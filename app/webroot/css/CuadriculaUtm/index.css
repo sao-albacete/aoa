@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+legend.small {
+  background: none;
+  padding: 0;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+#tablaLugares_paginate {
+	text-align: left;
+}
+
+#frmCuadriculaUtm label {
+	margin: 0 20px 0 20px;
+	width: 160px;
+	text-align: right;
+}
+
+#fsDatosCuadriculaUtm legend {
+	font-size: 17px;
+}
+
+.search_init {
+	width: auto;
+}
+
+.popover-content {
+	font-size: 14px;
+	line-height: 20px;
+}

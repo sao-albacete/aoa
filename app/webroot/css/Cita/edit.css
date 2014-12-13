@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+
+.row {
+  margin-left: 0;
+  *margin-left: 0;    
+}
+    
+.fsCustom {
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+    
+.fsCustom legend {
+    border: 0;
+    margin-bottom: 0;
+    width: auto;
+    font-size: 14px;
+    color: white;
+    background: #0B6138;
+    background-color: #0B6138;
+    line-height: 30px;    
+    padding: 0 10px 0 10px;
+    border-radius: 4px 4px 4px 4px;
+    font-weight: bold;
+}
+    
+.tituloCampo {
+    float: left;
+    width: 160px;
+    text-align: right;
+    margin-right: 20px;
+    font-weight: bold;
+}
+    
+.input-mini {
+    width: 35px;
+}
+    
+.badge {
+    padding: 0;
+    cursor: help;
+    margin-left: 5px;
+}
+    
+.control-label {
+    font-weight: bold;
+}
+
+.search_init {
+    width: auto;
+}
+
+.rareza-message {
+    margin-left: 30px;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+#map_canvas {
+    margin: 0;
+}

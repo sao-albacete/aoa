@@ -1,0 +1,21 @@
+table.tablaNumeroAves .caption,
+table.tablaNumeroAves td{
+    text-align: center;
+}
+
+table.tablaNumeroAves td.caption {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.tablaNumeroAves .input-mini {
+    width: 40px;
+}
+
+table.tablaNumeroAves .popover {
+    color: #333333;
+}
+
+table.tablaNumeroAves .info-clase-edad {
+    cursor: help;
+}

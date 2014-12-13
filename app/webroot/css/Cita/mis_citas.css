@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+body .modal {
+	/* new custom width */
+	width: 600px;
+}
+
+legend.small {
+  	background: none;
+  	padding: 0;
+  	border: 0;
+  	border-bottom: 1px solid #e5e5e5;
+  	color: #666666;
+    font-size: 15px;
+}

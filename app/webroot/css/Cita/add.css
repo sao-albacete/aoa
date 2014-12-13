@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+
+legend.small {
+    background: none;
+    padding: 0;
+    color: #333333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.input-mini {
+    width: 35px;
+}
+
+#tablaLugares_paginate {
+    text-align: left;
+}
+
+.table-hover tbody tr:hover>td {
+    cursor: pointer;
+}
+
+.ui-widget-content {
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 4px 4px 4px 4px;
+    color: #555555;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 4px 6px;
+}
+
+.badge {
+    padding: 0;
+    cursor: help;
+    margin-left: 5px;
+}
+
+.control-label {
+    font-weight: bold;
+}
+
+#tablaNumeroAves td {
+    text-align: center;
+}
+
+#tablaNumeroAves th {
+    vertical-align: middle;
+}

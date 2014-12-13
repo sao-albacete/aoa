@@ -1,0 +1,82 @@
+@CHARSET "UTF-8";
+
+legend.small {
+  background: none;
+  padding: 0;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Corrige la renderización errónea del panel de control de zoom en el mapa */
+.gmnoprint img {
+    max-width: none; 
+}
+
+/* Cuadros de colores para la leyenda del mapa */
+.content-box-blue,
+.content-box-gray,
+.content-box-light-gray,
+.content-box-green,
+.content-box-purple,
+.content-box-red,
+.content-box-yellow {
+    width: 15px; 
+    height: 15px; 
+    display:inline-block; 
+    margin-right: 10px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+
+.content-box-blue {
+    background-color: #d8ecf7;
+    border: 1px solid #afcde3;
+}
+
+.content-box-gray {
+    background-color: #424242;
+    border: 1px solid #2D2D2D;
+}
+
+.content-box-light-gray {
+    background-color: #999999;
+    border: 1px solid #2D2D2D;
+}
+
+.content-box-green {
+    background-color: #338533;
+    border: 1px solid #1F501F;
+}
+
+.content-box-purple {
+    background-color: #e2e2f9;
+    border: 1px solid #bebde9;
+}
+
+.content-box-red {
+    background-color: #E64545;
+    border: 1px solid #732222;
+}
+
+.content-box-yellow {
+    background-color: #FFDB4D;
+    border: 1px solid #99832E;
+}
+
+/* Icono de información */
+.badge {
+    padding: 0;
+    cursor: help;
+    margin-left: 5px;
+}
+
+.popover-content {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+div.yoxview {
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+
+.bio {
+    background: none repeat scroll 0 0 #f9f9f9;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    margin: 10px;
+    padding: 20px;
+    text-align: justify;
+}
+
+.bio .content {
+    text-align: justify;
+}
+
+img.picture {
+    border: 1px solid #000;
+    height: 90px;
+    width: 90px;
+    float: right;
+    vertical-align: top;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}

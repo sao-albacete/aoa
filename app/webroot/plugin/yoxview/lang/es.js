@@ -1,0 +1,21 @@
+﻿{
+    "Direction" : "ltr",
+    "Close" : "Cerrar",
+    "Help" : "Ayuda",
+    "FirstImage" : "A la primer imagen",
+    "LastImage" : "A la ultima imagen",
+    "StartStopSlideShow" : "Play/Pause slideshow",
+    "Pause" : "Pausar",
+    "Play" : "Play",
+    "Prev" : "Anterior",
+    "PinInfo" : "Pin info",
+    "UnpinInfo" : "Unpin info",
+    "Next" : "Siguiente",
+    "PrevImage" : "Imagen anterior",
+    "NextImage" : "Siguiente imagen",
+    "Loading" : "Cargando",
+    "CloseHelp" : "Cerrar ayuda",  
+    "HelpText" : "Se puede navegar por la galería usando el teclado:<br/><br/>Flechas IZQUIERDA/DERECHA: Anterior/Siguiente<br/>INICIO/FIN: Primera/Última<br/>SPACEBAR: Siguiente<br/>ENTER: Iniciar/Parar diapositivas<br/>ESCAPE: Cerrar galería<br/>H - Este panel de ayuda",
+    "Slideshow" : "Play",
+    "OriginalContext": "Ver en el contexto original"
+}

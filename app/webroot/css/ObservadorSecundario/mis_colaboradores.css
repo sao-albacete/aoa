@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+
+body .modal {
+	/* new custom width */
+	width: 600px;
+}

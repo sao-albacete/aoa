@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+#newUserFormContent {
+  width: 550px ;
+  margin-left: auto ;
+  margin-right: auto ;
+}
+
+div.error-message {
+  display: none;
+}
+
+.badge {
+	padding: 0;
+	cursor: help;
+	margin-left: 5px;
+}

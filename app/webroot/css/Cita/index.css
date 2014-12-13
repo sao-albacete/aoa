@@ -1,0 +1,107 @@
+@CHARSET "UTF-8";
+
+legend.small {
+  background: none;
+  padding: 0;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+#frmBusqueda label {
+	margin: 0 20px 0 20px;
+	width: 160px;
+	text-align: right;
+}
+
+#divBotonesBusqueda {
+	margin: 20px;
+	text-align: center;
+}
+
+.pagination span {
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 0;
+  margin-left: 0;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* .pagination ul > li { */
+/*   display: inline; */
+/* } */
+
+.pagination span a,
+.pagination span.current,
+.pagination span.disable{
+  padding: 4px 12px;
+  line-height: 20px;
+  text-decoration: none;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-left-width: 0;
+}
+
+/* .pagination span a { */
+/* 	float: left; */
+/* } */
+
+.pagination span > a:hover,
+.pagination span > a:focus,
+.pagination span.current {
+  background-color: #f5f5f5;
+}
+
+.pagination span.current {
+  color: #999999;
+  cursor: default;
+}
+
+.pagination span.disable,
+.pagination span.disable > a,
+.pagination span.disable > a:hover,
+.pagination span.disable > a:focus {
+  color: #999999;
+  cursor: default;
+  background-color: transparent;
+}
+
+.pagination span:first-child > a,
+.pagination span:first-child {
+  border-left-width: 1px;
+  -webkit-border-bottom-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+          border-top-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -moz-border-radius-topleft: 4px;
+}
+
+.pagination span:last-child > a,
+.pagination span:last-child {
+  -webkit-border-top-right-radius: 4px;
+          border-top-right-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
+}
+
+
+.tab-content {
+	border-left: 1px solid rgb(204, 204, 204);
+	border-right: 1px solid rgb(204, 204, 204);
+	border-bottom: 1px solid rgb(204, 204, 204);
+ 	padding-bottom: 20px;
+	background: #f6f6f6;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+    background: #f6f6f6;
+}

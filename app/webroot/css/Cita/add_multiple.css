@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+
+#tablaLugares_paginate {
+    text-align: left;
+}
+
+.table-hover tbody tr:hover>td {
+    cursor: pointer;
+}
+
+.ui-widget-content {
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 4px 4px 4px 4px;
+    color: #555555;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 4px 6px;
+}
+
+.ui-autocomplete {
+    z-index: 5000;
+}
+
+.badge {
+    padding: 0;
+    cursor: help;
+    margin-left: 5px;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-size: 0.9em;
+}
+
+.control-label {
+    font-weight: bold;
+}
