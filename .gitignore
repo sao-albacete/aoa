@@ -5,3 +5,13 @@ app/tmp/*
 app/[Cc]onfig/core.php
 app/[Cc]onfig/database.php
 !empty
+.buildpath
+.idea/*
+.project
+.svn/*
+.settings/*
+/app/Config/database.php
+/app/Config/email.php
+/app/Config/core.php
+/app/webroot/img/tmp/*
+/app/webroot/img/users/*
