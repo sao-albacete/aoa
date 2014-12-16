@@ -93,6 +93,7 @@ class CitaController extends AppController
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
+        $valuesSubmited = [];
         $filtraCitasPrivadas = false;
         
         /*
@@ -109,25 +110,25 @@ class CitaController extends AppController
         if ($this->request->is('get')) {
 
             // Especie
-            if (isset($this->request->query["especieId"]) && ! empty($this->request->query["especieId"])) {
+            if (isset($this->request->query["especieId"])  && ! empty($this->request->query["especieId"])) {
                 $conditions["Cita.especie_id"] = $this->request->query["especieId"];
-                $this->request->data["especieId"] = $this->request->query["especieId"];
+                $valuesSubmited["especieId"] = $this->request->query["especieId"];
 
-                if (isset($this->request->query["especie"])) {
-                    $this->request->data["especie"] = $this->request->query["especie"];
+                if (isset($this->request->query["especie"]) && ! empty($this->request->query["especie"])) {
+                    $valuesSubmited["especie"] = $this->request->query["especie"];
                 } else {
                     $this->Especie->id = $this->request->query["especieId"];
-                    $this->request->data["especie"] = $this->Especie->field('nombreComun') . ", " . $this->Especie->field('genero') . " " . $this->Especie->field('especie');
+                    $valuesSubmited["especie"] = $this->Especie->field('nombreComun') . ", " . $this->Especie->field('genero') . " " . $this->Especie->field('especie');
                 }
             }
 
             // Familia
-            if (isset($this->request->query["familia"]) && ! empty($this->request->query["familia"])) {
+            if (isset($this->request->query["familia"])  && ! empty($this->request->query["familia"])) {
                 $conditions["Especie.familia_id"] = $this->request->query["familia"];
-                $this->request->data["familia"] = $this->request->query["familia"];
+                $valuesSubmited["familia"] = $this->request->query["familia"];
 
                 if (isset($this->request->query["ordenTaxonomico"]) && ! empty($this->request->query["ordenTaxonomico"])) {
-                    $this->request->data["ordenTaxonomico"] = $this->request->query["ordenTaxonomico"];
+                    $valuesSubmited["ordenTaxonomico"] = $this->request->query["ordenTaxonomico"];
                 }
             // Orden taxonomico
             } elseif (isset($this->request->query["ordenTaxonomico"]) && ! empty($this->request->query["ordenTaxonomico"])) {
@@ -142,15 +143,15 @@ class CitaController extends AppController
                     'recursive' => - 1
                 ));
                 $conditions["Especie.familia_id"] = $familias;
-                $this->request->data["ordenTaxonomico"] = $this->request->query["ordenTaxonomico"];
+                $valuesSubmited["ordenTaxonomico"] = $this->request->query["ordenTaxonomico"];
             }
 
             // Figura de proteccion
             if (isset($this->request->query["figuraProteccion"]) && ! empty($this->request->query["figuraProteccion"]) && isset($this->request->query["nivelProteccion"]) && ! empty($this->request->query["nivelProteccion"])) {
 
-                $this->request->data["nivelProteccion"] = $this->request->query["nivelProteccion"];
+                $valuesSubmited["nivelProteccion"] = $this->request->query["nivelProteccion"];
                 $figuraProteccion = $this->request->query["figuraProteccion"];
-                $this->request->data["figuraProteccion"] = $figuraProteccion;
+                $valuesSubmited["figuraProteccion"] = $figuraProteccion;
 
                 if ($figuraProteccion == "catalogoRegional") {
                     $conditions["Especie.proteccion_clm_id"] = $this->request->query["nivelProteccion"];
@@ -164,26 +165,26 @@ class CitaController extends AppController
             // Comarca
             if (isset($this->request->query["comarcaId"]) && ! empty($this->request->query["comarcaId"])) {
                 $conditions["Lugar.comarca_id"] = $this->request->query["comarcaId"];
-                $this->request->data["comarcaId"] = $this->request->query["comarcaId"];
+                $valuesSubmited["comarcaId"] = $this->request->query["comarcaId"];
             }
 
             // Municipio
             if (isset($this->request->query["municipioId"]) && ! empty($this->request->query["municipioId"])) {
                 $conditions["Lugar.municipio_id"] = $this->request->query["municipioId"];
-                $this->request->data["municipioId"] = $this->request->query["municipioId"];
+                $valuesSubmited["municipioId"] = $this->request->query["municipioId"];
             }
 
             // Cuadricula UTM
             if (isset($this->request->query["cuadriculaUtmId"]) && ! empty($this->request->query["cuadriculaUtmId"])) {
                 $conditions["Lugar.cuadricula_utm_id"] = $this->request->query["cuadriculaUtmId"];
-                $this->request->data["cuadriculaUtmId"] = $this->request->query["cuadriculaUtmId"];
+                $valuesSubmited["cuadriculaUtmId"] = $this->request->query["cuadriculaUtmId"];
             }
 
             // Lugar
             if (isset($this->request->query["lugarId"]) && ! empty($this->request->query["lugarId"])) {
                 $conditions["Cita.lugar_id"] = $this->request->query["lugarId"];
-                $this->request->data["lugarId"] = $this->request->query["lugarId"];
-                $this->request->data["lugar"] = $this->request->query["lugar"];
+                $valuesSubmited["lugarId"] = $this->request->query["lugarId"];
+                $valuesSubmited["lugar"] = $this->request->query["lugar"];
 
                 // Filtramos las citas privadas salvo las que pertenezcan al usuario
                 if (! isset($usuario)) {
@@ -204,32 +205,32 @@ class CitaController extends AppController
             // Fecha alta
             if (isset($this->request->query["fechaDesde"]) && ! empty($this->request->query["fechaDesde"])) {
                 $fecha_desde = $this->request->query["fechaDesde"];
-                $this->request->data["fechaDesde"] = $fecha_desde;
+                $valuesSubmited["fechaDesde"] = $fecha_desde;
                 $conditions[] = "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')";
             }
             if (isset($this->request->query["fechaHasta"]) && ! empty($this->request->query["fechaHasta"])) {
                 $fecha_hasta = $this->request->query["fechaHasta"];
-                $this->request->data["fechaHasta"] = $fecha_hasta;
+                $valuesSubmited["fechaHasta"] = $fecha_hasta;
                 $conditions[] = "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')";
             }
-            if (isset($this->request->query["fechaAlta"]) && ! empty($this->request->query["fechaAlta"]) && ! (isset($this->request->data["fechaHasta"]) && ! empty($this->request->data["fechaHasta"]))) {
+            if (isset($this->request->query["fechaAlta"]) && ! empty($this->request->query["fechaAlta"]) && ! (isset($valuesSubmited["fechaHasta"]) && ! empty($valuesSubmited["fechaHasta"]))) {
                 $fecha_alta = $this->request->query["fechaAlta"];
                 $conditions[] = "Cita.fechaAlta = STR_TO_DATE('$fecha_alta','%d/%m/%Y')";
-                $this->request->data["fechaDesde"] = $this->request->query["fechaAlta"];
-                $this->request->data["fechaHasta"] = $this->request->query["fechaAlta"];
+                $valuesSubmited["fechaDesde"] = $this->request->query["fechaAlta"];
+                $valuesSubmited["fechaHasta"] = $this->request->query["fechaAlta"];
             }
 
             // Clase reproduccion
             if (isset($this->request->query["claseReproduccionId"]) && ! empty($this->request->query["claseReproduccionId"])) {
                 $conditions["Cita.clase_reproduccion_id"] = $this->request->query["claseReproduccionId"];
-                $this->request->data["claseReproduccionId"] = $this->request->query["claseReproduccionId"];
+                $valuesSubmited["claseReproduccionId"] = $this->request->query["claseReproduccionId"];
             }
 
             // Observador
             if (isset($this->request->query["observadorId"]) && ! empty($this->request->query["observadorId"])) {
                 $conditions["Cita.observador_principal_id"] = $this->request->query["observadorId"];
-                $this->request->data["observadorId"] = $this->request->query["observadorId"];
-                $this->request->data["observador"] = $this->request->query["observador"];
+                $valuesSubmited["observadorId"] = $this->request->query["observadorId"];
+                $valuesSubmited["observador"] = $this->request->query["observador"];
             }
 
             // Colaborador
@@ -243,8 +244,8 @@ class CitaController extends AppController
                         'Cita.id = AsoCitaObservador.cita_id'
                     )
                 );
-                $this->request->data["colaboradorId"] = $this->request->query["colaboradorId"];
-                $this->request->data["colaborador"] = $this->request->query["colaborador"];
+                $valuesSubmited["colaboradorId"] = $this->request->query["colaboradorId"];
+                $valuesSubmited["colaborador"] = $this->request->query["colaborador"];
             }
         }
 
@@ -315,7 +316,7 @@ class CitaController extends AppController
 
             $this->set('citas', $citas);
 
-            $this->set('valuesSubmited', $this->request->data);
+            $this->set('valuesSubmited', $valuesSubmited);
         }
 
         /*
@@ -353,24 +354,6 @@ class CitaController extends AppController
          */
         $cuadriculasUtm = $this->CuadriculaUtm->obtenerCuadriculasUtmActivosOrdenadosPorCodigo();
         $this->set('cuadriculasUtm', $cuadriculasUtm);
-
-        /*
-         * Lugares
-         */
-        $lugares = $this->Lugar->obtenerLugaresActivosOrdenadosPorNombre();
-        $this->set('lugares', $lugares);
-
-        /*
-         * Observadores
-         */
-        $observadores = $this->ObservadorPrincipal->getAllObservadoresPrincipalesBasic();
-        $this->set('observadores', $observadores);
-
-        /*
-         * Colaboradores
-         */
-        $colaboradores = $this->ObservadorSecundario->getAllObservadoresSecundariosBasic();
-        $this->set('colaboradores', $colaboradores);
 
         /*
          * Años
