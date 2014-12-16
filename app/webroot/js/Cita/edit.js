@@ -52,7 +52,7 @@ $(document).ready(function() {
     });
 
     // Seleccionar colaborador
-    seleccionarColaborador($divEditarCita);
+    seleccionarColaboradores($divEditarCita);
 
     // Limpiar colaboradores seleccioandos
     $divEditarCita.find("#btnVaciarColaboradores").click(function () {

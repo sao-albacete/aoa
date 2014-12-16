@@ -79,7 +79,6 @@ class CitaController extends AppController
             'generar_grafico',
             'generar_mapa',
             'cargar_niveles_proteccion',
-            'buscar_lugares',
             'buscar_observadores',
             'buscar_especies',
             'obtenerCitasDatatables'
@@ -184,6 +183,7 @@ class CitaController extends AppController
             if (isset($this->request->query["lugarId"]) && ! empty($this->request->query["lugarId"])) {
                 $conditions["Cita.lugar_id"] = $this->request->query["lugarId"];
                 $this->request->data["lugarId"] = $this->request->query["lugarId"];
+                $this->request->data["lugar"] = $this->request->query["lugar"];
 
                 // Filtramos las citas privadas salvo las que pertenezcan al usuario
                 if (! isset($usuario)) {
@@ -229,6 +229,7 @@ class CitaController extends AppController
             if (isset($this->request->query["observadorId"]) && ! empty($this->request->query["observadorId"])) {
                 $conditions["Cita.observador_principal_id"] = $this->request->query["observadorId"];
                 $this->request->data["observadorId"] = $this->request->query["observadorId"];
+                $this->request->data["observador"] = $this->request->query["observador"];
             }
 
             // Colaborador
@@ -243,6 +244,7 @@ class CitaController extends AppController
                     )
                 );
                 $this->request->data["colaboradorId"] = $this->request->query["colaboradorId"];
+                $this->request->data["colaborador"] = $this->request->query["colaborador"];
             }
         }
 

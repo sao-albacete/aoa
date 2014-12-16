@@ -16,6 +16,9 @@ $this->Html->css(array(
  */
 $this->Html->script(array(
     'pleaseWaitDialog',
+    'common/Lugar/funciones',
+    'common/ObservadorPrimario/funciones',
+    'common/ObservadorSecundario/funciones',
     'Cita/index'
 ), array('inline' => false));
 
@@ -26,7 +29,6 @@ $this->end();
 ?>
 
 <script type="text/javascript">
-<!--
 $(document).ready(function() {
 
    /* INICIO Carga de valores seleccionados de los combos */
@@ -36,10 +38,13 @@ $(document).ready(function() {
    $("#selectComarca").val("<?php if(isset($valuesSubmited['comarcaId'])){echo $valuesSubmited['comarcaId'];}?>");
    $("#selectMunicipio").val("<?php if(isset($valuesSubmited['municipioId'])){echo $valuesSubmited['municipioId'];}?>");
    $("#selectCuadriculaUtm").val("<?php if(isset($valuesSubmited['cuadriculaUtmId'])){echo $valuesSubmited['cuadriculaUtmId'];}?>");
-   $("#selectLugar").val("<?php if(isset($valuesSubmited['lugarId'])){echo $valuesSubmited['lugarId'];}?>");
+   $("#lugar").val("<?php if(isset($valuesSubmited['lugar'])){echo $valuesSubmited['lugar'];}?>");
+   $("#lugarId").val("<?php if(isset($valuesSubmited['lugarId'])){echo $valuesSubmited['lugarId'];}?>");
    $("#selectClaseReproduccion").val("<?php if(isset($valuesSubmited['claseReproduccionId'])){echo $valuesSubmited['claseReproduccionId'];}?>");
-   $("#selectObservador").val("<?php if(isset($valuesSubmited['observadorId'])){echo $valuesSubmited['observadorId'];}?>");
-   $("#selectColaborador").val("<?php if(isset($valuesSubmited['colaboradorId'])){echo $valuesSubmited['colaboradorId'];}?>");
+   $("#observador").val("<?php if(isset($valuesSubmited['observador'])){echo $valuesSubmited['observador'];}?>");
+   $("#observadorSeleccionado").val("<?php if(isset($valuesSubmited['observadorId'])){echo $valuesSubmited['observadorId'];}?>");
+   $("#colaborador").val("<?php if(isset($valuesSubmited['colaborador'])){echo $valuesSubmited['colaborador'];}?>");
+   $("#colaboradorSeleccionado").val("<?php if(isset($valuesSubmited['colaboradorId'])){echo $valuesSubmited['colaboradorId'];}?>");
    /* Fin Carga de valores seleccionados de los combos */
    
    /* INICIO especie */
@@ -125,6 +130,24 @@ $(document).ready(function() {
         }
     });
 
+   $('#lugar').blur(function(){
+      if ($(this).val() == '') {
+         $('#lugarId').val('');
+      }
+   });
+
+   $('#observador').blur(function(){
+      if ($(this).val() == '') {
+         $('#observadorId').val('');
+      }
+   });
+
+   $('#colaborador').blur(function(){
+      if ($(this).val() == '') {
+         $('#colaboradorId').val('');
+      }
+   });
+
 });
 
 function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
@@ -139,7 +162,6 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
    }
 }
 
-//-->
 </script>
 
 <!-- Cuerpo -->
@@ -159,14 +181,14 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
 
          <form method="get" id="frmBusqueda">
 
-            <div class="tab-content">
+            <div id="divFiltrosBusqueda" class="tab-content">
 
                <!-- Que -->
-               <div class="tab-pane active text-center" id="que">
+               <div class="tab-pane active" id="que">
 
                   <!-- Especie -->
-                  <div class="control-group">
-                     <div class="controls form-inline">
+                  <div class="row">
+                     <div class="span12">
                         <label class="control-label" for="especie"> <?php echo __("Especie");?></label>
                         <input id="especie" name="especie" class="input-xxlarge"
                            type="text"
@@ -177,9 +199,9 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                      </div>
                   </div>
 
-                  <div class="control-group">
 
-                     <div class="controls form-inline">
+                  <div class="row">
+                     <div class="span2" style="min-width: 250px;">
                         <!-- Orden taxonomico -->
                         <label class="control-label" for="selectOrdenTaxonomico"><?php echo __("Orden taxonómico");?></label>
                         <select id="selectOrdenTaxonomico" name="ordenTaxonomico"
@@ -191,43 +213,47 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                            }
                            ?>
                         </select>
-                        <!-- Familia -->
-                        <label class="control-label" style="width: 80px;"
-                           for="selectFamilia"><?php echo __("Familia");?></label> <select
-                           id="selectFamilia" name="familia" class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                           foreach($familias as $familia) {
-                              echo '<option value="'.$familia["Familia"]["id"].'">'.$familia["Familia"]["nombre"].'</option>';
-                           }
-                           ?>
-                        </select>
+                     </div>
+                     <div class="span10" style="margin-left: 0;">
+                           <!-- Familia -->
+                           <label class="control-label"
+                                  for="selectFamilia"><?php echo __("Familia");?></label> <select
+                               id="selectFamilia" name="familia" class="input-large">
+                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <?php
+                              foreach($familias as $familia) {
+                                 echo '<option value="'.$familia["Familia"]["id"].'">'.$familia["Familia"]["nombre"].'</option>';
+                              }
+                              ?>
+                           </select>
                      </div>
                   </div>
 
-                  <!-- Figura protección -->
-                  <div class="control-group">
-                     <div class="controls form-inline">
+                  <div class="row">
+                     <div class="span2" style="min-width: 250px;">
+                        <!-- Figura protección -->
                         <label class="control-label" for="selectFiguraProteccion"><?php echo __("Figura de protección");?></label>
                         <select id="selectFiguraProteccion" name="figuraProteccion"
-                           class="input-large">
+                                class="input-large">
                            <option value=""><?php echo __("-- Seleccione --");?></option>
                            <option value="catalogoRegional"><?php echo __("Catálogo Regional");?></option>
                            <option value="libroRojo"><?php echo __("Libro Rojo de España");?></option>
                            <option value="estatusAlbacete"><?php echo __("Estatus en Albacete");?></option>
-                        </select> <select id="selectNivelProteccion"
-                           name="nivelProteccion" class="input-xlarge"
-                           style="margin-left: 20px; width: 315px;" disabled="disabled">
+                        </select>
+                     </div>
+                     <div class="span10" style="margin-left: 0; margin-top: 20px;">
+                        <select id="selectNivelProteccion"
+                                name="nivelProteccion" class="input-xlarge" disabled="disabled">
                         </select>
                      </div>
                   </div>
 
                   <!-- Clase reproducción -->
-                  <div class="control-group">
-                     <div class="controls form-inline">
+                  <div class="row">
+                     <div class="span12">
                         <label class="control-label" for="selectClaseReproduccion"><?php echo __("Clase de reproducción");?></label>
                         <select id="selectClaseReproduccion" name="claseReproduccionId"
-                           class="input-xxlarge" style="width: 550px;">
+                           class="input-xxlarge">
                            <option value=""><?php echo __("-- Seleccione --");?></option>
                            <?php
                            $tiposCriaSeleccionados = array();
@@ -252,69 +278,63 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
 
                </div>
                <!-- Donde -->
-               <div class="tab-pane text-center" id="donde">
+               <div class="tab-pane" id="donde">
 
-                  <div class="control-group">
-
-                     <!-- Comarca -->
-                     <div class="controls form-inline">
-                        <label class="control-label" for="selectComarca"><?php echo __("Comarca");?></label>
-                        <select id="selectComarca" name="comarcaId" class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                                    foreach ($comarcas as $comarca)
-                                    {
-                              echo '<option value="'.$comarca["Comarca"]["id"].'">'.$comarca["Comarca"]["nombre"].'</option>';
-                           }
-                           ?>
-                        </select>
-                        <!-- Municipio -->
-                        <label class="control-label" style="width: 80px;"
-                           for="selectMunicipio"><?php echo __("Municipio");?> </label> <select
-                           id="selectMunicipio" name="municipioId" class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                           foreach($municipios as $municipio) {
-                              echo '<option value="'.$municipio["Municipio"]["id"].'">'.$municipio["Municipio"]["nombre"].'</option>';
-                           }
-                           ?>
-                        </select>
+                     <div class="row">
+                        <div class="span2" style="min-width: 265px;">
+                           <!-- Comarca -->
+                           <label class="control-label" for="selectComarca"><?php echo __("Comarca");?></label>
+                           <select id="selectComarca" name="comarcaId" class="input-xlarge">
+                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <?php
+                              foreach ($comarcas as $comarca)
+                              {
+                                 echo '<option value="'.$comarca["Comarca"]["id"].'">'.$comarca["Comarca"]["nombre"].'</option>';
+                              }
+                              ?>
+                           </select>
+                        </div>
+                        <div class="span2" style="min-width: 265px;">
+                           <!-- Municipio -->
+                           <label class="control-label" for="selectMunicipio"><?php echo __("Municipio");?> </label>
+                           <select id="selectMunicipio" name="municipioId" class="input-xlarge">
+                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <?php
+                              foreach($municipios as $municipio) {
+                                 echo '<option value="'.$municipio["Municipio"]["id"].'">'.$municipio["Municipio"]["nombre"].'</option>';
+                              }
+                              ?>
+                           </select>
+                        </div>
+                        <div class="span2" style="min-width: 265px;">
+                           <!-- Cuadricula UTM -->
+                           <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?></label>
+                           <select id="selectCuadriculaUtm" name="cuadriculaUtmId"
+                                   class="input-large">
+                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <?php
+                              foreach($cuadriculasUtm as $cuadriculaUtm) {
+                                 echo '<option value="'.$cuadriculaUtm["CuadriculaUtm"]["id"].'">'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'</option>';
+                              }
+                              ?>
+                           </select>
+                        </div>
                      </div>
-                  </div>
 
-                  <div class="control-group">
-
-                     <div class="controls  form-inline">
-
-                        <!-- Cuadricula UTM -->
-                        <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?></label>
-                        <select id="selectCuadriculaUtm" name="cuadriculaUtmId"
-                           class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                           foreach($cuadriculasUtm as $cuadriculaUtm) {
-                              echo '<option value="'.$cuadriculaUtm["CuadriculaUtm"]["id"].'">'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'</option>';
-                           }
-                           ?>
-                        </select>
+                  <div class="row">
+                     <div class="span12">
                         <!-- Lugar -->
-                        <label class="control-label" style="width: 80px;"
-                           for="selectLugar"><?php echo __("Lugar");?></label> <select
-                           id="selectLugar" name="lugarId" class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                           foreach($lugares as $lugar) {
-                              echo '<option value="'.$lugar["Lugar"]["id"].'">'.$lugar["Lugar"]["nombre"].'</option>';
-                           }
-                           ?>
-                        </select>
+                        <label class="control-label" for="lugar"><?php echo __("Lugar");?></label>
+                        <input type="text" id="lugar" name="lugar" class="input-xxlarge"
+                               placeholder="Escriba el nombre del lugar"/>
+                        <input type="hidden" id="lugarId" name="lugarId">
                      </div>
                   </div>
                </div>
                <!-- Cuándo -->
-               <div class="tab-pane text-center" id="cuando">
+               <div class="tab-pane" id="cuando">
                   <!-- Intervalo fechas -->
-                  <div class="controls form-inline">
+                  <div class="controls">
                      <label class="control-label" for="fechaDesde"><?php echo __("Fecha desde");?></label>
                      <div class="input-append">
                         <input type="text"
@@ -337,35 +357,26 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   </div>
                </div>
                <!-- Quién -->
-               <div class="tab-pane text-center" id="quien">
-                  <!-- Observador principal -->
+               <div class="tab-pane" id="quien">
+                  <!-- Observador -->
                   <div class="control-group">
-                     <div class="controls form-inline">
-                        <label class="control-label" for="selectObservador"><?php echo __("Observador");?></label>
-                        <select id="selectObservador" name="observadorId"
-                           class="input-xlarge">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                           foreach($observadores as $observador) {
-                              echo '<option value="'.$observador["ObservadorPrincipal"]["id"].'">'.$observador["ObservadorPrincipal"]["codigo"]." - ".$observador["ObservadorPrincipal"]["nombre"].'</option>';
-                           }
-                           ?>
-                        </select>
+                     <div class="controls">
+                        <label class="control-label" for="observador"><?php echo __("Observador");?></label>
+                        <input id="observador" name="observador" class="input-xxlarge"
+                               type="text"
+                               placeholder="Escriba el código o el nombre del observador">
+                        <input type="hidden" id="observadorSeleccionado"
+                               name="observadorId"/>
                      </div>
                   </div>
-                  <!-- Observador secundario -->
+                  <!-- Colaborador -->
                   <div class="control-group">
-                     <div class="controls form-inline">
-                        <label class="control-label" for="selectColaborador"><?php echo __("Colaborador");?></label>
-                        <select id="selectColaborador" name="colaboradorId"
-                           class="input-xlarge">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <?php
-                           foreach($colaboradores as $colaborador) {
-                              echo '<option value="'.$colaborador["ObservadorSecundario"]["id"].'">'.$colaborador["ObservadorSecundario"]["codigo"]." - ".$colaborador["ObservadorSecundario"]["nombre"].'</option>';
-                           }
-                           ?>
-                        </select>
+                     <div class="controls">
+                        <label class="control-label" for="colaborador"><?php echo __("Colaborador");?></label>
+                        <input id="colaborador" name="colaborador" class="input-xxlarge"
+                               type="text"
+                               placeholder="Escriba el código o el nombre del colaborador">
+                        <input type="hidden" id="colaboradorSeleccionado" name="colaboradorId"/>
                      </div>
                   </div>
                </div>

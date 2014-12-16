@@ -8,15 +8,15 @@ legend.small {
   border-bottom: 1px solid #e5e5e5;
 }
 
-#frmBusqueda label {
-	margin: 0 20px 0 20px;
-	width: 160px;
-	text-align: right;
-}
+/*#frmBusqueda label {
+    margin: 0 20px 0 20px;
+    width: 160px;
+    text-align: right;
+}*/
 
 #divBotonesBusqueda {
-	margin: 20px;
-	text-align: center;
+    margin: 20px;
+    text-align: center;
 }
 
 .pagination span {
@@ -49,7 +49,7 @@ legend.small {
 }
 
 /* .pagination span a { */
-/* 	float: left; */
+/*     float: left; */
 /* } */
 
 .pagination span > a:hover,
@@ -95,11 +95,11 @@ legend.small {
 
 
 .tab-content {
-	border-left: 1px solid rgb(204, 204, 204);
-	border-right: 1px solid rgb(204, 204, 204);
-	border-bottom: 1px solid rgb(204, 204, 204);
- 	padding-bottom: 20px;
-	background: #f6f6f6;
+    border-left: 1px solid rgb(204, 204, 204);
+    border-right: 1px solid rgb(204, 204, 204);
+    border-bottom: 1px solid rgb(204, 204, 204);
+    padding: 20px;
+    background: #f6f6f6;
 }
 
 .nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {

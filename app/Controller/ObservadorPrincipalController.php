@@ -34,6 +34,15 @@ class ObservadorPrincipalController extends AppController {
      * Constantes
      */
     const ID_OPCION_MENU = Constants::MENU_OBSERVADORES_ID;
+
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+
+        $this->Auth->allow(
+            'obtenerObservadoresPrincipales'
+        );
+    }
     
     
     /**
@@ -48,25 +57,37 @@ class ObservadorPrincipalController extends AppController {
 
         $this->set('observadores', $observadores);
     }
-    
-    public function buscar_observadores_principales() {
+
+    /**
+     * Obtiene los observadores por codigo o nombre
+     */
+    public function obtenerObservadoresPrincipales() {
         
         $this->ObservadorPrincipal->recursive = -1;
-
-        $observadoresEncontrados = array();
 
         if ($this->request->is('ajax')) {
 
             $this->autoRender = false;
-            $results = $this->ObservadorPrincipal->find('all', array(
-                    'fields' => array('ObservadorPrincipal.id', 'ObservadorPrincipal.nombre', 'ObservadorPrincipal.codigo'),
-                    'conditions' => array('OR' => array('ObservadorPrincipal.nombre LIKE ' => '%' . $this->request->query['term'] . '%', 'ObservadorPrincipal.codigo LIKE ' => '%' . $this->request->query['term'] . '%')),
+            $results = $this->ObservadorPrincipal->find(
+                'all',
+                [
+                    'fields' => ['ObservadorPrincipal.id', 'ObservadorPrincipal.nombre', 'ObservadorPrincipal.codigo'],
+                    'conditions' => [
+                        'OR' => [
+                            'ObservadorPrincipal.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                            'ObservadorPrincipal.codigo LIKE ' => '%' . $this->request->query['term'] . '%'
+                        ]
+                    ],
                     'recursive'=>-1
-            ));
-            foreach($results as $result) {
-                array_push($observadoresEncontrados, array("id"=>$result['ObservadorPrincipal']['id'],"value"=>$result['ObservadorPrincipal']['codigo']." - ".$result['ObservadorPrincipal']['nombre']));
-            }
+                ]);
 
+            $observadoresEncontrados = [];
+            foreach($results as $result) {
+                $observadoresEncontrados[] = [
+                    "id"=>$result['ObservadorPrincipal']['id'],
+                    "value"=>$result['ObservadorPrincipal']['codigo']." - ".$result['ObservadorPrincipal']['nombre']
+                ];
+            }
             echo json_encode($observadoresEncontrados);
         }
     }

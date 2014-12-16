@@ -47,11 +47,16 @@ function gestionarTablaNumeroAves($div)
     });
 }
 
+/**
+ * Seleccionar un lugar por nombre, municipio, comarca o cuadricula UTM
+ *
+ * @param $div
+ */
 function seleccionarLugar($div)
 {
     $div.find("#lugar").autocomplete({
         source: function (request, response) {
-            $.getJSON("/lugar/buscar_lugares", {
+            $.getJSON("/lugar/obtenerLugares", {
                     term: request.term
                 },
                 response);
@@ -61,6 +66,32 @@ function seleccionarLugar($div)
             if (ui.item) {
                 this.value = ui.item.value;
                 $div.find("#lugarSeleccionadoContenedor").show();
+                $div.find("#lugarSeleccionado").text(ui.item.value);
+                $div.find("#lugarId").val(ui.item.id);
+            }
+            return false;
+        }
+    });
+}
+
+/**
+ * Seleccionar un lugar por nombre
+ *
+ * @param $div
+ */
+function seleccionarLugarPorNombre($div)
+{
+    $div.find("#lugar").autocomplete({
+        source: function (request, response) {
+            $.getJSON("/lugar/obtenerLugaresPorNombre", {
+                    term: request.term
+                },
+                response);
+        },
+        minLength: 3,
+        select: function (event, ui) {
+            if (ui.item) {
+                this.value = ui.item.value;
                 $div.find("#lugarSeleccionado").text(ui.item.value);
                 $div.find("#lugarId").val(ui.item.id);
             }

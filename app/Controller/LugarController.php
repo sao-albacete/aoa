@@ -44,14 +44,17 @@ class LugarController extends AppController {
     );
     
     public function beforeFilter() {
+
         parent::beforeFilter();
+
         $this->Auth->allow(
             'index',
             'view',
             'cargarMunicipios',
             'cargarCoordenadasUtm',
             'cargarLugaresSimilares',
-            'buscar_lugares',
+            'obtenerLugares',
+            'obtenerLugaresPorNombre',
             'guardarLugarAjax'
         );
     }
@@ -506,23 +509,83 @@ class LugarController extends AppController {
 
         echo json_encode($response);
     }
-    
-    public function buscar_lugares() {
+
+    /**
+     * Obtiene los lugares que coincidan en su nombre, municipio, comarca o cuadricula UTM con el valor recibido
+     */
+    public function obtenerLugares() {
         
-        $lugaresEncontrados = array();
+        $response = [];
 
         if ($this->request->is('ajax')) {
 
             $this->autoRender = false;
+
             $results = $this->Lugar->find(
-                    'all',
-                    array('fields' => array('Lugar.id', 'Lugar.nombre', 'Municipio.nombre', 'Comarca.nombre', 'CuadriculaUtm.codigo'),
-                            'conditions' => array('OR' => array('Lugar.nombre LIKE ' => '%' . $this->request->query['term'] . '%', 'Municipio.nombre LIKE ' => '%' . $this->request->query['term'] . '%', 'Comarca.nombre LIKE ' => '%' . $this->request->query['term'] . '%', 'CuadriculaUtm.codigo LIKE ' => '%' . $this->request->query['term'] . '%'))
-                    ));
+                'all',
+                [
+                    'fields' => [
+                        'Lugar.id',
+                        'Lugar.nombre',
+                        'Municipio.nombre',
+                        'Comarca.nombre',
+                        'CuadriculaUtm.codigo'
+                    ],
+                    'conditions' => [
+                        'OR' => [
+                            'Lugar.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                            'Municipio.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                            'Comarca.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                            'CuadriculaUtm.codigo LIKE ' => '%' . $this->request->query['term'] . '%'
+                        ]
+                    ]
+                ]
+            );
+
+            $lugaresEncontrados = [];
             foreach($results as $result) {
-                array_push($lugaresEncontrados, array("id"=>$result['Lugar']['id'],"value"=>$result['Lugar']['nombre'].", ".$result['Municipio']['nombre'].", ".$result['Comarca']['nombre'].", ".$result['CuadriculaUtm']['codigo']));
+                $lugaresEncontrados[] = [
+                    "id" => $result['Lugar']['id'],
+                    "value" => $result['Lugar']['nombre'].", ".$result['Municipio']['nombre'].", ".$result['Comarca']['nombre'].", ".$result['CuadriculaUtm']['codigo']
+                ];
             }
 
+            echo json_encode($lugaresEncontrados);
+        }
+    }
+
+    /**
+     * Obtiene los lugares que coincidan en su nombre
+     */
+    public function obtenerLugaresPorNombre() {
+
+        if ($this->request->is('ajax')) {
+
+            $this->autoRender = false;
+
+            $results = $this->Lugar->find(
+                'all',
+                [
+                    'fields' => [
+                        'Lugar.id',
+                        'Lugar.nombre',
+                    ],
+                    'conditions' => [
+                        'OR' => [
+                            'Lugar.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                        ]
+                    ],
+                    'recursive' => -1
+                ]
+            );
+
+            $lugaresEncontrados = [];
+            foreach($results as $result) {
+                $lugaresEncontrados[] = [
+                    "id" => $result['Lugar']['id'],
+                    "value" => $result['Lugar']['nombre']
+                ];
+            }
             echo json_encode($lugaresEncontrados);
         }
     }
@@ -534,7 +597,7 @@ class LugarController extends AppController {
      * @param array $usuario
      * @return bool
      */
-    public function esLugarEditable($lugar, $usuario)
+    private function esLugarEditable($lugar, $usuario)
     {
         return
             ($lugar['Lugar']['observador_principal_id'] == $usuario['observador_principal_id']
@@ -546,10 +609,9 @@ class LugarController extends AppController {
      * Comprueba si el lugar es visible
      *
      * @param array $lugar
-     * @param array $usuario
      * @return bool
      */
-    public function esLugarVisible($lugar)
+    private function esLugarVisible($lugar)
     {
         return $lugar['Lugar']['indActivo'] == 1;
     }

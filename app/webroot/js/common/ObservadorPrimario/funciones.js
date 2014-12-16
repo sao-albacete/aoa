@@ -2,7 +2,7 @@ function seleccionarObservador($div)
 {
     $div.find("#observador").autocomplete({
         source: function( request, response ) {
-            $.getJSON( "/observadorPrincipal/buscar_observadores_principales", {
+            $.getJSON( "/observadorPrincipal/obtenerObservadoresPrincipales", {
                     term: request.term
                 },
                 response );

@@ -1,8 +1,8 @@
-function seleccionarColaborador($div)
+function seleccionarColaboradores($div)
 {
     $div.find("#colaboradores").autocomplete({
         source: function( request, response ) {
-            $.getJSON( "/observadorSecundario/buscar_observadores_secundarios", {
+            $.getJSON( "/observadorSecundario/obtenerObservadoresSecundarios", {
                     term: request.term,
                     data: $("#colaboradoresSeleccionados").val()
                 },
@@ -12,6 +12,27 @@ function seleccionarColaborador($div)
         select: function( event, ui ) {
             if(ui.item) {
                 insertarColaborador( ui.item.value, ui.item.id);
+            }
+            return false;
+        }
+    });
+}
+
+function seleccionarColaborador($div)
+{
+    $div.find("#colaborador").autocomplete({
+        source: function( request, response ) {
+            $.getJSON( "/observadorSecundario/obtenerObservadoresSecundarios", {
+                    term: request.term
+                },
+                response );
+        },
+        minLength: 3,
+        select: function( event, ui ) {
+            if(ui.item) {
+                this.value = ui.item.value;
+                $div.find("#colaboradorSeleccionadoTexto").text(ui.item.value);
+                $div.find("#colaboradorSeleccionado").val(ui.item.id);
             }
             return false;
         }

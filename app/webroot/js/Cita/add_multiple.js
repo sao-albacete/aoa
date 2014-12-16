@@ -37,7 +37,7 @@ $(document).ready(function () {
     });
 
     // Seleccionar colaborador
-    seleccionarColaborador($divNuevaCitaMultiple);
+    seleccionarColaboradores($divNuevaCitaMultiple);
 
     // Limpiar colaboradores seleccioandos
     $divNuevaCitaMultiple.find("#btnVaciarColaboradores").click(function () {

@@ -35,7 +35,16 @@ class ObservadorSecundarioController extends AppController {
      * Constantes
      */
     const ID_OPCION_MENU = Constants::MENU_OBSERVADORES_ID;
-    
+
+
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+
+        $this->Auth->allow(
+            'obtenerObservadoresSecundarios'
+        );
+    }
     
     /**
      * Funcion que se ejecuta al inicio
@@ -238,42 +247,60 @@ class ObservadorSecundarioController extends AppController {
         $this->Session->setFlash(__('El colaborador no ha podido ser eliminado. Por favor, inténtelo de nuevo.'), 'failure');
         $this->redirect(array('action' => 'mis_colaboradores'));
     }
-    
-    public function buscar_observadores_secundarios() {
+
+    /**
+     * Obtiene los observadores secundarios por codigo y nombre
+     */
+    public function obtenerObservadoresSecundarios() {
     
         $this->ObservadorSecundario->recursive = -1;
-
-        $observadoresEncontrados = array();
 
         if ($this->request->is('ajax')) {
 
             $this->autoRender = false;
 
-            $results = array();
-
             if(!empty($this->request->query['data'])) {
                 $observadoresIds = explode(",", $this->request->query['data']);
-                $results = $this->ObservadorSecundario->find('all', array(
-                        'fields' => array('ObservadorSecundario.id', 'ObservadorSecundario.nombre', 'ObservadorSecundario.codigo'),
-                        'conditions' => array(
-                                'OR' => array('ObservadorSecundario.nombre LIKE ' => '%' . $this->request->query['term'] . '%', 'ObservadorSecundario.codigo LIKE ' => '%' . $this->request->query['term'] . '%'),
-                                'NOT'=>array('ObservadorSecundario.id' => $observadoresIds)
-                        ),
+                $results = $this->ObservadorSecundario->find(
+                    'all',
+                    [
+                        'fields' => ['ObservadorSecundario.id', 'ObservadorSecundario.nombre', 'ObservadorSecundario.codigo'],
+                        'conditions' => [
+                            'OR' => [
+                                'ObservadorSecundario.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                                'ObservadorSecundario.codigo LIKE ' => '%' . $this->request->query['term'] . '%'
+                            ],
+                            'NOT'=>['ObservadorSecundario.id' => $observadoresIds]
+                        ],
                         'recursive'=>-1
-                ));
+                    ]
+                );
             }
             else {
-                $results = $this->ObservadorSecundario->find('all', array(
-                        'fields' => array('ObservadorSecundario.id', 'ObservadorSecundario.nombre', 'ObservadorSecundario.codigo'),
-                        'conditions' => array('OR' => array('ObservadorSecundario.nombre LIKE ' => '%' . $this->request->query['term'] . '%', 'ObservadorSecundario.codigo LIKE ' => '%' . $this->request->query['term'] . '%')),
+                $results = $this->ObservadorSecundario->find(
+                    'all',
+                    [
+                        'fields' => [
+                            'ObservadorSecundario.id',
+                            'ObservadorSecundario.nombre',
+                            'ObservadorSecundario.codigo'
+                        ],
+                        'conditions' => ['OR' => [
+                            'ObservadorSecundario.nombre LIKE ' => '%' . $this->request->query['term'] . '%',
+                            'ObservadorSecundario.codigo LIKE ' => '%' . $this->request->query['term'] . '%']
+                        ],
                         'recursive'=>-1
-                ));
+                    ]
+                );
             }
 
+            $observadoresEncontrados = [];
             foreach($results as $result) {
-                array_push($observadoresEncontrados, array("id"=>$result['ObservadorSecundario']['id'],"value"=>$result['ObservadorSecundario']['codigo']." - ".$result['ObservadorSecundario']['nombre']));
+                $observadoresEncontrados[] = [
+                    "id"=>$result['ObservadorSecundario']['id'],
+                    "value"=>$result['ObservadorSecundario']['codigo']." - ".$result['ObservadorSecundario']['nombre']
+                ];
             }
-
             echo json_encode($observadoresEncontrados);
         }
     }
