@@ -31,10 +31,12 @@ $this->end();
 <script type="text/javascript">
 $(document).ready(function() {
 
+   var $selectFiguraProteccion = $('#selectFiguraProteccion');
+
    /* INICIO Carga de valores seleccionados de los combos */
    $("#selectOrdenTaxonomico").val("<?php if(isset($valuesSubmited['ordenTaxonomico'])){echo $valuesSubmited['ordenTaxonomico'];}?>");
    $("#selectFamilia").val("<?php if(isset($valuesSubmited['familia'])){echo $valuesSubmited['familia'];}?>");
-   $("#selectFiguraProteccion").val("<?php if(isset($valuesSubmited['figuraProteccion'])){echo $valuesSubmited['figuraProteccion'];}?>");
+   $selectFiguraProteccion.val("<?php if(isset($valuesSubmited['figuraProteccion'])){echo $valuesSubmited['figuraProteccion'];}?>");
    $("#selectComarca").val("<?php if(isset($valuesSubmited['comarcaId'])){echo $valuesSubmited['comarcaId'];}?>");
    $("#selectMunicipio").val("<?php if(isset($valuesSubmited['municipioId'])){echo $valuesSubmited['municipioId'];}?>");
    $("#selectCuadriculaUtm").val("<?php if(isset($valuesSubmited['cuadriculaUtmId'])){echo $valuesSubmited['cuadriculaUtmId'];}?>");
@@ -47,39 +49,9 @@ $(document).ready(function() {
    $("#colaboradorSeleccionado").val("<?php if(isset($valuesSubmited['colaboradorId'])){echo $valuesSubmited['colaboradorId'];}?>");
    /* Fin Carga de valores seleccionados de los combos */
    
-   /* INICIO especie */
-   $("#especie").autocomplete({
-      source: function( request, response ) {
-         $.getJSON( "/especie/buscar_especies", {
-            term: request.term
-         }, 
-         response );
-      },
-      minLength: 3,
-      select: function( event, ui ) {
-         this.value = ui.item.value;
-         $("#especieId").val(ui.item.id);
-
-         $("#selectOrdenTaxonomico option:selected").prop("selected", false);
-         $("#selectFamilia option:selected").prop("selected", false);
-         $("#selectOrdenTaxonomico").prop('disabled', true);
-         $("#selectFamilia").prop('disabled', true);
-         
-         return false;
-      }
-   });
-
-   $("#especie").keyup(function() {
-         if(this.value == '') {
-             $("#selectOrdenTaxonomico").prop('disabled', false);
-             $("#selectFamilia").prop('disabled', false);
-         }   
-   });
-   /* FIN especie */
-   
-   /* INICIO fechas */
+   // Fecha desde
    $( "#fechaDesde" ).datepicker({
-      yearRange: "<?php echo $anios[count($anios) - 1 ][0]['anio'];?>:<?php echo date("Y");?>",
+      yearRange: "<?=$anios[count($anios) - 1 ][0]['anio'];?>:<?=date("Y");?>",
       changeMonth: true,
       changeYear: true,
       maxDate: 0,
@@ -87,8 +59,9 @@ $(document).ready(function() {
          $( "#fechaHasta" ).datepicker( "option", "minDate", selectedDate );
       }
    });
+   // FEcha fin
    $( "#fechaHasta" ).datepicker({
-      yearRange: "<?php echo $anios[count($anios) - 1 ][0]['anio'];?>:<?php echo date("Y");?>",
+      yearRange: "<?=$anios[count($anios) - 1 ][0]['anio'];?>:<?=date("Y");?>",
       changeMonth: true,
       changeYear: true,
       maxDate: 0,
@@ -96,71 +69,17 @@ $(document).ready(function() {
           $( "#fechaDesde" ).datepicker( "option", "maxDate", selectedDate );
       }
    });
-   // Fin fechas
-   
-   /* INICIO figura proteccion */
-   var figuraProteccion = $("#selectFiguraProteccion").find(':selected').val();
+
+   //igura proteccion
+   var figuraProteccion = $selectFiguraProteccion.find(':selected').val();
    var nivelProteccion = "<?php if(isset($valuesSubmited['nivelProteccion'])){echo $valuesSubmited['nivelProteccion'];}?>";
    cargarNivelesProteccion(figuraProteccion, nivelProteccion);
-   
-    $("#selectFiguraProteccion").change(function(event){
+
+   $selectFiguraProteccion.change(function(event){
       figuraProteccion = $("#selectFiguraProteccion").find(':selected').val();
       cargarNivelesProteccion(figuraProteccion);
      });
-   /* FIN figura proteccion */
-
-   /* INICIO buscar */
-   $("#btnBuscar").click(function(){
-      $("#pleaseWaitDialog").modal();
-      $("#frmBusqueda").submit();
-   });
-   /* FIN buscar */
-      
-   /* INICIO limpiar */
-   $("#btnLimpiar").click(function(){
-      $("#frmBusqueda").find("input[type=text], input[type=hidden],select").val("");
-      $("#selectNivelProteccion").empty();
-      $("#selectNivelProteccion").prop("disabled", true);
-   });
-   /* FIN limpiar */
-
-    $('#especie').blur(function(){
-        if ($(this).val() == '') {
-            $('#especieId').val('');
-        }
-    });
-
-   $('#lugar').blur(function(){
-      if ($(this).val() == '') {
-         $('#lugarId').val('');
-      }
-   });
-
-   $('#observador').blur(function(){
-      if ($(this).val() == '') {
-         $('#observadorId').val('');
-      }
-   });
-
-   $('#colaborador').blur(function(){
-      if ($(this).val() == '') {
-         $('#colaboradorId').val('');
-      }
-   });
-
 });
-
-function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
-
-   $("#selectNivelProteccion").load('/cita/cargar_niveles_proteccion/figuraProteccion:' + figuraProteccion + '/nivelProteccion:' + nivelProteccion);
-
-    if(figuraProteccion != "") {
-      $("#selectNivelProteccion").prop("disabled", false);
-   }
-   else {
-      $("#selectNivelProteccion").prop("disabled", true);
-   }
-}
 
 </script>
 
@@ -168,15 +87,15 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
 <div>
    <fieldset>
       <legend>
-      <?php echo __('Búsqueda de citas'); ?>
+      <?=__('Búsqueda de citas'); ?>
       </legend>
 
       <div class="tabbable">
          <ul class="nav nav-tabs">
-            <li class="active"><a href="#que" data-toggle="tab"><?php echo __("¿Qué?")?></a></li>
-            <li><a href="#donde" data-toggle="tab"><?php echo __("¿Dónde?")?> </a></li>
-            <li><a href="#cuando" data-toggle="tab"><?php echo __("¿Cuándo?")?></a></li>
-            <li><a href="#quien" data-toggle="tab"><?php echo __("¿Quién?")?></a></li>
+            <li class="active"><a href="#que" data-toggle="tab"><?=__("¿Qué?")?></a></li>
+            <li><a href="#donde" data-toggle="tab"><?=__("¿Dónde?")?> </a></li>
+            <li><a href="#cuando" data-toggle="tab"><?=__("¿Cuándo?")?></a></li>
+            <li><a href="#quien" data-toggle="tab"><?=__("¿Quién?")?></a></li>
          </ul>
 
          <form method="get" id="frmBusqueda">
@@ -189,11 +108,11 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <!-- Especie -->
                   <div class="row">
                      <div class="span12">
-                        <label class="control-label" for="especie"> <?php echo __("Especie");?></label>
+                        <label class="control-label" for="especie"> <?=__("Especie");?></label>
                         <input id="especie" name="especie" class="input-xxlarge"
                            type="text"
                            value="<?php if(isset($valuesSubmited['especie'])){echo $valuesSubmited['especie'];}?>"
-                           placeholder="<?php echo __('Escriba el nombre común o el nombre científico');?>">
+                           placeholder="<?=__('Escriba el nombre común o el nombre científico');?>">
                         <input type="hidden" id="especieId" name="especieId"
                            value="<?php if(isset($valuesSubmited['especieId'])){echo $valuesSubmited['especieId'];}?>">
                      </div>
@@ -203,10 +122,10 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <div class="row">
                      <div class="span2" style="min-width: 250px;">
                         <!-- Orden taxonomico -->
-                        <label class="control-label" for="selectOrdenTaxonomico"><?php echo __("Orden taxonómico");?></label>
+                        <label class="control-label" for="selectOrdenTaxonomico"><?=__("Orden taxonómico");?></label>
                         <select id="selectOrdenTaxonomico" name="ordenTaxonomico"
                            class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
+                           <option value=""><?=__("-- Seleccione --");?></option>
                            <?php
                            foreach($ordenesTaxonomicos as $ordenTaxonomico) {
                               echo '<option value="'.$ordenTaxonomico["OrdenTaxonomico"]["id"].'">'.$ordenTaxonomico["OrdenTaxonomico"]["nombre"].'</option>';
@@ -217,9 +136,9 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                      <div class="span10" style="margin-left: 0;">
                            <!-- Familia -->
                            <label class="control-label"
-                                  for="selectFamilia"><?php echo __("Familia");?></label> <select
+                                  for="selectFamilia"><?=__("Familia");?></label> <select
                                id="selectFamilia" name="familia" class="input-large">
-                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <option value=""><?=__("-- Seleccione --");?></option>
                               <?php
                               foreach($familias as $familia) {
                                  echo '<option value="'.$familia["Familia"]["id"].'">'.$familia["Familia"]["nombre"].'</option>';
@@ -232,13 +151,13 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <div class="row">
                      <div class="span2" style="min-width: 250px;">
                         <!-- Figura protección -->
-                        <label class="control-label" for="selectFiguraProteccion"><?php echo __("Figura de protección");?></label>
+                        <label class="control-label" for="selectFiguraProteccion"><?=__("Figura de protección");?></label>
                         <select id="selectFiguraProteccion" name="figuraProteccion"
                                 class="input-large">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
-                           <option value="catalogoRegional"><?php echo __("Catálogo Regional");?></option>
-                           <option value="libroRojo"><?php echo __("Libro Rojo de España");?></option>
-                           <option value="estatusAlbacete"><?php echo __("Estatus en Albacete");?></option>
+                           <option value=""><?=__("-- Seleccione --");?></option>
+                           <option value="catalogoRegional"><?=__("Catálogo Regional");?></option>
+                           <option value="libroRojo"><?=__("Libro Rojo de España");?></option>
+                           <option value="estatusAlbacete"><?=__("Estatus en Albacete");?></option>
                         </select>
                      </div>
                      <div class="span10" style="margin-left: 0; margin-top: 20px;">
@@ -251,10 +170,10 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <!-- Clase reproducción -->
                   <div class="row">
                      <div class="span12">
-                        <label class="control-label" for="selectClaseReproduccion"><?php echo __("Clase de reproducción");?></label>
+                        <label class="control-label" for="selectClaseReproduccion"><?=__("Clase de reproducción");?></label>
                         <select id="selectClaseReproduccion" name="claseReproduccionId"
                            class="input-xxlarge">
-                           <option value=""><?php echo __("-- Seleccione --");?></option>
+                           <option value=""><?=__("-- Seleccione --");?></option>
                            <?php
                            $tiposCriaSeleccionados = array();
                            $lastIdTipoCria = 0;
@@ -283,9 +202,9 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                      <div class="row">
                         <div class="span2" style="min-width: 265px;">
                            <!-- Comarca -->
-                           <label class="control-label" for="selectComarca"><?php echo __("Comarca");?></label>
+                           <label class="control-label" for="selectComarca"><?=__("Comarca");?></label>
                            <select id="selectComarca" name="comarcaId" class="input-xlarge">
-                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <option value=""><?=__("-- Seleccione --");?></option>
                               <?php
                               foreach ($comarcas as $comarca)
                               {
@@ -296,9 +215,9 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                         </div>
                         <div class="span2" style="min-width: 265px;">
                            <!-- Municipio -->
-                           <label class="control-label" for="selectMunicipio"><?php echo __("Municipio");?> </label>
+                           <label class="control-label" for="selectMunicipio"><?=__("Municipio");?> </label>
                            <select id="selectMunicipio" name="municipioId" class="input-xlarge">
-                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <option value=""><?=__("-- Seleccione --");?></option>
                               <?php
                               foreach($municipios as $municipio) {
                                  echo '<option value="'.$municipio["Municipio"]["id"].'">'.$municipio["Municipio"]["nombre"].'</option>';
@@ -308,10 +227,10 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                         </div>
                         <div class="span2" style="min-width: 265px;">
                            <!-- Cuadricula UTM -->
-                           <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?></label>
+                           <label class="control-label" for="selectCuadriculaUtm"><?=__("Cuadrícula UTM");?></label>
                            <select id="selectCuadriculaUtm" name="cuadriculaUtmId"
                                    class="input-large">
-                              <option value=""><?php echo __("-- Seleccione --");?></option>
+                              <option value=""><?=__("-- Seleccione --");?></option>
                               <?php
                               foreach($cuadriculasUtm as $cuadriculaUtm) {
                                  echo '<option value="'.$cuadriculaUtm["CuadriculaUtm"]["id"].'">'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'</option>';
@@ -324,7 +243,7 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <div class="row">
                      <div class="span12">
                         <!-- Lugar -->
-                        <label class="control-label" for="lugar"><?php echo __("Lugar");?></label>
+                        <label class="control-label" for="lugar"><?=__("Lugar");?></label>
                         <input type="text" id="lugar" name="lugar" class="input-xxlarge"
                                placeholder="Escriba el nombre del lugar"/>
                         <input type="hidden" id="lugarId" name="lugarId">
@@ -335,7 +254,7 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                <div class="tab-pane" id="cuando">
                   <!-- Intervalo fechas -->
                   <div class="controls">
-                     <label class="control-label" for="fechaDesde"><?php echo __("Fecha desde");?></label>
+                     <label class="control-label" for="fechaDesde"><?=__("Fecha desde");?></label>
                      <div class="input-append">
                         <input type="text"
                            value="<?php if(isset($valuesSubmited['fechaDesde'])){echo $valuesSubmited['fechaDesde'];}?>"
@@ -345,7 +264,7 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                            class="add-on"><i class="icon-calendar"></i></label>
                      </div>
                      <label class="control-label" style="width: 40px;"
-                        for="fechaDesde"><?php echo __("hasta");?></label>
+                        for="fechaDesde"><?=__("hasta");?></label>
                      <div class="input-append">
                         <input type="text"
                            value="<?php if(isset($valuesSubmited['fechaHasta'])){echo $valuesSubmited['fechaHasta'];}?>"
@@ -361,7 +280,7 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <!-- Observador -->
                   <div class="control-group">
                      <div class="controls">
-                        <label class="control-label" for="observador"><?php echo __("Observador");?></label>
+                        <label class="control-label" for="observador"><?=__("Observador");?></label>
                         <input id="observador" name="observador" class="input-xxlarge"
                                type="text"
                                placeholder="Escriba el código o el nombre del observador">
@@ -372,7 +291,7 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                   <!-- Colaborador -->
                   <div class="control-group">
                      <div class="controls">
-                        <label class="control-label" for="colaborador"><?php echo __("Colaborador");?></label>
+                        <label class="control-label" for="colaborador"><?=__("Colaborador");?></label>
                         <input id="colaborador" name="colaborador" class="input-xxlarge"
                                type="text"
                                placeholder="Escriba el código o el nombre del colaborador">
@@ -388,9 +307,9 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
             <div id="divBotonesBusqueda" class="control-group">
                <div class="controls">
                   <input type="button" id="btnLimpiar" class="btn btn-warning"
-                     value="<?php echo __("Limpiar");?>" /> <input type="submit"
+                     value="<?=__("Limpiar");?>" /> <input type="submit"
                      id="btnBuscar" class="btn btn-success btn-large"
-                     value="<?php echo __("Buscar");?>" />
+                     value="<?=__("Buscar");?>" />
                </div>
             </div>
          </form>
@@ -426,26 +345,26 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
             </div>
          </div>
 
-         <legend class="small"><?php echo __("Citas encontradas");?></legend>
+         <legend class="small"><?=__("Citas encontradas");?></legend>
 
          <table id="tabla_citas"
             class="table table-striped table-bordered table-hover table-condensed">
             <thead>
                <tr>
-                  <th style="text-align: center;"><?php echo __("Ver más");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("fechaAlta", "Fecha");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("cantidad", "Número de Aves");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("ObservadorPrincipal.codigo", "Observador");?></th>
-                  <th style="text-align: center;"><?php echo __("Colaboradores");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("ClaseReproduccion.codigo","Clase de Reproducción");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
+                  <th><?=__("Ver más");?></th>
+                  <th><?=$this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
+                  <th><?=$this->Paginator->sort("fechaAlta", "Fecha");?></th>
+                  <th><?=$this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
+                  <th><?=$this->Paginator->sort("cantidad", "Número de Aves");?></th>
+                  <th><?=$this->Paginator->sort("ObservadorPrincipal.codigo", "Observador");?></th>
+                  <th><?=__("Colaboradores");?></th>
+                  <th><?=$this->Paginator->sort("ClaseReproduccion.codigo","Clase de Reproducción");?></th>
+                  <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
                </tr>
             </thead>
             <tbody>
-               <?php 
-                  foreach ($citas as $cita) {
+               <?php foreach ($citas as $cita):?>
+                  <?php
                      echo "<tr>";
                      echo    "<td style='text-align: center;'><a href='/cita/view/id:".$cita['Cita']['id']."' title='".__("Más información")."'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver detalle de la cita' alt='Ver detalle'/></a></td>";
                      echo    "<td><a href='/cita/index?especieId=".$cita['Especie']['id']."' title='".$cita['Especie']['genero']." ".$cita['Especie']['especie']." ".$cita['Especie']['subespecie']."'>".$cita['Especie']['nombreComun']." ".$cita['Especie']['subespecie']."</a></td>";
@@ -464,38 +383,32 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
                      echo    "<td style='text-align: center;'><a href='/cita/index?claseReproduccionId=".$cita['ClaseReproduccion']['id']."' title='".$cita['ClaseReproduccion']['descripcion']."'>".$cita['ClaseReproduccion']['codigo']."</a></td>";
                      echo    "<td style='text-align:center;'>".$this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion'])."</td>";
                      echo "</tr>";
-                  } 
-               ?>
+                  ?>
+               <?php endforeach;?>
                </tbody>
             <tfoot>
                <tr>
-                  <th style="text-align: center;"><?php echo __("Ver más");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("fechaAlta", "Fecha");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("cantidad", "Número de Aves");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("ObservadorPrincipal.codigo", "Observador");?></th>
-                  <th style="text-align: center;"><?php echo __("Colaboradores");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("ClaseReproduccion.codigo","Clase de Reproducción");?></th>
-                  <th style="text-align: center;"><?php echo $this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
+                  <th><?=__("Ver más");?></th>
+                  <th><?=$this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
+                  <th><?=$this->Paginator->sort("fechaAlta", "Fecha");?></th>
+                  <th><?=$this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
+                  <th><?=$this->Paginator->sort("cantidad", "Número de Aves");?></th>
+                  <th><?=$this->Paginator->sort("ObservadorPrincipal.codigo", "Observador");?></th>
+                  <th><?=__("Colaboradores");?></th>
+                  <th><?=$this->Paginator->sort("ClaseReproduccion.codigo","Clase de Reproducción");?></th>
+                  <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
                </tr>
             </tfoot>
          </table>
          
-         <?php 
-            echo $this->Paginator->counter(
-               'Mostrando {:start} de {:end} registros de un total de {:count}'
-            );
-         ?>
+         <?=$this->Paginator->counter('Mostrando {:start} de {:end} registros de un total de {:count}');?>
 
          <div class="pagination pagination-right">
-            <?php 
-               echo $this->Paginator->first('Primera', null, null, array('class'=>'disable'));
-               echo $this->Paginator->prev('← Anterior', null, null, array('class'=>'disable'));
-               echo $this->Paginator->numbers(array('separator'=>''));
-               echo $this->Paginator->next('Siguiente → ', null, null, array('class'=>'disable'));
-               echo $this->Paginator->last('Última', null, null, array('class'=>'disable'));
-            ?>
+            <?=$this->Paginator->first('Primera', null, null, array('class'=>'disable'));?>
+            <?=$this->Paginator->prev('← Anterior', null, null, array('class'=>'disable'));?>
+            <?=$this->Paginator->numbers(array('separator'=>''));?>
+            <?=$this->Paginator->next('Siguiente → ', null, null, array('class'=>'disable'));?>
+            <?=$this->Paginator->last('Última', null, null, array('class'=>'disable'));?>
          </div>
 
       </fieldset>
@@ -503,7 +416,7 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
       <?php else :?>
          
          <fieldset>
-         <legend><?php echo __("No se han encontado citas.");?></legend>
+         <legend><?=__("No se han encontado citas.");?></legend>
       </fieldset>
          
       <?php endif;?>
@@ -513,9 +426,9 @@ function cargarNivelesProteccion(figuraProteccion, nivelProteccion) {
 
 <!-- Pie -->
 <?php
-   $this->start('pie');
-   echo $this->element('/pie');
-   $this->end();
+$this->start('pie');
+echo $this->element('/pie');
+$this->end();
 ?>
 
-<?php echo $this->Js->writeBuffer(); ?>
+<?=$this->Js->writeBuffer(); ?>
