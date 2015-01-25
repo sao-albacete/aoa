@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
  * Cita Model
  *
  * @property Lugar $Lugar
- * @property Usuario $Usuario
+ * @property User $Usuario
  * @property ClaseReproduccion $ClaseReproduccion
  * @property Fuente $Fuente
  * @property Especie $Especie
@@ -289,9 +289,16 @@ class Cita extends AppModel {
     /*
      * Funciones
      */
-    
+
     /**
      * Obtiene toda la información de la cita por id
+     *
+     * @param $conditions
+     * @param null $fields
+     * @param null $order
+     * @param int $limit
+     * @param null $joins
+     * @return array
      */
     public function obtenerCitas($conditions, $fields=null, $order=null, $limit = 0, $joins=null) {
         
@@ -320,18 +327,22 @@ class Cita extends AppModel {
     
         return $citas;
     }
-    
+
     /**
      * Obtiene toda la información de la cita por id
+     *
+     * @param null $conditions
+     * @param null $joins
+     * @return array
      */
     public function obtenerNumeroCitas($conditions=null, $joins=null) {
-        
+
         $params = array();
-        
+
         if (! empty($conditions)) {
             $params['conditions'] = $conditions;
         }
-        
+
         if (! empty($joins)) {
             $params['joins'] = $joins;
         }

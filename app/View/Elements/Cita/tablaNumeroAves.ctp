@@ -111,6 +111,3 @@ $this->Html->script(array(
     </tr>
     </tbody>
 </table>
-
-<!-- INFORMACIÓN CLASES DE EDAD -->
-<?=$this->element('Cita/infoClaseEdad'); ?>

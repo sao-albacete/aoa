@@ -353,11 +353,10 @@ class CitaAjaxController extends AppController
     
     private function getTotal()
     {
-        $iTotal = 0;
         if (isset($_GET['iTotal'])) {
             $iTotal = $_GET['iTotal'];
         } else {
-            $iTotal = $this->Cita->obtenerNumeroCitas();
+            $iTotal = $this->Cita->obtenerNumeroCitas(['Cita.indActivo = 1']);
         }
         
         return $iTotal;
@@ -365,13 +364,12 @@ class CitaAjaxController extends AppController
     
     private function getFilteredTotal($aConditions, $iTotal, $aJoins = null)
     {
-        $iFilteredTotal = 0;
         if (isset($_GET['iTotal'])) {
             $iFilteredTotal = count($this->Cita->obtenerCitas($aConditions, array('Cita.id'), null, $iTotal, $aJoins));
         } else {
-            $iFilteredTotal = count($this->Cita->obtenerCitas($aConditions, array('Cita.id'), null, 0, $aJoins));
+            $iFilteredTotal = $this->Cita->obtenerNumeroCitas($aConditions, $aJoins);
         }
-        
+
         return $iFilteredTotal;
     }
     
@@ -387,7 +385,7 @@ class CitaAjaxController extends AppController
         if(! empty($aJoins)) {
             $params['joins'] = $aJoins;
         }
-        
+
         $citas = $this->Cita->find('all', $params);
         
         return $citas;
