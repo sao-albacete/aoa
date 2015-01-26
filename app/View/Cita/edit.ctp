@@ -496,50 +496,79 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     </div>
                 </div>
             </div>
-            
+
         </fieldset>
         
+        <!-- Fotos -->
+        <fieldset class="fsCustom" style="margin-top: 20px;">
+            <legend>Fotos</legend>
+            <div class="row">
+                <div class="span3">
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
+                        </div>
+                        <div class="fileupload-preview fileupload-exists thumbnail" style="width: 100px; height: 100px;"></div>
+                        <span class="btn btn-file">
+                            <span class="fileupload-new"><?=__('Seleccionar nueva foto')?></span>
+                            <span class="fileupload-exists"><?=__('Cambiar')?></span>
+                            <input type="file" name="fotos[]"/>
+                        </span>
+                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><?=__('Quitar')?></a>
+                    </div>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
+                        </div>
+                        <div class="fileupload-preview fileupload-exists thumbnail" style="width: 100px; height: 100px;"></div>
+                        <span class="btn btn-file">
+                            <span class="fileupload-new"><?=__('Seleccionar nueva foto')?></span>
+                            <span class="fileupload-exists"><?=__('Cambiar')?></span>
+                            <input type="file" name="fotos[]"/>
+                        </span>
+                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><?=__('Quitar')?></a>
+                    </div>
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
+                        </div>
+                        <div class="fileupload-preview fileupload-exists thumbnail" style="width: 100px; height: 100px;"></div>
+                        <span class="btn btn-file">
+                            <span class="fileupload-new"><?=__('Seleccionar nueva foto')?></span>
+                            <span class="fileupload-exists"><?=__('Cambiar')?></span>
+                            <input type="file" name="fotos[]"/>
+                        </span>
+                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><?=__('Quitar')?></a>
+                    </div>
+                </div>
+                <div class="span9">
+                    <ul class="thumbnails">
+                        <?php
+                        if(isset($cita['Fichero']) && count($cita['Fichero']) > 0) {
+
+                            foreach ($cita['Fichero'] as $foto) {
+                                echo '<li class="span2">';
+                                echo     '<a href="'.$foto['ruta'].$foto['nombreFisico'].'" class="thumbnail">';
+                                echo         '<img src="'.$foto['ruta'].$foto['nombreFisico'].'" alt="'.$foto['descripcion'].'"/>';
+                                echo     '</a>';
+                                echo '</li>';
+                            }
+                        }
+                        else {
+                            echo '<div class="thumbnail" style="width: 360px; height: 270px;">';
+                            echo '<img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif" />';
+                            echo '</div>';
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </fieldset>
+
         <br>
-        
+
         <!-- Button (Double) -->
         <div class="text-center">
             <a id="btnGuardar" class="btn btn-success btn-large"><i class="icon-ok"></i> <?php echo __("Guardar");?></a>
         </div>
 
-        <br>
-        
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#fotos"><?php echo __("Fotos");?></a></li>
-        </ul>
-
-        <!-- Fotos -->
-        <div id="especie_tab_content" class="tab-content">
-            <div id="fotos" class="tab-pane fade active in">
-                
-                <div class="row">
-                    <ul class="thumbnails yoxview">
-                <?php
-                if(isset($cita['Fichero']) && count($cita['Fichero']) > 0) {
-                    
-                    foreach ($cita['Fichero'] as $foto) {
-                        echo '<li class="span2">';
-                        echo     '<a href="'.$foto['ruta'].$foto['nombreFisico'].'" class="thumbnail">';
-                        echo         '<img src="'.$foto['ruta'].$foto['nombreFisico'].'" alt="'.$foto['descripcion'].'"/>';  
-                        echo     '</a>';
-                        echo '</li>';
-                    }
-                    
-                }
-                else {
-                    echo '<div class="thumbnail" style="width: 360px; height: 270px;">';
-                    echo '<img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif" />';
-                    echo '</div>';
-                }
-                ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
         </form>
     </fieldset>
 </div>

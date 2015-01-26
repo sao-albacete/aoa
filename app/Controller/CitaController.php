@@ -551,16 +551,23 @@ class CitaController extends AppController
                         $privacidad = $this->calcularPrivacidadCita($this->Cita->id, $this->Cita->field('fechaAlta'), $especieId, $this->Cita->field('clase_reproduccion_id'));
                         $this->Cita->saveField('indPrivacidad', $privacidad);
 
+                        /* Fichero */
+                        if (isset($_FILES["fotos"])) {
+
+                            $fotos = $this->Fichero->reArrayFiles($_FILES['fotos']);
+
+                            foreach ($fotos as $foto) {
+                                $this->Fichero->subirImagenCita($foto, $cita, $current_user['id'], 1);
+                            }
+                        }
+
                         if (empty($errorsMessagesList)) {
 
                             $dataSource->commit();
 
                             $this->Session->setFlash(__('La cita se ha guardado correctamente.'), 'success');
 
-                            return $this->redirect(array(
-                                "action" => "edit",
-                                "id" => $this->Cita->id
-                            ));
+                            $this->redirect(array("action" => "edit", "id" => $this->Cita->id));
                         } else {
                             $dataSource->rollback();
 
