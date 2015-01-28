@@ -404,6 +404,8 @@ class CitaController extends AppController
 
             try {
 
+                CakeLog::debug(print_r($_POST, true));
+
                 $dataSource = $this->Cita->getDataSource();
                 $dataSource->begin();
                 $errorsMessagesList = array();
@@ -530,9 +532,7 @@ class CitaController extends AppController
                             }
                         }
 
-                        /*
-                         * Cita-clase_edad_sexo
-                         */
+                        // Cita-clase_edad_sexo
                         {
                             // Eliminamos todas las existentes
                             $this->AsoCitaClaseEdadSexo->deleteAll(['AsoCitaClaseEdadSexo.cita_id' => $citaId], false);
@@ -545,19 +545,28 @@ class CitaController extends AppController
                             }
                         }
 
-                        /*
-                         * Privacidad
-                         */
+                        // Privacidad
                         $privacidad = $this->calcularPrivacidadCita($this->Cita->id, $this->Cita->field('fechaAlta'), $especieId, $this->Cita->field('clase_reproduccion_id'));
                         $this->Cita->saveField('indPrivacidad', $privacidad);
 
-                        /* Fichero */
-                        if (isset($_FILES["fotos"])) {
+                        // Fotos
+                        {
+                            // Subir
+                            if (isset($_FILES["fotos"])) {
 
-                            $fotos = $this->Fichero->reArrayFiles($_FILES['fotos']);
+                                $fotos = $this->Fichero->reArrayFiles($_FILES['fotos']);
 
-                            foreach ($fotos as $foto) {
-                                $this->Fichero->subirImagenCita($foto, $cita, $current_user['id'], 1);
+                                foreach ($fotos as $foto) {
+                                    if (UPLOAD_ERR_NO_FILE !== $foto['error']) {
+                                        $this->Fichero->subirImagenCita($foto, $cita, $current_user['id'], 1);
+                                    }
+                                }
+                            }
+                            // Eliminar
+                            if (isset($_POST['fotosEliminar'])) {
+                                foreach ($_POST['fotosEliminar'] as $fotoId) {
+                                    $this->Fichero->delete($fotoId);
+                                }
                             }
                         }
 

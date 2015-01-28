@@ -105,7 +105,7 @@ function initialize() {
 
                 placemark.polygon.normalStyle = normalStyle;
 
-                if(placemark.name == '<?php echo $cita['Lugar']['CuadriculaUtm']['codigo'];?>') {
+                if(placemark.name == '<?=$cita['Lugar']['CuadriculaUtm']['codigo'];?>') {
                     placemark.polygon.setOptions(highlightOptions); 
                 }
             }
@@ -121,7 +121,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
     <fieldset>
         <legend>
-        <?php echo __('Editar cita: ').$cita['Cita']['id']; ?>
+        <?=__('Editar cita: ').$cita['Cita']['id']; ?>
         &nbsp;&nbsp;
         <?php
             echo $this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion']);
@@ -149,7 +149,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         <form id="frmEditarCita" class="form-horizontal" method="post"
             enctype="multipart/form-data">
             
-            <input type="hidden" id="citaId" name="citaId" value="<?php echo $cita['Cita']['id'];?>"/>
+            <input type="hidden" id="citaId" name="citaId" value="<?=$cita['Cita']['id'];?>"/>
 
             <div class="row">
             
@@ -157,54 +157,54 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 
                     <!-- Especie-->
                     <div class="control-group">
-                        <label class="control-label" style="width: 100px;" for="especie"> <?php echo __("Especie");?>&nbsp;(*)
+                        <label class="control-label" style="width: 100px;" for="especie"> <?=__("Especie");?>&nbsp;(*)
                             <br/>
                             <span class="badge badge-info" data-trigger="hover"
-                                  data-content="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.');?>"><i
+                                  data-content="<?=__('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.');?>"><i
                                     class="icon-info-sign icon-white"></i> </span>
                         </label>
                         <div class="controls" style="margin-left: 120px;">
                             <div class="dummy">
                                 <input class="especie input-xxlarge" name="especie"
                                     type="text"
-                                    value="<?php echo $cita['Especie']['Especie']['nombreComun'].", ".$cita['Especie']['Especie']['genero']." ".$cita['Especie']['Especie']['especie'];?>"
-                                    placeholder="<?php echo __('Escriba el nombre común o el nombre científico');?>">
-                                <input name="subespecie" class="subespecie input-large" type="text" placeholder="<?php echo __('Escriba la subespecie'); ?>"
-                                       value="<?php echo $cita['Especie']['Especie']['subespecie'];?>">
+                                    value="<?=$cita['Especie']['Especie']['nombreComun'].", ".$cita['Especie']['Especie']['genero']." ".$cita['Especie']['Especie']['especie'];?>"
+                                    placeholder="<?=__('Escriba el nombre común o el nombre científico');?>">
+                                <input name="subespecie" class="subespecie input-large" type="text" placeholder="<?=__('Escriba la subespecie'); ?>"
+                                       value="<?=$cita['Especie']['Especie']['subespecie'];?>">
                                 <div class="especieSeleccionadaContenedor"
                                     style="margin-top: 5px;">
-                                    <?php echo __("Especie seleccionada");?>:
+                                    <?=__("Especie seleccionada");?>:
                                     <span class="especieSeleccionada text-success" style="font-weight: bold;">
-                                        <?php echo $cita['Especie']['Especie']['nombreComun'].", ".$cita['Especie']['Especie']['genero']." ".$cita['Especie']['Especie']['especie'];?>
+                                        <?=$cita['Especie']['Especie']['nombreComun'].", ".$cita['Especie']['Especie']['genero']." ".$cita['Especie']['Especie']['especie'];?>
                                     </span>
                                 </div>
                                 <div class="subespecieSeleccionadaContenedor" style="margin-top: 5px;">
-                                    <?php echo __("Subespecie seleccionada");?>:
-                                    <span class="subespecieSeleccionada text-success" style="font-weight: bold;"><?php echo $cita['Especie']['Especie']['subespecie'];?></span>
+                                    <?=__("Subespecie seleccionada");?>:
+                                    <span class="subespecieSeleccionada text-success" style="font-weight: bold;"><?=$cita['Especie']['Especie']['subespecie'];?></span>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     <button class="btnVaciarEspecie btn btn-warning btn-mini" type="button">
-                                        <i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar");?>
+                                        <i class="icon-trash" style="margin-right: 10px;"></i><?=__("Limpiar");?>
                                     </button>
                                 </div>
-                                <input type="hidden" class="especieId" name="data[Cita][especie_id]" value="<?php echo $cita['Especie']['Especie']['id'];?>">
+                                <input type="hidden" class="especieId" name="data[Cita][especie_id]" value="<?=$cita['Especie']['Especie']['id'];?>">
                             </div>
                         </div>
                     </div>
         
                     <!-- Fecha alta-->
                     <div class="control-group">
-                        <label class="control-label" style="width: 100px;" for="fechaAlta"> <?php echo __("Fecha");?>&nbsp;(*)
+                        <label class="control-label" style="width: 100px;" for="fechaAlta"> <?=__("Fecha");?>&nbsp;(*)
                             <br/>
                             <span class="badge badge-info" data-trigger="hover"
-                                  data-content="<?php echo __('Seleccione un día pulsando el calendario o escriba una fecha con formato ').date('d/m/Y')?>"><i
+                                  data-content="<?=__('Seleccione un día pulsando el calendario o escriba una fecha con formato ').date('d/m/Y')?>"><i
                                     class="icon-info-sign icon-white"></i> </span>
                         </label>
                         <div class="controls" style="margin-left: 120px;">
                             <div class="input-prepend">
                                 <label for="fechaAlta" class="add-on"><i class="icon-calendar"></i></label> 
                                 <input type="text" id="fechaAlta"
-                                    value="<?php echo date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y");?>"
+                                    value="<?=date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y");?>"
                                     name="data[Cita][fechaAlta]" size="10" class="date-picker"
                                     data-mask="99/99/9999" style="width: auto;"
                                     placeholder="dd/mm/aaaa" />
@@ -215,16 +215,16 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 <!-- Figuras de protección -->
                 <div class="span6">
                     <p>
-                       <?php echo "<span class='label ".$this->Especie->obtener_color_proteccion_lr($cita['Especie']['ProteccionLr']['codigo'])."'>".$cita['Especie']['ProteccionLr']['nombre']."</span>".__(" según el ")."<em><b>".__("Libro Rojo de las Aves de España")."</b></em>";?>
+                       <?="<span class='label ".$this->Especie->obtener_color_proteccion_lr($cita['Especie']['ProteccionLr']['codigo'])."'>".$cita['Especie']['ProteccionLr']['nombre']."</span>".__(" según el ")."<em><b>".__("Libro Rojo de las Aves de España")."</b></em>";?>
                     </p>
                     <p>
-                       <?php echo "<span class='label ".$this->Especie->obtener_color_proteccion_clm($cita['Especie']['ProteccionClm']['codigo'])."'>".$cita['Especie']['ProteccionClm']['nombre']."</span>".__(" en ")."<b>".__("Castilla - La Mancha")."</b>";?>
+                       <?="<span class='label ".$this->Especie->obtener_color_proteccion_clm($cita['Especie']['ProteccionClm']['codigo'])."'>".$cita['Especie']['ProteccionClm']['nombre']."</span>".__(" en ")."<b>".__("Castilla - La Mancha")."</b>";?>
                     </p>
                     <p>
-                       <?php echo "<span class='label label-info'>".$cita['Especie']['EstatusCuantitativoAb']['nombre']."</span>".__(" en ")."<b>".__("Albacete")."</b>";?>
+                       <?="<span class='label label-info'>".$cita['Especie']['EstatusCuantitativoAb']['nombre']."</span>".__(" en ")."<b>".__("Albacete")."</b>";?>
                     </p>
                     <p>
-                        <?php echo "<span class='label label-info'>".$cita['Especie']['EstatusReproductivoAb']['nombre']."</span>".__(" en ")."<b>".__("Albacete")."</b>";?>
+                        <?="<span class='label label-info'>".$cita['Especie']['EstatusReproductivoAb']['nombre']."</span>".__(" en ")."<b>".__("Albacete")."</b>";?>
                     </p>
                 </div>
             </div>
@@ -237,37 +237,37 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 <!-- Número de aves-->
                 <div class="dummy" style="display: inline; text-align: center;">
 
-                    <?php echo $this->element('Cita/tablaNumeroAves'); ?>
+                    <?=$this->element('Cita/tablaNumeroAves'); ?>
 
                     <div class="numeroTotalAvesDiv" style="margin-top: 5px; text-align: left; margin-bottom: 20px;">
-                        <?php echo __("Número total aves");?>:
-                        <span class="numeroTotalAvesTexto text-success" style="font-weight: bold;"><?php echo $cita['Cita']['cantidad'];?></span>
+                        <?=__("Número total aves");?>:
+                        <span class="numeroTotalAvesTexto text-success" style="font-weight: bold;"><?=$cita['Cita']['cantidad'];?></span>
                     </div>
                     <input type="hidden" class="totalNumeroAves"
-                        name="data[Cita][cantidad]" value="<?php echo $cita['Cita']['cantidad'];?>" />
+                        name="data[Cita][cantidad]" value="<?=$cita['Cita']['cantidad'];?>" />
                 </div>
                 
                 <fieldset class="fsCustom">
                     <legend >Datos de los observadores</legend>
                         <!-- Observador -->
                         <div class="control-group">
-                            <label class="control-label" for="observador"> <?php echo __("Observador");?>&nbsp;(*)</label>
+                            <label class="control-label" for="observador"> <?=__("Observador");?>&nbsp;(*)</label>
                             <div class="controls">
                                 <div class="dummy">
                                     <input id="observador" name="observador" class="input-xlarge"
-                                        type="text" value="<?php echo $usuario['ObservadorPrincipal']['codigo']." - ".$usuario['ObservadorPrincipal']['nombre'];?>"
+                                        type="text" value="<?=$usuario['ObservadorPrincipal']['codigo']." - ".$usuario['ObservadorPrincipal']['nombre'];?>"
                                         placeholder="Escriba el código o el nombre del observador"> 
                                     <span class="badge badge-info" data-trigger="hover"
-                                    data-content='<?php echo __("Escriba al menos tres letras y seleccione de la lista los observadores que quiera incluir en la cita.");?>'><i
+                                    data-content='<?=__("Escriba al menos tres letras y seleccione de la lista los observadores que quiera incluir en la cita.");?>'><i
                                         class="icon-info-sign icon-white"></i> </span>
                                     <br />
                                     <div id="observadorSeleccionadoDiv"
                                         style="margin-top: 5px;">
                                         Observador seleccionado: <span
                                             id="observadorSeleccionadoTexto" class="text-success"
-                                            style="font-weight: bold;"><?php echo $usuario['ObservadorPrincipal']['codigo']." - ".$usuario['ObservadorPrincipal']['nombre'];?></span>
+                                            style="font-weight: bold;"><?=$usuario['ObservadorPrincipal']['codigo']." - ".$usuario['ObservadorPrincipal']['nombre'];?></span>
                                     </div>
-                                    <input type="hidden" id="observadorSeleccionado" value="<?php echo $usuario['ObservadorPrincipal']['id'];?>"
+                                    <input type="hidden" id="observadorSeleccionado" value="<?=$usuario['ObservadorPrincipal']['id'];?>"
                                         name="data[Cita][observador_principal_id]" />
                                 </div>
                             </div>
@@ -275,30 +275,30 @@ google.maps.event.addDomListener(window, 'load', initialize);
             
                         <!-- Colaboradores -->
                         <div class="control-group">
-                            <label class="control-label" for="colaboradores"> <?php echo __("Colaboradores");?></label>
+                            <label class="control-label" for="colaboradores"> <?=__("Colaboradores");?></label>
                             <div class="controls">
                                 <div class="dummy">
                                     <input id="colaboradores" name="colaboradores" class="input-xlarge"
                                         type="text"
                                         placeholder="Escriba el código o el nombre del colaborador">
                                     <span class="badge badge-info" data-trigger="hover"
-                                    data-content='<?php echo __("Escriba al menos tres letras y seleccione de la lista los colaboradores que quiera incluir en la cita.");?>'><i
+                                    data-content='<?=__("Escriba al menos tres letras y seleccione de la lista los colaboradores que quiera incluir en la cita.");?>'><i
                                         class="icon-info-sign icon-white"></i> </span> 
                                     <br />
                                     <div id="colaboradoresSeleccionadosDiv"
                                         style="margin-top: 5px;">
                                         Colaboradores seleccionados: <span
                                             id="colaboradoresSeleccionadosTexto" class="text-success"
-                                            style="font-weight: bold;"><?php echo $this->ObservadorSecundario->mostrar_nombres_observadores($cita['observadores']);?></span>
+                                            style="font-weight: bold;"><?=$this->ObservadorSecundario->mostrar_nombres_observadores($cita['observadores']);?></span>
                                     </div>
                                     <input type="hidden" id="colaboradoresSeleccionados"
-                                        name="colaboradoresSeleccionados" value="<?php echo $this->ObservadorSecundario->mostrar_ids_observadores($cita['observadores']);?>"/>
+                                        name="colaboradoresSeleccionados" value="<?=$this->ObservadorSecundario->mostrar_ids_observadores($cita['observadores']);?>"/>
                                     <div style="margin-top: 5px;">
                                         <button class="btn btn-warning btn-mini" type="button" id="btnVaciarColaboradores">
-                                            <i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar"); ?>
+                                            <i class="icon-trash" style="margin-right: 10px;"></i><?=__("Limpiar"); ?>
                                         </button>
                                         <button class="btn btn-mini btn-warning btnNuevoColaborador" type="button">
-                                            <i class="icon-plus"></i> <?php echo __("Nuevo colaborador"); ?>
+                                            <i class="icon-plus"></i> <?=__("Nuevo colaborador"); ?>
                                         </button>
                                     </div>
                                 </div>
@@ -307,7 +307,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                         
                         <!-- Fuente -->
                         <div class="control-group">
-                            <label class="control-label" for="fuenteId"> <?php echo __("Fuente");?></label>
+                            <label class="control-label" for="fuenteId"> <?=__("Fuente");?></label>
                             <div class="controls">
                                 <select id="fuenteId" name="data[Cita][fuente_id]"
                                     class="input-xlarge">
@@ -323,14 +323,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
                                     ?>
                                 </select>
                                 <span class="badge badge-info" data-trigger="hover"
-                                data-content='<?php echo __("Seleccione la fuente de la que proviene la cita.");?>'><i
+                                data-content='<?=__("Seleccione la fuente de la que proviene la cita.");?>'><i
                                     class="icon-info-sign icon-white"></i> </span>
                             </div>
                         </div>
                         
                         <!-- Estudio -->
                         <div class="control-group">
-                            <label class="control-label" for="estudio"> <?php echo __("Estudio");?></label>
+                            <label class="control-label" for="estudio"> <?=__("Estudio");?></label>
                             <div class="controls">
                                 <select id="estudioId" name="data[Cita][estudio_id]" class="input-xlarge">
                                     <option value=""></option>
@@ -346,7 +346,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                                     ?>
                                 </select>
                                 <span class="badge badge-info" data-trigger="hover"
-                                    data-content='<?php echo __("Seleccione el tipo de estudio asociado a la cita.");?>'><i
+                                    data-content='<?=__("Seleccione el tipo de estudio asociado a la cita.");?>'><i
                                         class="icon-info-sign icon-white"></i> </span>
                             </div>
                         </div>
@@ -357,7 +357,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     <legend>Indicadores de la cita</legend>
                     
                     <div class="control-group">
-                        <label class="control-label width300 marginRight20" for="cbxIndHabitatRaro" title="<?php echo __("Individuo/s visto en habitat raro");?>"> <?php echo __("Habitat raro");?></label>
+                        <label class="control-label width300 marginRight20" for="cbxIndHabitatRaro" title="<?=__("Individuo/s visto en habitat raro");?>"> <?=__("Habitat raro");?></label>
                         <div class="controls">
                             <div class="dummy">
                                 <input name="data[Cita][indHabitatRaro]" id="cbxIndHabitatRaro" value="1" type="checkbox" <?php if($cita['Cita']['indHabitatRaro'] == true){echo "checked='checked'";}?>>
@@ -365,7 +365,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label width300 marginRight20" for="cbxIndCriaHabitatRaro" title="<?php echo __("Individuo/s visto criando en habitat raro");?>"> <?php echo __("Criando en habitat raro");?></label>
+                        <label class="control-label width300 marginRight20" for="cbxIndCriaHabitatRaro" title="<?=__("Individuo/s visto criando en habitat raro");?>"> <?=__("Criando en habitat raro");?></label>
                         <div class="controls">
                             <div class="dummy">
                                 <input name="data[Cita][indCriaHabitatRaro]" id="cbxIndCriaHabitatRaro" value="1" type="checkbox" <?php if($cita['Cita']['indCriaHabitatRaro'] == true){echo "checked='checked'";}?>>
@@ -373,7 +373,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label width300 marginRight20" for="cbxIndHerido" title="<?php echo __("Individuo/s herido, accidentado o muerto");?>"> <?php echo __("Herido, accidentado o muerto");?></label>
+                        <label class="control-label width300 marginRight20" for="cbxIndHerido" title="<?=__("Individuo/s herido, accidentado o muerto");?>"> <?=__("Herido, accidentado o muerto");?></label>
                         <div class="controls">
                             <div class="dummy">
                                 <input name="data[Cita][indHerido]" id="cbxIndHerido" value="1" type="checkbox" <?php if($cita['Cita']['indHerido'] == true){echo "checked='checked'";}?>>
@@ -381,7 +381,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label width300 marginRight20" for="cbxIndComportamiento" title="<?php echo __("Indivudo/s con comportamiento o morfología curiosa");?>"> <?php echo __("Comportamiento o morfología curiosa");?></label>
+                        <label class="control-label width300 marginRight20" for="cbxIndComportamiento" title="<?=__("Indivudo/s con comportamiento o morfología curiosa");?>"> <?=__("Comportamiento o morfología curiosa");?></label>
                         <div class="controls">
                             <div class="dummy">
                                 <input name="data[Cita][indComportamiento]" id="cbxIndComportamiento" value="1" type="checkbox" <?php if($cita['Cita']['indComportamiento'] == true){echo "checked='checked'";}?>>
@@ -398,37 +398,37 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 
                     <!-- Lugar-->
                     <div class="control-group">
-                        <label class="control-label" style="width: 60px;" for="lugar"> <?php echo __("Lugar");?>&nbsp;(*)</label>
+                        <label class="control-label" style="width: 60px;" for="lugar"> <?=__("Lugar");?>&nbsp;(*)</label>
                         <div class="controls" style="margin-left: 80px; text-align: left;">
                             <div class="dummy">
                                 <input type="text" id="lugar" name="lugar" style="width: 440px;"
-                                    value="<?php echo $cita['Lugar']['Lugar']['nombre'].", ".$cita['Lugar']['Municipio']['nombre'].", ".$cita['Lugar']['Comarca']['nombre'].", ".$cita['Lugar']['CuadriculaUtm']['codigo'];?>"
+                                    value="<?=$cita['Lugar']['Lugar']['nombre'].", ".$cita['Lugar']['Municipio']['nombre'].", ".$cita['Lugar']['Comarca']['nombre'].", ".$cita['Lugar']['CuadriculaUtm']['codigo'];?>"
                                     placeholder="Escriba el nombre del lugar, municipio, comarca o cuadrícula UTM" />
                                 <span class="badge badge-info" data-trigger="hover" data-placement="left"
-                                    data-content='<?php echo __("Escriba tres letras y seleccione un lugar del listado. También puede seleccionarlo a través de la tabla. Si no lo encuentra, puede crear uno nuevo.");?>'><i
+                                    data-content='<?=__("Escriba tres letras y seleccione un lugar del listado. También puede seleccionarlo a través de la tabla. Si no lo encuentra, puede crear uno nuevo.");?>'><i
                                         class="icon-info-sign icon-white"></i> </span>
                                 <br>
                                 <div id="lugarSeleccionadoContenedor"
                                     style="margin-top: 5px;">
                                     Lugar seleccionado: 
                                     <span id="lugarSeleccionado" class="text-success" style="font-weight: bold;">
-                                        <?php echo $cita['Lugar']['Lugar']['nombre'].", ".$cita['Lugar']['Municipio']['nombre'].", ".$cita['Lugar']['Comarca']['nombre'].", ".$cita['Lugar']['CuadriculaUtm']['codigo'];?>
+                                        <?=$cita['Lugar']['Lugar']['nombre'].", ".$cita['Lugar']['Municipio']['nombre'].", ".$cita['Lugar']['Comarca']['nombre'].", ".$cita['Lugar']['CuadriculaUtm']['codigo'];?>
                                     </span>
                                 </div>
                             </div>
                             <div style="margin-top: 5px;">
                                 <button class="btnVaciarLugar btn btn-warning btn-mini" type="button">
-                                    <i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar"); ?>
+                                    <i class="icon-trash" style="margin-right: 10px;"></i><?=__("Limpiar"); ?>
                                 </button>
                                 <a href="#modalSeleccioanrLugar" role="button"
                                    class="btn btn-mini btn-warning" data-toggle="modal"
-                                   id="btnSeleccionarLugar"><i class="icon-zoom-in"></i> <?php echo __("Seleccionar desde tabla"); ?>
+                                   id="btnSeleccionarLugar"><i class="icon-zoom-in"></i> <?=__("Seleccionar desde tabla"); ?>
                                 </a>
                                 <button class="btn btn-mini btn-warning btnNuevoLugar" type="button">
-                                    <i class="icon-plus"></i> <?php echo __("Nuevo lugar"); ?>
+                                    <i class="icon-plus"></i> <?=__("Nuevo lugar"); ?>
                                 </button>
                             </div>
-                            <input type="hidden" id="lugarId" name="data[Cita][lugar_id]" value="<?php echo $cita['Lugar']['Lugar']['id']?>">
+                            <input type="hidden" id="lugarId" name="data[Cita][lugar_id]" value="<?=$cita['Lugar']['Lugar']['id']?>">
                         </div>
                     </div>
                     <div id="map_canvas" class="span12" style="height: 400px"></div>
@@ -436,7 +436,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 <fieldset class="fsCustom" style="margin-top: 20px;">    
                     <legend>Observaciones</legend>
                     <textarea id="observaciones" name="data[Cita][observaciones]"
-                        rows="2" style="width: 100%;"><?php echo $cita['Cita']['observaciones'];?></textarea>
+                        rows="2" style="width: 100%;"><?=$cita['Cita']['observaciones'];?></textarea>
                 </fieldset>
             </div>
             
@@ -446,7 +446,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <legend>Criterios de selección de la cita</legend>
                     
             <div class="control-group">
-                <label class="control-label width240 marginRight20" for="cbxindSeleccionada"> <?php echo __("Cita seleccionada para el anuario");?></label>
+                <label class="control-label width240 marginRight20" for="cbxindSeleccionada"> <?=__("Cita seleccionada para el anuario");?></label>
                 <div class="controls">
                     <div class="dummy">
                         <input name="data[Cita][indSeleccionada]" id="cbxindSeleccionada" value="1" type="checkbox" disabled="disabled" <?php if($cita['Cita']['indSeleccionada'] == "1"){echo "checked='checked'";}?>>
@@ -455,7 +455,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             </div>
             <!-- Datos de reproducción -->
             <div class="control-group">
-                <label class="control-label width240 marginRight20" for="selectDatosReproduccion"> <?php echo __("Datos de reproducción");?>&nbsp;(*)</label>
+                <label class="control-label width240 marginRight20" for="selectDatosReproduccion"> <?=__("Datos de reproducción");?>&nbsp;(*)</label>
                 <div class="controls">
                     <div class="dummy">
                     <?php
@@ -483,16 +483,16 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     echo '</select>';
                     ?>
                     <span class="badge badge-info" data-trigger="hover" data-placement="left"
-                    data-content='<?php echo __("Seleccione el tipo de reproducción observado.");?>'><i
+                    data-content='<?=__("Seleccione el tipo de reproducción observado.");?>'><i
                         class="icon-info-sign icon-white"></i> </span>
                     </div>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label width240 marginRight20"> <?php echo __("Criterio de selección de la cita");?></label>
+                <label class="control-label width240 marginRight20"> <?=__("Criterio de selección de la cita");?></label>
                 <div class="controls">
                     <div class="dummy">
-                        <span><?php echo $cita['CriterioSeleccionCita']['nombre'];?></span>
+                        <span><?=$cita['CriterioSeleccionCita']['nombre'];?></span>
                     </div>
                 </div>
             </div>
@@ -503,7 +503,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
         <fieldset class="fsCustom" style="margin-top: 20px;">
             <legend>Fotos</legend>
             <div class="row">
-                <div class="span3">
+                <div class="span3" style="border-right: 1px solid #E4E4E4;">
+                    <div><p><?=__('Puedes añadir más fotos a la cita seleccionandolas con los botones de abajo y pulsando <b>Guardar</b>')?></p></div>
+                    <br/>
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
                         </div>
@@ -540,23 +542,29 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 </div>
                 <div class="span9">
                     <ul class="thumbnails">
-                        <?php
-                        if(isset($cita['Fichero']) && count($cita['Fichero']) > 0) {
+                        <?php if(isset($cita['Fichero']) && count($cita['Fichero']) > 0): ?>
 
-                            foreach ($cita['Fichero'] as $foto) {
-                                echo '<li class="span2">';
-                                echo     '<a href="'.$foto['ruta'].$foto['nombreFisico'].'" class="thumbnail">';
-                                echo         '<img src="'.$foto['ruta'].$foto['nombreFisico'].'" alt="'.$foto['descripcion'].'"/>';
-                                echo     '</a>';
-                                echo '</li>';
-                            }
-                        }
-                        else {
-                            echo '<div class="thumbnail" style="width: 360px; height: 270px;">';
-                            echo '<img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif" />';
-                            echo '</div>';
-                        }
-                        ?>
+                            <div><p><?=__('Puedes eliminar fotos de la cita seleccionándolas con el botón <b>Quitar</b> y pulsando <b>Guardar</b>')?></p></div>
+                            <br/>
+
+                            <?php foreach ($cita['Fichero'] as $foto): ?>
+                                <li class="span2">
+                                    <div class="thumbnail">
+                                        <img src="<?=$foto['ruta'].$foto['nombreFisico']?>" alt="<?=$foto['descripcion']?>"/>
+                                        <div class="caption text-center">
+                                            <input type="hidden" class="foto-eliminar-<?=$foto['id']?>" name="fotosEliminar[]" value="<?=$foto['id']?>" disabled="disabled">
+                                            <button type="button" class="btn btn-danger quitar-foto" data-id="<?=$foto['id']?>">
+                                                <i class="icon-trash" style="margin-right: 10px;"></i><?=__('Quitar')?>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php endforeach ?>
+                        <?php else: ?>
+                            <div class="thumbnail" style="width: 360px; height: 270px;">
+                                <img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif"/>
+                            </div>
+                        <?php endif ?>
                     </ul>
                 </div>
             </div>
@@ -566,7 +574,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
         <!-- Button (Double) -->
         <div class="text-center">
-            <a id="btnGuardar" class="btn btn-success btn-large"><i class="icon-ok"></i> <?php echo __("Guardar");?></a>
+            <a id="btnGuardar" class="btn btn-success btn-large"><i class="icon-ok"></i> <?=__("Guardar");?></a>
         </div>
 
         </form>
@@ -574,13 +582,13 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </div>
 
 <!-- SELECCIONAR LUGAR -->
-<?php echo $this->element('Lugar/seleccionarLugar'); ?>
+<?=$this->element('Lugar/seleccionarLugar'); ?>
 
 <!-- NUEVO LUGAR -->
-<?php echo $this->element('Lugar/nuevoLugar'); ?>
+<?=$this->element('Lugar/nuevoLugar'); ?>
 
 <!-- NUEVO COLABORADOR -->
-<?php echo $this->element('ObservadorSecundario/nuevoObservadorSecundario'); ?>
+<?=$this->element('ObservadorSecundario/nuevoObservadorSecundario'); ?>
 
 <!-- Pie -->
 <?php

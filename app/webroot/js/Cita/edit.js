@@ -65,6 +65,21 @@ $(document).ready(function() {
     // Resaltar checks seleccioandos
     marcarChecksSeleccioandos($divEditarCita);
 
+    // Eliminar fotos
+    $divEditarCita.find('.quitar-foto').each(function() {
+        $(this).click(function() {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+                $(this).parent().parent().removeClass('error');
+                $divEditarCita.find('.foto-eliminar-' + $(this).attr('data-id')).prop('disabled', true);
+            } else {
+                $(this).addClass('active');
+                $(this).parent().parent().addClass('error');
+                $divEditarCita.find('.foto-eliminar-' + $(this).attr('data-id')).prop('disabled', false);
+            }
+        });
+    });
+
 
     /** INICIO Validación de formulario * */
     jQuery.validator.addMethod("isdate", function (value, element) {

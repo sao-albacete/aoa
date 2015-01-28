@@ -60,3 +60,8 @@
 #map_canvas {
     margin: 0;
 }
+
+.thumbnails .thumbnail.error {
+    border-color: #b94a48;
+    background-color: #FFAAAA;
+}

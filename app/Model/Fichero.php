@@ -137,7 +137,7 @@ class Fichero extends AppModel {
 
             // Comprobamos si la imagen se ha enviado correctamente por POST
             if ($fichero["error"] > 0) {
-                $this->Session->setFlash("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"], "failure");
+                CakeLog::error("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"]);
                 return false;
             }
             else {
@@ -197,7 +197,7 @@ class Fichero extends AppModel {
                 
             // Comprobamos si la imagen se ha enviado correctamente por POST
             if ($fichero["error"] > 0) {
-                $this->Session->setFlash("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"], "failure");
+                CakeLog::error("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"]);
                 return false;
             }
             else {
