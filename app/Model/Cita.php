@@ -272,9 +272,6 @@ class Cita extends AppModel {
             'rule' => array('boolean'),
             'required' => false,
             'message' => 'El valor del indicador de comportamiento debe ser un booleano.'
-<<<<<<< Updated upstream
-        )
-=======
         ),
         'fuente_id' => array(
             'numeric' => array(
@@ -291,7 +288,6 @@ class Cita extends AppModel {
                 'message' => 'El estudio es obligatorio.'
             )
         ),
->>>>>>> Stashed changes
     );
     
     public function dateBeforeOrEqualToday($data) {
@@ -418,11 +414,12 @@ class Cita extends AppModel {
         
         return $anios;
     }
-    
+
     /**
      * Obtiene las citas provinciales por mes
-     * 
+     *
      * @param number $especie_id
+     * @return array
      */
     public function obtenerCitasProvincialesPorIntervaloAnios($especie_id, $anio_desde, $anio_hasta, $selectField) {
         
