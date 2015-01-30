@@ -188,9 +188,9 @@ class Cita extends AppModel {
         ),
         'observaciones' => array(
             'between' => array(
-                'rule' => array('between', 0, 256),
+                'rule' => array('between', 0, 1000),
                 'required' => true,
-                'message' => 'El texto de observaciones no puede ser mayor de 256 caracteres.'
+                'message' => 'El texto de observaciones no puede ser mayor de 1000 caracteres.'
             )
         ),
         'lugar_id' => array(
@@ -272,7 +272,26 @@ class Cita extends AppModel {
             'rule' => array('boolean'),
             'required' => false,
             'message' => 'El valor del indicador de comportamiento debe ser un booleano.'
+<<<<<<< Updated upstream
         )
+=======
+        ),
+        'fuente_id' => array(
+            'numeric' => array(
+                'rule' => 'naturalNumber',
+                'required' => true,
+                'message' => 'La fuente es obligatoria.'
+            )
+        ),
+        'estudio_id' => array(
+            'numeric' => array(
+                'rule' => 'naturalNumber',
+                'required' => true,
+                'allowEmpty' => false,
+                'message' => 'El estudio es obligatorio.'
+            )
+        ),
+>>>>>>> Stashed changes
     );
     
     public function dateBeforeOrEqualToday($data) {

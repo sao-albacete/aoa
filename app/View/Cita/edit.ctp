@@ -333,7 +333,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
                             <label class="control-label" for="estudio"> <?php echo __("Estudio");?></label>
                             <div class="controls">
                                 <select id="estudioId" name="data[Cita][estudio_id]" class="input-xlarge">
-                                    <option value=""></option>
                                     <?php
                                     foreach ($estudios as $estudio) {
                                         if($estudio["Estudio"]["id"] == $cita['Estudio']['id']) {
