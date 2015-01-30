@@ -272,7 +272,21 @@ class Cita extends AppModel {
             'rule' => array('boolean'),
             'required' => false,
             'message' => 'El valor del indicador de comportamiento debe ser un booleano.'
-        )
+        ),
+        'fuente_id' => array(
+            'numeric' => array(
+                'rule' => 'naturalNumber',
+                'required' => true,
+                'message' => 'El id de la fuente debe ser un numero.'
+            )
+        ),
+        'estudio_id' => array(
+            'numeric' => array(
+                'rule' => 'naturalNumber',
+                'required' => true,
+                'message' => 'El id del estudio debe ser un numero.'
+            )
+        ),
     );
     
     public function dateBeforeOrEqualToday($data) {

@@ -173,11 +173,12 @@ class Fichero extends AppModel {
                     }
                     else {
                         CakeLog::write('error', $this->invalidFields());
-                        throw new exception;
+                        return false;
                     }
                 }
                 else {
                     CakeLog::write('error', "Error procesando la imagen.");
+                    return false;
                 }
             }
         }
@@ -187,8 +188,10 @@ class Fichero extends AppModel {
                 unlink($imageAbsolutePath.$nombre_fisico);
             }
             
-            CakeLog::write('error', $e->getTraceAsString());
+            CakeLog::error(sprintf('[%s] Hubo un error inesperado al intentar subir una imagen', __METHOD__), $e);
         }
+
+        return true;
     }
     
     public function subirAvatar($fichero, $usuarioId, $avatarId) {

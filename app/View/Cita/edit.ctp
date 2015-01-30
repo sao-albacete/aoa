@@ -116,6 +116,18 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
+<?php if (isset($warnings)): ?>
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p><?=__('Hubo algún problema al guardar la cita:') ?></p>
+        <ul>
+            <?php foreach ($warnings as $warning) : ?>
+                <li><?=$warning?></li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+<?php endif ?>
+
 <!-- Cuerpo -->
 <div id="divEditarCita">
 
@@ -504,7 +516,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <legend>Fotos</legend>
             <div class="row">
                 <div class="span3" style="border-right: 1px solid #E4E4E4;">
-                    <div><p><?=__('Puedes añadir más fotos a la cita seleccionandolas con los botones de abajo y pulsando <b>Guardar</b>')?></p></div>
+                    <div>
+                        <p><?=__('Puedes añadir más fotos a la cita seleccionandolas con los botones de abajo y pulsando <b>Guardar</b>.')?></p>
+                        <p><?=__('Las fotos deben tener formato jpg, jpeg, png o gif y no pueden ocupar más de 2 megas')?></p>
+                    </div>
                     <br/>
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
