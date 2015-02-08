@@ -719,7 +719,13 @@ class Cita extends AppModel {
         
         return $totalCitas;
     }
-    
+
+    /**
+     * Obtiene el tipo de cria por municipio
+     *
+     * @param $especie_id
+     * @return array
+     */
     public function obtenerTipoCriaPorMunicipio($especie_id) {
         
         $citas = $this -> find(
@@ -733,7 +739,13 @@ class Cita extends AppModel {
         
         return $citas;
     }
-    
+
+    /**
+     * Obtiene el tipo de cría por cuadrícula UTM
+     *
+     * @param $especie_id
+     * @return array
+     */
     public function obtenerTipoCriaPorCuadriculaUtm($especie_id) {
         
         $citas = $this -> find(
@@ -747,37 +759,38 @@ class Cita extends AppModel {
         
         return $citas;
     }
-    
-    public function existeCita($especieId, $lugarId, $observadorId, $fechaAlta, $citaId=null) {
+
+    /**
+     * Comprueba si existe una cita por especie, lugar, observador y fecha de alta
+     *
+     * @param $especieId
+     * @param $lugarId
+     * @param $observadorId
+     * @param $fechaAlta
+     * @param null $citaId
+     * @return int
+     */
+    public function existeCita($especieId, $lugarId, $observadorId, $fechaAlta, $citaId = null) {
         
-        try {
-            
-            $citas = 0;
-            
-            if($citaId != null) {
-                $citas = $this -> find(
-                    'count',
-                    array(
-                        'conditions'=>array('Cita.id <> '=>$citaId,'Cita.especie_id'=>$especieId, 'Cita.lugar_id'=>$lugarId, 'Cita.observador_principal_id'=>$observadorId, "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"),
-                        'fields'=>array('Cita.id')
-                    )
-                );
-            }
-            else {
-                $citas = $this -> find(
-                    'count',
-                    array(
-                        'conditions'=>array('Cita.especie_id'=>$especieId, 'Cita.lugar_id'=>$lugarId, 'Cita.observador_principal_id'=>$observadorId, "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"),
-                        'fields'=>array('Cita.id')
-                    )
-                );
-            }
-        
-            return $citas;
+        if($citaId != null) {
+            $citas = $this -> find(
+                'count',
+                array(
+                    'conditions'=>array('Cita.id <> '=>$citaId,'Cita.especie_id'=>$especieId, 'Cita.lugar_id'=>$lugarId, 'Cita.observador_principal_id'=>$observadorId, "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"),
+                    'fields'=>array('Cita.id')
+                )
+            );
         }
-        catch(Exception $e) {
-            $this->Session->setFlash(__('Ha ocurrido el siguiente error en la aplicación: '.$e->getMessage()), "failure");
-            CakeLog::write('error', $e->getTrace());
+        else {
+            $citas = $this -> find(
+                'count',
+                array(
+                    'conditions'=>array('Cita.especie_id'=>$especieId, 'Cita.lugar_id'=>$lugarId, 'Cita.observador_principal_id'=>$observadorId, "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"),
+                    'fields'=>array('Cita.id')
+                )
+            );
         }
+
+        return $citas;
     }
 }
