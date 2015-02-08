@@ -516,7 +516,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <div class="row">
                 <div class="span3" style="border-right: 1px solid #E4E4E4;">
                     <div>
-                        <p><?=__('Puedes añadir más fotos a la cita seleccionandolas con los botones de abajo y pulsando <b>Guardar</b>.')?></p>
+                        <p><?=__('Puedes añadir cuantas fotos quieras a la cita (de 3 en 3) seleccionandolas con los botones de abajo y pulsando <b>Guardar</b>.')?></p>
                         <p><?=__('Las fotos deben tener formato jpg, jpeg, png o gif y no pueden ocupar más de 2 megas')?></p>
                     </div>
                     <br/>
