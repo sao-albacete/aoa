@@ -352,6 +352,7 @@ $(document).ready(function() {
             <thead>
                <tr>
                   <th><?=__("Ver más");?></th>
+                  <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
                   <th><?=$this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
                   <th><?=$this->Paginator->sort("fechaAlta", "Fecha");?></th>
                   <th><?=$this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
@@ -359,7 +360,7 @@ $(document).ready(function() {
                   <th><?=$this->Paginator->sort("ObservadorPrincipal.codigo", "Observador");?></th>
                   <th><?=__("Colaboradores");?></th>
                   <th><?=$this->Paginator->sort("ClaseReproduccion.codigo","Clase de Reproducción");?></th>
-                  <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
+                  <th><?=$this->Paginator->sort("CriterioSeleccionCita.codigo","Criterio de Selección");?></th>
                </tr>
             </thead>
             <tbody>
@@ -367,6 +368,7 @@ $(document).ready(function() {
                   <?php
                      echo "<tr>";
                      echo    "<td style='text-align: center;'><a href='/cita/view/id:".$cita['Cita']['id']."' title='".__("Más información")."'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver detalle de la cita' alt='Ver detalle'/></a></td>";
+                     echo    "<td style='text-align:center;'>".$this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion'])."</td>";
                      echo    "<td><a href='/cita/index?especieId=".$cita['Especie']['id']."' title='".$cita['Especie']['genero']." ".$cita['Especie']['especie']." ".$cita['Especie']['subespecie']."'>".$cita['Especie']['nombreComun']." ".$cita['Especie']['subespecie']."</a></td>";
                      echo    "<td style='text-align: center;'><a href='/cita/index?fechaAlta=".date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y")."'>".date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y")."</a></td>";
                      
@@ -381,7 +383,7 @@ $(document).ready(function() {
                      echo    "<td style='text-align: center;'><a href='/cita/index?observadorId=".$cita['ObservadorPrincipal']['id']."' title='".$cita['ObservadorPrincipal']['nombre']."'>".$cita['ObservadorPrincipal']['codigo']."</a></td>";
                      echo    "<td>".$this->ObservadorSecundario->mostrar_codigos_observadores($cita['observadoresSecundarios'])."</td>";
                      echo    "<td style='text-align: center;'><a href='/cita/index?claseReproduccionId=".$cita['ClaseReproduccion']['id']."' title='".$cita['ClaseReproduccion']['descripcion']."'>".$cita['ClaseReproduccion']['codigo']."</a></td>";
-                     echo    "<td style='text-align:center;'>".$this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion'])."</td>";
+                     echo    "<td style='text-align: center;'><span title='".$cita['CriterioSeleccionCita']['nombre']."'>".$cita['CriterioSeleccionCita']['codigo']."</span></td>";
                      echo "</tr>";
                   ?>
                <?php endforeach;?>
@@ -389,6 +391,7 @@ $(document).ready(function() {
             <tfoot>
                <tr>
                   <th><?=__("Ver más");?></th>
+                  <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
                   <th><?=$this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
                   <th><?=$this->Paginator->sort("fechaAlta", "Fecha");?></th>
                   <th><?=$this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
@@ -396,7 +399,7 @@ $(document).ready(function() {
                   <th><?=$this->Paginator->sort("ObservadorPrincipal.codigo", "Observador");?></th>
                   <th><?=__("Colaboradores");?></th>
                   <th><?=$this->Paginator->sort("ClaseReproduccion.codigo","Clase de Reproducción");?></th>
-                  <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
+                  <th><?=$this->Paginator->sort("CriterioSeleccionCita.codigo","Criterio de Selección");?></th>
                </tr>
             </tfoot>
          </table>

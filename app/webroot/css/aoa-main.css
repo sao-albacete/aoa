@@ -176,6 +176,7 @@ legend {
 
 .thumbnail{
     background-color: #F7F8E0;
+    max-width: 410px;
 }
 
 .ui-autocomplete-loading {
