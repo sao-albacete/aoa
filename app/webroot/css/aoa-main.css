@@ -164,7 +164,7 @@ legend {
   text-align: center;
 }
 
-.table caption, .caption {
+.table caption, td.caption {
     color: #ffffff;
     background-color: #0B6138 !important;
     font-weight: bold;

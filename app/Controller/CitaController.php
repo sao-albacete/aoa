@@ -363,11 +363,11 @@ class CitaController extends AppController
     }
 
     /**
-     * Función que se ejecuta al carga la página inicial
+     * Guarda los cambios realizados en una cita
      */
     public function edit()
     {
-        // Opcion seleccionada del menu
+        // Marca la opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
         // Recogemos los parámetros de la request
@@ -377,53 +377,65 @@ class CitaController extends AppController
         $current_user = $this->Auth->user();
 
         // Datos del detalle de la cita
-        $cita = $this->obtenerDetalleCita($citaId, $current_user);
+        $cita = $this->obtenerDetalleCita($citaId);
 
         //Comprobamos si el usuario que ejecuta la acción tiene permisos para editar la cita
         if (! $this->esCitaEditable($cita, $current_user)) {
             throw new ForbiddenException(sprintf('El usuario con email %s no tiene permisos editar la cita con id %s',$current_user['email'], $citaId));
         }
 
+        // Pasamos los datos de la cita y el usuario registrado a la vista
         $this->set('cita', $cita);
         $this->set('usuario', $current_user);
 
-        // Carga los combos necesarios para la pantalla de alta
+        // Carga los datos de los combos a mostrar en la vista
         $this->cargarCombosCita();
 
-        /*
-         * Clase edad sexo
-         */
+        // Clase edad sexo
         $clasesEdadSexo = $this->ClaseEdadSexo->obtenerActivos();
         $cantidades = [];
         for ($i = 0; $i < count($clasesEdadSexo); $i ++) {
-            $cantidades[$clasesEdadSexo[$i]['ClaseEdadSexo']['codigo']] = $this->AsoCitaClaseEdadSexo->obtenerCantidadPorClaseEdadSexoYCita($citaId, $clasesEdadSexo[$i]['ClaseEdadSexo']['id']);
+            $cantidades[$clasesEdadSexo[$i]['ClaseEdadSexo']['codigo']]
+                = $this->AsoCitaClaseEdadSexo->obtenerCantidadPorClaseEdadSexoYCita(
+                $citaId,
+                $clasesEdadSexo[$i]['ClaseEdadSexo']['id']
+            );
         }
         $this->set('cantidades', $cantidades);
 
         if ($this->request->is('post')) {
 
+            if (empty($_POST)) {
+                $this->Session->setFlash(__('Alguno de los datos de la cita no son correctos, por favor corríjalos y vuelva a intentarlo'), 'failure');
+                return;
+            }
+
             try {
 
+                // Comanzamos la transaccion
                 $dataSource = $this->Cita->getDataSource();
                 $dataSource->begin();
-                $errorsMessagesList = array();
 
-                // Obtenemos la cita de BD
+                $errorsMessagesList = [];
+                $warningMessagesList = [];
+
+                // Obtenemos la cita de BD y la rellenamos a partir de los datos editables
+                // TODO validar y sanear
                 $cita = $this->Cita->obtenerTodoPorId($citaId);
-
                 $cita["Cita"]["lugar_id"] = $this->request->data["Cita"]["lugar_id"];
                 $cita["Cita"]["observador_principal_id"] = $this->request->data["Cita"]["observador_principal_id"];
                 $cita["Cita"]["fuente_id"] = $this->request->data["Cita"]["fuente_id"];
                 $cita["Cita"]["estudio_id"] = $this->request->data["Cita"]["estudio_id"];
-                $cita["Cita"]["observaciones"] = $this->request->data["Cita"]["observaciones"];
+                $observaciones = $this->request->data["Cita"]["observaciones"];
+                $cita["Cita"]["observaciones"] = trim(strip_tags($observaciones));
                 $cita["Cita"]["cantidad"] = $this->request->data["Cita"]["cantidad"];
                 $cita["Cita"]["clase_reproduccion_id"] = $this->request->data["Cita"]["clase_reproduccion_id"];
 
-                /* Fecha de alta */
+                // Fecha de alta
                 {
                     $fechaAlta = $this->request->data["Cita"]["fechaAlta"];
                     $fechaAltaFormateada = DateUtil::europeanFormatToAmericanFormat($fechaAlta);
-                    if ($fechaAltaFormateada != false) {
+                    if ($fechaAltaFormateada !== false) {
                         $cita["Cita"]["fechaAlta"] = $fechaAltaFormateada;
                     } else {
                         $this->Session->setFlash('El formato de la fecha de alta no es correcto, debe indicar una fecha con formato dd/mm/aaaa', 'failure');
@@ -431,7 +443,7 @@ class CitaController extends AppController
                     }
                 }
 
-                /* Especie */
+                // Especie
                 $especieId = $this->request->data["Cita"]["especie_id"];
                 $cita["Cita"]["especie_id"] = $especieId;
                 $especie = $this->Especie->obtenerTodoPorId($especieId, array(
@@ -452,17 +464,17 @@ class CitaController extends AppController
                     }
                 }
 
-                /* Importancia */
+                // Importancia
                 $cita["Cita"]["importancia_cita_id"] = CitaUtil::calcularImportanciaCita($especie['Especie']['indRareza'], $especie['Especie']['clasificacion_criterio_esp_id'], $cita["Cita"]["clase_reproduccion_id"]);
 
-                /* Criterio seleccion */
+                // Criterio seleccion
                 $numeroCitasPorLugar = $this->Cita->obtenerTotalCitasPorLugar($cita["Cita"]["lugar_id"]);
                 $cita["Cita"]["criterio_seleccion_cita_id"] = CitaUtil::calcularCriterioSeleccion($cita["Cita"], $especie, $numeroCitasPorLugar);
                 if ($cita["Cita"]["criterio_seleccion_cita_id"] != 21) {
                     $cita["Cita"]["indSeleccionada"] = 1;
                 }
 
-                /* Indicadores */
+                // Indicadores
                 {
                     if (isset($this->request->data["Cita"]["indHabitatRaro"])) {
                         $cita["Cita"]["indHabitatRaro"] = $this->request->data["Cita"]["indHabitatRaro"];
@@ -486,53 +498,46 @@ class CitaController extends AppController
                     }
                 }
 
-                /*
-                 * Rareza
-                 */
+                // Indicador de Rareza
                 if ($especie['Especie']['indRareza'] == 1) {
                     $this->request->data["Cita"]["indRarezaHomologada"] = 2;
                 }
 
+                // Inicializamos la cita y la rellenamos antes de validar
                 $this->Cita->create();
-
                 $this->Cita->set($cita);
 
                 if ($this->Cita->validates()) {
 
+                    // Guardamos la cita
                     if ($this->Cita->save()) {
 
-                        /*
-                         * Cita historico
-                         */
+                        // Cita historico
                         $errorsMessagesHist = $citaHistorico = $this->CitaHistorico->guardarHistorico($this->Cita->obtenerDatosBasicosPorId($this->Cita->id), $current_user['id']);
-
                         if (! empty($errorsMessagesHist)) {
                             array_push($errorsMessagesList, $errorsMessagesHist);
                         }
 
-                        /*
-                         * Cita-observador_secundario
-                         */
-                        $this->AsoCitaObservador->deleteAll(['AsoCitaObservador.cita_id' => $citaId], false);
+                        // Cita-observador_secundario
+                        {
+                            // Borramos las relaciones existentes
+                            $this->AsoCitaObservador->deleteAll(['AsoCitaObservador.cita_id' => $citaId], false);
 
-                        if (! empty($this->request->data["colaboradoresSeleccionados"])) {
+                            // Insertamos los observadores recibidos
+                            if (! empty($this->request->data["colaboradoresSeleccionados"])) {
 
-                            $observadores = explode(",", $this->request->data["colaboradoresSeleccionados"]);
+                                $observadores = explode(",", $this->request->data["colaboradoresSeleccionados"]);
+                                foreach ($observadores as $observador) {
 
-                            /* Insertamos si es nuevo */
-                            foreach ($observadores as $observador) {
-
-                                $errorsMessagesObs = $this->AsoCitaObservador->crearAsoCitaObservador($observador, $this->Cita->id);
-
-                                if (! empty($errorsMessagesObs)) {
-                                    array_push($errorsMessagesList, $errorsMessagesObs);
+                                    $errorsMessagesObs = $this->AsoCitaObservador->crearAsoCitaObservador($observador, $this->Cita->id);
+                                    if (! empty($errorsMessagesObs)) {
+                                        array_push($errorsMessagesList, $errorsMessagesObs);
+                                    }
                                 }
                             }
                         }
 
-                        /*
-                         * Cita-clase_edad_sexo
-                         */
+                        // Cita-clase_edad_sexo
                         {
                             // Eliminamos todas las existentes
                             $this->AsoCitaClaseEdadSexo->deleteAll(['AsoCitaClaseEdadSexo.cita_id' => $citaId], false);
@@ -545,11 +550,36 @@ class CitaController extends AppController
                             }
                         }
 
-                        /*
-                         * Privacidad
-                         */
+                        // Privacidad
                         $privacidad = $this->calcularPrivacidadCita($this->Cita->id, $this->Cita->field('fechaAlta'), $especieId, $this->Cita->field('clase_reproduccion_id'));
                         $this->Cita->saveField('indPrivacidad', $privacidad);
+
+                        // Fotos
+                        {
+                            // Subir
+                            if (isset($_FILES["fotos"])) {
+
+                                $fotos = $this->Fichero->reArrayFiles($_FILES['fotos']);
+                                $falloSubidaImagen = false;
+
+                                foreach ($fotos as $foto) {
+                                    if (UPLOAD_ERR_NO_FILE !== $foto['error']) {
+                                        if(! $this->Fichero->subirImagenCita($foto, $cita, $current_user['id'], 1)) {
+                                            $falloSubidaImagen = true;
+                                        }
+                                    }
+                                }
+                                if ($falloSubidaImagen) {
+                                    $warningMessagesList[] = 'Hubo problemas al subir alguna de las imágenes. Compruebe que el formato es correcto (jpg, jpeg, png o gif) y que no ocupan más de 2 megas.';
+                                }
+                            }
+                            // Eliminar
+                            if (isset($_POST['fotosEliminar'])) {
+                                foreach ($_POST['fotosEliminar'] as $fotoId) {
+                                    $this->Fichero->delete($fotoId);
+                                }
+                            }
+                        }
 
                         if (empty($errorsMessagesList)) {
 
@@ -557,18 +587,18 @@ class CitaController extends AppController
 
                             $this->Session->setFlash(__('La cita se ha guardado correctamente.'), 'success');
 
-                            return $this->redirect(array(
-                                "action" => "edit",
-                                "id" => $this->Cita->id
-                            ));
+                            // Si hay warnings los pasamos a la vista
+                            if (empty($warningMessagesList)) {
+                                $this->Session->setFlash(__('La cita se ha guardado correctamente.'), 'success');
+                            } else {
+                                $this->set('warnings', $warningMessagesList);
+                            }
+
+                            $this->redirect(array("action" => "edit", "id" => $this->Cita->id));
                         } else {
                             $dataSource->rollback();
 
-                            $errorsMessages = "";
-                            foreach ($errorsMessagesList as $errorMessage) {
-                                $errorsMessages .= $errorMessage . "\n";
-                            }
-
+                            $errorsMessages = implode("\n", $errorsMessagesList);
                             $this->Session->setFlash($errorsMessages, "failure");
                         }
                     }
@@ -1006,7 +1036,7 @@ class CitaController extends AppController
         $current_user = $this->Auth->user();
 
         // Obtenemos los datos de la cita
-        $cita = $this->obtenerDetalleCita($citaId, $current_user);
+        $cita = $this->obtenerDetalleCita($citaId);
 
         if (! $this->esCitaVisible($cita)) {
             throw new ForbiddenException(sprintf('El usuario con email %s no tiene permisos ver la cita con id %s',$current_user['email'], $citaId));
@@ -1118,11 +1148,9 @@ class CitaController extends AppController
      * @param $citaId
      * @return array
      */
-    private function obtenerDetalleCita($citaId, $usuario)
+    private function obtenerDetalleCita($citaId)
     {
-        /*
-         * Datos generales cita
-         */
+        // Datos generales cita
         $cita = $this->Cita->obtenerTodoPorId($citaId);
 
         // Comprobamos si la cita existe
@@ -1130,30 +1158,20 @@ class CitaController extends AppController
             throw new NotFoundException(sprintf('La cita con id %s no existe', $citaId));
         }
 
-        /*
-         * Observadores
-         */
+        // Observadores
         $cita['observadores'] = $this->AsoCitaObservador->obtenerObservadoresPorCita($citaId);
 
-        /*
-         * Especie
-         */
+        // Especie
         $cita['Especie'] = $this->Especie->obtenerTodoPorId($cita['Especie']['id']);
 
-        /*
-         * Orden taxonomico
-         */
+        // Orden taxonomico
         $this->OrdenTaxonomico->id = $cita['Especie']['Familia']['orden_taxonomico_id'];
         $cita['Especie']['OrdenTaxonomico']['nombre'] = $this->OrdenTaxonomico->field("nombre");
 
-        /*
-         * Ubicacion
-         */
+        // Ubicacion
         $cita['Lugar'] = $this->Lugar->obtenerTodoPorId($cita['Lugar']['id']);
 
-        /*
-         * Clase edad sexo
-         */
+        // Clase edad sexo
         $i = 0;
         foreach ($cita['AsoCitaClaseEdadSexo'] as $claseEdadSexo) {
             $this->ClaseEdadSexo->id = $claseEdadSexo['clase_edad_sexo_id'];
