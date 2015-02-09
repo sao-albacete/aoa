@@ -47,6 +47,7 @@ $(document).ready(function() {
    $("#observadorSeleccionado").val("<?php if(isset($valuesSubmited['observadorId'])){echo $valuesSubmited['observadorId'];}?>");
    $("#colaborador").val("<?php if(isset($valuesSubmited['colaborador'])){echo $valuesSubmited['colaborador'];}?>");
    $("#colaboradorSeleccionado").val("<?php if(isset($valuesSubmited['colaboradorId'])){echo $valuesSubmited['colaboradorId'];}?>");
+   $("#selectEstudio").val("<?php if(isset($valuesSubmited['estudioId'])){echo $valuesSubmited['estudioId'];}?>");
    /* Fin Carga de valores seleccionados de los combos */
    
    // Fecha desde
@@ -126,24 +127,19 @@ $(document).ready(function() {
                         <select id="selectOrdenTaxonomico" name="ordenTaxonomico"
                            class="input-large">
                            <option value=""><?=__("-- Seleccione --");?></option>
-                           <?php
-                           foreach($ordenesTaxonomicos as $ordenTaxonomico) {
-                              echo '<option value="'.$ordenTaxonomico["OrdenTaxonomico"]["id"].'">'.$ordenTaxonomico["OrdenTaxonomico"]["nombre"].'</option>';
-                           }
-                           ?>
+                           <?php foreach($ordenesTaxonomicos as $ordenTaxonomico) : ?>
+                              <option value="<?=$ordenTaxonomico["OrdenTaxonomico"]["id"]?>"><?=$ordenTaxonomico["OrdenTaxonomico"]["nombre"]?></option>
+                           <?php endforeach ?>
                         </select>
                      </div>
                      <div class="span10" style="margin-left: 0;">
-                           <!-- Familia -->
-                           <label class="control-label"
-                                  for="selectFamilia"><?=__("Familia");?></label> <select
-                               id="selectFamilia" name="familia" class="input-large">
+                        <!-- Familia -->
+                        <label class="control-label" for="selectFamilia"><?=__("Familia");?></label>
+                        <select id="selectFamilia" name="familia" class="input-large">
                               <option value=""><?=__("-- Seleccione --");?></option>
-                              <?php
-                              foreach($familias as $familia) {
-                                 echo '<option value="'.$familia["Familia"]["id"].'">'.$familia["Familia"]["nombre"].'</option>';
-                              }
-                              ?>
+                              <?php foreach($familias as $familia) : ?>
+                                 <option value="<?=$familia["Familia"]["id"]?>"><?=$familia["Familia"]["nombre"]?></option>;
+                              <?php endforeach ?>
                            </select>
                      </div>
                   </div>
@@ -191,6 +187,18 @@ $(document).ready(function() {
                               echo '<option value="'.$claseReproduccion["ClaseReproduccion"]["id"].'">'.$claseReproduccion["ClaseReproduccion"]["codigo"].' - '.$claseReproduccion["ClaseReproduccion"]["descripcion"].'</option>';
                            }
                            ?>
+                        </select>
+                     </div>
+                  </div>
+                  <!-- Estudio -->
+                  <div class="row">
+                     <div class="span12">
+                        <label class="control-label" for="estudioId"> <?php echo __("Estudio"); ?></label>
+                        <select id="selectEstudio" name="estudioId" class="input-xxlarge">
+                           <option value=""><?=__("-- Seleccione --");?></option>
+                           <?php foreach ($estudios as $estudio) : ?>
+                                 <option value='<?=$estudio["Estudio"]["id"]?>'><?=$estudio["Estudio"]["descripcion"]?></option>
+                           <?php endforeach ?>
                         </select>
                      </div>
                   </div>

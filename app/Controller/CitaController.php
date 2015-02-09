@@ -101,6 +101,54 @@ class CitaController extends AppController
         */
         $usuario = $this->Auth->user();
         $this->set('usuario', $usuario);
+        /*
+         * Orden taxonómico
+         */
+        $ordenesTaxonomicos = $this->OrdenTaxonomico->getAllOrdenesTaxonomicosBasic();
+        $this->set('ordenesTaxonomicos', $ordenesTaxonomicos);
+
+        /*
+         * Clase reproduccion
+         */
+        $clasesReproduccion = $this->ClaseReproduccion->getAllClasesReproduccionBasic();
+        $this->set('clasesReproduccion', $clasesReproduccion);
+
+        /*
+         * Familia
+         */
+        $familias = $this->Familia->getAllFamiliasBasic();
+        $this->set('familias', $familias);
+
+        /*
+         * Comarca
+         */
+        $comarcas = $this->Comarca->getAllComarcasBasic();
+        $this->set('comarcas', $comarcas);
+
+        /*
+         * Municipios
+         */
+        $municipios = $this->Municipio->obtenerMunicipiosActivosOrdenadosPorNombre();
+        $this->set('municipios', $municipios);
+
+        /*
+         * Cuadricula UTM
+         */
+        $cuadriculasUtm = $this->CuadriculaUtm->obtenerCuadriculasUtmActivosOrdenadosPorCodigo();
+        $this->set('cuadriculasUtm', $cuadriculasUtm);
+
+        /*
+         * Años
+         */
+        $anios = $this->Cita->obtenerAniosCitas();
+        $this->set('anios', $anios);
+
+        /* Estudios */
+        $estudios = $this->Estudio->obtenerEstudios(null, null, array(
+            'Estudio.descripcion'
+        ));
+        $this->set('estudios', $estudios);
+
         
         $conditions = array(
             'Cita.indActivo' => 1
@@ -160,6 +208,12 @@ class CitaController extends AppController
                 } elseif ($figuraProteccion == "estatusAlbacete") {
                     $conditions["Especie.estatus_cuantitativo_ab_id"] = $this->request->query["nivelProteccion"];
                 }
+            }
+
+            // Estudio
+            if (isset($this->request->query["estudioId"]) && ! empty($this->request->query["estudioId"])) {
+                $conditions["Cita.estudio_id"] = $this->request->query["estudioId"];
+                $valuesSubmited["estudioId"] = $this->request->query["estudioId"];
             }
 
             // Comarca
@@ -318,48 +372,6 @@ class CitaController extends AppController
 
             $this->set('valuesSubmited', $valuesSubmited);
         }
-
-        /*
-         * Orden taxonómico
-         */
-        $ordenesTaxonomicos = $this->OrdenTaxonomico->getAllOrdenesTaxonomicosBasic();
-        $this->set('ordenesTaxonomicos', $ordenesTaxonomicos);
-
-        /*
-         * Clase reproduccion
-         */
-        $clasesReproduccion = $this->ClaseReproduccion->getAllClasesReproduccionBasic();
-        $this->set('clasesReproduccion', $clasesReproduccion);
-
-        /*
-         * Familia
-         */
-        $familias = $this->Familia->getAllFamiliasBasic();
-        $this->set('familias', $familias);
-
-        /*
-         * Comarca
-         */
-        $comarcas = $this->Comarca->getAllComarcasBasic();
-        $this->set('comarcas', $comarcas);
-
-        /*
-         * Municipios
-         */
-        $municipios = $this->Municipio->obtenerMunicipiosActivosOrdenadosPorNombre();
-        $this->set('municipios', $municipios);
-
-        /*
-         * Cuadricula UTM
-         */
-        $cuadriculasUtm = $this->CuadriculaUtm->obtenerCuadriculasUtmActivosOrdenadosPorCodigo();
-        $this->set('cuadriculasUtm', $cuadriculasUtm);
-
-        /*
-         * Años
-         */
-        $anios = $this->Cita->obtenerAniosCitas();
-        $this->set('anios', $anios);
     }
 
     /**
