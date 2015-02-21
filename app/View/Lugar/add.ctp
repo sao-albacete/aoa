@@ -5,12 +5,24 @@ $this->set('title_for_layout','Nuevo lugar');
 /**
  * CSS
  */
-$this->Html->css(array('Lugar/add'), null, array('inline' => false));
+$this->Html->css(array(
+    'Lugar/add'
+), null, array('inline' => false));
 
 /**
  * Javascript
  */
-$this->Html->script(array('https://maps.googleapis.com/maps/api/js?sensor=false', 'https://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js', 'https://geoxml3.googlecode.com/svn/trunk/ProjectedOverlay.js', '/plugin/jquery-validation-1.11.1/dist/jquery.validate.min', '/plugin/jquery-validation-1.11.1/dist/additional-methods.min', '/plugin/jquery-validation-1.11.1/localization/messages_es', '/plugin/bootbox/bootbox.min', 'common/maps/functions', 'Lugar/add'), array('inline' => false));
+$this->Html->script(array(
+    'https://maps.googleapis.com/maps/api/js?sensor=false',
+    'https://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js',
+    'https://geoxml3.googlecode.com/svn/trunk/ProjectedOverlay.js',
+    '/plugin/jquery-validation-1.11.1/dist/jquery.validate.min',
+    '/plugin/jquery-validation-1.11.1/dist/additional-methods.min',
+    '/plugin/jquery-validation-1.11.1/localization/messages_es',
+    '/plugin/bootbox/bootbox.min',
+    'common/maps/functions',
+    'Lugar/add'
+), array('inline' => false));
 
 // Menu
 $this->start('menu');
@@ -21,12 +33,12 @@ $this->end();
 <div>
     <fieldset>
         <legend>
-            <?php echo __('Nuevo lugar'); ?>
+            <?=__('Nuevo lugar'); ?>
             <button class="btn btn-mini btn-info pull-right help-button"
                 data-trigger="click" data-placement="left" data-html="true"
-                data-content="<?php echo __('Para crear un nuevo lugar, introduzca los datos en el formulario y pulse <b>Guardar</b>. <br> Puede consultar las cuadrículas UTM de la provincia de Albacete en el mapa haciendo clic sobre cualqueira de ellas.');?>">
+                data-content="<?=__('Para crear un nuevo lugar, introduzca los datos en el formulario y pulse <b>Guardar</b>. <br> Puede consultar las cuadrículas UTM de la provincia de Albacete en el mapa haciendo clic sobre cualqueira de ellas.');?>">
                 <i class="icon-info-sign"></i> 
-                <?php echo __("Ayuda");?>
+                <?=__("Ayuda");?>
             </button>
         </legend>
         
@@ -39,7 +51,7 @@ $this->end();
         <div class="row-fluid">
             <div class="span6">
                 <fieldset>
-                    <legend style="font-size: 16px;" class="small"><?php echo __('Datos del lugar'); ?></legend>
+                    <legend style="font-size: 16px;" class="small"><?=__('Datos del lugar'); ?></legend>
                     
                     <div class="alert">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -58,11 +70,11 @@ $this->end();
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <!-- Nombre -->
-                                    <label class="control-label" for="txtNombre"> <?php echo __("Nombre");?> (*)</label>
+                                    <label class="control-label" for="txtNombre"> <?=__("Nombre");?> (*)</label>
                                     <input id="txtNombre" name="nombre" class="input-xlarge required" type="text" maxlength="100"
                                         value="<?php if(isset($valuesSubmited['nombre'])){echo $valuesSubmited['nombre'];}?>">
                                     <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Escriba el nombre del lugar. Debe tener un máximo de 100 caracteres.');?>"><i
+                                        data-content="<?=__('Escriba el nombre del lugar. Debe tener un máximo de 100 caracteres.');?>"><i
                                             class="icon-info-sign icon-white"></i> </span>
                                 </div>
                             </div>
@@ -71,10 +83,10 @@ $this->end();
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <!-- Cuadricula UTM -->
-                                    <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?> (*)</label>
+                                    <label class="control-label" for="selectCuadriculaUtm"><?=__("Cuadrícula UTM");?> (*)</label>
                                     <select id="selectCuadriculaUtm" name="cuadriculaUtmCodigo"
                                         class="input-xlarge required">
-                                        <option value=""><?php echo __("-- Seleccione --");?></option>
+                                        <option value=""><?=__("-- Seleccione --");?></option>
                                         <?php
                                         foreach($cuadriculasUtm as $cuadriculaUtm) {
                                             echo '<option value="'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'">'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'</option>';
@@ -82,7 +94,7 @@ $this->end();
                                         ?>
                                     </select>
                                     <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Seleccione una cuadrícula UTM. Puede consultar los códigos de cuadrícula en el mapa. Un vez seleccione una cuadrícula, se cargarán los municipios asociados.');?>"><i
+                                        data-content="<?=__('Seleccione una cuadrícula UTM. Puede consultar los códigos de cuadrícula en el mapa. Un vez seleccione una cuadrícula, se cargarán los municipios asociados.');?>"><i
                                             class="icon-info-sign icon-white"></i> </span>
                                 </div>
                             </div>
@@ -92,11 +104,11 @@ $this->end();
                         <div class="control-group">
                             <div class="controls form-inline">
                                 <!-- Municipio -->
-                                <label class="control-label" for="selectMunicipio"><?php echo __("Municipio");?> (*)</label>
+                                <label class="control-label" for="selectMunicipio"><?=__("Municipio");?> (*)</label>
                                 <select id="selectMunicipio" name="municipioId" class="input-xlarge required" disabled="disabled">
                                 </select>
                                 <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Seleccione un municipio.');?>"><i
+                                        data-content="<?=__('Seleccione un municipio.');?>"><i
                                             class="icon-info-sign icon-white"></i> </span>
                             </div>
                         </div>
@@ -104,7 +116,7 @@ $this->end();
                         <!-- Coordenadas UTM -->
                         <div class="control-group">
                             <div class="controls form-inline">
-                                <label class="control-label" for="txtCoordenadasUtmX"> <?php echo __("Coordenadas UTM");?></label>
+                                <label class="control-label" for="txtCoordenadasUtmX"> <?=__("Coordenadas UTM");?></label>
                                 <input id="txtCoordenadasUtmArea" name="area" readonly="readonly"
                                     class="input-mini" type="text"
                                     value="<?php if(isset($valuesSubmited['area'])){echo $valuesSubmited['area'];}?>"> 
@@ -113,7 +125,7 @@ $this->end();
                                 <input id="txtCoordenadasUtmY" name="coordenadaY" class="input-mini" type="text" readonly="readonly"
                                     value="<?php if(isset($valuesSubmited['coordenadaY'])){echo $valuesSubmited['coordenadaY'];}?>" maxlength="7">
                                 <span class="badge badge-info" data-trigger="hover"
-                                    data-content="<?php echo __('Coordenadas UTM x e y del lugar.');?>">
+                                    data-content="<?=__('Coordenadas UTM x e y del lugar.');?>">
                                     <i class="icon-info-sign icon-white"></i> 
                                 </span>
                             </div>
@@ -122,8 +134,8 @@ $this->end();
                         <!-- Botones de búsqueda -->
                         <div id="divBotonesBusqueda" class="control-group" style="margin-top: 20px;">
                             <div class="controls" style="text-align: center;">
-                                <a id="btnLimpiar" class="btn btn-warning" href="#"><i class="icon-trash"></i> <?php echo __("Limpiar");?></a>
-                                <a id="btnGuardar" class="btn btn-success btn-large" href="#"><i class="icon-ok"></i> <?php echo __("Guardar");?></a>
+                                <a id="btnLimpiar" class="btn btn-warning" href="#"><i class="icon-trash"></i> <?=__("Limpiar");?></a>
+                                <a id="btnGuardar" class="btn btn-success btn-large" href="#"><i class="icon-ok"></i> <?=__("Guardar");?></a>
                             </div>
                         </div>
                         
@@ -133,7 +145,7 @@ $this->end();
             
             <div class="span6">
                 <fieldset>
-                    <legend class="small" style="font-size: 16px;"><?php echo __('Mapa'); ?></legend>
+                    <legend class="small" style="font-size: 16px;"><?=__('Mapa'); ?></legend>
                     <div id="map_canvas" style="height:400px;" class="span12"></div>
                 </fieldset>
             </div>

@@ -765,31 +765,28 @@ class Cita extends AppModel {
      *
      * @param $especieId
      * @param $lugarId
-     * @param $observadorId
      * @param $fechaAlta
-     * @param null $citaId
-     * @return int
+     * @param $observadorId
+     * @return array []
      */
-    public function existeCita($especieId, $lugarId, $observadorId, $fechaAlta, $citaId = null) {
-        
-        if($citaId != null) {
-            $citas = $this -> find(
-                'count',
-                array(
-                    'conditions'=>array('Cita.id <> '=>$citaId,'Cita.especie_id'=>$especieId, 'Cita.lugar_id'=>$lugarId, 'Cita.observador_principal_id'=>$observadorId, "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"),
-                    'fields'=>array('Cita.id')
-                )
-            );
+    public function existeCita($especieId, $lugarId, $fechaAlta, $observadorId = null) {
+
+        $conditions = [
+            'Cita.especie_id' => $especieId,
+            'Cita.lugar_id' => $lugarId,
+            "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"
+        ];
+
+        if (isset($observadorId)) {
+            $conditions['Cita.observador_principal_id'] = $observadorId;
         }
-        else {
-            $citas = $this -> find(
-                'count',
-                array(
-                    'conditions'=>array('Cita.especie_id'=>$especieId, 'Cita.lugar_id'=>$lugarId, 'Cita.observador_principal_id'=>$observadorId, "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"),
-                    'fields'=>array('Cita.id')
-                )
-            );
-        }
+
+        $citas = $this -> find(
+            'all',
+            [
+                'conditions' => $conditions,
+            ]
+        );
 
         return $citas;
     }

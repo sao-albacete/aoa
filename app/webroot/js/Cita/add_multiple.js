@@ -119,74 +119,53 @@ $(document).ready(function () {
 
         if ($divNuevaCitaMultiple.find('#frmNuevaCitaMultiple').valid()) {
 
-            var especies = "",
+            var especies = [],
                 lugarId = $("#lugarId").val(),
                 fechaAlta = $("#fechaAlta").val(),
                 items = [];
 
-
-            $("input[name$='[especie_id]']").each(function () {
-                especies = especies + $(this).val() + ",";
+            $divNuevaCitaMultiple.find("input[name$='[especie_id]']").each(function () {
+                if ($(this).val() !== '') {
+                    especies.push($(this).val());
+                }
             });
+            especies = especies.join(',');
 
             $.ajax({
                 url: "/cita/existenCitas",
                 data: {"especies": especies, "lugarId": lugarId, "fechaAlta": fechaAlta},
-                success: function (indExisteCita) {
+                dataType: "json",
+                success: function (response) {
 
-                    if (indExisteCita == 1) {
+                    if (response.status === 0 && response.citasSimilares === false) {
                         items = [];
                         items.push("<h5>");
                         items.push("<img src='/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png' width='34' height='28' alt='alert icon' style='margin-right: 20px;'>");
-                        items.push("Ya existe una cita creada para la misma fecha, lugar y alguna de las especies introducidas.");
+                        items.push("Ya has creado previamente alguna cita para la misma fecha y lugar de alguna de las especies introducidas.");
                         items.push("</h5>");
 
                         bootbox.alert(items.join(""), "Aceptar");
-                    }
-                    else {
-                        $.ajax({
-                            url: "/especie/sonRarezas",
-                            data: {"especies": especies},
-                            success: function (indEsRareza) {
+                    } else if(response.status == 0 && response.citasSimilares.length > 0) {
 
-                                if (indEsRareza == 1) {
-                                    items = [];
-                                    items.push("<h5>");
-                                    items.push("<img src='/img/icons/fugue-icons-3.5.6/icons/exclamation.png' width='34' height='28' alt='alert icon' style='margin-right: 20px;'>");
-                                    items.push("Alguna de las especies que has introducido es una <b>RAREZA NACIONAL</b>.");
-                                    items.push("</h5>");
-                                    items.push("<br>");
-                                    items.push("Para homologar esta cita debes seguir ");
-                                    items.push("<a href='http://www.seo.org/2012/01/25/%C2%BFque-hacer-si-observamos-una-rareza/' target='_blank'>estas instrucciones</a>.");
+                        items.push("<p>Ya existen citas en <b>" + response.citasSimilares[0].Lugar.nombre + "</b> del día <b>" + response.citasSimilares[0].Cita.fechaAlta + "</b> de:</p>");
+                        items.push("<br>");
+                        items.push("<table class='table table-striped table-bordered table-condensed'>");
+                        items.push("<tr><th>Especie</th><th>Observador</th><th>Número individuos</th></tr>");
+                        for (var i = 0; i < response.citasSimilares.length; i++) {
+                            var citaSimilar = response.citasSimilares[i];
+                            items.push("<tr><td>" + citaSimilar.Especie.nombreComun + "</td><td>" + citaSimilar.ObservadorPrincipal.codigo + ' - ' + citaSimilar.ObservadorPrincipal.nombre + "</td><td>" + citaSimilar.Cita.cantidad + "</td></tr>");
+                        }
+                        items.push("</table>");
+                        items.push("<br>");
+                        items.push("<p>¿Estás seguro de que deseas crear estas nuevas citas?</p>");
 
-                                    bootbox.confirm(items.join(""), "Cancelar", "Continuar", function (result) {
-                                        if (result) {
-                                            $("#frmNuevaCitaMultiple").submit();
-                                        }
-                                    });
-                                } else if (indEsRareza == 2) {
-                                    items = [];
-                                    items.push("<h5>");
-                                    items.push("<img src='/img/icons/fugue-icons-3.5.6/icons/exclamation.png' width='34' height='28' alt='alert icon' style='margin-right: 20px;'>");
-                                    items.push("Alguna de las especies que has introducido es una <b>RAREZA LOCAL</b>.");
-                                    items.push("</h5>");
-                                    items.push("<br>");
-                                    items.push("Debido a la importancia de la cita, por favor, <b>envíanos un correo electrónico a ");
-                                    items.push("<a href='mailto:anuario@sao.albacete.org' target='_blank'>anuario@sao.albacete.org</a></b>, ");
-                                    items.push("describíendo con detalle el avistamiento y ampliando toda la información posible.");
-                                    items.push("<br>");
-                                    items.push("<b>Es importante que adjuntes fotografías</b> aunque sean de mala calidad para apoyar la identificación de la especie.");
-
-                                    bootbox.confirm(items.join(""), "Cancelar", "Continuar", function (result) {
-                                        if (result) {
-                                            $("#frmNuevaCitaMultiple").submit();
-                                        }
-                                    });
-                                } else {
-                                    $("#frmNuevaCitaMultiple").submit();
-                                }
+                        bootbox.confirm(items.join(""), "Cancelar", "Aceptar", function (result) {
+                            if (result) {
+                                validarRarezaCitaMultiple(especies);
                             }
                         });
+                    } else {
+                        validarRarezaCitaMultiple(especies);
                     }
                 }
             });
@@ -194,3 +173,52 @@ $(document).ready(function () {
     });
     /* FIN guardar */
 });
+
+function validarRarezaCitaMultiple(especies)
+{
+    var items = [];
+
+    $.ajax({
+        url: "/especie/sonRarezas",
+        data: {"especies": especies},
+        success: function (indEsRareza) {
+
+            if (indEsRareza == 1) {
+                items = [];
+                items.push("<h5>");
+                items.push("<img src='/img/icons/fugue-icons-3.5.6/icons/exclamation.png' width='34' height='28' alt='alert icon' style='margin-right: 20px;'>");
+                items.push("Alguna de las especies que has introducido es una <b>RAREZA NACIONAL</b>.");
+                items.push("</h5>");
+                items.push("<br>");
+                items.push("Para homologar esta cita debes seguir ");
+                items.push("<a href='http://www.seo.org/2012/01/25/%C2%BFque-hacer-si-observamos-una-rareza/' target='_blank'>estas instrucciones</a>.");
+
+                bootbox.confirm(items.join(""), "Cancelar", "Continuar", function (result) {
+                    if (result) {
+                        $("#frmNuevaCitaMultiple").submit();
+                    }
+                });
+            } else if (indEsRareza == 2) {
+                items = [];
+                items.push("<h5>");
+                items.push("<img src='/img/icons/fugue-icons-3.5.6/icons/exclamation.png' width='34' height='28' alt='alert icon' style='margin-right: 20px;'>");
+                items.push("Alguna de las especies que has introducido es una <b>RAREZA LOCAL</b>.");
+                items.push("</h5>");
+                items.push("<br>");
+                items.push("Debido a la importancia de la cita, por favor, <b>envíanos un correo electrónico a ");
+                items.push("<a href='mailto:anuario@sao.albacete.org' target='_blank'>anuario@sao.albacete.org</a></b>, ");
+                items.push("describíendo con detalle el avistamiento y ampliando toda la información posible.");
+                items.push("<br>");
+                items.push("<b>Es importante que adjuntes fotografías</b> aunque sean de mala calidad para apoyar la identificación de la especie.");
+
+                bootbox.confirm(items.join(""), "Cancelar", "Continuar", function (result) {
+                    if (result) {
+                        $("#frmNuevaCitaMultiple").submit();
+                    }
+                });
+            } else {
+                $("#frmNuevaCitaMultiple").submit();
+            }
+        }
+    });
+}

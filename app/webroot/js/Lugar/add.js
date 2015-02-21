@@ -43,14 +43,14 @@ $(document).ready(function() {
         loadCoordenadasUtm($(this).val());
         
         // Marcar cuadrícula UTM
-        var cuadriculaUtmAMarcar = new Object();
+        var cuadriculaUtmAMarcar = {};
         cuadriculaUtmAMarcar.codigo = $(this).val();
         cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
         
         marcarMapa(parser.docs[1], cuadriculaUtmAMarcar);
         
         // Descarmacar municipios
-        var municipioAMarcar = new Object();
+        var municipioAMarcar = {};
         municipioAMarcar.tipo = "municipio";
         
         marcarMapa(parser.docs[0], municipioAMarcar);
@@ -69,7 +69,7 @@ $(document).ready(function() {
                     
                     var datosMunicipio = JSON.parse(data);
                     
-                    var municipioAMarcar = new Object();
+                    var municipioAMarcar = {};
                     municipioAMarcar.codigo = datosMunicipio.Municipio.nombre;
                     municipioAMarcar.tipo = "municipio";
                     
@@ -148,8 +148,6 @@ $(document).ready(function() {
                 data: {"codigoCuadriculaUtm":codigoCuadriculaUtm, "nombreLugar":nombreLugar, "municipioId":municipioId},
                 success: function( lugaresSimilares ) {
 
-                    //alert(JSON.stringify(lugaresSimilares));
-
                     if(lugaresSimilares.length > 0) {
                         var items = [];
                         items.push( "<p>Existen lugares dados de alta ya en la aplicación cuya cuadrícula UTM y municipio coinciden con el que desea crear:</p>" );
@@ -189,17 +187,20 @@ $(document).ready(function() {
  * Limpia el formulario
  */
 function limpiar() {
+
+    var selectMunicipio = $("#selectMunicipio");
+
     $("#frmNuevoLugar").find("input[type=text], select").val("");
-    $("#selectMunicipio").empty();
-    $("#selectMunicipio").prop("disabled", true);
+    selectMunicipio.empty();
+    selectMunicipio.prop("disabled", true);
     
     // Descarmacar municipios
-    var cuadriculaUtmAMarcar = new Object();
+    var cuadriculaUtmAMarcar = {};
     cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
     marcarMapa(parser.docs[1], cuadriculaUtmAMarcar);
     
     // Descarmacar municipios
-    var municipioAMarcar = new Object();
+    var municipioAMarcar = {};
     municipioAMarcar.tipo = "municipio";
     marcarMapa(parser.docs[0], municipioAMarcar);
 }
@@ -211,13 +212,15 @@ function limpiar() {
  */
 function loadMunicipioSelect(codigoCuadriculaUtm) {
 
-    $("#selectMunicipio").load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
+    var selectMunicipio = $("#selectMunicipio");
+
+    selectMunicipio.load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
 
     if(codigoCuadriculaUtm != "") {
-        $("#selectMunicipio").prop("disabled", false);
+        selectMunicipio.prop("disabled", false);
     }
     else {
-        $("#selectMunicipio").prop("disabled", true);
+        selectMunicipio.prop("disabled", true);
     }
 }
 
@@ -256,16 +259,14 @@ function marcarMapa(parserDoc, elementoAMarcar){
             
             var kmlStrokeColor = kmlColor(placemark.style.color);
             var kmlFillColor = kmlColor(placemark.style.fillcolor);
-            
-            var normalStyle = {
+
+            placemark.polygon.normalStyle = {
                 strokeColor: kmlStrokeColor.color,
                 strokeWeight: placemark.style.width,
                 strokeOpacity: kmlStrokeColor.opacity,
                 fillColor: kmlFillColor.color,
                 fillOpacity: kmlFillColor.opacity
             };
-
-            placemark.polygon.normalStyle = normalStyle;
             
             if(placemark.name == elementoAMarcar.codigo) {
                     

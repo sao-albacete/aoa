@@ -456,7 +456,7 @@ class EspecieController extends AppController
 
             $this->autoRender = false;
 
-            $especies = substr($this->request->query["especies"], 0, -1);
+            $especies = $this->request->query["especies"];
             $especiesList = explode(",", $especies);
 
             foreach ($especiesList as $especieId) {

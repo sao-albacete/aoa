@@ -66,7 +66,7 @@ $this->end();
                 <input name="subespecie" disabled="disabled" class="subespecie input-large" type="text"
                        placeholder="<?php echo __('Escriba la subespecie'); ?>">
                 <span class="badge badge-info" data-trigger="hover"
-                      data-content="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.'); ?>"><i
+                      data-content="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccionar su subespecie escribiendo su primera letra y seleccioando una del listado.'); ?>"><i
                         class="icon-info-sign icon-white"></i> </span>
                 <br>
 

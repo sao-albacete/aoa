@@ -1111,40 +1111,37 @@ class CitaController extends AppController
     public function existenCitas()
     {
         $response = [];
+        $citas = [];
 
         try {
             
             if ($this->request->is('ajax')) {
                 
-                $countCitas = 0;
-                
                 $this->autoRender = false;
-                
-                $current_user = $this->Auth->user();
-                $observadorPrincipalId = $current_user['observador_principal_id'];
 
+                $currentUser = $this->Auth->user();
+                $observadorPrincipalId = $currentUser['observador_principal_id'];
                 $lugarId = $this->request->query["lugarId"];
                 $fechaAlta = $this->request->query["fechaAlta"];
-
                 $especies = $this->request->query["especies"];
 
-                if (is_array($especies)) {
-                    $especies = substr($this->request->query["especies"], 0, - 1);
-                    $especies = explode(",", $especies);
+                $especies = explode(",", $especies);
 
-                    foreach ($especies as $especieId) {
-                        $countCitas = $this->Cita->existeCita($especieId, $lugarId, $observadorPrincipalId, $fechaAlta);
+                foreach ($especies as $especieId) {
 
-                        if ($countCitas > 0) {
-                            break;
+                    if (count($this->Cita->existeCita($especieId, $lugarId, $fechaAlta, $observadorPrincipalId)) > 0) {
+                        $citas = false;
+                        break;
+                    } else {
+                        $resultado = $this->Cita->existeCita($especieId, $lugarId, $fechaAlta);
+                        if (! empty($resultado)) {
+                            $citas = array_merge($citas, $resultado);
                         }
                     }
-                } else {
-                    $countCitas = $this->Cita->existeCita($especies, $lugarId, $observadorPrincipalId, $fechaAlta);
                 }
 
                 $response['status'] = 0;
-                $response['existenCitas'] = $countCitas > 0;
+                $response['citasSimilares'] = $citas;
             }
         } catch (Exception $e) {
             $response['status'] = 1;
