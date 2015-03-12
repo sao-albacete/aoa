@@ -162,51 +162,33 @@ class EspecieController extends AppController
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
-        /*
-         * Especies citadas en Albacete agrupadas por familia
-         */
-        $familias = $this->Familia->find(
+        $especiesAb = $this->Especie->find(
             'all',
-            array(
-                'fields' => array('Familia.id', 'Familia.nombre'),
-                'recursive' => -1
-            )
+            [
+                'conditions' => ['Especie.indCitadaAlbacete' => 1, 'Especie.codigoEuring IS NOT NULL'],
+                'order' => ['Especie.codigoEuring ASC']
+            ]
         );
-
-        $especies_ab = [];
-        foreach ($familias as $familia) {
-
-            $especies_ab_por_familia = $this->Especie->find(
-                'all',
-                array(
-                    'conditions' => array('Especie.familia_id' => $familia['Familia']['id'], 'Especie.indCitadaAlbacete' => 1)
-                )
-            );
-
-            if (count($especies_ab_por_familia) > 0) {
-                $especies_ab[$familia['Familia']['nombre']] = $especies_ab_por_familia;
-            }
+        foreach ($especiesAb as $key => $value) {
+            $especiesAb[$key]['Citas'] = $this->Cita->obtenerNumeroCitas(['Cita.especie_id' => $especiesAb[$key]['Especie']['id']]);
         }
+        $this->set('especies_ab', $especiesAb);
 
-        $this->set('especies_ab', $especies_ab);
+        $especiesAbCount = count($especiesAb);
+        $this->set('especiesAbCount', $especiesAbCount);
 
         /*
          * Info (Estatus nacional, nivel proteccion LR, nivel protección CLM, Estatus provincial Ab, Distribucion provincial Ab)
          */
-        $info = array();
-
+        $info = [];
         // Proteccion LR
         $info['ProteccionLr'] = $this->ProteccionLr->obtenerActivos();
-
         // Proteccion CLM
         $info['ProteccionClm'] = $this->ProteccionClm->obtenerActivos();
-
         // Estatus Cuantitativo AB
         $info['EstatusCuantitativoAb'] = $this->EstatusCuantitativoAb->obtenerActivos();
-
         // Distribucion AB
         $info['DistribucionAb'] = $this->DistribucionAb->obtenerActivos();
-
         $this->set('info', $info);
     }
 

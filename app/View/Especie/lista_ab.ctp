@@ -55,22 +55,20 @@ $this->end();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($especies_ab as $familia) : ?>
-                    <?php foreach ($familia as $especie_ab) : ?>
-                        <tr>
-                            <td style='text-align: center;'><?=count($especie_ab['Citas'])?></td>
-                            <td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
-                            <td title='<?=$especie_ab['Especie']['nombreIngles']?>'><?=$especie_ab['Especie']['nombreComun']?></td>
-                            <td><i><?=$familia[0]['Familia']['nombre']?></i></td>
-                            <td><i><?=$especie_ab['Especie']['genero'] . ' ' . $especie_ab['Especie']['especie']?></i></td>
-                            <td><i><?=$especie_ab['Especie']['subespecie']?></i></td>
-                            <td style='text-align: center; background-color: #B3DCB3;' title ='<?=$especie_ab['EstatusCuantitativoAb']['nombre']?>'><?=$especie_ab['EstatusCuantitativoAb']['codigo']?></td>
-                            <td style='text-align: center; background-color: #B3DCB3;font-size: 28px;' title ='<?=$especie_ab['DistribucionAb']['nombre']?>'><?=$especie_ab['DistribucionAb']['codigo']?></td>
-                            <td style='text-align: center;'><?=$especie_ab['Especie']['codigoEstatusEsp']?></td>
-                            <td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
-                            <td style='text-align: center;' title ='<?=$especie_ab['ProteccionClm']['nombre']?>'><?=$especie_ab['ProteccionClm']['codigo']?></td>
-                        </tr>
-                    <?php endforeach ?>
+                <?php foreach ($especies_ab as $especie_ab) : ?>
+                    <tr>
+                        <td style='text-align: center;'><?=$especie_ab['Citas']?></td>
+                        <td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
+                        <td title='<?=$especie_ab['Especie']['nombreIngles']?>'><?=$especie_ab['Especie']['nombreComun']?></td>
+                        <td><i><?=$especie_ab['Familia']['nombre']?></i></td>
+                        <td><i><?=$especie_ab['Especie']['genero'] . ' ' . $especie_ab['Especie']['especie']?></i></td>
+                        <td><i><?=$especie_ab['Especie']['subespecie']?></i></td>
+                        <td style='text-align: center; background-color: #B3DCB3;' title ='<?=$especie_ab['EstatusCuantitativoAb']['nombre']?>'><?=$especie_ab['EstatusCuantitativoAb']['codigo']?></td>
+                        <td style='text-align: center; background-color: #B3DCB3;font-size: 28px;' title ='<?=$especie_ab['DistribucionAb']['nombre']?>'><?=$especie_ab['DistribucionAb']['codigo']?></td>
+                        <td style='text-align: center;'><?=$especie_ab['Especie']['codigoEstatusEsp']?></td>
+                        <td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
+                        <td style='text-align: center;' title ='<?=$especie_ab['ProteccionClm']['nombre']?>'><?=$especie_ab['ProteccionClm']['codigo']?></td>
+                    </tr>
                 <?php endforeach ?>
             </tbody>
         </table>
