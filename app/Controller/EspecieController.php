@@ -166,7 +166,7 @@ class EspecieController extends AppController
             'all',
             [
                 'conditions' => ['Especie.indCitadaAlbacete' => 1, 'Especie.codigoEuring IS NOT NULL'],
-                'order' => ['Especie.codigoEuring ASC']
+                'order' => ['Especie.codigoAerc ASC', 'Especie.codigoEuring ASC']
             ]
         );
         foreach ($especiesAb as $key => $value) {
