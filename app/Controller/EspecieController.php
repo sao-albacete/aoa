@@ -39,7 +39,7 @@ class EspecieController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('lista_ab', 'generar_grafico', 'generar_mapa', 'buscar_especies');
+        $this->Auth->allow('lista_ab', 'generar_grafico', 'generar_mapa', 'buscar_especies', 'especies_objetivo');
     }
 
     /**
@@ -190,6 +190,12 @@ class EspecieController extends AppController
         // Distribucion AB
         $info['DistribucionAb'] = $this->DistribucionAb->obtenerActivos();
         $this->set('info', $info);
+    }
+
+    public function especies_objetivo()
+    {
+        // Opcion seleccionada del menu
+        $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
     }
 
     /**

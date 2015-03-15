@@ -32,64 +32,64 @@ App::uses('Constants', 'Utility');
  */
 class PagesController extends AppController {
 
-	/**
-	 * Controller name
-	 *
-	 * @var string
-	 */
-	public $name = 'Pages';
-	
-	/**
-	 * Constantes
-	 */
-	const ID_OPCION_MENU = Constants::MENU_ACERCA_DE_ID;
+    /**
+     * Controller name
+     *
+     * @var string
+     */
+    public $name = 'Pages';
+    
+    /**
+     * Constantes
+     */
+    const ID_OPCION_MENU = Constants::MENU_ACERCA_DE_ID;
 
-	/**
-	 * This controller does not use a model
-	 *
-	 * @var array
-	 */
-	public $uses = array();
-	
-	/**
-	 * Componentes
-	 */
-	public $components = array();
+    /**
+     * This controller does not use a model
+     *
+     * @var array
+     */
+    public $uses = array();
+    
+    /**
+     * Componentes
+     */
+    public $components = array();
 
-	public function beforeFilter() {
-		parent::beforeFilter();
+    public function beforeFilter() {
+        parent::beforeFilter();
         $this->Auth->allow('display');
     }
     
-	/**
-	 * Displays a view
-	 *
-	 * @param mixed What page to display
-	 * @return void
-	 */
-	public function display() {
-		
-		// Opcion seleccionada del menu
-		$this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
-		
-		$path = func_get_args();
+    /**
+     * Displays a view
+     *
+     * @param mixed What page to display
+     * @return void
+     */
+    public function display() {
+        
+        // Opcion seleccionada del menu
+        $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
+        
+        $path = func_get_args();
 
-		$count = count($path);
-		if (!$count) {
-			$this->redirect('/');
-		}
-		$page = $subpage = $title_for_layout = null;
+        $count = count($path);
+        if (!$count) {
+            $this->redirect('/');
+        }
+        $page = $subpage = $title_for_layout = null;
 
-		if (!empty($path[0])) {
-			$page = $path[0];
-		}
-		if (!empty($path[1])) {
-			$subpage = $path[1];
-		}
-		if (!empty($path[$count - 1])) {
-			$title_for_layout = Inflector::humanize($path[$count - 1]);
-		}
-		$this->set(compact('page', 'subpage', 'title_for_layout'));
-		$this->render(implode('/', $path));
-	}
+        if (!empty($path[0])) {
+            $page = $path[0];
+        }
+        if (!empty($path[1])) {
+            $subpage = $path[1];
+        }
+        if (!empty($path[$count - 1])) {
+            $title_for_layout = Inflector::humanize($path[$count - 1]);
+        }
+        $this->set(compact('page', 'subpage', 'title_for_layout'));
+        $this->render(implode('/', $path));
+    }
 }
