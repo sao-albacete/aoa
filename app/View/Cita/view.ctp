@@ -5,7 +5,10 @@ $this->set('title_for_layout','Detalle de Cita');
 /**
  * CSS
  */
-$this->Html->css(array('aoa-table', 'Cita/view'), null, array('inline' => false));
+$this->Html->css(array(
+    'aoa-table',
+    'Cita/view'
+), null, array('inline' => false));
 
 /**
  * Javascript
@@ -86,7 +89,7 @@ function initialize() {
         var colorStr = colorNum.toString(16);
         color += colorStr.substring(0,colorStr.indexOf('.'));
         return color;
-    };
+    }
 
 
     var highlightOptions = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
@@ -119,12 +122,12 @@ function initialize() {
 
                 placemark.polygon.normalStyle = normalStyle;
 
-                if(placemark.name == '<?php echo $cita['Lugar']['CuadriculaUtm']['codigo'];?>') {
+                if(placemark.name == '<?=$cita['Lugar']['CuadriculaUtm']['codigo'];?>') {
                     placemark.polygon.setOptions(highlightOptions); 
                 }
             }
         }
-    };
+    }
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -134,57 +137,42 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <div>
     <fieldset>
         <legend>
-        <?php echo __('Detalle de la cita: ').$cita['Cita']['id']; ?>
-        &nbsp;&nbsp;
-        <?php 
-            echo $this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion']);
-            if ($cita['Especie']['Especie']['indRareza'] == 1) {
-                if ($cita['Cita']['indRarezaHomologada'] == 3) {
-                    echo '<span class="label label-success text-info rareza-message">Rareza homologada</span>';
-                } else {
-                    echo '<span class="label label-warning text-info rareza-message">Rareza pendiente de homologar</span>';
-                }
-            }
-        ?>
-        
-        <span class="pull-right"><b><?php echo date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y");?></b></span>
+            <?=__('Detalle de la cita: ').$cita['Cita']['id']; ?>
+            &nbsp;&nbsp;
+            <?=$this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion']) ?>
+            <?php if ($cita['Especie']['Especie']['indRareza'] == 1) : ?>
+                <?php if ($cita['Cita']['indRarezaHomologada'] == 3) : ?>
+                    <span class="label label-success text-info rareza-message"><?=__('Rareza homologada')?></span>
+                <?php else : ?>
+                    <span class="label label-warning text-info rareza-message"><?=__('Rareza pendiente de homologar')?></span>
+                <?php endif ?>
+            <?php endif ?>
+            <span class="pull-right"><b><?=date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y");?></b></span>
         </legend>
         
         <?php if($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1) :?>
-        <a href="/cita/edit/id:<?php echo $cita['Cita']['id'];?>" role="button"
-            class="btn btn-mini btn-warning" data-toggle="modal"
-            id="btnEditarCita"><i class="icon-plus"></i> <?php echo __("Editar cita");?></a>
-        <hr>
+            <a href="/cita/edit/id:<?=$cita['Cita']['id'];?>" role="button"
+                class="btn btn-mini btn-warning" data-toggle="modal"
+                id="btnEditarCita"><i class="icon-plus"></i> <?=__("Editar cita");?></a>
+            <hr>
         <?php endif;?>
 
         <div class="row">
             <!-- Nombres -->
             <div class="span6 contenedor_azul">
                 <h3>
-                <?php echo $cita['Especie']['Especie']['nombreComun']." (<em>".$cita['Especie']['Especie']['genero']." ".$cita['Especie']['Especie']['especie']." ".$cita['Especie']['Especie']['subespecie']."</em>)"; ?>
+                    <?=$cita['Especie']['Especie']['nombreComun']." (<em>".$cita['Especie']['Especie']['genero']." ".$cita['Especie']['Especie']['especie']." ".$cita['Especie']['Especie']['subespecie']."</em>)"; ?>
                 </h3>
                 <h4>
-                <em>
-                <?php echo $cita['Especie']['Familia']['nombre'];?>
-                    ,
-                    <?php echo $cita['Especie']['OrdenTaxonomico']['nombre'];?>
-                </em>
+                    <em><?=$cita['Especie']['Familia']['nombre'];?>, <?=$cita['Especie']['OrdenTaxonomico']['nombre'];?></em>
                 </h4>
             </div>
             <!-- Figuras de protección -->
             <div class="span6">
-                <p>
-                <?php echo "<span class='label ".$this->Especie->obtener_color_proteccion_lr($cita['Especie']['ProteccionLr']['codigo'])."'>".$cita['Especie']['ProteccionLr']['nombre']."</span>".__(" según el ")."<em><b>".__("Libro Rojo de las Aves de España")."</b></em>";?>
-                </p>
-                <p>
-                <?php echo "<span class='label ".$this->Especie->obtener_color_proteccion_clm($cita['Especie']['ProteccionClm']['codigo'])."'>".$cita['Especie']['ProteccionClm']['nombre']."</span>".__(" en ")."<b>".__("Castilla - La Mancha")."</b>";?>
-                </p>
-                <p>
-                <?php echo "<span class='label label-info'>".$cita['Especie']['EstatusCuantitativoAb']['nombre']."</span>".__(" en ")."<b>".__("Albacete")."</b>";?>
-                </p>
-                <p>
-                <?php echo "<span class='label label-info'>".$cita['Especie']['EstatusReproductivoAb']['nombre']."</span>".__(" en ")."<b>".__("Albacete")."</b>";?>
-                </p>
+                <p><span class='label <?=$this->Especie->obtener_color_proteccion_lr($cita['Especie']['ProteccionLr']['codigo'])?>'> <?=$cita['Especie']['ProteccionLr']['nombre']?></span><?=__(" según el ")?><em><b><?=__("Libro Rojo de las Aves de España")?></b></em></p>
+                <p><span class='label <?=$this->Especie->obtener_color_proteccion_clm($cita['Especie']['ProteccionClm']['codigo'])?>'><?=$cita['Especie']['ProteccionClm']['nombre']?></span><?=__(" en ")?><b><?=__("Castilla - La Mancha")?></b></p>
+                <p><span class='label label-info'><?=$cita['Especie']['EstatusCuantitativoAb']['nombre']?></span><?=__(" en ")?><b><?=__("Albacete")?></b>></p>
+                <p><span class='label label-info'><?=$cita['Especie']['EstatusReproductivoAb']['nombre']?></span><?=__(" en ")?><b><?=__("Albacete")?></b>></p>
             </div>
         </div>
         <br>
@@ -194,78 +182,78 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <div class="span6">
                 
                 <table class="table table-striped table-bordered table-condensed">
-                    <caption>Número de individuos</caption>
+                    <caption><?=__('Número de individuos')?></caption>
                     <thead>
                         <tr>
-                            <th>Edad/Sexo</th>
-                            <th>Cantidad</th>
+                            <th><?=__('Edad/Sexo')?></th>
+                            <th><?=__('Cantidad')?></th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach ($cita['AsoCitaClaseEdadSexo'] as $claseEdadSexo) {
-                        echo "<tr>";
-                        echo     "<td style='text-align: center;'>".$claseEdadSexo['clase_edad_sexo_nombre']."</td>";
-                        echo     "<td style='text-align: center;'>".$claseEdadSexo['cantidad']."</td>";
-                        echo "</tr>";
-                    }
-                    ?>
+                    <?php foreach ($cita['AsoCitaClaseEdadSexo'] as $claseEdadSexo) : ?>
+                        <tr>
+                            <td style='text-align: center;'><?=$claseEdadSexo['clase_edad_sexo_nombre']?></td>
+                            <td style='text-align: center;'><?=$claseEdadSexo['cantidad']?></td>
+                        </tr>
+                    <?php endforeach ?>
                     </tbody>
                     <tfoot>
-                        <th>TOTAL</th>
-                        <th><?php echo $cita['Cita']['cantidad'];?></th>
+                        <tr>
+                            <th><?=__('TOTAL')?></th>
+                            <th><?=$cita['Cita']['cantidad'];?></th>
+                        </tr>
                     </tfoot>
                 </table>
                 
                 <fieldset class="fsCustom">
-                    <legend >Datos de los observadores</legend>
+                    <legend><?=__('Datos de los observadores')?></legend>
                     
                     <dl class="dl-horizontal">
-                        <dt><?php echo __("Observador");?></dt>
-                        <dd><?php echo $cita['ObservadorPrincipal']['codigo']." - ".$cita['ObservadorPrincipal']['nombre'];?></dd>
+                        <dt><?=__("Observador");?></dt>
+                        <dd><?=$cita['ObservadorPrincipal']['codigo']." - ".$cita['ObservadorPrincipal']['nombre'];?></dd>
                         
-                        <dt><?php echo __("Colaboradores");?></dt>
-                        <dd><?php echo $this->ObservadorSecundario->mostrar_nombres_observadores($cita['observadores']);?></dd>
+                        <dt><?=__("Colaboradores");?></dt>
+                        <dd><?=$this->ObservadorSecundario->mostrar_nombres_observadores($cita['observadores']);?></dd>
                         
-                        <dt><?php echo __("Fuente");?></dt>
-                        <dd><?php echo $cita['Fuente']['nombre'];?></dd>
+                        <dt><?=__("Fuente");?></dt>
+                        <dd><?=$cita['Fuente']['nombre'];?></dd>
                         
-                        <dt><?php echo __("Estudio");?></dt>
-                        <dd><?php echo $cita['Estudio']['descripcion'];?></dd>
+                        <dt><?=__("Estudio");?></dt>
+                        <dd><?=$cita['Estudio']['descripcion'];?></dd>
                     </dl>
                     
                 </fieldset>        
                 
                 <fieldset class="fsCustom" style="margin-top: 20px;">
-                    <legend>Indicadores de la cita</legend>
+                    <legend><?=__('Indicadores de la cita')?></legend>
                     
                     <dl class="dl-horizontal">
-                        <dt><?php echo __("Habitat raro");?></dt>
+                        <dt><?=__("Habitat raro");?></dt>
                         <dd><?php if($cita['Cita']['indHabitatRaro'] == true){echo "<img src='/img/icons/fugue-icons-3.5.6/icons/tick.png' alt='Sí'/>";}else{echo "<img src='/img/icons/fugue-icons-3.5.6/icons/cross-script.png' alt='No'/>";}?></dd>
                         
-                        <dt><?php echo __("Criando en habitat raro");?></dt>
+                        <dt><?=__("Criando en habitat raro");?></dt>
                         <dd><?php if($cita['Cita']['indCriaHabitatRaro'] == true){echo "<img src='/img/icons/fugue-icons-3.5.6/icons/tick.png' alt='Sí'/>";}else{echo "<img src='/img/icons/fugue-icons-3.5.6/icons/cross-script.png' alt='No'/>";}?></dd>
                         
-                        <dt><?php echo __("Herido, accidentado o muerto");?></dt>
+                        <dt><?=__("Herido, accidentado o muerto");?></dt>
                         <dd><?php if($cita['Cita']['indHerido'] == true){echo "<img src='/img/icons/fugue-icons-3.5.6/icons/tick.png' alt='Sí'/>";}else{echo "<img src='/img/icons/fugue-icons-3.5.6/icons/cross-script.png' alt='No'/>";}?></dd>
                         
-                        <dt title="<?php echo __("Comportamiento o morfología curiosa");?>"><?php echo __("Comportamiento o morfología curiosa");?></dt>
+                        <dt title="<?=__("Comportamiento o morfología curiosa");?>"><?=__("Comportamiento o morfología curiosa");?></dt>
                         <dd><?php if($cita['Cita']['indComportamiento'] == true){echo "<img src='/img/icons/fugue-icons-3.5.6/icons/tick.png' alt='Sí'/>";}else{echo "<img src='/img/icons/fugue-icons-3.5.6/icons/cross-script.png' alt='No'/>";}?></dd>
                     </dl>
                 </fieldset>        
                 
                 <fieldset class="fsCustom" style="margin-top: 20px;">
-                    <legend>Criterios de selección de la cita</legend>
+                    <legend><?=__('Criterios de selección de la cita')?></legend>
                     
                     <dl class="dl-horizontal">
-                        <dt><?php echo __("Seleccionada para el anuario");?></dt>
+                        <dt><?=__("Seleccionada para el anuario");?></dt>
                         <dd><?php if($cita['Cita']['indSeleccionada'] == "1"){echo "<img src='/img/icons/fugue-icons-3.5.6/icons/tick.png' alt='Sí'/>";}else{echo "<img src='/img/icons/fugue-icons-3.5.6/icons/cross-script.png' alt='No'/>";}?></dd>
 
-                        <dt><?php echo __("Clase de reproducción");?></dt>
-                        <dd><?php echo $cita['ClaseReproduccion']['tipoCria']." - ".$cita['ClaseReproduccion']['descripcion'];?></dd>
+                        <dt><?=__("Clase de reproducción");?></dt>
+                        <dd><?=$cita['ClaseReproduccion']['tipoCria']." - ".$cita['ClaseReproduccion']['descripcion'];?></dd>
                         
-                        <dt><?php echo __("Criterio de selección");?></dt>
-                        <dd><?php echo $cita['CriterioSeleccionCita']['nombre'];?></dd>
+                        <dt><?=__("Criterio de selección");?></dt>
+                        <dd><?=$cita['CriterioSeleccionCita']['nombre'];?></dd>
                     </dl>
                 </fieldset>
             </div>
@@ -278,22 +266,22 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     
                     <div class="span6">
                         <p>
-                            <b>Paraje: </b>
-                            <?php echo $cita['Lugar']['Lugar']['nombre'];?>
+                            <b><?=__('Paraje')?>: </b>
+                            <?=$cita['Lugar']['Lugar']['nombre'];?>
                         </p>
                         <p>
-                            <b>Cuadrícula UTM: </b>
-                            <?php echo $cita['Lugar']['CuadriculaUtm']['codigo'];?>
+                            <b><?=__('Cuadrícula UTM')?>: </b>
+                            <?=$cita['Lugar']['CuadriculaUtm']['codigo'];?>
                         </p>
                     </div>
                     <div class="span6">
                         <p>
-                            <b>Municipio: </b>
-                            <?php echo $cita['Lugar']['Municipio']['nombre'];?>
+                            <b><?=__('Municipio')?>: </b>
+                            <?=$cita['Lugar']['Municipio']['nombre'];?>
                         </p>
                         <p>
-                            <b>Comarca: </b>
-                            <?php echo $cita['Lugar']['Comarca']['nombre'];?>
+                            <b><?=__('Comarca')?>: </b>
+                            <?=$cita['Lugar']['Comarca']['nombre'];?>
                         </p>
                     </div>
                     <div id="map_canvas" class="span12" style="height:400px;"></div>
@@ -302,24 +290,24 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     
                         <h5 style="text-align: left;">
                             <img src='/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png' width='16' height='16' alt='alert icon' style='margin-right: 10px;'>
-                            <?php echo __("Por razones de seguridad, los datos de ubicación de la cita de esta especie están ocultos.");?>
+                            <?=__("Por razones de seguridad, los datos de ubicación de la cita de esta especie están ocultos.");?>
                         </h5>
-                        <p style="text-align: left;"><?php echo __("No obstante, puede solicitarlos enviándonos un email a ");?><a href="mailto:anuario@sao.albacete.org">anuario@sao.albacete.org</a></p>
+                        <p style="text-align: left;"><?=__("No obstante, puede solicitarlos enviándonos un email a ");?><a href="mailto:anuario@sao.albacete.org">anuario@sao.albacete.org</a></p>
                     
                     <?php endif; ?>
                     
                 </div>
                 <fieldset class="fsCustom" style="margin-top: 20px;">
-                    <legend>Observaciones</legend>
+                    <legend><?=__('Observaciones')?></legend>
                         
                     <?php if($cita['Cita']['indPrivacidad'] == 1 || $usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1) :?>
-                        <?php echo $cita['Cita']['observaciones'];?>
+                        <?=$cita['Cita']['observaciones'];?>
                     <?php else :?>
                         <h5>
                             <img src='/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png' width='16' height='16' alt='alert icon' style='margin-right: 10px;'>
-                            <?php echo __("Por razones de seguridad, las observaciones de la cita de esta especie están ocultos.");?>
+                            <?=__("Por razones de seguridad, las observaciones de la cita de esta especie están ocultos.");?>
                         </h5>
-                        <p><?php echo __("No obstante, puede solicitarlos enviándonos un email a ");?><a href="mailto:anuario@sao.albacete.org">anuario@sao.albacete.org</a></p>
+                        <p><?=__("No obstante, puede solicitarlos enviándonos un email a ");?><a href="mailto:anuario@sao.albacete.org">anuario@sao.albacete.org</a></p>
                     <?php endif; ?>
                 </fieldset>
             </div>
@@ -329,7 +317,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         <br>
         
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#fotos"><?php echo __("Fotos");?></a></li>
+            <li class="active"><a data-toggle="tab" href="#fotos"><?=__("Fotos");?></a></li>
         </ul>
 
         <!-- Fotos -->
@@ -338,29 +326,21 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 
                 <div class="row-fluid">
                     <ul class="thumbnails yoxview">
-                <?php
-                if(isset($cita['Fichero']) && count($cita['Fichero']) > 0) {
-                    
-                    foreach ($cita['Fichero'] as $foto) {
-                        echo '<li class="span2">';
-                        echo     '<a href="'.$foto['ruta'].$foto['nombreFisico'].'" class="thumbnail">';
-                        echo $this->Html->image($foto['ruta'].$foto['nombreFisico'], array(
-                                "alt"=>$foto['descripcion'],
-                                "title"=>$foto['descripcion'],
-                                "style"=>"max-width: 200px; max-height: 150px;"
-                        )
-                        );
-                        echo     '</a>';
-                        echo '</li>';
-                    }
-                    
-                }
-                else {
-                    echo '<div class="thumbnail" style="width: 360px; height: 270px;">';
-                    echo '<img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif" />';
-                    echo '</div>';
-                }
-                ?>
+                <?php if(isset($cita['Fichero']) && count($cita['Fichero']) > 0) : ?>
+                    <?php foreach ($cita['Fichero'] as $foto) : ?>
+                        <li class="span2">
+                            <a href="<?=$foto['ruta'].$foto['nombreFisico']?>" class="thumbnail">
+                                <img src="<?=$foto['ruta'].$foto['nombreFisico']?>"
+                                    alt="<?=$foto['descripcion']?>"
+                                    title="<?=$foto['descripcion']?>">
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <div class="thumbnail" style="width: 360px; height: 270px;">
+                        <img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif" />
+                    </div>
+                <?php endif ?>
                     </ul>
                 </div>
             </div>

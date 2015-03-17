@@ -98,19 +98,19 @@ class Especie extends AppModel {
      * @var array
      */
     public $hasMany = array(
-        'Citas' => array(
-            'className' => 'Cita',
-            'foreignKey' => 'especie_id',
-            'dependent' => false,
-            'conditions' => 'indActivo = 1',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
+//        'Citas' => array(
+//            'className' => 'Cita',
+//            'foreignKey' => 'especie_id',
+//            'dependent' => false,
+//            'conditions' => 'indActivo = 1',
+//            'fields' => '',
+//            'order' => '',
+//            'limit' => '',
+//            'offset' => '',
+//            'exclusive' => '',
+//            'finderQuery' => '',
+//            'counterQuery' => ''
+//        ),
         'AsoEspeciePrivacidad' => array(
             'className' => 'AsoEspeciePrivacidad',
             'foreignKey' => 'id_especie_id',

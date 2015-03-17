@@ -100,7 +100,7 @@
             <a title="www.sao.albacete.org" href="http://www.sao.albacete.org/" target="_blank">
                 <img src="/img/logos/logo_sao_180x179" alt="Logotipo de la Sociedad Albacetense de Ornitología">
             </a>
-            <h4>Versión 1.0.0</h4>
+            <h4>Versión 1.1.0</h4>
         </div>
         <div class="span5 segundo">
             <a href="/pages/elanuario/"><?=__("El Anuario");?></a> | 

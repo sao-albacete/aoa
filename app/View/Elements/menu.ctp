@@ -58,13 +58,13 @@
                     ?>
                     
                     <!-- Inicio -->
-                    <li class="<?=$inicio?>"><a href="/"><i class="icon-home"></i>&nbsp;<?=__("Inicio")?></a></li>
+                    <li class="<?=$inicio?>"><a href="/"><i class="icon-home"></i>&nbsp;&nbsp;<?=__("Inicio")?></a></li>
                     
                     <li class="divider-vertical"></li>
                     
                     <!-- Citas -->
                     <li class="<?=$citas?>">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><?=__("Citas")?> <b class="caret"></b> </a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-eye-open"></i>&nbsp;&nbsp;<?=__("Citas")?> <b class="caret"></b> </a>
                     <ul class="dropdown-menu">
                     <!-- Buscar citas -->
                     <li><a href="/cita/"><i class="icon-filter"></i>&nbsp;<?=__("Buscar citas")?></a></li>
@@ -79,17 +79,20 @@
                     
                     <!-- Especies -->
                     <li class="<?=$especies?>">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><?=__("Especies")?> <b class="caret"></b> </a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/icons/bird.png" width="20px">&nbsp;&nbsp;<?=__("Especies")?> <b class="caret"></b> </a>
                     <ul class="dropdown-menu">
                     <!-- Lista de aves de Albacete -->
                     <li><a href="/especie/lista_ab/"><i class="icon-list"></i>&nbsp;<?=__("Lista de Aves de Albacete")?></a></li>
+                    <li class="divider"></li>
+                    <!-- Especies objetivo -->
+                    <li><a href="/especie/especies_objetivo/"><i class="icon-flag"></i>&nbsp;<?=__("Especies objetivo")?></a></li>
                     </ul>
                     
                     <li class="divider-vertical"></li>
                     
                     <!-- Localizacion -->
                     <li class="<?=$localizacion?>">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><?=__("Localización")?> <b class="caret"></b> </a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-map-marker"></i>&nbsp;&nbsp;<?=__("Localización")?> <b class="caret"></b> </a>
                     <ul class="dropdown-menu">
                     <!-- Lugares -->
                     <li><a href="/lugar/"><i class="icon-map-marker"></i>&nbsp;<?=__("Lugares")?></a></li>
@@ -106,7 +109,7 @@
                     
                     <!-- Observadores -->
                     <li class="<?=$observadores?>">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><?=__("Observadores")?> <b class="caret"></b> </a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>&nbsp;&nbsp;<?=__("Observadores")?> <b class="caret"></b> </a>
                     <ul class="dropdown-menu">
                     <!-- Observadores -->
                     <li><a href="/observadorPrincipal/"><i class="icon-user"></i>&nbsp;<?=__("Observadores")?></a></li>
@@ -118,7 +121,7 @@
                     
                     <!-- Acerca de -->
                     <li class="<?=$acercaDe?>">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><?=__("Acerca de")?> <b class="caret"></b> </a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-info-sign"></i>&nbsp;&nbsp;<?=__("Acerca de")?> <b class="caret"></b> </a>
                     <ul class="dropdown-menu">
                     <!-- El anuario -->
                     <li><a href="/pages/elanuario/"><?=__("El Anuario")?></a></li>

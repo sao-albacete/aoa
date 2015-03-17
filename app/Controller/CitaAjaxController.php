@@ -40,6 +40,7 @@ class CitaAjaxController extends AppController
     // Array de columnas que serán mostradas en la tabla de DataTables.
     public $aColumns = array(
         'Ver Detalle',
+        'Importancia',
         'Especie',
         'Fecha',
         'Lugar',
@@ -47,12 +48,13 @@ class CitaAjaxController extends AppController
         'Observador',
         'Colaboradores',
         'Clase de Reproducción',
-        'Importancia'
+        'Criterio de Selección',
     );
     
     // Array de columnas por las que se puede ordenar
     public $aSortableColumns = array(
         ' ',
+        'ImportanciaCita.descripcion',
         'Especie.nombreComun',
         'Cita.fechaAlta',
         'Lugar.nombre',
@@ -60,11 +62,12 @@ class CitaAjaxController extends AppController
         'ObservadorPrincipal.codigo',
         ' ',
         'ClaseReproduccion.codigo',
-        'ImportanciaCita.descripcion'
+        'CriterioSeleccionCita.codigo',
     );
     
     // Array de columnas por las que se puede ordenar
     public $aSearchableColumns = array(
+        'ImportanciaCita.descripcion',
         'Especie.nombreComun',
         'Especie.genero',
         'Especie.especie',
@@ -76,7 +79,8 @@ class CitaAjaxController extends AppController
         'ObservadorPrincipal.nombre',
         'ClaseReproduccion.codigo',
         'ClaseReproduccion.descripcion',
-        'ImportanciaCita.descripcion'
+        'CriterioSeleccionCita.codigo',
+        'CriterioSeleccionCita.nombre',
     );
     
     // Array de columnas que queremos obtener de base de datos
@@ -100,7 +104,10 @@ class CitaAjaxController extends AppController
         'ClaseReproduccion.codigo',
         'ImportanciaCita.id',
         'ImportanciaCita.descripcion',
-        'Cita.cantidad'
+        'Cita.cantidad',
+        'CriterioSeleccionCita.id',
+        'CriterioSeleccionCita.codigo',
+        'CriterioSeleccionCita.nombre',
     );
     
     public function beforeFilter()
@@ -427,6 +434,8 @@ class CitaAjaxController extends AppController
                         $operationsColumn .= "<a href='/cita/view/id:" . $citas[$index]['Cita']['id'] . "' title='" . __("Detalle cita") . "'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' alt='Icono detalle'/></a>";
                     }
                     $row[] = $operationsColumn;
+                } elseif ($this->aColumns[$i] == "Importancia") {
+                    $row[] = $this->getIconoImportancia($citas[$index]['ImportanciaCita']['id'], $citas[$index]['ImportanciaCita']['descripcion']);
                 } elseif ($this->aColumns[$i] == "Especie") {
                     $row[] = "<a href='/cita/index?especieId=" . $citas[$index]['Especie']['id'] . "' title='" . $citas[$index]['Especie']['genero'] . " " . $citas[$index]['Especie']['especie'] . " " . $citas[$index]['Especie']['subespecie'] . "'>" . $citas[$index]['Especie']['nombreComun'] . ' ' . $citas[$index]['Especie']['subespecie'] . "</a>";
                 } elseif ($this->aColumns[$i] == "Fecha") {
@@ -445,8 +454,8 @@ class CitaAjaxController extends AppController
                     $row[] = $this->mostrarCodigosPbservadores($observadoresSecundarios);
                 } elseif ($this->aColumns[$i] == "Clase de Reproducción") {
                     $row[] = "<a href='/cita/index?claseReproduccionId=" . $citas[$index]['ClaseReproduccion']['id'] . "' title='" . $citas[$index]['ClaseReproduccion']['descripcion'] . "'>" . $citas[$index]['ClaseReproduccion']['codigo'] . "</a>";
-                } elseif ($this->aColumns[$i] == "Importancia") {
-                    $row[] = $this->getIconoImportancia($citas[$index]['ImportanciaCita']['id'], $citas[$index]['ImportanciaCita']['descripcion']);
+                } elseif ($this->aColumns[$i] == "Criterio de Selección") {
+                    $row[] = "<span title='" . $citas[$index]['CriterioSeleccionCita']['nombre'] . "'>" . $citas[$index]['CriterioSeleccionCita']['codigo'] . "</span>";
                 }
             }
         
@@ -469,7 +478,8 @@ class CitaAjaxController extends AppController
             $prefix . 'observador_principal AS ObservadorPrincipal ON (`Cita`.`observador_principal_id` = `ObservadorPrincipal`.`id`)',
             $prefix . 'clase_reproduccion AS ClaseReproduccion ON (`Cita`.`clase_reproduccion_id` = `ClaseReproduccion`.`id`)',
             $prefix . 'especie AS Especie ON (`Cita`.`especie_id` = `Especie`.`id`)',
-            $prefix . 'importancia_cita AS ImportanciaCita ON (`Cita`.`importancia_cita_id` = `ImportanciaCita`.`id`)'
+            $prefix . 'importancia_cita AS ImportanciaCita ON (`Cita`.`importancia_cita_id` = `ImportanciaCita`.`id`)',
+            $prefix . 'criterio_seleccion_cita AS CriterioSeleccionCita ON (`Cita`.`criterio_seleccion_cita_id` = `CriterioSeleccionCita`.`id`)',
         );
     }
 
@@ -512,7 +522,7 @@ class CitaAjaxController extends AppController
     /**
      * Genera el detalle del lugar: comarca, municipio y cuadrícula UTM
      *
-     * @param array $lugar
+     * @param int $lugarId
      * @return string
      */
     public function mostrarDetalleLugar($lugarId)
