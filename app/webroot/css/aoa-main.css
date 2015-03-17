@@ -172,6 +172,16 @@ legend {
     max-width: 410px;
 }
 
+.thumbnail > img {
+    max-height: 300px;
+}
+
+.row-fluid ul.thumbnails li.span3 {
+    margin-right: 20px;
+    margin-left: 0;
+    min-height: 450px;
+}
+
 .ui-autocomplete-loading {
     background: white url('/img/gif/cargando_barra_mini.gif') right center no-repeat;
 }

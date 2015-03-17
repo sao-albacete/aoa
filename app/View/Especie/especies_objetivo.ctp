@@ -59,12 +59,13 @@ $this->Html->script(array(
                 </div>
             </div>
 
-            <p><?=__('Pero en muchas ocasiones, cuando salimos al campo y recogemos las observaciones, solemos anotar básicamente las especies más raras, escasas o llamativas, olvidándonos la mayoría de las veces a las más comunes. Algunas como el gorrión molinero, el verderón común o el pico picapinos no llegan a 10 citas las que se recogen actualmente en el anuario. ')?></p>
+            <p><?=__('En muchas ocasiones, cuando salimos al campo y recogemos las observaciones, solemos anotar básicamente las especies más raras, escasas o llamativas, olvidándonos la mayoría de las veces a las más comunes. Algunas como el gorrión molinero, el verderón común o el pico picapinos no llegan a 10 citas las que se recogen actualmente en el anuario. ')?></p>
+            <p><?=__('Pero, ¿cuáles son las más comunes? Para Albacete, bastaría con ir al menú de “Lista de aves de la provincia de Albacete”, y observar por ejemplo la columna de distribución provincial, aquellas especies con tres o cuatro estrellas serán las consideradas más comunes en la provincia.')?></p>
             <p><?=__('SEO/BirdLife lleva avisando desde hace unos años acerca del debilitamiento de las poblaciones de las especies comunes. Para algunas de ellas, este descenso es alarmante como es el caso del alcaudón real, cuyas poblaciones han llegado a disminuir hasta un 65% en el año 2013 respecto a 1998. También es preocupante el caso de otras especies como la codorniz común, la golondrina común o la grajilla occidental con declives de entorno al 30% respecto a aquel año (SEO/BirdLife, 2014). Este hecho hace que sea necesario obtener mayor información sobre estas especies. Este motivo nos ha animado a poner en marcha esta iniciativa y así intentar ayudar a conocer un poco más sobre qué les está pasando a todas estas especies, tanto a nivel provincial como a nivel más global. Para más información, visitad este enlace de la página de <a href="http://www.seo.org/boletin/seguimiento/boletin/2013" target="_blank">SEO/BirdLife</a>.')?></p>
             <p><?=__('Por todo ello, hemos creado esta sección, para intentar llamar la atención sobre estas otras especies, que paradójicamente, son de las que menos datos disponemos. Os animamos a todos/as los/as que colaboráis con este anuario ornitológico a que subáis también las citas de todas estas especies comunes, pues así podremos conocer un poco mejor la situación de las aves de Albacete, ayudando con ello a protegerlas y conservarlas.')?></p>
             <p><?=__('Cada año se elegirán 5 especies para motivar que se introduzcan las observaciones que se recojan de éstas.')?></p>
             <br/>
-            <p style="font-size: 18px; font-weight: bold"><?=__('Muchas gracias por colaborar.')?></p>
+            <p style="font-size: 18px; font-weight: bold; text-align: center"><?=__('Muchas gracias por colaborar.')?></p>
 
 
         </div>
@@ -127,7 +128,7 @@ $this->Html->script(array(
 
         <p><?=__('Referencias:')?></p>
         <ul>
-            <li><p><?=__('SEO/BirdLife. Programas de seguimiento de SEO/BirdLife en 2013. 60 años de ciencia ciudadana de SEO/BirdLife [en línea] [Madrid, España].')?></p></li>
+            <li><p><?=__('SEO/BirdLife. Programas de seguimiento de SEO/BirdLife en 2013. <i>60 años de ciencia ciudadana de SEO/BirdLife</i> [en línea] [Madrid, España].')?></p></li>
             <li><p><?=__('SEO/BirdLife 2014. [fecha de consulta: 10 de febrero de 2015]. Disponible en Web: <a href="http://www.seo.org/boletin/seguimiento/boletin/2013" target="_blank">http://www.seo.org/boletin/seguimiento/boletin/2013</a>')?></p></li>
         </ul>
     </fieldset>
