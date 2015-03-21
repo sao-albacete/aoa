@@ -20,6 +20,13 @@ body {
     background-color: #ffffff;
 }
 
+body p {
+    font-size: 1.2em;
+    font-weight: 200;
+    line-height: 1.3;
+    text-rendering: optimizelegibility;
+}
+
 select {
     width: auto;
     background-color: rgb(255, 255, 255);

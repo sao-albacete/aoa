@@ -128,8 +128,7 @@ $this->Html->script(array(
 
         <p><?=__('Referencias:')?></p>
         <ul>
-            <li><p><?=__('SEO/BirdLife. Programas de seguimiento de SEO/BirdLife en 2013. <i>60 años de ciencia ciudadana de SEO/BirdLife</i> [en línea] [Madrid, España].')?></p></li>
-            <li><p><?=__('SEO/BirdLife 2014. [fecha de consulta: 10 de febrero de 2015]. Disponible en Web: <a href="http://www.seo.org/boletin/seguimiento/boletin/2013" target="_blank">http://www.seo.org/boletin/seguimiento/boletin/2013</a>')?></p></li>
+            <li><p><?=__('SEO/BirdLife. Programas de seguimiento de SEO/BirdLife en 2013. <i>60 años de ciencia ciudadana de SEO/BirdLife</i> [en línea] [Madrid, España]. SEO/BirdLife 2014. [fecha de consulta: 10 de febrero de 2015]. Disponible en Web: <a href="http://www.seo.org/boletin/seguimiento/boletin/2013" target="_blank">http://www.seo.org/boletin/seguimiento/boletin/2013</a>')?></p></li>
         </ul>
     </fieldset>
 </div>

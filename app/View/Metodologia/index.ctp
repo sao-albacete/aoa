@@ -26,33 +26,47 @@ $this->end();
 <!-- Cuerpo -->
 <div>
     <fieldset>
-    <legend><?=__("Metodología utilizada para la elaboración de este Anuario");?></legend>
+        <legend><?=__("Metodología utilizada para la elaboración de este Anuario");?></legend>
 
-    <p><?=__("En este documento se indica la metodología que se ha utilizado para realizar el anuario ornitológico de Albacete online");?>.</p>
+        <br/>
+        <p><?=__("En este documento se indica la metodología que se ha utilizado para realizar el anuario ornitológico de Albacete online");?>.</p>
+        <br/>
 
-    <h4><?=__("Criterios de selección de las citas");?></h4>
-    <p><?=__("Las citas son seleccionadas automáticamente por la aplicación. Se han utilizado unos criterios para esta selección clasificados en: citas de presencia, de distribución, hábitat, fenología, abundancia, reproducción, comportamiento y conservación. En el caso de que una cita cumpla alguno de estos criterios, será seleccionada para el anuario y se le asignará el código de mayor importancia. Estos criterios de selección  serán los que compongan los posteriores anuarios ornitológicos");?>.</p>
+        <div class="page-header">
+            <h4><?=__("Criterios de selección de las citas");?></h4>
+        </div>
 
-    <?=$this->element('Cita/tablaCriterioSeleccion'); ?>
+        <p><?=__("Las citas son seleccionadas automáticamente por la aplicación. Se han utilizado unos criterios para esta selección clasificados en: citas de presencia, de distribución, hábitat, fenología, abundancia, reproducción, comportamiento y conservación. En el caso de que una cita cumpla alguno de estos criterios, será seleccionada para el anuario y se le asignará el código de mayor importancia. Estos criterios de selección  serán los que compongan los posteriores anuarios ornitológicos");?>.</p>
 
-    <h4><?=__("Especies consideradas rarezas");?></h4>
-    <p><?=__("En la aplicación se pueden distinguir dos clases de aves consideradas rarezas, las rarezas locales y las rarezas nacionales.");?></p>
-    <ul>
-        <li>
-            <?=__("Las <b>rarezas nacionales</b> son las que oficialmente son incluidas como tales por el ");?>
-            <a href="http://www.seo.org/2012/01/25/%C2%BFque-es-y-como-trabaja-el-comite-de-rarezas/" target="_blank"><?=__("comité de rarezas de SEO/BirdLife")?></a>.
-            <?=__("En el siguiente enlace se puede ver esta lista actual de las aves consideradas rarezas nacionales:")?>
-            <a href="http://www.rarebirdspain.net/homolog_2006.pdf" target="_blank">http://www.rarebirdspain.net/homolog_2006.pdf</a>.
-        </li>
-        <li>
-            <p><?=__("Las <b>rarezas locales</b> son todas aquellas especies que no son rarezas nacionales pero con reducidas citas en la provincia de Albacete")?>. <a href="#modalRarezasLocales" data-toggle="modal"><?=__("En este enlace")?></a> <?=__("se puede ver el listado de las especies consideradas rarezas locales:")?></p>
-        </li>
-    </ul>
-    <p><?=__("¿Qué pasa al introducir una rareza?. Al introducir una especie considerada rareza local o nacional, la aplicación avisa de que la especie considerada es rareza. En el caso de rareza nacional, se le indica la dirección web del comité de rarezas de SEO/BirdLife para que rellene un formulario de registro. En el caso de ser un ave considerada rareza local, se indica que la cita está sujeta a revisión y que deberá aportar toda la información adicional de la que se disponga al correo electrónico del anuario con el fin de confirmar o rechazar la rareza.")?></p>
+        <br/>
+        <?=$this->element('Cita/tablaCriterioSeleccion'); ?>
+        <br/>
 
-        <h4><?=__("Citas de especies Vulnerables y En Peligro y rarezas")?></h4>
+        <div class="page-header">
+            <h4><?=__("Especies consideradas rarezas");?></h4>
+        </div>
+
+        <p><?=__("En la aplicación se pueden distinguir dos clases de aves consideradas rarezas, las rarezas locales y las rarezas nacionales.");?></p>
+        <ul>
+            <li>
+                <?=__("Las <b>rarezas nacionales</b> son las que oficialmente son incluidas como tales por el ");?>
+                <a href="http://www.seo.org/2012/01/25/%C2%BFque-es-y-como-trabaja-el-comite-de-rarezas/" target="_blank"><?=__("comité de rarezas de SEO/BirdLife")?></a>.
+                <?=__("En el siguiente enlace se puede ver esta lista actual de las aves consideradas rarezas nacionales:")?>
+                <a href="http://www.rarebirdspain.net/homolog_2006.pdf" target="_blank">http://www.rarebirdspain.net/homolog_2006.pdf</a>.
+            </li>
+            <li>
+                <p><?=__("Las <b>rarezas locales</b> son todas aquellas especies que no son rarezas nacionales pero con reducidas citas en la provincia de Albacete")?>. <a href="#modalRarezasLocales" data-toggle="modal"><?=__("En este enlace")?></a> <?=__("se puede ver el listado de las especies consideradas rarezas locales:")?></p>
+            </li>
+        </ul>
+        <p><?=__("¿Qué pasa al introducir una rareza?. Al introducir una especie considerada rareza local o nacional, la aplicación avisa de que la especie considerada es rareza. En el caso de rareza nacional, se le indica la dirección web del comité de rarezas de SEO/BirdLife para que rellene un formulario de registro. En el caso de ser un ave considerada rareza local, se indica que la cita está sujeta a revisión y que deberá aportar toda la información adicional de la que se disponga al correo electrónico del anuario con el fin de confirmar o rechazar la rareza.")?></p>
+        <br/>
+
+        <div class="page-header">
+            <h4><?=__("Citas de especies Vulnerables y En Peligro y rarezas")?></h4>
+        </div>
         <p><?=__("Para las especies consideradas más sensibles, escasas o raras, se ocultan determinados datos con la intención de protegerlas. Con ese fin, se oculta la información de los apartados \"Localidad\" y \"Observaciones\" relativas a esa cita. La coordenada UTM 10x10 km es la localización más precisa que se ofrecería en estos casos. Se ha estudiado cada especie minuciosamente, y se ha desarrollado una serie de criterios para valorar si se debe mostrar o no esta información de la observación,  dependiendo de su grado de amenaza, su rareza o el riesgo de que cierta información sea mal usada. Principalmente se ha filtrado esta información en todas las especies catalogadas \"En peligro de extinción\" y \"Vulnerables\" en el catálogo regional y nacional, de las consideradas rarezas en España y, asimismo, otras que por sus peculiaridades se ha estimado que eran especialmente sensibles.")?></p>
         <p><?=__("En la siguiente tabla se muestran estas especies. Ésta irá modificándose en función de las citas y de la información que se vaya actualizando.")?></p>
+        <br/>
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -88,9 +102,13 @@ $this->end();
             <tr><td>Cercotrichas galactotes</td></tr>
             </tbody>
         </table>
+        <br/>
 
-        <h4><?=__("Citas destacadas")?></h4>
+        <div class="page-header">
+            <h4><?=__("Citas destacadas")?></h4>
+        </div>
         <p><?=__("Se han enfatizado algunas citas para resaltar su importancia. La selección de la importancia de la cita atiende a la escasez de la especie y de su categoría de reproducción.")?></p>
+        <br/>
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -100,63 +118,67 @@ $this->end();
             </thead>
             <tbody>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/rareza_nacional.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/rareza_nacional.png"></td>
                 <td><?=__("Rareza nacional")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/rareza_local.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/rareza_local.png"></td>
                 <td><?=__("Rareza local")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/especie_protegida.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/especie_protegida.png"></td>
                 <td><?=__("Especie protegida EN o VU")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/especie_escasa.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/especie_escasa.png"></td>
                 <td><?=__("Especie muy escasa")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/rareza_cria_probable.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/rareza_cria_probable.png"></td>
                 <td><?=__("Rareza nacional con cría probable")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/rareza_local_cria_probable.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/rareza_local_cria_probable.png"></td>
                 <td><?=__("Rareza local con cría probable")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/protegida_cria_probable.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/protegida_cria_probable.png"></td>
                 <td><?=__("Especie Protegida con cría probable")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/escasa_cria_probable.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/escasa_cria_probable.png"></td>
                 <td><?=__("Especie escasa con cría probable")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/rareza_cria.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/rareza_cria.png"></td>
                 <td><?=__("Rareza nacional con cría segura")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/rareza_local_cria.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/rareza_local_cria.png"></td>
                 <td><?=__("Rareza local con cría segura")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/protegida_cria.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/protegida_cria.png"></td>
                 <td><?=__("Especie Protegida con cría segura")?></td>
             </tr>
             <tr>
-                <td><img alt="" src="/img/icons/importancia/escasa_cria.png"></td>
+                <td class="text-center"><img alt="" src="/img/icons/importancia/escasa_cria.png"></td>
                 <td><?=__("Especie escasa con cría segura")?></td>
             </tr>
             </tbody>
         </table>
+        <br/>
 
-        <h4><?=__("La lista de aves")?></h4>
+        <div class="page-header">
+            <h4><?=__("La lista de aves")?></h4>
+        </div>
         <p>
             <?=__("La Lista de Aves de Albacete que figura en el AOA es la que realizó y actualizó la SAO en el año 2011. En ella figura con detalle la metodología utilizada. Se puede descargar en el siguiente enlace:")?>
             <a href="http://sao.albacete.org/joom/images/pdfs/lista_aves_ab_v2_2011.pdf" target="_blank">http://sao.albacete.org/joom/images/pdfs/lista_aves_ab_v2_2011.pdf</a>
             <?=__("También, en el mismo anuario, esta metodología se puede consultar accediendo al menú Especies-> Lista de Aves de Albacete, donde se halla un botón informativo de Metodología.")?>
         </p>
         <p><?=__("Se ha mejorado esta lista de aves asignando a cada especie un criterio que será utilizado por la aplicación para establecer si la cita es destacada o no. Esta clasificación de criterios se ha elaborado en función del carácter migratorio, la escasez o la protección de cada especie:")?></p>
+        <br/>
 
         <table class="table table-striped table-bordered">
             <thead>
@@ -209,6 +231,7 @@ $this->end();
             </tbody>
         </table>
         <p><?=__('Asimismo, se ha completado la lista de aves añadiendo la información del estatus reproductor de cada especie en la provincia de Albacete y que puede consultarse en su correspondiente ficha y también en cada cita.')?></p>
+        <br/>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -259,17 +282,27 @@ $this->end();
                 </tr>
             </tbody>
         </table>
+        <br/>
 
-        <h4><?=__("Elaboración los comentarios de las especies")?></h4>
+        <div class="page-header">
+            <h4><?=__("Elaboración los comentarios de las especies")?></h4>
+        </div>
         <p><?=__("El comentario que aparece en la ficha de cada especie es el que figura en el Anuario Ornitológico de Albacete de los 1997 y 1998 en su versión impresa cuya referencia bibliográfica es la siguiente:")?></p>
-        <p style="text-align: center"><b><?=__("SAO (2001). Anuario Ornitológico de Albacete (1997 y 1998). Instituto de Estudios Albacetenses. Albacete.")?></b></p>
+        <div class="well" style="margin-top: 20px">
+            <blockquote style="margin-bottom: 0">
+                <p><b><?=__("SAO (2001). Anuario Ornitológico de Albacete (1997 y 1998). Instituto de Estudios Albacetenses. Albacete.")?></b></p>
+            </blockquote>
+        </div>
         <p>
             <?=__("Estos comentarios se irán actualizando en los próximos meses. Para su elaboración se recogerá la información más actualizada hasta el momento. Se extraerá de los datos que SAO tiene archivados así como del propio AOA. Se revisarán principalmente los Atlas de aves y las monografías publicadas por")?>
             <a href="http://www.seo.org" target="_blank">SEO/BirdLife</a>
         </p>
         <p><?=__('En la elaboración del apartado de migración, los datos proceden fundamentalmente del "Banco de datos de anillamiento del remite ICONA - Ministerio de Medio Ambiente, año. Datos de anillamiento y recuperaciones en España. Ministerio de Agricultura, Alimentación y Medio Ambiente, SEO/BirdLife, ICO, EBD-CSIC y GOB. Madrid"')?></p>
+        <br/>
 
-        <h4><?=__('Localización provincial')?></h4>
+        <div class="page-header">
+            <h4><?=__('Localización provincial')?></h4>
+        </div>
         <p><?=__('En la aplicación se han demarcado cuatro formas de localización espacial de la provincia: por localidades, por municipios, por comarcas y por cuadrículas UTM 10x10')?></p>
         <ul>
             <li><p><?=__('<b>Localidades o lugares</b>. En esta demarcación se indica el lugar, que normalmente suele coincidir con el topónimo de los mapas geográficos, o con los nombres locales  por los que son conocidos. Además, se especifica el término municipal y comarca al que pertenece y su cuadrícula UTM 10x10.')?></p></li>
@@ -282,8 +315,11 @@ $this->end();
                 </p>
             </li>
         </ul>
+        <br/>
 
-        <h4><?=__('Estadísticas de las citas')?></h4>
+        <div class="page-header">
+            <h4><?=__('Estadísticas de las citas')?></h4>
+        </div>
         <p><?=__('Se pueden obtener gráficos de abundancia absoluta para cada especie. Además, el gráfico representado se puede guardar para su posterior consulta. Es posible definir unos parámetros de búsqueda y obtener multitud de gráficos. Las opciones de búsqueda son:')?></p>
         <ul>
             <li>
@@ -296,8 +332,11 @@ $this->end();
                 <p><?=__('<b>Escala temporal</b>, pudiendo buscar por años calendarios, intervalos de fechas e intervalos de años.')?></p>
             </li>
         </ul>
+        <br/>
 
-        <h4><?=__('Mapas de distribución')?></h4>
+        <div class="page-header">
+            <h4><?=__('Mapas de distribución')?></h4>
+        </div>
         <p><?=__('ara cada especie se representa un mapa provincial dividido en cuadrículas UTM o  municipios. Este mapa sirve para conocer la distribución y abundancia de cada especie. Se representan tres tipos de mapas:')?></p>
         <ul>
             <li>
@@ -322,18 +361,27 @@ $this->end();
                 </ol>
             </li>
         </ul>
+        <br/>
 
-        <h4><?=__('Fuentes de las citas')?></h4>
+        <div class="page-header">
+            <h4><?=__('Fuentes de las citas')?></h4>
+        </div>
         <p>
             <?=__('Para cada cita, se informa de cual es su origen. Para citas obtenidas por el propio observador se citará como “Observaciones personales”. Si la cita proveniese de otra fuente ésta es indicaría. Ejemplos de fuentes son: el archivo de la SAO, Prontuario de la revista Sabuco del IEA, revista Quercus, foros de aves como Avesforum o Anillaforum, páginas web como Reservoir Birds, Rare Birds in Spain,… Si el usuario necesita una nueva fuente, sólo deberá comunicarlo a los administradores a través del correo electrónico')?>
             <a href="mailto:anuario@sao.albacete.org">anuario@sao.albacete.org</a>
             <?=__('y será creada')?>
         </p>
+        <br/>
 
-        <h4><?=__('Estudios')?></h4>
+        <div class="page-header">
+            <h4><?=__('Estudios')?></h4>
+        </div>
         <p><?=__('En este apartado se indicará si la cita forma parte de algún estudio o censo llevado a cabo por SAO, SEO/Birdlife, Universidad, etc. De no formar parte de ningún estudio, figurará como "Observación personal, no forma parte de ningún estudio". Se irán creando categorías nuevas conforme se vayan necesitando.')?></p>
+        <br/>
 
-        <h4><?=__('Datos de reproducción')?></h4>
+        <div class="page-header">
+            <h4><?=__('Datos de reproducción')?></h4>
+        </div>
         <p>
             <?=__('En todas las citas es posible añadir el dato de reproducción que se ha observado en la observación.  Es posible asignar hasta cinco categorías de cría, para lo cual se han seguido las evidencias de cría que considera la')?>
             <a href="http://www.ebcc.info/trim.html" target="_blank"><?=__('EBCC (Comité Europeo de Censos de Aves)')?></a>
@@ -367,7 +415,6 @@ $this->end();
                 </ul>
             </li>
         </ol>
-
 
     </fieldset>
 </div>
