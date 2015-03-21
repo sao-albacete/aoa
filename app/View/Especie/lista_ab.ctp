@@ -38,6 +38,10 @@ $this->end();
             </a>
         </legend>
 
+        <div class="well text-center">
+            <h4><?=__('Número de especies vistas en la provincia')?> <span style="margin-left: 20px">&#10140;</span> <span class="badge badge-success especies-ab-count"><?=$especiesAbCount?></span></h4>
+        </div>
+
         <table id="tbListaAvesAb" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
