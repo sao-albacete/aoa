@@ -62,7 +62,7 @@ $this->end();
                 <?php foreach ($especies_ab as $especie_ab) : ?>
                     <tr>
                         <td style='text-align: center;'><?=$especie_ab['Citas']?></td>
-                        <td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
+                        <td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/search.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
                         <td title='<?=$especie_ab['Especie']['nombreIngles']?>'><?=$especie_ab['Especie']['nombreComun']?></td>
                         <td><i><?=$especie_ab['Familia']['nombre']?></i></td>
                         <td><i><?=$especie_ab['Especie']['genero'] . ' ' . $especie_ab['Especie']['especie']?></i></td>

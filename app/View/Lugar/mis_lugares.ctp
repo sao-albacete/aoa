@@ -43,9 +43,9 @@
 					foreach ($lugares as $lugar) {
 						echo "<tr id='".$lugar["Lugar"]["id"]."'>";
 						echo 	"<td style='text-align: center;'>";
-						echo		"<a href='javascript: eliminarLugar(".$lugar['Lugar']['id'].", \"".$lugar['Lugar']['nombre']."\");' title='".__("Eliminar colaborador")."' title='".__("Eliminar lugar")."'><img src='/img/icons/fugue-icons-3.5.6/icons/cross.png' title='Eliminar el lugar' alt='Eliminar lugar'/></a>&nbsp;&nbsp;";
-						echo		"<a href='/lugar/edit/id:".$lugar['Lugar']['id']."' title='".__("Editar lugar")."'><img src='/img/icons/fugue-icons-3.5.6/icons/pencil.png' title='Editar lugar' alt='Editar lugar'/></a>&nbsp;&nbsp;";
-						echo		"<a href='/lugar/view/id:".$lugar['Lugar']['id']."' title='".__("Ver detalle del lugar")."'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver detalle del lugar' alt='Detalle lugar'/></a>";
+						echo		"<a href='javascript: eliminarLugar(".$lugar['Lugar']['id'].", \"".$lugar['Lugar']['nombre']."\");' title='".__("Eliminar colaborador")."' title='".__("Eliminar lugar")."'><img src='/img/icons/delete.png' title='Eliminar el lugar' alt='Eliminar lugar'/></a>&nbsp;&nbsp;";
+						echo		"<a href='/lugar/edit/id:".$lugar['Lugar']['id']."' title='".__("Editar lugar")."'><img src='/img/icons/edit.png' title='Editar lugar' alt='Editar lugar'/></a>&nbsp;&nbsp;";
+						echo		"<a href='/lugar/view/id:".$lugar['Lugar']['id']."' title='".__("Ver detalle del lugar")."'><img src='/img/icons/search.png' title='Ver detalle del lugar' alt='Detalle lugar'/></a>";
 						echo	"</td>";
 						echo 	"<td><a href='/cita/index?lugarId=".$lugar["Lugar"]["id"]."'>".$lugar["Lugar"]["nombre"]."</a></td>";
 						echo 	"<td><a href='/cita/index?municipioId=".$lugar["Municipio"]["id"]."'>".$lugar["Municipio"]["nombre"]."</a></td>";

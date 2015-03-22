@@ -103,7 +103,7 @@
                         <b>Comarca: </b>
                         <span><?php echo $comarca; ?></span>
                         
-                        <a href="/cita/index?municipioId=<?php echo $valuesSubmited['municipioId'];?>" class="pull-right">Ver citas del municipio <img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png'></img></a>
+                        <a href="/cita/index?municipioId=<?php echo $valuesSubmited['municipioId'];?>" class="pull-right">Ver citas del municipio <img src='/img/icons/search.png'/></a>
                     
                     <?php endif;?>
                 

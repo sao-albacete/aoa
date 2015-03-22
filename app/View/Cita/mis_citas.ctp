@@ -39,6 +39,7 @@ $this->end();
                     <tr>
                         <th><?=__("Acciones");?></th>
                         <th><?=__("Importancia");?></th>
+                        <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
                         <th><?=__("Lugar");?></th>
@@ -51,13 +52,14 @@ $this->end();
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="100%" class="dataTables_empty"><?=__("Cargando citas...");?> <img src="/img/gif/cargando_barra_mini.gif"></td>
+                        <td colspan="100%" class="dataTables_empty"><img src="/img/gif/cargando_barra_mini.gif"></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th><?=__("Acciones");?></th>
                         <th><?=__("Importancia");?></th>
+                        <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
                         <th><?=__("Lugar");?></th>
@@ -79,6 +81,7 @@ $this->end();
                     <tr>
                         <th><?=__("Ver más");?></th>
                         <th><?=__("Importancia");?></th>
+                        <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
                         <th><?=__("Lugar");?></th>
@@ -98,6 +101,7 @@ $this->end();
                     <tr>
                         <th><?=__("Ver más");?></th>
                         <th><?=__("Importancia");?></th>
+                        <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
                         <th><?=__("Lugar");?></th>

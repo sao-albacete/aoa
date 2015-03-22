@@ -115,7 +115,7 @@
                         </div>
                         
                         <div class="span4">
-                            <a href="/cita/index?comarcaId=<?php echo $valuesSubmited['comarcaId'];?>" class="pull-right">Ver citas de la comarca <img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png'></img></a>                        
+                            <a href="/cita/index?comarcaId=<?php echo $valuesSubmited['comarcaId'];?>" class="pull-right">Ver citas de la comarca <img src='/img/icons/search.png'/></a>
                         </div>
                     
                     <?php endif;?>

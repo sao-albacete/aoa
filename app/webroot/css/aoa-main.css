@@ -270,6 +270,11 @@ body .modal {
     text-align: justify;
 }
 
+.dataTables_filter,
+.dataTables_paginate {
+    float: right;
+}
+
 @media (max-width: 800px) {
     .header .brand {
         font-size: 25px;

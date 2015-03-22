@@ -67,10 +67,10 @@ $this->Html->script(array(
             "bFilter": true,
             "bSort": true,
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [ 0,1,7 ] },
-                { "sClass": "text-center", "aTargets": [ 0,1,4,5,7,8,9 ] }
+                { 'bSortable': false, 'aTargets': [ 0,1,8 ] },
+                { "sClass": "text-center", "aTargets": [ 0,1,2,4,6,7,8,9,10 ] }
             ],
-            "aoColumns": [null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
+            "aoColumns": [null,null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
             "bInfo": true,
             "bAutoWidth": false,
             "oLanguage": {
@@ -185,6 +185,7 @@ $this->end();
                         <tr>
                             <th><?=__("Ver más");?></th>
                             <th><?=__("Importancia");?></th>
+                            <th><?=__("Fotos");?></th>
                             <th><?=__("Especie");?></th>
                             <th><?=__("Fecha");?></th>
                             <th><?=__("Lugar");?></th>
@@ -197,13 +198,14 @@ $this->end();
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="100%" class="dataTables_empty"><?=__("Cargando citas...");?> <img src="/img/gif/cargando_barra_mini.gif"></td>
+                            <td colspan="100%" class="dataTables_empty"><img src="/img/gif/cargando_barra_mini.gif"></td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th><?=__("Ver más");?></th>
                             <th><?=__("Importancia");?></th>
+                            <th><?=__("Fotos");?></th>
                             <th><?=__("Especie");?></th>
                             <th><?=__("Fecha");?></th>
                             <th><?=__("Lugar");?></th>

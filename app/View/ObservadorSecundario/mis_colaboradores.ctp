@@ -43,8 +43,8 @@ $this->end();
                 foreach ($colaboradores as $colaborador) {
                     echo "<tr>";
                     echo     "<td style='text-align: center;'>";
-                    echo        "<a href='javascript: eliminarColaborador(".$colaborador['ObservadorSecundario']['id'].", \"".$colaborador['ObservadorSecundario']['nombre']."\");' title='".__("Eliminar colaborador")."'><img src='/img/icons/fugue-icons-3.5.6/icons/cross.png' alt='Eliminar colaborador'/></a>&nbsp;&nbsp;";
-                    echo        "<a href='javascript: editarColaborador(".$colaborador['ObservadorSecundario']['id'].", \"".$colaborador['ObservadorSecundario']['nombre']."\");' title='".__("Editar colaborador")."'><img src='/img/icons/fugue-icons-3.5.6/icons/pencil.png' alt='Editar colaborador'/></a>&nbsp;&nbsp;";
+                    echo        "<a href='javascript: eliminarColaborador(".$colaborador['ObservadorSecundario']['id'].", \"".$colaborador['ObservadorSecundario']['nombre']."\");' title='".__("Eliminar colaborador")."'><img src='/img/icons/delete.png' alt='Eliminar colaborador'/></a>&nbsp;&nbsp;";
+                    echo        "<a href='javascript: editarColaborador(".$colaborador['ObservadorSecundario']['id'].", \"".$colaborador['ObservadorSecundario']['nombre']."\");' title='".__("Editar colaborador")."'><img src='/img/icons/edit.png' alt='Editar colaborador'/></a>&nbsp;&nbsp;";
                     echo    "</td>";
                     echo     "<td style='text-align: center;'>".$colaborador['ObservadorSecundario']['codigo']."</td>";
                     echo     "<td><a href='/cita/index?colaboradorId=".$colaborador['ObservadorSecundario']['id']."'>".$colaborador['ObservadorSecundario']['nombre']."</a></td>";
