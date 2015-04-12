@@ -11,7 +11,7 @@ $this->Html->css(array(), null, array('inline' => false));
 /**
  * Javascript
  */
-$this->Html->script(array('User/activate_user'), array('inline' => false));
+$this->Html->script(array(), array('inline' => false));
 
 // Menu
 $this->start('menu');
