@@ -9,7 +9,7 @@ class ImageUtil
     private static $HEADER_IMAGES = [
         ['src' => '/img/cabecera/aguila_perdicera1.jpg', 'alt' => 'Águila perdicera'],
         ['src' => '/img/cabecera/aguila_perdicera2.jpg', 'alt' => 'Águila perdicera'],
-        ['src' => '/img/cabecera/alcaraván2.jpg', 'alt' => 'Alcaraván'],
+        ['src' => '/img/cabecera/alcaravаn2.jpg', 'alt' => 'Alcaraván'],
         ['src' => '/img/cabecera/alondra_ricoti.jpg', 'alt' => 'Alondra ricotí'],
         ['src' => '/img/cabecera/alondra_ricoti2.jpg', 'alt' => 'Alondra ricotí'],
         ['src' => '/img/cabecera/alondra_ricoti3.jpg', 'alt' => 'Alondra ricotí'],
