@@ -58,7 +58,8 @@ $anuarioDescription = __('Anuario Ornitológico de Albacete Online');
             <a class="brand" href="/"><?=__("Anuario Ornitológico de Albacete Online")?></a>
             
             <?php if(!$logged_in): ?>
-                <?=$this->Html->link('Entrar', array('controller'=>'user', 'action'=>'login'), array('class'=>'btn btn-primary pull-right', 'id'=>'btn_entrar')); ?>
+                <a href="/user/login" class="btn btn-primary pull-right" id="btn_entrar">Entrar&nbsp;<i class="icon-share-alt icon-white"></i></a>
+                <a href="/user/add/" class="btn btn-success pull-right" style="margin-right: 10px"><?="Registrarte";?></a>
             <?php endif;?>
         
             <?php if($logged_in): ?>

@@ -115,7 +115,7 @@
                         </div>
                         
                         <div class="span5">
-                            <a href="/cita/index?cuadriculaUtmId=<?php echo $valuesSubmited['cuadriculaUtmId'];?>" class="pull-right">Ver citas de la cuadrícula UTM <img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png'></img></a>
+                            <a href="/cita/index?cuadriculaUtmId=<?php echo $valuesSubmited['cuadriculaUtmId'];?>" class="pull-right">Ver citas de la cuadrícula UTM <img src='/img/icons/search.png'/></a>
                         </div>
                     
                     <?php endif;?>

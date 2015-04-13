@@ -153,7 +153,7 @@ class CitaController extends AppController
         $conditions = array(
             'Cita.indActivo' => 1
         );
-        $joins = array();
+        $joins = [];
 
         if ($this->request->is('get')) {
 
@@ -592,6 +592,8 @@ class CitaController extends AppController
                                 }
                             }
                         }
+                        // Indicador tiene fotos
+                        $this->Cita->saveField('indFoto', $this->Fichero->tieneFotos($citaId));
 
                         if (empty($errorsMessagesList)) {
 
@@ -733,6 +735,7 @@ class CitaController extends AppController
                         /* Fichero */
                         if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] != 4) {
                             $this->Fichero->subirImagenCita($_FILES["imagen"], $this->request->data, $current_user['id'], 1);
+                            $this->Cita->saveField('indFoto', true);
                         }
 
                         /* Cita-observador_secundario */

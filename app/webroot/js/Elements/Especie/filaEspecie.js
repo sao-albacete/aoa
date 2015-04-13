@@ -134,9 +134,9 @@ function insertarBotonesFila(numeroFila)
     var columnaBotones = '';
 
     columnaBotones += '<td style="text-align: center">';
-    columnaBotones += "<a href='javascript: eliminarFilaEspecie(" + numeroFila + ");' title='Eliminar especie'><img src='/img/icons/fugue-icons-3.5.6/icons/cross.png' alt='Eliminar especie'/></a>";
+    columnaBotones += "<a href='javascript: eliminarFilaEspecie(" + numeroFila + ");' title='Eliminar especie'><img src='/img/icons/delete.png' alt='Eliminar especie'/></a>";
     columnaBotones += '&nbsp;&nbsp;';
-    columnaBotones += "<a href='javascript: editarFilaEspecie(" + numeroFila + ");' title='Editar especie'><img src='/img/icons/fugue-icons-3.5.6/icons/pencil.png' alt='Editar especie'/></a>";
+    columnaBotones += "<a href='javascript: editarFilaEspecie(" + numeroFila + ");' title='Editar especie'><img src='/img/icons/edit.png' alt='Editar especie'/></a>";
     columnaBotones += '</td>';
 
     return columnaBotones;

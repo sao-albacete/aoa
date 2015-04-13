@@ -19,28 +19,29 @@ class CitaAjaxController extends AppController
     /**
      * Componentes
      */
-    public $components = array();
+    public $components = [];
 
     /**
      * Helpers
      */
-    public $helpers = array();
+    public $helpers = [];
 
     /**
      * Modelos
      */
-    public $uses = array(
+    public $uses = [
         'Cita',
         'AsoCitaObservador',
         'AsoCitaClaseEdadSexo',
         'ObservadorSecundario',
         'Lugar'
-    );
+    ];
     
     // Array de columnas que serán mostradas en la tabla de DataTables.
-    public $aColumns = array(
+    private $aColumns = [
         'Ver Detalle',
         'Importancia',
+        'Fotos',
         'Especie',
         'Fecha',
         'Lugar',
@@ -49,12 +50,13 @@ class CitaAjaxController extends AppController
         'Colaboradores',
         'Clase de Reproducción',
         'Criterio de Selección',
-    );
+    ];
     
     // Array de columnas por las que se puede ordenar
-    public $aSortableColumns = array(
+    private $aSortableColumns = [
         ' ',
         'ImportanciaCita.descripcion',
+        'Cita.indFoto',
         'Especie.nombreComun',
         'Cita.fechaAlta',
         'Lugar.nombre',
@@ -63,10 +65,10 @@ class CitaAjaxController extends AppController
         ' ',
         'ClaseReproduccion.codigo',
         'CriterioSeleccionCita.codigo',
-    );
+    ];
     
     // Array de columnas por las que se puede ordenar
-    public $aSearchableColumns = array(
+    private $aSearchableColumns = [
         'ImportanciaCita.descripcion',
         'Especie.nombreComun',
         'Especie.genero',
@@ -81,14 +83,15 @@ class CitaAjaxController extends AppController
         'ClaseReproduccion.descripcion',
         'CriterioSeleccionCita.codigo',
         'CriterioSeleccionCita.nombre',
-    );
+    ];
     
     // Array de columnas que queremos obtener de base de datos
-    public $aFields = array(
+    private $aFields = [
         'Cita.id',
         'Cita.fechaAlta',
         'Cita.indPrivacidad',
         'Cita.observador_principal_id',
+        'Cita.indFoto',
         'Especie.id',
         'Especie.nombreComun',
         'Especie.genero',
@@ -108,7 +111,7 @@ class CitaAjaxController extends AppController
         'CriterioSeleccionCita.id',
         'CriterioSeleccionCita.codigo',
         'CriterioSeleccionCita.nombre',
-    );
+    ];
     
     public function beforeFilter()
     {
@@ -404,7 +407,7 @@ class CitaAjaxController extends AppController
             "sEcho" => intval($_GET['sEcho']),
             "iTotalRecords" => $iTotal,
             "iTotalDisplayRecords" => $iFilteredTotal,
-            "aaData" => array()
+            "aaData" => []
         );
         
         for ($index = 0; $index < count($citas); $index ++) {
@@ -419,23 +422,25 @@ class CitaAjaxController extends AppController
              */
             $clasesEdadSexo = $this->AsoCitaClaseEdadSexo->obtenerClasesEdadSexoPorCita($citas[$index]['Cita']['id']);
         
-            $row = array();
+            $row = [];
         
             for ($i = 0; $i < count($this->aColumns); $i ++) {
                 if ($this->aColumns[$i] == "Ver Detalle") {
                     $operationsColumn = '';
                     if (in_array('eliminar', $aOperations)) {
-                        $operationsColumn .= "<a href='javascript: eliminarCita(" . $citas[$index]['Cita']['id'] . ",\"" . $citas[$index]['Especie']['nombreComun'] . "\");' title='" . __("Eliminar cita") . "'><img src='/img/icons/fugue-icons-3.5.6/icons/cross.png' alt='Icono eliminar'/></a>&nbsp;&nbsp;";
+                        $operationsColumn .= "<a href='javascript: eliminarCita(" . $citas[$index]['Cita']['id'] . ",\"" . $citas[$index]['Especie']['nombreComun'] . "\");' title='" . __("Eliminar cita") . "'><img src='/img/icons/delete.png' alt='Icono eliminar'/></a>&nbsp;&nbsp;";
                     }
                     if (in_array('editar', $aOperations)) {
-                        $operationsColumn .= "<a href='/cita/edit/id:" . $citas[$index]['Cita']['id'] . "' title='" . __("Editar cita") . "'><img src='/img/icons/fugue-icons-3.5.6/icons/pencil.png' alt='Icono editar'/></a>&nbsp;&nbsp;";
+                        $operationsColumn .= "<a href='/cita/edit/id:" . $citas[$index]['Cita']['id'] . "' title='" . __("Editar cita") . "'><img src='/img/icons/edit.png' alt='Icono editar'/></a>&nbsp;&nbsp;";
                     }
                     if (in_array('ver', $aOperations)) {
-                        $operationsColumn .= "<a href='/cita/view/id:" . $citas[$index]['Cita']['id'] . "' title='" . __("Detalle cita") . "'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' alt='Icono detalle'/></a>";
+                        $operationsColumn .= "<a href='/cita/view/id:" . $citas[$index]['Cita']['id'] . "' title='" . __("Detalle cita") . "'><img src='/img/icons/search.png' alt='Icono detalle'/></a>";
                     }
                     $row[] = $operationsColumn;
                 } elseif ($this->aColumns[$i] == "Importancia") {
                     $row[] = $this->getIconoImportancia($citas[$index]['ImportanciaCita']['id'], $citas[$index]['ImportanciaCita']['descripcion']);
+                } elseif ($this->aColumns[$i] == "Fotos") {
+                    $row[] = $citas[$index]['Cita']['indFoto'] ? '<img src="/img/icons/camera.png" alt="Tiene fotos" title="Tiene fotos"/>'  : '';
                 } elseif ($this->aColumns[$i] == "Especie") {
                     $row[] = "<a href='/cita/index?especieId=" . $citas[$index]['Especie']['id'] . "' title='" . $citas[$index]['Especie']['genero'] . " " . $citas[$index]['Especie']['especie'] . " " . $citas[$index]['Especie']['subespecie'] . "'>" . $citas[$index]['Especie']['nombreComun'] . ' ' . $citas[$index]['Especie']['subespecie'] . "</a>";
                 } elseif ($this->aColumns[$i] == "Fecha") {

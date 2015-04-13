@@ -6,7 +6,7 @@ App::uses('FicheroUtility', 'Utility');
  * Fichero Model
  *
  * @property Cita $Cita
- * @property Usuario $Usuario
+ * @property User $Usuario
  */
 class Fichero extends AppModel {
 
@@ -277,5 +277,27 @@ class Fichero extends AppModel {
         }
 
         return $file_ary;
+    }
+
+    /**
+     * Comprueba si una cita tiene fotos asociadas
+     *
+     * @param $citaId
+     * @return boolean
+     */
+    public function tieneFotos($citaId) {
+
+        $conditions = [
+            'Fichero.cita_id' => $citaId,
+        ];
+
+        $ficheros = $this -> find(
+            'count',
+            [
+                'conditions' => $conditions,
+            ]
+        );
+
+        return $ficheros > 0;
     }
 }

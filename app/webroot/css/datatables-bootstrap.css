@@ -16,7 +16,7 @@ table.table thead .sorting_desc { background: url('../img/datatables/sort_desc.p
 table.table thead .sorting_asc_disabled { background: url('../img/datatables/sort_asc_disabled.png') no-repeat center right #F7F8E0; }
 table.table thead .sorting_desc_disabled { background: url('../img/datatables/sort_desc_disabled.png') no-repeat center right #F7F8E0; }
 
-.row {margin-left: 0px;margin-bottom: 10px;}
+.row {margin-left: 0;margin-bottom: 10px;}
 
 table tr.even.row_selected td {
 	background-color: #B0BED9;

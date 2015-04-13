@@ -106,10 +106,11 @@ class UserController extends AppController
         }
     }
 
+    /**
+     * Alta de un nuevo usuario
+     */
     public function add()
     {
-        $nombre = "";
-
         if ($this->request->is('post')) {
 
             /*
@@ -133,17 +134,6 @@ class UserController extends AppController
 
             } else {
 
-                // Creamos el observador principal
-                $codigo = $this->ObservadorPrincipal->generarCodigo($this->request->data["User"]["username"]);
-                $observador = array('ObservadorPrincipal' => array(
-                    'codigo' => $codigo,
-                    'nombre' => $this->request->data["User"]["username"])
-                );
-                $this->ObservadorPrincipal->create();
-                $this->ObservadorPrincipal->save($observador);
-
-                $this->request->data["User"]["observador_principal_id"] = $this->ObservadorPrincipal->id;
-
                 // Desactivado por defecto
                 $this->request->data["User"]["indActivo"] = 0;
 
@@ -157,15 +147,6 @@ class UserController extends AppController
 
                         // Cargamos los datos del nuevo usuario
                         $user = $this->User->read(null, $this->User->id);
-
-                        // Creamos el observador secundario
-                        $observadorSecundario = array('ObservadorSecundario' => array(
-                            'codigo' => $codigo,
-                            'nombre' => $this->request->data["User"]["username"],
-                            'observador_principal_id' => $user['User']['observador_principal_id']
-                        ));
-                        $this->ObservadorSecundario->create();
-                        $this->ObservadorSecundario->save($observadorSecundario);
 
                         //Creamos el directorio donde el usuario podrá subir sus ficheros
                         $imageAbsolutePath = IMAGES . 'users/' . $this->User->id . "/";
@@ -235,6 +216,37 @@ class UserController extends AppController
         }
 
         $user = $this->User->read(null, $userId);
+
+        // Creamos el observador principal
+        $codigo = $this->ObservadorPrincipal->generarCodigo($user["User"]["username"]);
+        $this->ObservadorPrincipal->create();
+        $observador = array('ObservadorPrincipal' => array(
+            'codigo' => $codigo,
+            'nombre' => $user["User"]["username"])
+        );
+        $this->ObservadorPrincipal->set($observador);
+        if ($this->ObservadorPrincipal->validates()) {
+            $this->ObservadorPrincipal->save();
+        } else {
+            CakeLog::error(sprintf('[%s] Error creando usuario principal. %s', __METHOD__, print_r($this->ObservadorPrincipal->validationErrors)));
+        }
+
+        $this->User->saveField('observador_principal_id', $this->ObservadorPrincipal->id);
+
+        // Creamos el observador secundario
+        $codigo = $this->ObservadorSecundario->generarCodigo($user["User"]["username"]);
+        $this->ObservadorSecundario->create();
+        $observadorSecundario = array('ObservadorSecundario' => array(
+            'codigo' => $codigo,
+            'nombre' => $user["User"]["username"],
+            'observador_principal_id' => $this->ObservadorPrincipal->id
+        ));
+        $this->ObservadorSecundario->set($observadorSecundario);
+        if ($this->ObservadorSecundario->validates()) {
+            $this->ObservadorSecundario->save();
+        } else {
+            CakeLog::error(sprintf('[%s] Error creando usuario secundario. %s', __METHOD__, print_r($this->ObservadorSecundario->validationErrors)));
+        }
 
         // Enviamos un email para que el alta quede registrada
         EmailUtil::enviarEmailNuevoUsuario($user);

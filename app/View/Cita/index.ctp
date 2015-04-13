@@ -361,6 +361,7 @@ $(document).ready(function() {
                <tr>
                   <th><?=__("Ver más");?></th>
                   <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
+                   <th><?=$this->Paginator->sort("Cita.indFoto", "Fotos");?></th>
                   <th><?=$this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
                   <th><?=$this->Paginator->sort("fechaAlta", "Fecha");?></th>
                   <th><?=$this->Paginator->sort("Lugar.nombre", "Lugar");?></th>
@@ -373,33 +374,32 @@ $(document).ready(function() {
             </thead>
             <tbody>
                <?php foreach ($citas as $cita):?>
-                  <?php
-                     echo "<tr>";
-                     echo    "<td style='text-align: center;'><a href='/cita/view/id:".$cita['Cita']['id']."' title='".__("Más información")."'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver detalle de la cita' alt='Ver detalle'/></a></td>";
-                     echo    "<td style='text-align:center;'>".$this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion'])."</td>";
-                     echo    "<td><a href='/cita/index?especieId=".$cita['Especie']['id']."' title='".$cita['Especie']['genero']." ".$cita['Especie']['especie']." ".$cita['Especie']['subespecie']."'>".$cita['Especie']['nombreComun']." ".$cita['Especie']['subespecie']."</a></td>";
-                     echo    "<td style='text-align: center;'><a href='/cita/index?fechaAlta=".date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y")."'>".date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y")."</a></td>";
+                <tr>
+                    <td style="text-align: center;"><a href="/cita/view/id:<?=$cita['Cita']['id']?>" title="<?=__("Más información")?>"><img src="/img/icons/search.png" title="Ver detalle de la cita" alt="Ver detalle"/></a></td>
+                    <td style="text-align:center;"><?=$this->Importancia->getIconoImportancia($cita['ImportanciaCita']['id'], $cita['ImportanciaCita']['descripcion'])?></td>
+                    <td style="text-align:center;"><?=($cita['Cita']['indFoto'] ? '<img src="/img/icons/camera.png" alt="Tiene fotos" title="Tiene fotos"/>'  : '')?></td>
+                    <td><a href="/cita/index?especieId=<?=$cita['Especie']['id']?>" title="<?=$cita['Especie']['genero'] . ' ' . $cita['Especie']['especie'] . ' ' . $cita['Especie']['subespecie']?>"><?=$cita['Especie']['nombreComun'] . ' ' . $cita['Especie']['subespecie']?></a></td>
+                    <td style="text-align: center;"><a href="/cita/index?fechaAlta=<?=date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y")?>"><?=date_format(date_create($cita['Cita']['fechaAlta']), "d/m/Y")?></a></td>
                      
-                     if ($cita['Cita']['indPrivacidad'] == 1 || (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1))) {
-                         $lugarContent = "<a href='/cita/index?lugarId=" . $cita['Lugar']['id'] . "' title='" . $this->Lugar->mostrarDetalleLugar($cita) . "'>" . ucwords($cita['Lugar']['nombre']) . "</a>";
-                     } else {
-                         $lugarContent = '<span title="' . $this->Lugar->mostrarDetalleLugar($cita) . '"><img width="16" height="16" style="margin-right: 10px;" alt="alert icon" src="/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png"> Lugar confidencial</span>';
-                     }
-                     echo    "<td>$lugarContent</td>";
-                     
-                     echo    "<td style='text-align: center;'><span title='".$this->ClaseEdadSexo->mostrar_detalle_clase_edad_sexo($cita['clases_edad_sexo'])."'>".$cita['Cita']['cantidad']."</span></td>";
-                     echo    "<td style='text-align: center;'><a href='/cita/index?observadorId=".$cita['ObservadorPrincipal']['id']."' title='".$cita['ObservadorPrincipal']['nombre']."'>".$cita['ObservadorPrincipal']['codigo']."</a></td>";
-                     echo    "<td>".$this->ObservadorSecundario->mostrar_codigos_observadores($cita['observadoresSecundarios'])."</td>";
-                     echo    "<td style='text-align: center;'><a href='/cita/index?claseReproduccionId=".$cita['ClaseReproduccion']['id']."' title='".$cita['ClaseReproduccion']['descripcion']."'>".$cita['ClaseReproduccion']['codigo']."</a></td>";
-                     echo    "<td style='text-align: center;'><span title='".$cita['CriterioSeleccionCita']['nombre']."'>".$cita['CriterioSeleccionCita']['codigo']."</span></td>";
-                     echo "</tr>";
-                  ?>
+                    <?php if ($cita['Cita']['indPrivacidad'] == 1 || (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1))) :?>
+                    <td><a href="/cita/index?lugarId=<?=$cita['Lugar']['id']?>" title="<?=$this->Lugar->mostrarDetalleLugar($cita)?>"><?=ucwords($cita['Lugar']['nombre'])?></a>
+                     <?php else : ?>
+                    <td><span title="<?=$this->Lugar->mostrarDetalleLugar($cita)?>"><img width="16" height="16" style="margin-right: 10px;" alt="alert icon" src="/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png"> Lugar confidencial</span>
+                     <?php endif ?>
+
+                    <td style="text-align: center;"><span title="<?=$this->ClaseEdadSexo->mostrar_detalle_clase_edad_sexo($cita['clases_edad_sexo'])?>"><?=$cita['Cita']['cantidad']?></span></td>
+                    <td style="text-align: center;"><a href="/cita/index?observadorId=<?=$cita['ObservadorPrincipal']['id']?>" title="<?=$cita['ObservadorPrincipal']['nombre']?>"><?=$cita['ObservadorPrincipal']['codigo']?></a></td>
+                    <td><?=$this->ObservadorSecundario->mostrar_codigos_observadores($cita['observadoresSecundarios'])?></td>
+                    <td style="text-align: center;"><a href="/cita/index?claseReproduccionId=<?=$cita['ClaseReproduccion']['id']?>" title="<?=$cita['ClaseReproduccion']['descripcion']?>"><?=$cita['ClaseReproduccion']['codigo']?></a></td>
+                    <td style="text-align: center;"><span title="<?=$cita['CriterioSeleccionCita']['nombre']?>"><?=$cita['CriterioSeleccionCita']['codigo']?></span></td>
+                </tr>
                <?php endforeach;?>
                </tbody>
             <tfoot>
                <tr>
                   <th><?=__("Ver más");?></th>
                   <th><?=$this->Paginator->sort("ImportanciaCita.codigo", __("Importancia"));?></th>
+                   <th><?=$this->Paginator->sort("Cita.indFoto", "Fotos");?></th>
                   <th><?=$this->Paginator->sort("Especie.nombreComun", "Especie");?></th>
                   <th><?=$this->Paginator->sort("fechaAlta", "Fecha");?></th>
                   <th><?=$this->Paginator->sort("Lugar.nombre", "Lugar");?></th>

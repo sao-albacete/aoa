@@ -288,6 +288,11 @@ class Cita extends AppModel {
                 'message' => 'El estudio es obligatorio.'
             )
         ),
+        'indFoto' => array(
+            'rule' => array('boolean'),
+            'required' => false,
+            'message' => 'El valor del indicador de fotos debe ser un booleano.'
+        ),
     );
     
     public function dateBeforeOrEqualToday($data) {

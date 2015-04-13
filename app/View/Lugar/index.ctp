@@ -96,7 +96,7 @@
                 <?php 
                     foreach ($lugares as $lugar) {
                         echo "<tr id='".$lugar["Lugar"]["id"]."'>";
-                        echo     "<td style='text-align: center;'><a href='/lugar/view/id:".$lugar['Lugar']['id']."' title='".__("Ver detalle del lugar")."'><img src='/img/icons/fugue-icons-3.5.6/icons/magnifier-left.png' title='Ver detalle del lugar' alt='Ver detalle'/></a></td>";
+                        echo     "<td style='text-align: center;'><a href='/lugar/view/id:".$lugar['Lugar']['id']."' title='".__("Ver detalle del lugar")."'><img src='/img/icons/search.png' title='Ver detalle del lugar' alt='Ver detalle'/></a></td>";
                         echo     "<td><a href='/cita/index?lugarId=".$lugar["Lugar"]["id"]."'>".$lugar["Lugar"]["nombre"]."</a></td>";
                         echo     "<td><a href='/cita/index?municipioId=".$lugar["Municipio"]["id"]."'>".$lugar["Municipio"]["nombre"]."</a></td>";
                         echo     "<td><a href='/cita/index?comarcaId=".$lugar["Comarca"]["id"]."'>".$lugar["Comarca"]["nombre"]."</a></td>";

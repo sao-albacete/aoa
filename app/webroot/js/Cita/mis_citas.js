@@ -14,10 +14,10 @@ $(document).ready(function(){
         "bFilter": true,
         "bSort": true,
         "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 0,1,7 ] },
-            { "sClass": "text-center", "aTargets": [ 0,1,4,5,7,8,9 ] }
+            { 'bSortable': false, 'aTargets': [ 0,1,2,8 ] },
+            { "sClass": "text-center", "aTargets": [ 0,1,2,4,6,7,8,9,10 ] }
         ],
-        "aoColumns": [null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
+        "aoColumns": [null,null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
         "bInfo": true,
         "bAutoWidth": false,
         "oLanguage": {
@@ -40,10 +40,10 @@ $(document).ready(function(){
         "bFilter": true,
         "bSort": true,
         "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 0,1,7 ] },
-            { "sClass": "text-center", "aTargets": [ 0,1,4,5,7,8,9 ] }
+            { 'bSortable': false, 'aTargets': [ 0,1,2,8 ] },
+            { "sClass": "text-center", "aTargets": [ 0,1,2,4,6,7,8,9,10 ] }
         ],
-        "aoColumns": [null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
+        "aoColumns": [null,null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
         "bInfo": true,
         "bAutoWidth": false,
         "oLanguage": {
