@@ -384,7 +384,7 @@ $(document).ready(function() {
                     <?php if ($cita['Cita']['indPrivacidad'] == 1 || (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1))) :?>
                     <td><a href="/cita/index?lugarId=<?=$cita['Lugar']['id']?>" title="<?=$this->Lugar->mostrarDetalleLugar($cita)?>"><?=ucwords($cita['Lugar']['nombre'])?></a>
                      <?php else : ?>
-                    <td><span title="<?=$this->Lugar->mostrarDetalleLugar($cita)?>"><img width="16" height="16" style="margin-right: 10px;" alt="alert icon" src="/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png"> Lugar confidencial</span>';
+                    <td><span title="<?=$this->Lugar->mostrarDetalleLugar($cita)?>"><img width="16" height="16" style="margin-right: 10px;" alt="alert icon" src="/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png"> Lugar confidencial</span>
                      <?php endif ?>
 
                     <td style="text-align: center;"><span title="<?=$this->ClaseEdadSexo->mostrar_detalle_clase_edad_sexo($cita['clases_edad_sexo'])?>"><?=$cita['Cita']['cantidad']?></span></td>
