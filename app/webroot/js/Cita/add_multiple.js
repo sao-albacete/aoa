@@ -50,7 +50,12 @@ $(document).ready(function () {
     // Insertar especie
     $divNuevaCitaMultiple.find("#btnInsertarEspecie").click(function() {
         limpiarFormularioEspecie();
-        $('#modalNuevaEspecie').modal();
+        var $modalNuevaEspecie = $('#modalNuevaEspecie');
+        $modalNuevaEspecie.modal();
+
+        $modalNuevaEspecie.on('shown', function () {
+            $modalNuevaEspecie.find('.modal-body').scrollTop(0);
+        });
     });
 
 

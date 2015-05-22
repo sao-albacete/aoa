@@ -39,8 +39,7 @@ $this->end();
     <fieldset>
         <legend><?php echo __('Nueva cita múltiple'); ?></legend>
 
-        <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div class="well well-small">
             Los campos marcados con un asterisco (*) son obligatorios.
         </div>
 
@@ -89,10 +88,10 @@ $this->end();
                     <div style="margin-top: 5px;">
                         <button class="btn btn-warning btn-mini btnVaciarLugar" type="button"><i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar"); ?></button>
                         <a href="#modalSeleccioanrLugar" role="button"
-                           class="btn btn-mini btn-warning" data-toggle="modal"
+                           class="btn btn-mini btn-info" data-toggle="modal"
                            id="btnSeleccionarLugar"><i class="icon-zoom-in"></i> <?php echo __("Seleccionar desde tabla"); ?>
                         </a>
-                        <button class="btn btn-mini btn-warning btnNuevoLugar" type="button"><i class="icon-plus"></i> <?php echo __("Nuevo lugar"); ?></button>
+                        <button class="btn btn-mini btn-primary btnNuevoLugar" type="button"><i class="icon-plus"></i> <?php echo __("Nuevo lugar"); ?></button>
                     </div>
                     <input type="hidden" id="lugarId" name="data[Cita][lugar_id]">
                 </div>
@@ -147,7 +146,7 @@ $this->end();
                             <button class="btn btn-warning btn-mini" type="button" id="btnVaciarColaboradores">
                                 <i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar"); ?>
                             </button>
-                            <button class="btn btn-mini btn-warning btnNuevoColaborador" type="button"><i class="icon-plus"></i> <?php echo __("Nuevo colaborador"); ?></button>
+                            <button class="btn btn-mini btn-primary btnNuevoColaborador" type="button"><i class="icon-plus"></i> <?php echo __("Nuevo colaborador"); ?></button>
                         </div>
                     </div>
                 </div>
@@ -212,7 +211,7 @@ $this->end();
                         <th><?php echo __('Herido, accidentado o muerto'); ?></th>
                         <th><?php echo __('Comportamiento o morfología curiosa'); ?></th>
                         <th><?php echo __('Observaciones'); ?></th>
-                        <th>Acciones</th>
+                        <th><?php echo __('Acciones'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -220,7 +219,7 @@ $this->end();
                 <tfoot>
                     <tr>
                         <th colspan="100%">
-                            <a role="button" class="btn btn-small btn-warning" id="btnInsertarEspecie">
+                            <a role="button" class="btn btn-small btn-primary" id="btnInsertarEspecie">
                                 <i class="icon-plus"></i> <?php echo __("Añadir especie"); ?>
                             </a>
                         </th>

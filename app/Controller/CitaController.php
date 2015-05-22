@@ -310,7 +310,8 @@ class CitaController extends AppController
             $this->paginate['Cita']['conditions'] = $conditions;
 
             $this->paginate['Cita']['order'] = array(
-                'Cita.fechaAlta' => 'desc'
+                'Cita.fechaAlta' => 'desc',
+                'Cita.fechaCreacion' => 'desc'
             );
 
             $this->paginate['Cita']['limit'] = 25;
@@ -665,9 +666,7 @@ class CitaController extends AppController
                 $dataSource = $this->Cita->getDataSource();
                 $dataSource->begin();
 
-                /*
-                 * Fecha de alta
-                 */
+                // Fecha de alta
                 $fechaAlta = $this->request->data["Cita"]["fechaAlta"];
                 $fechaAltaFormateada = DateUtil::europeanFormatToAmericanFormat($fechaAlta);
                 if ($fechaAltaFormateada != false) {
@@ -676,10 +675,10 @@ class CitaController extends AppController
                     $this->Session->setFlash('El formato de la fecha de alta no es correcto, debe indicar una fecha con formato dd/mm/aaaa', 'failure');
                     return;
                 }
+                // Fecha creacion
+                $this->request->data["Cita"]["fechaCreacion"] = (new DateTime())->format('Y-m-d H:i:s');
 
-                /*
-                 * Especie
-                 */
+                // Especie
                 $especieId = $this->request->data["Cita"]["especie_id"];
                 $especie = $this->Especie->obtenerTodoPorId($especieId, array(
                     'Especie.estatus_reproductivo_ab_id',
@@ -813,9 +812,7 @@ class CitaController extends AppController
                 $dataSource = $this->Cita->getDataSource();
                 $dataSource->begin();
 
-                /*
-                 * Fecha de alta
-                 */
+                // Fecha de alta
                 $fechaAlta = $this->request->data["Cita"]["fechaAlta"];
                 $fechaAltaFormateada = DateUtil::europeanFormatToAmericanFormat($fechaAlta);
                 if ($fechaAltaFormateada != false) {
@@ -825,14 +822,13 @@ class CitaController extends AppController
                     return;
                 }
 
-                /*
-                 * Citas por lugar
-                 */
+                // Fecha creacion
+                $fechaActual = (new DateTime())->format('Y-m-d H:i:s');
+
+                // Citas por lugar
                 $numeroCitasPorLugar = $this->Cita->obtenerTotalCitasPorLugar($this->request->data["Cita"]["lugar_id"]);
 
-                /*
-                 * Usuario
-                 */
+                // Usuario
                 $this->request->data["Cita"]["usuario_id"] = $current_user['id'];
 
                 if (! isset($this->request->data['Especie']) || empty($this->request->data['Especie'])) {
@@ -852,6 +848,8 @@ class CitaController extends AppController
                     $this->request->data["Cita"]["indComportamiento"] = $datosEspecie["indComportamiento"];
 
                     $this->request->data["Cita"]["observaciones"] = $datosEspecie["observaciones"];
+
+                    $this->request->data["Cita"]["fechaCreacion"] = $fechaActual;
 
                     /*
                      * Especie

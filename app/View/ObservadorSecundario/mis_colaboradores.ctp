@@ -24,7 +24,7 @@ $this->end();
         <legend><?php echo __('Mis colaboradores'); ?></legend>
 
         <a href="#divNuevoColaborador" role="button"
-            class="btn btn-mini btn-warning" data-toggle="modal"
+            class="btn btn-small btn-primary" data-toggle="modal"
             id="btnNuevoColaborador"><i class="icon-plus"></i> <?php echo __("Nuevo colaborador");?></a>
 
         <hr>
