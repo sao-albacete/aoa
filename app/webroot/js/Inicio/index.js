@@ -16,6 +16,7 @@ $(document).ready(function(){
 
     /* INICIO tabla citas */
     $("#tabla_citas").dataTable({
+        "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
         "iDisplayLength": 25,
         "bProcessing": true,
         "bServerSide": true,
