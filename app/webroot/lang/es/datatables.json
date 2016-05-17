@@ -14,7 +14,7 @@
   "sInfoEmpty": "No hay registros para mostrar",
   "sInfoFiltered": "- filtrando por _MAX_ registros",
   "sInfoThousands": "'",
-  "sLengthMenu": "Mostrar <select><option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"-1\">Todos</option></select> registros",
+  "sLengthMenu": "Mostrar <select><option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option></select> registros",
   "sLoadingRecords": "Cargando citas...",
   "sProcessing": "Cargando citas...",
   "sSearch": "Buscar:",

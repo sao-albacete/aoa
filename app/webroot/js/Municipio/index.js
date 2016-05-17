@@ -5,10 +5,11 @@ $(document).ready(function() {
     });
 
     /* INICIO Tabla de lugares */
-    var asInitVals = new Array();
+    var asInitVals = [];
     var oTable;
 
     oTable = $("#tablaMunicipios").dataTable({
+        "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
         "sDom": "<'row'<'span2'l><'span8'f>r>t<'row'<'span2'i><'span8'p>>",
         "sWrapper": "dataTables_wrapper form-inline",
         "bPaginate": true,
@@ -20,11 +21,7 @@ $(document).ready(function() {
         "bInfo": false,
         "bAutoWidth": true,
         "oLanguage": {
-            "oPaginate": {
-                   "sNext": "Siguiente",
-                   "sPrevious": "Anterior"
-            },
-            "sZeroRecords": "No se han encontrado coincidencias."
+            "sUrl": "/lang/es/datatables.json"
         }
     });
 

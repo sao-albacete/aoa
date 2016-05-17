@@ -8,7 +8,7 @@ $(document).ready(function(){
         "bInfo": false,
         "bAutoWidth": false,
         "oLanguage": {
-            "sSearch": "Buscar:"
+            "sUrl": "/lang/es/datatables.json"
         }
     });
     new $.fn.dataTable.FixedHeader(tbListaAvesAb);

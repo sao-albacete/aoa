@@ -20,9 +20,9 @@ $this->Html->script(array(
     '/plugin/jquery-validation-1.11.1/dist/jquery.validate.min',
     '/plugin/jquery-validation-1.11.1/localization/messages_es',
     '/plugin/yoxview/yoxview-init',
-    'https://maps.googleapis.com/maps/api/js?sensor=false',
-    'https://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js',
-    'https://geoxml3.googlecode.com/svn/trunk/ProjectedOverlay.js',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+    'common/maps/geoxml3/geoxml3.js',
+    'common/maps/geoxml3/ProjectedOverlay.js',
     'pleaseWaitDialog',
     'common/maps/functions',
     'Especie/view'
@@ -55,6 +55,7 @@ $this->Html->script(array(
 
         /* INICIO tabla citas */
         $("#tabla_citas").dataTable({
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
             "iDisplayLength": 25,
             "bProcessing": true,
             "bServerSide": true,
