@@ -10,7 +10,15 @@
     /**
      * Javascript
      */
-    $this->Html->script(array('/plugin/DataTables-1.9.4/media/js/jquery.dataTables', 'datatables-bootstrap', 'https://maps.googleapis.com/maps/api/js?sensor=false', 'https://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js', 'https://geoxml3.googlecode.com/svn/trunk/ProjectedOverlay.js','common/maps/functions','Municipio/index'), array('inline' => false));
+    $this->Html->script(array(
+        '/plugin/DataTables-1.9.4/media/js/jquery.dataTables',
+        'datatables-bootstrap',
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+        'common/maps/geoxml3/geoxml3.js',
+        'common/maps/geoxml3/ProjectedOverlay.js',
+        'common/maps/functions',
+        'Municipio/index'
+    ), array('inline' => false));
     
     // Menu
     $this->start('menu');        
