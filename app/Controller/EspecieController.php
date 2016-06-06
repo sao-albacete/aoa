@@ -79,9 +79,9 @@ class EspecieController extends AppController
          */
         $orden_taxonomico = $this->OrdenTaxonomico->find(
             'first',
-            array(
-                'conditions' => array('OrdenTaxonomico.id' => $especie['Familia']['orden_taxonomico_id'])
-            )
+            [
+                'conditions' => ['OrdenTaxonomico.id' => $especie['Familia']['orden_taxonomico_id']]
+            ]
         );
         $especie['OrdenTaxonomico'] = $orden_taxonomico['OrdenTaxonomico'];
 
@@ -89,9 +89,9 @@ class EspecieController extends AppController
          * Citas
          */
         $citas = $this->Cita->obtenerCitas(
-            array('Cita.especie_id' => $especie['Especie']['id'], 'Cita.indActivo' => 1),
+            ['Cita.especie_id' => $especie['Especie']['id'], 'Cita.indActivo' => 1],
             null,
-            array('Cita.fechaAlta DESC')
+            ['Cita.fechaAlta DESC']
         );
         $counter = 0;
         // Contendra todas las fotos asociadas a las citas de la especie

@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Cita Model
  *
@@ -35,71 +37,71 @@ class Cita extends AppModel {
      *
      * @var array
      */
-    public $belongsTo = array(
-        'Lugar' => array(
+    public $belongsTo = [
+        'Lugar' => [
             'className' => 'Lugar',
             'foreignKey' => 'lugar_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'ObservadorPrincipal' => array(
+        ],
+        'ObservadorPrincipal' => [
             'className' => 'ObservadorPrincipal',
             'foreignKey' => 'observador_principal_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'ClaseReproduccion' => array(
+        ],
+        'ClaseReproduccion' => [
             'className' => 'ClaseReproduccion',
             'foreignKey' => 'clase_reproduccion_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'Fuente' => array(
+        ],
+        'Fuente' => [
             'className' => 'Fuente',
             'foreignKey' => 'fuente_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'Especie' => array(
+        ],
+        'Especie' => [
             'className' => 'Especie',
             'foreignKey' => 'especie_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'CriterioSeleccionCita' => array(
+        ],
+        'CriterioSeleccionCita' => [
             'className' => 'CriterioSeleccionCita',
             'foreignKey' => 'criterio_seleccion_cita_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'ImportanciaCita' => array(
+        ],
+        'ImportanciaCita' => [
             'className' => 'ImportanciaCita',
             'foreignKey' => 'importancia_cita_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'Estudio' => array(
+        ],
+        'Estudio' => [
             'className' => 'Estudio',
             'foreignKey' => 'estudio_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        )
-    );
+        ]
+    ];
 
     /**
      * hasMany associations
      *
      * @var array
      */
-    public $hasMany = array(
+    public $hasMany = [
 //         'CitaHistorico' => array(
 //             'className' => 'CitaHistorico',
 //             'foreignKey' => 'cita_id',
@@ -113,7 +115,7 @@ class Cita extends AppModel {
 //             'finderQuery' => '',
 //             'counterQuery' => ''
 //         ),
-        'Fichero' => array(
+        'Fichero' => [
             'className' => 'Fichero',
             'foreignKey' => 'cita_id',
             'dependent' => false,
@@ -125,8 +127,8 @@ class Cita extends AppModel {
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
-        ),
-        'AsoCitaObservador' => array(
+        ],
+        'AsoCitaObservador' => [
             'className' => 'AsoCitaObservador',
             'foreignKey' => 'cita_id',
             'dependent' => false,
@@ -138,8 +140,8 @@ class Cita extends AppModel {
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
-        ),
-        'AsoCitaClaseEdadSexo' => array(
+        ],
+        'AsoCitaClaseEdadSexo' => [
             'className' => 'AsoCitaClaseEdadSexo',
             'foreignKey' => 'cita_id',
             'dependent' => false,
@@ -151,151 +153,156 @@ class Cita extends AppModel {
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
-        )
-    );
+        ]
+    ];
     
     /**
      * Validaciones
      */
-    public $validate = array(
-        'fechaAlta' => array(
-            'required' => array(
+    public $validate = [
+        'fechaAlta' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => 'create',
                 'message' => 'Debe seleccionar una fecha de alta.'
-            ),
-            'date' => array(
-                'rule' => array('date', 'ymd'),
+            ],
+            'date' => [
+                'rule' => ['date', 'ymd'],
                 'required' => 'create',
                 'message' => 'Debe introducir una fecha de alta con formato correcto (dd/mm/aaaa).'
-            ),
-            'dateAfterOrEqualToday' => array(
+            ],
+            'dateAfterOrEqualToday' => [
                 'rule' => 'dateBeforeOrEqualToday',
                 'message' => 'Debe introducir una fecha de alta anterior o igual a la fecha de hoy.'
-            )
-        ),
-        'cantidad' => array(
-            'required' => array(
+            ]
+        ],
+        'cantidad' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => true,
                 'message' => 'El número de aves debe ser mayor que cero.'
-            ),
-            'moreThanZero' => array(
-                'rule' => array('comparison', '>', 0),
+            ],
+            'moreThanZero' => [
+                'rule' => ['comparison', '>', 0],
                 'required' => true,
                 'message' => 'El número de aves debe ser mayor que cero'
-            )
-        ),
-        'observaciones' => array(
-            'between' => array(
-                'rule' => array('between', 0, 1000),
+            ]
+        ],
+        'observaciones' => [
+            'between' => [
+                'rule' => ['between', 0, 1000],
                 'required' => true,
                 'message' => 'El texto de observaciones no puede ser mayor de 1000 caracteres.'
-            )
-        ),
-        'lugar_id' => array(
-            'required' => array(
+            ]
+        ],
+        'lugar_id' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => true,
                 'message' => 'El lugar es obligatorio.'
-            ),
-            'numeric' => array(
+            ],
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'message' => 'El id del lugar debe ser un numero.'
-            )
-        ),
-        'observador_principal_id' => array(
-            'required' => array(
+            ]
+        ],
+        'observador_principal_id' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => true,
                 'message' => 'El observador es obligatorio.'
-            ),
-            'numeric' => array(
+            ],
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'message' => 'El id del observador debe ser un numero.'
-            )
-        ),
-        'clase_reproduccion_id' => array(
-            'required' => array(
+            ]
+        ],
+        'clase_reproduccion_id' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => true,
                 'message' => 'La clase de reproducción es obligatoria.'
-            ),
-            'numeric' => array(
+            ],
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'message' => 'El id de la clase de reproducción debe ser un numero.'
-            )
-        ),
-        'especie_id' => array(
-            'required' => array(
+            ]
+        ],
+        'especie_id' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => true,
                 'message' => 'La especie es obligatoria.'
-            ),
-            'numeric' => array(
+            ],
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'message' => 'El id de la especie debe ser un numero.'
-            )
-        ),
-        'criterio_seleccion_cita_id' => array(
-            'required' => array(
+            ]
+        ],
+        'criterio_seleccion_cita_id' => [
+            'required' => [
                 'rule' => 'notEmpty',
                 'required' => true,
                 'message' => 'El criterio de selección es obligatorio.'
-            ),
-            'numeric' => array(
+            ],
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'message' => 'El id del criterio de selección debe ser un numero.'
-            )
-        ),
-         'indHabitatRaro' => array(
-                'rule' => array('boolean'),
+            ]
+        ],
+         'indHabitatRaro' => [
+                'rule' => ['boolean'],
                 'required' => false,
                 'message' => 'El valor del indicador de hábitat raro debe ser un booleano.'
-        ),
-        'indCriaHabitatRaro' => array(
-            'rule' => array('boolean'),
+         ],
+        'indCriaHabitatRaro' => [
+            'rule' => ['boolean'],
             'required' => false,
             'message' => 'El valor del indicador de cría en hábitat raro debe ser un booleano.'
-        ),
-        'indHerido' => array(
-            'rule' => array('boolean'),
+        ],
+        'indHerido' => [
+            'rule' => ['boolean'],
             'required' => false,
             'message' => 'El valor del indicador de herido debe ser un booleano.'
-        ),
-        'indComportamiento' => array(
-            'rule' => array('boolean'),
+        ],
+        'indComportamiento' => [
+            'rule' => ['boolean'],
             'required' => false,
             'message' => 'El valor del indicador de comportamiento debe ser un booleano.'
-        ),
-        'fuente_id' => array(
-            'numeric' => array(
+        ],
+        'fuente_id' => [
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'message' => 'La fuente es obligatoria.'
-            )
-        ),
-        'estudio_id' => array(
-            'numeric' => array(
+            ]
+        ],
+        'estudio_id' => [
+            'numeric' => [
                 'rule' => 'naturalNumber',
                 'required' => true,
                 'allowEmpty' => false,
                 'message' => 'El estudio es obligatorio.'
-            )
-        ),
-        'indFoto' => array(
-            'rule' => array('boolean'),
+            ]
+        ],
+        'indFoto' => [
+            'rule' => ['boolean'],
             'required' => false,
             'message' => 'El valor del indicador de fotos debe ser un booleano.'
-        ),
-    );
-    
-    public function dateBeforeOrEqualToday($data) {
+        ],
+    ];
+
+    /**
+     * Valida si la fecha de alta de la cita es anterior o igual a la fecha de hoy
+     *
+     * @return bool
+     */
+    public function dateBeforeOrEqualToday() {
         
         $dtFechaAlta = new DateTime($this->data['Cita']['fechaAlta']);
         $dtNow = new DateTime('now');
@@ -322,10 +329,13 @@ class Cita extends AppModel {
      */
     public function obtenerCitas($conditions, $fields=null, $order=null, $limit = 0, $joins=null) {
         
-        $params = array();
-        
+        $params = [];
+
         if (! empty($conditions)) {
             $params['conditions'] = $conditions;
+            if(! array_key_exists('Cita.indActivo', $params['conditions'])) {
+                $params['conditions']['Cita.indActivo'] = 1;
+            }
         }
         if (! empty($fields)) {
             $params['fields'] = $fields;
@@ -355,14 +365,16 @@ class Cita extends AppModel {
      * @param null $joins
      * @return array
      */
-    public function obtenerNumeroCitas($conditions=null, $joins=null) {
+    public function obtenerNumeroCitas($conditions = null, $joins = null) {
 
-        $params = array();
+        $params = [];
 
         if (! empty($conditions)) {
             $params['conditions'] = $conditions;
+            if(! array_key_exists('Cita.indActivo', $params['conditions'])) {
+                $params['conditions']['Cita.indActivo'] = 1;
+            }
         }
-
         if (! empty($joins)) {
             $params['joins'] = $joins;
         }
@@ -371,33 +383,38 @@ class Cita extends AppModel {
         
         return $numCitas;
     }
-    
+
     /**
      * Obtiene toda la información de la cita por id
+     * @param $id_cita
+     * @return array
      */
     public function obtenerTodoPorId($id_cita) {
         
         $cita = $this -> find(
             'first', 
-            array(
-                'conditions'=>array('Cita.id'=>$id_cita)
-            )
+            [
+                'conditions' => ['Cita.id' => $id_cita, 'Cita.indActivo' => 1]
+            ]
         );
         
         return $cita;
     }
-    
+
     /**
      * Obtiene la información básica de la cita por id
+     *
+     * @param $id_cita
+     * @return array
      */
     public function obtenerDatosBasicosPorId($id_cita) {
         
         $cita = $this -> find(
             'first', 
-            array(
-                'conditions'=>array('Cita.id'=>$id_cita),
+            [
+                'conditions'=> ['Cita.id' => $id_cita, 'Cita.indActivo' => 1],
                 'recursive'=>-1
-            )
+            ]
         );
         
         return $cita;
@@ -410,11 +427,12 @@ class Cita extends AppModel {
         
         $anios = $this -> find(
             'all', 
-            array(
-                'fields'=>array('DISTINCT(YEAR(Cita.fechaAlta)) AS anio'),
-                'order'=>array('anio DESC'),
+            [
+                'fields'=> ['DISTINCT(YEAR(Cita.fechaAlta)) AS anio'],
+                'conditions'=> ['Cita.indActivo' => 1],
+                'order'=> ['anio DESC'],
                 'recursive' => -1
-            )
+            ]
         );
         
         return $anios;
@@ -424,214 +442,355 @@ class Cita extends AppModel {
      * Obtiene las citas provinciales por mes
      *
      * @param number $especie_id
+     * @param $anio_desde
+     * @param $anio_hasta
+     * @param $selectField
      * @return array
      */
     public function obtenerCitasProvincialesPorIntervaloAnios($especie_id, $anio_desde, $anio_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'YEAR(Cita.fechaAlta) >='=>$anio_desde,
+                    'YEAR(Cita.fechaAlta) <='=>$anio_hasta,
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes'],
                 'recursive'=>-1
-            )
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtener citas por provincia y año
+     *
+     * @param $especie_id
+     * @param $anio
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasProvincialesPorAnio($especie_id, $anio, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'YEAR(Cita.fechaAlta)'=>$anio),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'YEAR(Cita.fechaAlta)'=>$anio,
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes'],
                 'recursive'=>-1
-            )
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtener citas por provincia y fechas
+     *
+     * @param $especie_id
+     * @param $fecha_desde
+     * @param $fecha_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasProvincialesPorIntervaloFechas($especie_id, $fecha_desde, $fecha_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')",
+                    "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')",
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes'],
                 'recursive'=>-1
-            )
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtener citas por municipio y años
+     *
+     * @param $especie_id
+     * @param $municipio
+     * @param $anio_desde
+     * @param $anio_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorMunicipioIntervaloAnios($especie_id, $municipio, $anio_desde, $anio_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes')
-            )
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Lugar.municipio_id'=>$municipio,
+                    'YEAR(Cita.fechaAlta) >='=>$anio_desde,
+                    'YEAR(Cita.fechaAlta) <='=>$anio_hasta,
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes']
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtiene citas por municipio y año
+     *
+     * @param $especie_id
+     * @param $municipio
+     * @param $anio
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorMunicipioYAnio($especie_id, $municipio, $anio, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, 'YEAR(Cita.fechaAlta)'=>$anio),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes')
-            )
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Lugar.municipio_id'=>$municipio,
+                    'YEAR(Cita.fechaAlta)'=>$anio,
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes']
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtiene citas por municipio y fechas
+     *
+     * @param $especie_id
+     * @param $municipio
+     * @param $fecha_desde
+     * @param $fecha_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorMunicipioIntervaloFechas($especie_id, $municipio, $fecha_desde, $fecha_hasta, $selectField) {
 
         $citas = $this -> find(
             'all',
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes')
-            )
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Lugar.municipio_id'=>$municipio,
+                    "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')",
+                    "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')",
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes']
+            ]
         );
 
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
 
         return $out;
     }
-    
+
+    /**
+     * Obtiene citas por lugar y años
+     *
+     * @param $especie_id
+     * @param $lugar
+     * @param $anio_desde
+     * @param $anio_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorLugarIntervaloAnios($especie_id, $lugar, $anio_desde, $anio_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Cita.lugar_id'=>$lugar,
+                    'YEAR(Cita.fechaAlta) >='=>$anio_desde,
+                    'YEAR(Cita.fechaAlta) <='=>$anio_hasta,
+                    'Cita.indActivo' => 1
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes'],
                 'recursive'=>-1
-            )
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtiene citas por lugar y año
+     *
+     * @param $especie_id
+     * @param $lugar
+     * @param $anio
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorLugarYAnio($especie_id, $lugar, $anio, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, 'YEAR(Cita.fechaAlta)'=>$anio),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Cita.lugar_id'=>$lugar,
+                    'YEAR(Cita.fechaAlta)'=>$anio,
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes'],
                 'recursive'=>-1
-            )
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtiene citas por lugar y fechas
+     *
+     * @param $especie_id
+     * @param $lugar
+     * @param $fecha_desde
+     * @param $fecha_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorLugarIntervaloFechas($especie_id, $lugar, $fecha_desde, $fecha_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Cita.lugar_id'=>$lugar,
+                    "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')",
+                    "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')",
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes'],
                 'recursive'=>-1
-            )
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
-    
+
+    /**
+     * Obtiene citas por cuadricula UTM y años
+     *
+     * @param $especie_id
+     * @param $cuadricula_utm
+     * @param $anio_desde
+     * @param $anio_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorCuadriculaUtmIntervaloAnios($especie_id, $cuadricula_utm, $anio_desde, $anio_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes')
-            )
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Lugar.cuadricula_utm_id'=>$cuadricula_utm,
+                    'YEAR(Cita.fechaAlta) >='=>$anio_desde,
+                    'YEAR(Cita.fechaAlta) <='=>$anio_hasta,
+                    'Cita.indActivo' => 1,
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes']
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
@@ -642,84 +801,132 @@ class Cita extends AppModel {
         
         return $out;
     }
-    
+
+    /**
+     * Obtener citas por cuadricula UTM y año
+     *
+     * @param $especie_id
+     * @param $cuadricula_utm
+     * @param $anio
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorCuadriculaUtmYAnio($especie_id, $cuadricula_utm, $anio, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, 'YEAR(Cita.fechaAlta)'=>$anio),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes')
-            )
+            [
+                'conditions'=> [
+                    'Cita.especie_id' => $especie_id,
+                    'Lugar.cuadricula_utm_id' => $cuadricula_utm,
+                    'YEAR(Cita.fechaAlta)' => $anio,
+                    'Cita.indActivo' => 1
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes']
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtiene las citas por cuadricula UTM y filtradas por fechas
+     *
+     * @param $especie_id
+     * @param $cuadricula_utm
+     * @param $fecha_desde
+     * @param $fecha_hasta
+     * @param $selectField
+     * @return array
+     */
     public function obtenerCitasPorCuadriculaUtmIntervaloFechas($especie_id, $cuadricula_utm, $fecha_desde, $fecha_hasta, $selectField) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
-                'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
-                'order'=>array('mes ASC'),
-                'group'=>array('mes')
-            )
+            [
+                'conditions'=> [
+                    'Cita.especie_id'=>$especie_id,
+                    'Lugar.cuadricula_utm_id'=>$cuadricula_utm,
+                    "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')",
+                    "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')",
+                    'Cita.indActivo' => 1
+                ],
+                'fields'=> ["$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"],
+                'order'=> ['mes ASC'],
+                'group'=> ['mes']
+            ]
         );
         
         // Rellenamos un array con los valores para los 12 meses
-        $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $out = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
         
         return $out;
     }
-    
+
+    /**
+     * Obtiene todas las citas por municipio
+     *
+     * @param $especie_id
+     * @return array
+     */
     public function obtenerTotalCitasPorMunicipio($especie_id) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('COUNT(Cita.id) as total', 'Lugar.municipio_id as municipio'),
-                'group'=>array('municipio')
-            )
+            [
+                'conditions'=> ['Cita.especie_id' => $especie_id, 'Cita.indActivo' => 1],
+                'fields'=> ['COUNT(Cita.id) as total', 'Lugar.municipio_id as municipio'],
+                'group'=> ['municipio']
+            ]
         );
         
         return $citas;
     }
-    
+
+    /**
+     * Obtiene el total de citas por cuadricula UTM
+     *
+     * @param $especie_id
+     * @return array
+     */
     public function obtenerTotalCitasPorCuadriculaUtm($especie_id) {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('COUNT(Cita.id) as total', 'Lugar.cuadricula_utm_id as cuadriculaUtm'),
-                'group'=>array('cuadriculaUtm')
-            )
+            [
+                'conditions'=> ['Cita.especie_id' => $especie_id, 'Cita.indActivo' => 1],
+                'fields'=> ['COUNT(Cita.id) as total', 'Lugar.cuadricula_utm_id as cuadriculaUtm'],
+                'group'=> ['cuadriculaUtm']
+            ]
         );
         
         return $citas;
     }
-    
+
+    /**
+     * Obtiene todas las citas por lugar
+     *
+     * @param $lugar_id
+     * @return array
+     */
     public function obtenerTotalCitasPorLugar($lugar_id) {
         
         $totalCitas = $this -> find(
             'count', 
-            array(
-                'conditions'=>array('Cita.lugar_id'=>$lugar_id)
-            )
+            [
+                'conditions'=> ['Cita.lugar_id' => $lugar_id, 'Cita.indActivo' => 1]
+            ]
         );
         
         return $totalCitas;
@@ -735,11 +942,11 @@ class Cita extends AppModel {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('Lugar.municipio_id as municipio', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
-                'group'=>array('municipio')
-            )
+            [
+                'conditions'=> ['Cita.especie_id' => $especie_id, 'Cita.indActivo' => 1],
+                'fields'=> ['Lugar.municipio_id as municipio', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'],
+                'group'=> ['municipio']
+            ]
         );
         
         return $citas;
@@ -755,11 +962,11 @@ class Cita extends AppModel {
         
         $citas = $this -> find(
             'all', 
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('Lugar.cuadricula_utm_id as cuadriculaUtm', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
-                'group'=>array('cuadriculaUtm')
-            )
+            [
+                'conditions'=> ['Cita.especie_id' => $especie_id, 'Cita.indActivo' => 1],
+                'fields'=> ['Lugar.cuadricula_utm_id as cuadriculaUtm', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'],
+                'group'=> ['cuadriculaUtm']
+            ]
         );
         
         return $citas;
@@ -779,7 +986,8 @@ class Cita extends AppModel {
         $conditions = [
             'Cita.especie_id' => $especieId,
             'Cita.lugar_id' => $lugarId,
-            "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')"
+            "Cita.fechaAlta = STR_TO_DATE('$fechaAlta','%d/%m/%Y')",
+            'Cita.indActivo' => 1
         ];
 
         if (isset($observadorId)) {
