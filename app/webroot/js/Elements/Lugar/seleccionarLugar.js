@@ -33,22 +33,19 @@ $(document).ready(function(){
     });
 
     oTable = $divSeleccionarLugar.find(".tablaLugares").dataTable({
+        "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+        "iDisplayLength": 5,
         "sDom": "<'row'<'span3'l><'span6'f>r>t<'row'<'span3'i><'span6'p>>",
         "sWrapper": "dataTables_wrapper form-inline",
         "bPaginate": true,
         "sPaginationType": "bootstrap",
-        "iDisplayLength": 5,
         "bLengthChange": false,
         "bFilter": true,
         "bSort": true,
         "bInfo": false,
         "bAutoWidth": true,
         "oLanguage": {
-            "oPaginate": {
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "sZeroRecords": "No se han encontrado coincidencias."
+            "sUrl": "/lang/es/datatables.json"
         }
     });
 
