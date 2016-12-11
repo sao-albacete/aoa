@@ -27,25 +27,25 @@ class CitaController extends AppController
     /**
      * Componentes
      */
-    public $components = array(
-        'RequestHandler'
-    );
+    public $components = [
+        'RequestHandler',
+    ];
 
     /**
      * Helpers
      */
-    public $helpers = array(
+    public $helpers = [
         'ObservadorSecundario',
         'Especie',
         'ClaseEdadSexo',
         'Importancia',
-        'Js'
-    );
+        'Js',
+    ];
 
     /**
      * Modelos
      */
-    public $uses = array(
+    public $uses = [
         'Cita',
         'AsoCitaObservador',
         'Especie',
@@ -68,7 +68,7 @@ class CitaController extends AppController
         'Fichero',
         'AsoEspeciePrivacidad',
         'Estudio'
-    );
+    ];
 
     public function beforeFilter()
     {
@@ -150,9 +150,9 @@ class CitaController extends AppController
         $this->set('estudios', $estudios);
 
         
-        $conditions = array(
+        $conditions = [
             'Cita.indActivo' => 1
-        );
+        ];
         $joins = [];
 
         if ($this->request->is('get')) {
@@ -305,18 +305,16 @@ class CitaController extends AppController
 
         if (count($conditions) > 0) {
 
-            $this->paginate['Cita']['joins'] = $joins;
-
-            $this->paginate['Cita']['conditions'] = $conditions;
-
-            $this->paginate['Cita']['order'] = array(
+            $params = [];
+            $params['joins'] = $joins;
+            $params['conditions'] = $conditions;
+            $params['order'] = [
                 'Cita.fechaAlta' => 'desc',
                 'Cita.fechaCreacion' => 'desc'
-            );
+            ];
+            $params['limit'] = 25;
 
-            $this->paginate['Cita']['limit'] = 25;
-
-            // Mostramos avisto si se han filtrado las citas privadas pero existe alguna
+            // Mostramos aviso si se han filtrado las citas privadas pero existe alguna
             if ($filtraCitasPrivadas) {
 
                 if (! isset($usuario)) {
@@ -344,34 +342,128 @@ class CitaController extends AppController
                 }
             }
 
-            $citas = $this->paginate();
+            if ($this->request->query('exportarAExcel')) {
 
-            for ($index = 0; $index < count($citas); $index ++) {
+                $limit = $this->Cita->find('count', $params);
+                if ($limit > 1000) {
+                    $this->Session->setFlash('El número de citas a exportar no puede ser superior a 1.000 registros. Por favor, utilice filtros para acotar más la búsqueda.', 'warning');
+                    return;
+                }
+                $params['limit'] = $limit;
+                $citas = $this->Cita->find('all', $params);
 
-                /*
-                 * Observadores
-                 */
-                $observadores = $this->AsoCitaObservador->obtenerObservadoresPorCita($citas[$index]['Cita']['id']);
-                $citas[$index]['observadoresSecundarios'] = $observadores;
+                $this->ObservadorSecundario = $this->Components->load('ObservadorSecundario');
+                $this->PhpExcel = $this->Components->load('PhpExcel');
+                $this->PhpExcel->createWorksheet()->setDefaultFont('Calibri', 12);
 
-                /*
-                 * Clases edad sexo
-                 */
-                $citas[$index]['clases_edad_sexo'] = $this->AsoCitaClaseEdadSexo->obtenerClasesEdadSexoPorCita($citas[$index]['Cita']['id']);
+                // define table cells
+                $table = [
+                    ['label' => __('Importancia (codigo)')],
+                    ['label' => __('Importancia (descripción)')],
+                    ['label' => __('Especie (nombre común)')],
+                    ['label' => __('Especie (nombre científico)')],
+                    ['label' => __('Fecha')],
+                    ['label' => __('Lugar')],
+                    ['label' => __('Municipio')],
+                    ['label' => __('Comarca')],
+                    ['label' => __('Cuadrícula UTM')],
+                    ['label' => __('Número de Aves')],
+                    ['label' => __('Observador (código)')],
+                    ['label' => __('Observador (nombre)')],
+                    ['label' => __('Colaboradores (códigos)')],
+                    ['label' => __('Colaboradores (nombres)')],
+                    ['label' => __('Clase de Reproducción (codigo)')],
+                    ['label' => __('Clase de Reproducción (descripción)')],
+                    ['label' => __('Criterio de Selección (código)')],
+                    ['label' => __('Criterio de Selección (descripción)')],
+                ];
 
-                /*
-                 * Lugar
-                */
-                $lugar = $this->Lugar->obtenerTodoPorId($citas[$index]['Lugar']['id']);
-                $citas[$index]['Comarca'] = $lugar['Comarca'];
-                $citas[$index]['Municipio'] = $lugar['Municipio'];
-                $citas[$index]['CuadriculaUtm'] = $lugar['CuadriculaUtm'];
+                // add heading with different font and bold text
+                $this->PhpExcel->addTableHeader($table, ['name' => 'Cambria', 'bold' => true]);
 
+                // add data
+                foreach ($citas as $cita) {
+
+                    /*
+                     * Observadores
+                     */
+                    $observadores = $this->AsoCitaObservador->obtenerObservadoresPorCita($cita['Cita']['id']);
+                    $cita['observadoresSecundarios'] = $observadores;
+
+                    /*
+                     * Clases edad sexo
+                     */
+                    $cita['clases_edad_sexo'] = $this->AsoCitaClaseEdadSexo->obtenerClasesEdadSexoPorCita($cita['Cita']['id']);
+
+                    /*
+                     * Lugar
+                    */
+                    $lugar = $this->Lugar->obtenerTodoPorId($cita['Lugar']['id']);
+                    $cita['Comarca'] = $lugar['Comarca'];
+                    $cita['Municipio'] = $lugar['Municipio'];
+                    $cita['CuadriculaUtm'] = $lugar['CuadriculaUtm'];
+
+                    $lugar = $cita['Lugar']['nombre'];
+                    if ($cita['Cita']['indPrivacidad'] == 1 || (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1))) {
+                        $lugar = __('Lugar confidencial');
+                    }
+
+                    $this->PhpExcel->addTableRow([
+                        $cita['ImportanciaCita']['codigo'],
+                        $cita['ImportanciaCita']['descripcion'],
+                        $cita['Especie']['nombreComun'],
+                        $cita['Especie']['genero'] . ' ' . $cita['Especie']['especie'] . ' ' . $cita['Especie']['subespecie'],
+                        $cita['Cita']['fechaAlta'],
+                        $lugar,
+                        $cita['Municipio']['nombre'],
+                        $cita['Comarca']['nombre'],
+                        $cita['CuadriculaUtm']['codigo'],
+                        $cita['Cita']['cantidad'],
+                        $cita['ObservadorPrincipal']['codigo'],
+                        $cita['ObservadorPrincipal']['nombre'],
+                        $this->ObservadorSecundario->mostrarCodigosObservadores($cita['observadoresSecundarios']),
+                        $this->ObservadorSecundario->mostrarNombresObservadores($cita['observadoresSecundarios']),
+                        $cita['ClaseReproduccion']['codigo'],
+                        $cita['ClaseReproduccion']['descripcion'],
+                        $cita['CriterioSeleccionCita']['codigo'],
+                        $cita['CriterioSeleccionCita']['nombre'],
+                    ]);
+                }
+
+                // close table and output
+                $this->PhpExcel->addTableFooter()->output('citas.xlsx', 'Excel2007');
+
+            } else {
+                $this->paginate['Cita'] = $params;
+                $citas = $this->paginate();
+
+                for ($index = 0; $index < count($citas); $index ++) {
+
+                    /*
+                     * Observadores
+                     */
+                    $observadores = $this->AsoCitaObservador->obtenerObservadoresPorCita($citas[$index]['Cita']['id']);
+                    $citas[$index]['observadoresSecundarios'] = $observadores;
+
+                    /*
+                     * Clases edad sexo
+                     */
+                    $citas[$index]['clases_edad_sexo'] = $this->AsoCitaClaseEdadSexo->obtenerClasesEdadSexoPorCita($citas[$index]['Cita']['id']);
+
+                    /*
+                     * Lugar
+                    */
+                    $lugar = $this->Lugar->obtenerTodoPorId($citas[$index]['Lugar']['id']);
+                    $citas[$index]['Comarca'] = $lugar['Comarca'];
+                    $citas[$index]['Municipio'] = $lugar['Municipio'];
+                    $citas[$index]['CuadriculaUtm'] = $lugar['CuadriculaUtm'];
+
+                }
+
+                $this->set('citas', $citas);
+
+                $this->set('valuesSubmited', $valuesSubmited);
             }
-
-            $this->set('citas', $citas);
-
-            $this->set('valuesSubmited', $valuesSubmited);
         }
     }
 

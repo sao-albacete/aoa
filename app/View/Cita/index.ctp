@@ -6,21 +6,21 @@ $this->set('title_for_layout', 'Búsqueda de citas');
 /**
  * CSS
  */
-$this->Html->css(array(
+$this->Html->css([
     'datatables-bootstrap',
     'Cita/index'
-), null, array('inline' => false));
+], null, ['inline' => false]);
 
 /**
  * Javascript
  */
-$this->Html->script(array(
+$this->Html->script([
     'pleaseWaitDialog',
     'common/Lugar/funciones',
     'common/ObservadorPrimario/funciones',
     'common/ObservadorSecundario/funciones',
     'Cita/index'
-), array('inline' => false));
+], ['inline' => false]);
 
 // Menu
 $this->start('menu');
@@ -314,27 +314,26 @@ $(document).ready(function() {
             <!-- Botones de búsqueda -->
             <div id="divBotonesBusqueda" class="control-group">
                <div class="controls">
-                  <input type="button" id="btnLimpiar" class="btn btn-warning"
-                     value="<?=__("Limpiar");?>" /> <input type="submit"
-                     id="btnBuscar" class="btn btn-success btn-large"
-                     value="<?=__("Buscar");?>" />
+                  <input type="button" id="btnLimpiar" class="btn btn-warning" value="<?=__("Limpiar");?>" />
+                   <input type="submit" id="btnBuscar" class="btn btn-success btn-large" value="<?=__("Buscar");?>" />
+                   <input type="submit" id="btnExportar" class="btn btn-info btn-large" name="exportarAExcel" value="<?=__("Exportar");?>" />
                </div>
             </div>
          </form>
       </div>
       
       <?php 
-         $this->Paginator->options(array(
+         $this->Paginator->options([
             'update'=>'#content',
             'before' => $this->Js->get('#pleaseWaitDialog')->effect(
                  'fadeIn',
-                 array('buffer' => false)
+                 ['buffer' => false]
              ),
              'complete' => $this->Js->get('#pleaseWaitDialog')->effect(
                  'fadeOut',
-                 array('buffer' => false)
+                 ['buffer' => false]
              )
-      ) );
+         ]);
       ?>
       
       <?php if(isset($citas)) : ?>
@@ -344,7 +343,7 @@ $(document).ready(function() {
          <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static"
             data-keyboard="false">
             <div class="modal-header">
-               <h4>Por favor, espere...</h4>
+               <h4><?=__("Por favor, espere...");?></h4>
             </div>
             <div class="modal-body">
                <div class="progress progress-striped active">
