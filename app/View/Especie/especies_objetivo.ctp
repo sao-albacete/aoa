@@ -73,6 +73,60 @@ $this->Html->script(array(
         <div class="row-fluid">
 
             <div class="page-header">
+                <h3><?=__('Especies objetivo 2016')?></h3>
+            </div>
+
+            <!-- 2015 -->
+            <p><?=__('En el año 2016, las especies objetivo que se han elegido son: la <strong>perdiz roja</strong>, la <strong>codorniz común</strong>, el <strong>alcaraván común</strong>, la <strong>lechuza común</strong> y el <strong>mochuelo común</strong>.')?></p>
+
+            <ul class="thumbnails yoxview">
+                <li class="offset1"></li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/codorniz_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/codorniz_comun.jpg" alt="Codorniz común" title="Codorniz común">
+                        </a>
+                        <h4>Codorniz común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/perdiz_roja.jpg">
+                            <img src="/img/Pages/especies-objetivo/perdiz_roja.jpg" alt="Perdiz roja" title="Perdiz roja">
+                        </a>
+                        <h4>Perdiz roja</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/alcaravan_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/alcaravan_comun.jpg" alt="Alcaraván común" title="Alcaraván común">
+                        </a>
+                        <h4>Alcaraván común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/lechuza_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/lechuza_comun.jpg" alt="Lechuza común" title="Lechuza común">
+                        </a>
+                        <h4>Lechuza común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/mochuelo_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/mochuelo_comun.jpg" alt="Mochuelo común" title="Mochuelo común">
+                        </a>
+                        <h4>Mochuelo común</h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+
+            <div class="page-header">
                 <h3><?=__('Especies objetivo 2015')?></h3>
             </div>
 
