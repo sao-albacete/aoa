@@ -41,6 +41,12 @@ $this->Html->script(array(
     <fieldset>
         <legend><?php echo __("Especies objetivo");?></legend>
 
+        <ul class="nav nav-pills">
+            <li><a href="#2017">2017</a></li>
+            <li><a href="#2016">2016</a></li>
+            <li><a href="#2015">2015</a></li>
+        </ul>
+
         <div class="row-fluid">
 
             <div class="thumbnail span2 text-center pull-right" style="margin-left: 2.5%">
@@ -65,7 +71,7 @@ $this->Html->script(array(
             <p><?=__('Por todo ello, hemos creado esta sección, para intentar llamar la atención sobre estas otras especies, que paradójicamente, son de las que menos datos disponemos. Os animamos a todos/as los/as que colaboráis con este anuario ornitológico a que subáis también las citas de todas estas especies comunes, pues así podremos conocer un poco mejor la situación de las aves de Albacete, ayudando con ello a protegerlas y conservarlas.')?></p>
             <p><?=__('Cada año se elegirán 5 especies para motivar que se introduzcan las observaciones que se recojan de éstas.')?></p>
             <br/>
-            <p style="font-size: 18px; font-weight: bold; text-align: center"><?=__('Muchas gracias por colaborar.')?></p>
+            <center><span class="label label-success"><h3> <?=__('¡Muchas gracias por colaborar!')?> </h3></span></center>
 
 
         </div>
@@ -73,11 +79,57 @@ $this->Html->script(array(
         <div class="row-fluid">
 
             <div class="page-header">
-                <h3><?=__('Especies objetivo 2016')?></h3>
+                <h3 id="2017"><?=__('Especies objetivo 2017')?></h3>
             </div>
 
-            <!-- 2015 -->
-            <p><?=__('En el año 2016, las especies objetivo que se han elegido son: la <strong>perdiz roja</strong>, la <strong>codorniz común</strong>, el <strong>alcaraván común</strong>, la <strong>lechuza común</strong> y el <strong>mochuelo común</strong>.')?></p>
+            <!-- 2017 -->
+            <p><?=__('En el año 2017, las especies objetivo que se han elegido son: el <strong>Alcaudón real (<i>Lanius meridionalis</i>)</strong>, el <strong>Alcaudón común (<i>Lanius excubitor</i>)</strong>, el <strong>Roquero solitario (<i>Monticola solitarius</i>)</strong> y el <strong>Roquero rojo (<i>Monticola saxatilis</i>)</strong>.')?></p>
+
+            <ul class="thumbnails yoxview">
+                <li class="offset1"></li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/lanius_meridionalis.jpg">
+                            <img src="/img/Pages/especies-objetivo/lanius_meridionalis.jpg" alt="Alcaudón real" title="Alcaudón real">
+                        </a>
+                        <h4>Codorniz común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/lanius_senator.jpg">
+                            <img src="/img/Pages/especies-objetivo/lanius_senator.jpg" alt="Alcaudón común" title="Alcaudón común">
+                        </a>
+                        <h4>Perdiz roja</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/monticola_solitarius.jpg">
+                            <img src="/img/Pages/especies-objetivo/monticola_solitarius.jpg" alt="Roquero solitario" title="Roquero solitario">
+                        </a>
+                        <h4>Alcaraván común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/monticola_saxatilis.jpg">
+                            <img src="/img/Pages/especies-objetivo/monticola_saxatilis.jpg" alt="Roquero rojo" title="Roquero rojo">
+                        </a>
+                        <h4>Lechuza común</h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+
+            <div class="page-header">
+                <h3 id="2016"><?=__('Especies objetivo 2016')?></h3>
+            </div>
+
+            <!-- 2016 -->
+            <p><?=__('En el año 2016, las especies objetivo que se han elegido son: la <strong>Perdiz roja (<i>Alectoris rufa</i>)</strong>, la <strong>Codorniz común (<i>Coturnix coturnix</i>)</strong>, el <strong>Alcaraván común (<i>Burhinus oedicnemus</i>)</strong>, la <strong>Lechuza común(<i>Tyto alba</i>)</strong> y el <strong>Mochuelo común (<i>Athene noctua</i>)</strong>.')?></p>
 
             <ul class="thumbnails yoxview">
                 <li class="offset1"></li>
@@ -122,16 +174,17 @@ $this->Html->script(array(
                     </div>
                 </li>
             </ul>
+            <center><a href="/files/especies_objetivo/estadisticas_especies_objetivo_2016.pdf" class="btn btn-large btn-primary" target="_blank"><i class="icon-download-alt icon-white"></i>&nbsp;<?=__('Descargar estadísticas 2016')?></a></center>
         </div>
 
         <div class="row-fluid">
 
             <div class="page-header">
-                <h3><?=__('Especies objetivo 2015')?></h3>
+                <h3 id="2015"><?=__('Especies objetivo 2015')?></h3>
             </div>
 
             <!-- 2015 -->
-            <p><?=__('En el año 2015, las especies objetivo que se han elegido son: la <strong>collalba rubia</strong>, la <strong>collalba gris</strong>, la <strong>collalba negra</strong>, la <strong>paloma zurita</strong> y la <a href="http://www.seo.org/2014/12/08/tortola-europea-ave-del-ano-2015/" target="_blank"><strong>tórtola europea</strong></a>, esta última, elegida como ave del año por  SEO/BirdLife.')?></p>
+            <p><?=__('En el año 2015, las especies objetivo que se han elegido son: la <strong>Collalba rubia (<i>Oenanthe hispanica</i>)</strong>, la <strong>Collalba gris (<i>Oenanthe oenanthe</i>)</strong>, la <strong>Collalba negra  (<i>Oenanthe leucura</i>)</strong>, la <strong>Paloma zurita (<i>Columba oenas</i>)</strong> y la <a href="http://www.seo.org/2014/12/08/tortola-europea-ave-del-ano-2015/" target="_blank"><strong>Tórtola europea (<i>Streptopelia turtur</i>)</strong></a>, esta última, elegida como ave del año 2015 por SEO/BirdLife.')?></p>
 
             <ul class="thumbnails yoxview">
                 <li class="offset1"></li>
@@ -176,6 +229,7 @@ $this->Html->script(array(
                     </div>
                 </li>
             </ul>
+            <center><a href="/files/especies_objetivo/estadisticas_especies_objetivo_2015.pdf" class="btn btn-large btn-primary" target="_blank"><i class="icon-download-alt icon-white"></i>&nbsp;<?=__('Descargar estadísticas 2015')?></a></center>
         </div>
 
         <hr/>
