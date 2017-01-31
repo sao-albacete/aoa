@@ -83,7 +83,7 @@ $this->Html->script(array(
             </div>
 
             <!-- 2017 -->
-            <p><?=__('En el año 2017, las especies objetivo que se han elegido son: el <strong>Alcaudón real (<i>Lanius meridionalis</i>)</strong>, el <strong>Alcaudón común (<i>Lanius excubitor</i>)</strong>, el <strong>Roquero solitario (<i>Monticola solitarius</i>)</strong> y el <strong>Roquero rojo (<i>Monticola saxatilis</i>)</strong>.')?></p>
+            <p><?=__('En el año 2017, las especies objetivo que se han elegido son: el <strong>Alcaudón real (<i>Lanius meridionalis</i>)</strong>, el <strong>Alcaudón común (<i>Lanius senator</i>)</strong>, el <strong>Roquero solitario (<i>Monticola solitarius</i>)</strong> y el <strong>Roquero rojo (<i>Monticola saxatilis</i>)</strong>.')?></p>
 
             <ul class="thumbnails yoxview">
                 <li class="offset1"></li>
@@ -92,7 +92,7 @@ $this->Html->script(array(
                         <a href="/img/Pages/especies-objetivo/lanius_meridionalis.jpg">
                             <img src="/img/Pages/especies-objetivo/lanius_meridionalis.jpg" alt="Alcaudón real" title="Alcaudón real">
                         </a>
-                        <h4>Codorniz común</h4>
+                        <h4>Alcaudón real</h4>
                     </div>
                 </li>
                 <li class="span2">
@@ -100,7 +100,7 @@ $this->Html->script(array(
                         <a href="/img/Pages/especies-objetivo/lanius_senator.jpg">
                             <img src="/img/Pages/especies-objetivo/lanius_senator.jpg" alt="Alcaudón común" title="Alcaudón común">
                         </a>
-                        <h4>Perdiz roja</h4>
+                        <h4>Alcaudón común</h4>
                     </div>
                 </li>
                 <li class="span2">
@@ -108,7 +108,7 @@ $this->Html->script(array(
                         <a href="/img/Pages/especies-objetivo/monticola_solitarius.jpg">
                             <img src="/img/Pages/especies-objetivo/monticola_solitarius.jpg" alt="Roquero solitario" title="Roquero solitario">
                         </a>
-                        <h4>Alcaraván común</h4>
+                        <h4>Roquero solitario</h4>
                     </div>
                 </li>
                 <li class="span2">
@@ -116,7 +116,7 @@ $this->Html->script(array(
                         <a href="/img/Pages/especies-objetivo/monticola_saxatilis.jpg">
                             <img src="/img/Pages/especies-objetivo/monticola_saxatilis.jpg" alt="Roquero rojo" title="Roquero rojo">
                         </a>
-                        <h4>Lechuza común</h4>
+                        <h4>Roquero rojo</h4>
                     </div>
                 </li>
             </ul>
