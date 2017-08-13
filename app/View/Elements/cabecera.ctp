@@ -18,7 +18,7 @@
             <div class="carousel-caption">
                 <a href="/user/add/" class="btn btn-large btn-success pull-right" style="margin-left: 10px"><?="Registrarte";?></a>
                 <a href="/especie/especies_objetivo/" class="btn btn-large btn-info pull-right"><?="Leer más...";?></a>
-                <h3><?=__("Especies objetivo 2016");?></h3>
+                <h3><?=__("Especies objetivo 2017");?></h3>
                 <p><?=__("Ayúdanos a saber más sobre estas especies de las que se tiene muy poca información.");?></p>
             </div>
         </div>
