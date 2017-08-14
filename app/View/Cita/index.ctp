@@ -313,11 +313,12 @@ $(document).ready(function() {
 
             <!-- Botones de búsqueda -->
             <div id="divBotonesBusqueda" class="control-group">
-               <div class="controls">
-                  <input type="button" id="btnLimpiar" class="btn btn-warning" value="<?=__("Limpiar");?>" />
-                   <input type="submit" id="btnBuscar" class="btn btn-success btn-large" value="<?=__("Buscar");?>" />
-                   <input type="submit" id="btnExportar" class="btn btn-info btn-large" name="exportarAExcel" value="<?=__("Exportar");?>" />
-               </div>
+                <div class="controls">
+                    <button id="btnLimpiar" class="btn btn-warning"><?php echo __("Limpiar")?>&nbsp;<i class="icon-trash icon-white"></i></button>
+                    <button id="btnBuscar" class="btn btn-success btn-large"><?php echo __("Buscar")?>&nbsp;<i class="icon-search icon-white"></i></button>
+<!--                    <button id="btnExportar" class="btn btn-success btn-info">--><?php //echo __("Exportar")?><!--&nbsp;<i class="icon-download-alt icon-white"></i></button>-->
+                    <input type="submit" id="btnExportar" class="btn btn-info" name="exportarAExcel" value="<?=__("Exportar");?>" />
+                </div>
             </div>
          </form>
       </div>
