@@ -72,7 +72,7 @@ class InicioController extends AppController {
 
         // Imagenes de cabecera
         $headerImages = [];
-        $headerImages[0] = ['src' => '/img/Pages/especies-objetivo/cabecera_2015.jpg', 'alt' => 'Especies objetivo 2015'];
+        $headerImages[0] = ['src' => '/img/Pages/especies-objetivo/cabecera_2017.jpg', 'alt' => 'Especies objetivo 2017'];
         $headerImages = array_merge($headerImages, ImageUtil::getHeaderImages(7));
         $this->set('headerImages', $headerImages);
     }
