@@ -5,46 +5,46 @@ App::uses('ImageUtil', 'Utility');
 
 /**
  * Maneja la información a mostrar el la página de inicio
- * 
+ *
  * @author vcanizares
  */
 class InicioController extends AppController {
-    
+
     /**
      * Nombre del controlador
      */
     public $name = 'Inicio';
-    
+
     /**
      * Constantes
      */
     const ID_OPCION_MENU = Constants::MENU_INICIO_ID;
-    
+
     /**
      * Componentes
      */
     public $components = array();
-    
+
     /**
      * Helpers
      */
     public $helpers = array('ObservadorSecundario', 'ClaseEdadSexo', 'Importancia');
-    
+
     /**
      * Modelos
      */
     public $uses = array('Cita', 'Fichero', 'AsoCitaObservador', 'AsoCitaClaseEdadSexo', 'Municipio');
-    
+
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('ajaxData');
     }
-    
+
     /**
      * Función que se ejecuta al carga la página inicial
      */
     public function index() {
-        
+
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
@@ -72,7 +72,7 @@ class InicioController extends AppController {
 
         // Imagenes de cabecera
         $headerImages = [];
-        $headerImages[0] = ['src' => '/img/Pages/especies-objetivo/cabecera_2017.jpg', 'alt' => 'Especies objetivo 2017'];
+        $headerImages[0] = ['src' => '/img/Pages/especies-objetivo/cabecera_2018.png', 'alt' => 'Especies objetivo 2017'];
         $headerImages = array_merge($headerImages, ImageUtil::getHeaderImages(7));
         $this->set('headerImages', $headerImages);
     }
