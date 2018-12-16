@@ -375,6 +375,7 @@ class CitaController extends AppController
                         ['label' => __('Clase de Reproducción (descripción)')],
                         ['label' => __('Criterio de Selección (código)')],
                         ['label' => __('Criterio de Selección (descripción)')],
+                        ['label' => __('Observaciones')],
                     ];
 
                     // add heading with different font and bold text
@@ -406,8 +407,10 @@ class CitaController extends AppController
                         if ($cita['Cita']['indPrivacidad'] == 1 ||
                             ($cita['Cita']['indPrivacidad'] == 0 && (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1)))) {
                             $lugar = $cita['Lugar']['nombre'];
+                            $observaciones = $cita['Cita']['observaciones'];
                         } else {
                             $lugar = __('Lugar confidencial');
+                            $observaciones = __('Lugar confidencial');
                         }
 
                         $this->PhpExcel->addTableRow([
@@ -429,6 +432,7 @@ class CitaController extends AppController
                             $cita['ClaseReproduccion']['descripcion'],
                             $cita['CriterioSeleccionCita']['codigo'],
                             $cita['CriterioSeleccionCita']['nombre'],
+                            $observaciones,
                         ]);
                     }
 
