@@ -396,14 +396,17 @@ class CitaController extends AppController
 
                         /*
                          * Lugar
-                        */
+                         */
                         $lugar = $this->Lugar->obtenerTodoPorId($cita['Lugar']['id']);
                         $cita['Comarca'] = $lugar['Comarca'];
                         $cita['Municipio'] = $lugar['Municipio'];
                         $cita['CuadriculaUtm'] = $lugar['CuadriculaUtm'];
 
-                        $lugar = $cita['Lugar']['nombre'];
-                        if ($cita['Cita']['indPrivacidad'] == 1 || (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1))) {
+                        // Si la cita NO es confidencial o es confidencial y es una cita del usuario o el usuario es administrador, mostramos el texto del lugar 
+                        if ($cita['Cita']['indPrivacidad'] == 1 ||
+                            ($cita['Cita']['indPrivacidad'] == 0 && (isset($usuario) && ($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1)))) {
+                            $lugar = $cita['Lugar']['nombre'];
+                        } else {
                             $lugar = __('Lugar confidencial');
                         }
 
