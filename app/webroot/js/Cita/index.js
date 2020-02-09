@@ -71,6 +71,11 @@ $(document).ready(function() {
         $("#pleaseWaitDialog").modal();
         $("#frmBusqueda").submit();
     });
+
+    // Buscar citas
+    $("#btnExportar").click(function(){
+        $("#frmBusqueda").submit();
+    });
 });
 
 /**

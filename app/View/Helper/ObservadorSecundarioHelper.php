@@ -53,4 +53,3 @@ class ObservadorSecundarioHelper extends AppHelper {
         return $out;
     }
 }
-?>

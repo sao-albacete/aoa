@@ -22,8 +22,7 @@ $this->end();
 <fieldset>
     <legend><?php echo __("Regístrate en el anuario");?></legend>
     
-    <div class="alert">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="well well-small">
         <?php echo __("Los campos marcados con un asterisco rojo (*) son obligatorios");?>
     </div>
 

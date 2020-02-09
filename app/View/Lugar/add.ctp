@@ -53,8 +53,7 @@ $this->end();
                 <fieldset>
                     <legend style="font-size: 16px;" class="small"><?=__('Datos del lugar'); ?></legend>
                     
-                    <div class="alert">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="well well-small">
                         Los campos marcados con un asterisco (*) son obligatorios.
                     </div>
                     

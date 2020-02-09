@@ -22,8 +22,7 @@ $this->end();
 <fieldset>
 	<legend><?php __("Editar tus datos de usuario");?></legend>
 	
-	<div class="alert">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<div class="well well-small">
 		<?php echo __("Los campos marcados con un asterisco (*) son obligatorios");?>
 	</div>
 

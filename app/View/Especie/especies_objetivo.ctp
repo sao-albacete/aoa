@@ -180,52 +180,52 @@ $this->Html->script(array(
         <div class="row-fluid">
 
             <div class="page-header">
-                <h3 id="2015"><?=__('Especies objetivo 2015')?></h3>
+                <h3><?=__('Especies objetivo 2016')?></h3>
             </div>
 
-            <!-- 2015 -->
-            <p><?=__('En el año 2015, las especies objetivo que se han elegido son: la <strong>Collalba rubia (<i>Oenanthe hispanica</i>)</strong>, la <strong>Collalba gris (<i>Oenanthe oenanthe</i>)</strong>, la <strong>Collalba negra  (<i>Oenanthe leucura</i>)</strong>, la <strong>Paloma zurita (<i>Columba oenas</i>)</strong> y la <a href="http://www.seo.org/2014/12/08/tortola-europea-ave-del-ano-2015/" target="_blank"><strong>Tórtola europea (<i>Streptopelia turtur</i>)</strong></a>, esta última, elegida como ave del año 2015 por SEO/BirdLife.')?></p>
+            <!-- 2016 -->
+            <p><?=__('En el año 2016, las especies objetivo que se han elegido son: la <strong>perdiz roja</strong>, la <strong>codorniz común</strong>, el <strong>alcaraván común</strong>, la <strong>lechuza común</strong> y el <strong>mochuelo común</strong>.')?></p>
 
             <ul class="thumbnails yoxview">
                 <li class="offset1"></li>
                 <li class="span2">
                     <div class="thumbnail text-center">
-                        <a href="/img/Pages/especies-objetivo/collalba-rubia.jpg">
-                            <img src="/img/Pages/especies-objetivo/collalba-rubia.jpg" alt="Collalba rubia" title="Collalba rubia">
+                        <a href="/img/Pages/especies-objetivo/codorniz_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/codorniz_comun.jpg" alt="Codorniz común" title="Codorniz común">
                         </a>
-                        <h4>Collalba rubia</h4>
+                        <h4>Codorniz común</h4>
                     </div>
                 </li>
                 <li class="span2">
                     <div class="thumbnail text-center">
-                        <a href="/img/Pages/especies-objetivo/collalba-gris.jpg">
-                            <img src="/img/Pages/especies-objetivo/collalba-gris.jpg" alt="Collalba gris" title="Collalba gris">
+                        <a href="/img/Pages/especies-objetivo/perdiz_roja.jpg">
+                            <img src="/img/Pages/especies-objetivo/perdiz_roja.jpg" alt="Perdiz roja" title="Perdiz roja">
                         </a>
-                        <h4>Collalba gris</h4>
+                        <h4>Perdiz roja</h4>
                     </div>
                 </li>
                 <li class="span2">
                     <div class="thumbnail text-center">
-                        <a href="/img/Pages/especies-objetivo/collalba-negra.jpg">
-                            <img src="/img/Pages/especies-objetivo/collalba-negra.jpg" alt="Collalba negra" title="Collalba negra">
+                        <a href="/img/Pages/especies-objetivo/alcaravan_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/alcaravan_comun.jpg" alt="Alcaraván común" title="Alcaraván común">
                         </a>
-                        <h4>Collalba negra</h4>
+                        <h4>Alcaraván común</h4>
                     </div>
                 </li>
                 <li class="span2">
                     <div class="thumbnail text-center">
-                        <a href="/img/Pages/especies-objetivo/tortola-europea.jpg">
-                            <img src="/img/Pages/especies-objetivo/tortola-europea.jpg" alt="Tórtola europea" title="Tórtola europea">
+                        <a href="/img/Pages/especies-objetivo/lechuza_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/lechuza_comun.jpg" alt="Lechuza común" title="Lechuza común">
                         </a>
-                        <h4>Tórtola europea</h4>
+                        <h4>Lechuza común</h4>
                     </div>
                 </li>
                 <li class="span2">
                     <div class="thumbnail text-center">
-                        <a href="/img/Pages/especies-objetivo/paloma-zurita.jpg">
-                            <img src="/img/Pages/especies-objetivo/paloma-zurita.jpg" alt="Paloma zurita" title="Paloma zurita">
+                        <a href="/img/Pages/especies-objetivo/mochuelo_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/mochuelo_comun.jpg" alt="Mochuelo común" title="Mochuelo común">
                         </a>
-                        <h4>Paloma zurita</h4>
+                        <h4>Mochuelo común</h4>
                     </div>
                 </li>
             </ul>

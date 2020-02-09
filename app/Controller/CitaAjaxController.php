@@ -354,7 +354,8 @@ class CitaAjaxController extends AppController
         }
         if (count($aOrder) == 0) {
             $aOrder = array(
-                'Cita.fechaAlta DESC'
+                'Cita.fechaAlta DESC',
+                'Cita.fechaCreacion DESC'
             );
         }
         

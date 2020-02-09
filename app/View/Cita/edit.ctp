@@ -147,8 +147,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         ?>
         </legend>
         
-        <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div class="well well-small">
             Los campos marcados con un asterisco (*) son obligatorios
         </div>
 
@@ -309,7 +308,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                                         <button class="btn btn-warning btn-mini" type="button" id="btnVaciarColaboradores">
                                             <i class="icon-trash" style="margin-right: 10px;"></i><?=__("Limpiar"); ?>
                                         </button>
-                                        <button class="btn btn-mini btn-warning btnNuevoColaborador" type="button">
+                                        <button class="btn btn-mini btn-primary btnNuevoColaborador" type="button">
                                             <i class="icon-plus"></i> <?=__("Nuevo colaborador"); ?>
                                         </button>
                                     </div>
@@ -432,10 +431,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
                                     <i class="icon-trash" style="margin-right: 10px;"></i><?=__("Limpiar"); ?>
                                 </button>
                                 <a href="#modalSeleccioanrLugar" role="button"
-                                   class="btn btn-mini btn-warning" data-toggle="modal"
+                                   class="btn btn-mini btn-info" data-toggle="modal"
                                    id="btnSeleccionarLugar"><i class="icon-zoom-in"></i> <?=__("Seleccionar desde tabla"); ?>
                                 </a>
-                                <button class="btn btn-mini btn-warning btnNuevoLugar" type="button">
+                                <button class="btn btn-mini btn-primary btnNuevoLugar" type="button">
                                     <i class="icon-plus"></i> <?=__("Nuevo lugar"); ?>
                                 </button>
                             </div>
