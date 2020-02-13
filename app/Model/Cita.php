@@ -434,7 +434,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+                'group'=>array('Cita.id', 'mes'),
                 'recursive'=>-1
             )
         );
@@ -456,7 +456,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+                'group'=>array('Cita.id', 'mes'),
                 'recursive'=>-1
             )
         );
@@ -478,7 +478,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+                'group'=>array('Cita.id', 'mes'),
                 'recursive'=>-1
             )
         );
@@ -500,7 +500,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes')
+                'group'=>array('Cita.id', 'mes')
             )
         );
         
@@ -521,7 +521,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes')
+                'group'=>array('Cita.id', 'mes')
             )
         );
         
@@ -542,7 +542,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes')
+                'group'=>array('Cita.id', 'mes')
             )
         );
 
@@ -563,7 +563,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+                'group'=>array('Cita.id', 'mes'),
                 'recursive'=>-1
             )
         );
@@ -585,7 +585,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+                'group'=>array('Cita.id', 'mes'),
                 'recursive'=>-1
             )
         );
@@ -607,7 +607,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes'),
+                'group'=>array('Cita.id', 'mes'),
                 'recursive'=>-1
             )
         );
@@ -630,7 +630,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes')
+                'group'=>array('Cita.id', 'mes')
             )
         );
         
@@ -651,7 +651,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes')
+                'group'=>array('Cita.id', 'mes')
             )
         );
         
@@ -672,7 +672,7 @@ class Cita extends AppModel {
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
                 'order'=>array('mes ASC'),
-                'group'=>array('mes')
+                'group'=>array('Cita.id', 'mes')
             )
         );
         
@@ -692,7 +692,7 @@ class Cita extends AppModel {
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('COUNT(Cita.id) as total', 'Lugar.municipio_id as municipio'),
-                'group'=>array('municipio')
+                'group'=>array('Lugar.municipio_id', 'Cita.id')
             )
         );
         
@@ -706,7 +706,7 @@ class Cita extends AppModel {
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('COUNT(Cita.id) as total', 'Lugar.cuadricula_utm_id as cuadriculaUtm'),
-                'group'=>array('cuadriculaUtm')
+                'group'=>array('Lugar.cuadricula_utm_id', 'Cita.id')
             )
         );
         
@@ -738,7 +738,7 @@ class Cita extends AppModel {
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('Lugar.municipio_id as municipio', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
-                'group'=>array('municipio')
+                'group'=>array('Cita.id', 'Lugar.municipio_id')
             )
         );
         
@@ -758,7 +758,7 @@ class Cita extends AppModel {
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('Lugar.cuadricula_utm_id as cuadriculaUtm', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
-                'group'=>array('cuadriculaUtm')
+                'group'=>array('Lugar.cuadricula_utm_id', 'Cita.id')
             )
         );
         
