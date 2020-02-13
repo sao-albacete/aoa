@@ -40,8 +40,6 @@ Para obtener una información más detallada puedes consultar [este enlace](http
 ### Instalar PHP
 Para instalar la versión 5.3 de PHP en tu equipo puedes ejecutar los siguientes comandos desde tu consola:
 
-> La compatibilidad con PHP 7 no ha sido probada. Dado que la versión que viene por defecto en la versión 18.04 de Ubuntu es la 7, es necesario instalar un nuevo repositorio en tu equipo:
-
     $ sudo add-apt-repository -y ppa:ondrej/php
     $ sudo apt update
     $ sudo apt install php5.6
@@ -50,6 +48,15 @@ También son necesario instalar algunos paquetes adicionales:
     $ sudo apt-get install php5.6-mbstring php5.6-mcrypt php5.6-mysql php5.6-xml php5.6-curl php5.6-zip
 
 Para ver todo el proceso completo de instalación de la pila LAMP más en detalle puedes consultar [este enlace](https://www.digitalocean.com/community/tutorials/como-instalar-en-ubuntu-18-04-la-pila-lamp-linux-apache-mysql-y-php-es).
+
+En la actualidad, esta aplicación **no es compatible con PHP 7**. Dado que la versión que viene por defecto en la versión 18.04 de Ubuntu es la 7, puede que tengas que cambiar a la versión 5.6, para ellos, puedes ejecutar estos comandos:
+
+    $ sudo a2dismod php7.0
+    $ sudo a2enmod php5.6
+    $ sudo service apache2 restart
+    $ sudo ln -sfn /usr/bin/php5.6 /etc/alternatives/php
+
+ 
 
 # Descarga el código
 Una vez tengas instalado Apache, muévete al directorio /var/www/html y ejecuta el siguiente comando desde tu consola:
