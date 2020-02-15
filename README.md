@@ -4,7 +4,7 @@ El Anuario Ornitológico de Albacete (AOA) online es una herramienta que te perm
 # Herramientas usadas
 AOA está desarrollado usando la siguientes tecnologías:
  - PHP (versión 5.x)
- - CakePHP framework (versión 2.x) Más información sobre el framework [aquí](https://book.cakephp.org/2/es/index.html).
+ - CakePHP framework (versión 2.3.1) Más información sobre el framework [aquí](https://book.cakephp.org/2/es/index.html).
  - MySQL (versión 5.x)
  - Apache (versión 2)
  - Booststrap (versión 2) Más información sobre el framework [aquí](https://getbootstrap.com/2.3.2/). 
