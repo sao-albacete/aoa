@@ -2,8 +2,6 @@
 /**
  * Library of array functions for Cake.
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -15,7 +13,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Utility
  * @since         CakePHP(tm) v 1.2.0
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 App::uses('String', 'Utility');
@@ -25,6 +23,7 @@ App::uses('Hash', 'Utility');
  * Class used for manipulation of arrays.
  *
  * @package       Cake.Utility
+ * @deprecated Will be removed in 3.0. Use Hash instead.
  */
 class Set {
 
@@ -309,7 +308,7 @@ class Set {
  * @param string $path An absolute XPath 2.0 path
  * @param array $data An array of data to extract from
  * @param array $options Currently only supports 'flatten' which can be disabled for higher XPath-ness
- * @return array An array of matched items
+ * @return mixed An array of matched items or the content of a single selected item or null in any of these cases: $path or $data are null, no items found.
  * @link http://book.cakephp.org/2.0/en/core-utility-libraries/set.html#Set::extract
  */
 	public static function extract($path, $data = null, $options = array()) {
@@ -457,7 +456,7 @@ class Set {
  * This function can be used to see if a single item or a given xpath match certain conditions.
  *
  * @param string|array $conditions An array of condition strings or an XPath expression
- * @param array $data  An array of data to execute the match on
+ * @param array $data An array of data to execute the match on
  * @param integer $i Optional: The 'nth'-number of the item being matched.
  * @param integer $length
  * @return boolean
@@ -534,7 +533,7 @@ class Set {
  *
  * @param array $data Array from where to extract
  * @param string|array $path As an array, or as a dot-separated string.
- * @return array|null Extracted data or null when $data or $path are empty.
+ * @return mixed An array of matched items or the content of a single selected item or null in any of these cases: $path or $data are null, no items found.
  * @link http://book.cakephp.org/2.0/en/core-utility-libraries/set.html#Set::classicExtract
  */
 	public static function classicExtract($data, $path = null) {
@@ -591,7 +590,7 @@ class Set {
 					}
 				}
 				return $tmp;
-			} elseif (false !== strpos($key, '{') && false !== strpos($key, '}')) {
+			} elseif (strpos($key, '{') !== false && strpos($key, '}') !== false) {
 				$pattern = substr($key, 1, -1);
 
 				foreach ($data as $j => $val) {
@@ -935,7 +934,7 @@ class Set {
 		$stack = array();
 		foreach ($results as $k => $r) {
 			$id = $k;
-			if (!is_null($key)) {
+			if ($key !== null) {
 				$id = $key;
 			}
 			if (is_array($r) && !empty($r)) {
