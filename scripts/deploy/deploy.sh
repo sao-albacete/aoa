@@ -25,35 +25,35 @@ fi
 
 # Descargar el código del repositorio de GIT
 echo Descargando código del repositorio \"https://github.com/sao-albacete/aoa\"...
-git clone https://github.com/sao-albacete/aoa.git --branch $git_repo_branch --single-branch --depth 1
+git clone --branch $git_repo_branch https://github.com/sao-albacete/aoa.git $deploy_folder-new
 
 # Copiar contenido de la carpeta app/webroot/img/users al nuevo despliegue
 echo Copiando contenido de la carpeta app/webroot/img/users al nuevo despliegue...
-cp -r web/app/webroot/img/users/ aoa/app/webroot/img/users/
+cp -r $deploy_folder/app/webroot/img/users/ $deploy_folder-new/app/webroot/img/
 
 # Copiar fichero app/Config/core.php al nuevo despliegue
 echo Copiando fichero app/Config/core.php al nuevo despliegue...
-cp web/app/Config/core.php aoa/app/Config/core.php
+cp $deploy_folder/app/Config/core.php $deploy_folder-new/app/Config/core.php
 
 # Copiar fichero app/Config/database.php al nuevo despliegue
 echo Copiando fichero app/Config/database.php al nuevo despliegue...
-cp web/app/Config/database.php aoa/app/Config/database.php
+cp $deploy_folder/app/Config/database.php $deploy_folder-new/app/Config/database.php
 
 # Copiar fichero app/Config/email.php al nuevo despliegue
 echo Copiando fichero app/Config/email.php al nuevo despliegue...
-cp web/app/Config/email.php aoa/app/Config/email.php
+cp $deploy_folder/app/Config/email.php $deploy_folder-new/app/Config/email.php
 
 # Copiar el directorio /tmp
 echo Copiando directorio app/tmp...
-cp -r web/app/tmp/ aoa/app/tmp/
+cp -r $deploy_folder/app/tmp/ $deploy_folder-new/app/
 
 # Cambiando permisos de la carpeta del nuevo despliegue
 echo Cambiando permisos de la carpeta del nuevo despliegue...
-chmod -R 775 aoa
+chmod -R 775 $deploy_folder-new
 
 # Cambiando propietarios de la carpeta del nuevo despliegue
 echo Cambiando propietarios de la carpeta del nuevo despliegue...
-chown -R www-data:"$USER" aoa
+chown -R www-data:"$USER" $deploy_folder-new
 
 # Renombrar despliegue actual a modo de backup
 echo Renombrando despliegue actual a modo de backup...
@@ -61,6 +61,6 @@ mv $deploy_folder "${deploy_folder}_backup_$(timestamp)"
 
 # Renombrar nuevo despliegue a despliegue oficial
 echo Renombrando nuevo despliegue a despliegue oficial...
-mv aoa $deploy_folder
+mv $deploy_folder-new $deploy_folder
 
 echo Proceso finalizado con éxito.
