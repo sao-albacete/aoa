@@ -2,8 +2,6 @@
 /**
  * Methods for displaying presentation data in the view.
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -15,7 +13,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.View
  * @since         CakePHP(tm) v 0.10.0.1076
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 App::uses('HelperCollection', 'View');
@@ -98,7 +96,7 @@ class View extends Object {
  *
  * @var mixed A single name as a string or a list of names as an array.
  */
-	public $helpers = array('Html');
+	public $helpers = array();
 
 /**
  * Path to View.
@@ -136,7 +134,7 @@ class View extends Object {
 	public $layoutPath = null;
 
 /**
- * Turns on or off Cake's conventional mode of applying layout files. On by default.
+ * Turns on or off CakePHP's conventional mode of applying layout files. On by default.
  * Setting to off means that layouts will not be automatically applied to rendered views.
  *
  * @var boolean
@@ -144,7 +142,7 @@ class View extends Object {
 	public $autoLayout = true;
 
 /**
- * File extension. Defaults to Cake's template ".ctp".
+ * File extension. Defaults to CakePHP's template ".ctp".
  *
  * @var string
  */
@@ -254,13 +252,6 @@ class View extends Object {
 	protected $_paths = array();
 
 /**
- * Indicate that helpers have been loaded.
- *
- * @var boolean
- */
-	protected $_helpersLoaded = false;
-
-/**
  * The names of views and their parents used with View::extend();
  *
  * @var array
@@ -308,16 +299,22 @@ class View extends Object {
 
 /**
  * Constant for view file type 'view'
+ *
+ * @var string
  */
 	const TYPE_VIEW = 'view';
 
 /**
  * Constant for view file type 'element'
+ *
+ * @var string
  */
 	const TYPE_ELEMENT = 'element';
 
 /**
  * Constant for view file type 'layout'
+ *
+ * @var string
  */
 	const TYPE_LAYOUT = 'layout';
 
@@ -347,6 +344,7 @@ class View extends Object {
 		}
 		$this->Helpers = new HelperCollection($this);
 		$this->Blocks = new ViewBlock();
+		$this->loadHelpers();
 		parent::__construct();
 	}
 
@@ -383,13 +381,12 @@ class View extends Object {
  *   If an array, the following keys can be used:
  *   - `config` - Used to store the cached element in a custom cache configuration.
  *   - `key` - Used to define the key used in the Cache::write(). It will be prefixed with `element_`
- * - `plugin` - Load an element from a specific plugin. This option is deprecated, see below.
+ * - `plugin` - (deprecated!) Load an element from a specific plugin. This option is deprecated, and
+ *              will be removed in CakePHP 3.0. Use `Plugin.element_name` instead.
  * - `callbacks` - Set to true to fire beforeRender and afterRender helper callbacks for this element.
  *   Defaults to false.
  * - `ignoreMissing` - Used to allow missing elements. Set to true to not trigger notices.
  * @return string Rendered Element
- * @deprecated The `$options['plugin']` is deprecated and will be removed in CakePHP 3.0. Use
- *   `Plugin.element_name` instead.
  */
 	public function element($name, $data = array(), $options = array()) {
 		$file = $plugin = null;
@@ -453,15 +450,12 @@ class View extends Object {
  *
  * @param string $view Name of view file to use
  * @param string $layout Layout to use.
- * @return string Rendered Element
- * @throws CakeException if there is an error in the view.
+ * @return string|null Rendered content or null if content already rendered and returned earlier.
+ * @throws CakeException If there is an error in the view.
  */
 	public function render($view = null, $layout = null) {
 		if ($this->hasRendered) {
-			return true;
-		}
-		if (!$this->_helpersLoaded) {
-			$this->loadHelpers();
+			return;
 		}
 		$this->Blocks->set('content', '');
 
@@ -511,11 +505,10 @@ class View extends Object {
 			return $this->Blocks->get('content');
 		}
 
-		if (!$this->_helpersLoaded) {
-			$this->loadHelpers();
-		}
 		if (empty($content)) {
 			$content = $this->Blocks->get('content');
+		} else {
+			$this->Blocks->set('content', $content);
 		}
 		$this->getEventManager()->dispatch(new CakeEvent('View.beforeLayout', $this, array($layoutFileName)));
 
@@ -547,10 +540,12 @@ class View extends Object {
  * @return boolean Success of rendering the cached file.
  */
 	public function renderCache($filename, $timeStart) {
+		$response = $this->response;
 		ob_start();
-		include ($filename);
+		include $filename;
 
-		if (Configure::read('debug') > 0 && $this->layout !== 'xml') {
+		$type = $response->mapType($response->type());
+		if (Configure::read('debug') > 0 && $type === 'html') {
 			echo "<!-- Cached Render Time: " . round(microtime(true) - $timeStart, 4) . "s -->";
 		}
 		$out = ob_get_clean();
@@ -560,15 +555,10 @@ class View extends Object {
 				//@codingStandardsIgnoreStart
 				@unlink($filename);
 				//@codingStandardsIgnoreEnd
-				unset ($out);
+				unset($out);
 				return false;
-			} else {
-				if ($this->layout === 'xml') {
-					header('Content-type: text/xml');
-				}
-				$commentLength = strlen('<!--cachetime:' . $match['1'] . '-->');
-				return substr($out, $commentLength);
 			}
+			return substr($out, strlen($match[0]));
 		}
 	}
 
@@ -586,7 +576,7 @@ class View extends Object {
  *
  * @param string $var The view var you want the contents of.
  * @return mixed The content of the named var if its set, otherwise null.
- * @deprecated Will be removed in 3.0  Use View::get() instead.
+ * @deprecated Will be removed in 3.0. Use View::get() instead.
  */
 	public function getVar($var) {
 		return $this->get($var);
@@ -624,7 +614,7 @@ class View extends Object {
  * @see ViewBlock::start()
  */
 	public function start($name) {
-		return $this->Blocks->start($name);
+		$this->Blocks->start($name);
 	}
 
 /**
@@ -635,7 +625,7 @@ class View extends Object {
  * @see ViewBlock::startIfEmpty()
  */
 	public function startIfEmpty($name) {
-		return $this->Blocks->startIfEmpty($name);
+		$this->Blocks->startIfEmpty($name);
 	}
 
 /**
@@ -643,13 +633,12 @@ class View extends Object {
  * block will create the block.
  *
  * @param string $name Name of the block
- * @param string $value The content for the block.
+ * @param mixed $value The content for the block.
  * @return void
- * @throws CakeException when you use non-string values.
  * @see ViewBlock::concat()
  */
 	public function append($name, $value = null) {
-		return $this->Blocks->concat($name, $value);
+		$this->Blocks->concat($name, $value);
 	}
 
 /**
@@ -657,13 +646,12 @@ class View extends Object {
  * block will create the block.
  *
  * @param string $name Name of the block
- * @param string $value The content for the block.
+ * @param mixed $value The content for the block.
  * @return void
- * @throws CakeException when you use non-string values.
  * @see ViewBlock::concat()
  */
 	public function prepend($name, $value = null) {
-		return $this->Blocks->concat($name, $value, ViewBlock::PREPEND);
+		$this->Blocks->concat($name, $value, ViewBlock::PREPEND);
 	}
 
 /**
@@ -671,13 +659,12 @@ class View extends Object {
  * existing content.
  *
  * @param string $name Name of the block
- * @param string $value The content for the block.
+ * @param mixed $value The content for the block.
  * @return void
- * @throws CakeException when you use non-string values.
  * @see ViewBlock::set()
  */
 	public function assign($name, $value) {
-		return $this->Blocks->set($name, $value);
+		$this->Blocks->set($name, $value);
 	}
 
 /**
@@ -700,7 +687,7 @@ class View extends Object {
  * @see ViewBlock::end()
  */
 	public function end() {
-		return $this->Blocks->end();
+		$this->Blocks->end();
 	}
 
 /**
@@ -755,7 +742,7 @@ class View extends Object {
  *   update/replace a script element.
  * @param string $content The content of the script being added, optional.
  * @return void
- * @deprecated Will be removed in 3.0. Supersceeded by blocks functionality.
+ * @deprecated Will be removed in 3.0. Superseded by blocks functionality.
  * @see View::start()
  */
 	public function addScript($name, $content = null) {
@@ -844,7 +831,7 @@ class View extends Object {
  * Magic accessor for deprecated attributes.
  *
  * @param string $name Name of the attribute to set.
- * @param string $value Value of the attribute to set.
+ * @param mixed $value Value of the attribute to set.
  * @return mixed
  */
 	public function __set($name, $value) {
@@ -884,7 +871,6 @@ class View extends Object {
 			list(, $class) = pluginSplit($properties['class']);
 			$this->{$class} = $this->Helpers->load($properties['class'], $properties['settings']);
 		}
-		$this->_helpersLoaded = true;
 	}
 
 /**
@@ -975,7 +961,7 @@ class View extends Object {
 	protected function _getViewFileName($name = null) {
 		$subDir = null;
 
-		if (!is_null($this->subDir)) {
+		if ($this->subDir !== null) {
 			$subDir = $this->subDir . DS;
 		}
 
@@ -1057,7 +1043,7 @@ class View extends Object {
 		}
 		$subDir = null;
 
-		if (!is_null($this->layoutPath)) {
+		if ($this->layoutPath !== null) {
 			$subDir = $this->layoutPath . DS;
 		}
 		list($plugin, $name) = $this->pluginSplit($name);
@@ -1113,7 +1099,7 @@ class View extends Object {
  * Return all possible paths to find view files in order
  *
  * @param string $plugin Optional plugin name to scan for view files.
- * @param boolean $cached Set to true to force a refresh of view paths.
+ * @param boolean $cached Set to false to force a refresh of view paths. Default true.
  * @return array paths
  */
 	protected function _paths($plugin = null, $cached = true) {
@@ -1197,9 +1183,6 @@ class View extends Object {
  * @return string
  */
 	protected function _renderElement($file, $data, $options) {
-		if (!$this->_helpersLoaded) {
-			$this->loadHelpers();
-		}
 		if ($options['callbacks']) {
 			$this->getEventManager()->dispatch(new CakeEvent('View.beforeRender', $this, array($file)));
 		}

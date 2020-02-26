@@ -11,8 +11,9 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Controller.Component
  * @since         CakePHP(tm) v 0.10.0.1076
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 App::uses('Component', 'Controller');
 App::uses('AclInterface', 'Controller/Component/Acl');
 
@@ -20,8 +21,8 @@ App::uses('AclInterface', 'Controller/Component/Acl');
  * Access Control List factory class.
  *
  * Uses a strategy pattern to allow custom ACL implementations to be used with the same component interface.
- * You can define by changing `Configure::write('Acl.classname', 'DbAcl');` in your core.php. Concrete ACL
- * implementations should extend `AclBase` and implement the methods it defines.
+ * You can define by changing `Configure::write('Acl.classname', 'DbAcl');` in your core.php. The adapter
+ * you specify must implement `AclInterface`
  *
  * @package       Cake.Controller.Component
  * @link http://book.cakephp.org/2.0/en/core-libraries/components/access-control-lists.html
@@ -155,10 +156,10 @@ class AclComponent extends Component {
  * @param array|string|Model $aco ACO The controlled object identifier. See `AclNode::node()` for possible formats
  * @param string $action Action (defaults to *)
  * @return boolean Success
- * @deprecated
+ * @deprecated Will be removed in 3.0.
  */
 	public function grant($aro, $aco, $action = "*") {
-		trigger_error(__d('cake_dev', 'AclComponent::grant() is deprecated, use allow() instead'), E_USER_WARNING);
+		trigger_error(__d('cake_dev', '%s is deprecated, use %s instead', 'AclComponent::grant()', 'allow()'), E_USER_WARNING);
 		return $this->_Instance->allow($aro, $aco, $action);
 	}
 
@@ -169,10 +170,10 @@ class AclComponent extends Component {
  * @param array|string|Model $aco ACO The controlled object identifier. See `AclNode::node()` for possible formats
  * @param string $action Action (defaults to *)
  * @return boolean Success
- * @deprecated
+ * @deprecated Will be removed in 3.0.
  */
 	public function revoke($aro, $aco, $action = "*") {
-		trigger_error(__d('cake_dev', 'AclComponent::revoke() is deprecated, use deny() instead'), E_USER_WARNING);
+		trigger_error(__d('cake_dev', '%s is deprecated, use %s instead', 'AclComponent::revoke()', 'deny()'), E_USER_WARNING);
 		return $this->_Instance->deny($aro, $aco, $action);
 	}
 

@@ -15,7 +15,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.TestSuite.Coverage
  * @since         CakePHP(tm) v 2.0
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 App::uses('BaseCoverageReport', 'TestSuite/Coverage');
@@ -105,7 +105,7 @@ HTML;
 	}
 
 /**
- * Guess the classname the test was for based on the test case filename.
+ * Guess the class name the test was for based on the test case filename.
  *
  * @param ReflectionClass $testReflection.
  * @return string Possible test subject name.
@@ -181,7 +181,7 @@ HTML;
  */
 	public function coverageHeader($filename, $percent) {
 		$filename = basename($filename);
-		list($file, $ext) = explode('.', $filename);
+		list($file) = explode('.', $filename);
 		$display = in_array($file, $this->_testNames) ? 'block' : 'none';
 		$primary = $display === 'block' ? 'primary' : '';
 		return <<<HTML

@@ -2,8 +2,6 @@
 /**
  * HTTP Response from HttpSocket.
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -14,7 +12,7 @@
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 2.0.0
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -138,7 +136,7 @@ class HttpSocketResponse implements ArrayAccess {
  * @return boolean
  */
 	public function isRedirect() {
-		return in_array($this->code, array(301, 302, 303, 307)) && !is_null($this->getHeader('Location'));
+		return in_array($this->code, array(301, 302, 303, 307)) && $this->getHeader('Location') !== null;
 	}
 
 /**
@@ -161,7 +159,7 @@ class HttpSocketResponse implements ArrayAccess {
 		$this->raw = $message;
 		$this->body = (string)substr($message, strlen($match[0]));
 
-		if (preg_match("/(.+) ([0-9]{3}) (.+)\r\n/DU", $statusLine, $match)) {
+		if (preg_match("/(.+) ([0-9]{3})\s*([^ ]*)\r\n/DU", $statusLine, $match)) {
 			$this->httpVersion = $match[1];
 			$this->code = $match[2];
 			$this->reasonPhrase = $match[3];
