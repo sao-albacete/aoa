@@ -28,7 +28,7 @@ class InicioController extends AppController {
     /**
      * Helpers
      */
-    public $helpers = array('ObservadorSecundario', 'ClaseEdadSexo', 'Importancia');
+    public $helpers = array('ObservadorSecundario', 'ClaseEdadSexo', 'Importancia', 'Version');
 
     /**
      * Modelos
