@@ -133,6 +133,8 @@
                     <li><a href="/pages/elequipo/"><?=__("El Equipo")?></a></li>
                     <!-- Agradecimientos -->
                     <li><a href="/pages/agradecimientos/"><?=__("Agradecimientos")?></a></li>
+                    <!-- Aviso legal -->
+                    <li><a href="/pages/aviso-legal/"><?=__("Aviso legal")?></a></li>
                     <li class="divider"></li>
                     <!-- Contacto -->
                     <li><a href="/pages/contacto/"><i class="icon-envelope"></i>&nbsp;<?=__("Contacto")?></a></li>
