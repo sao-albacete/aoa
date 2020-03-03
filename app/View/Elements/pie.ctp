@@ -115,7 +115,7 @@
             <a href="/pages/elanuario/"><?=__("El Anuario");?></a> | 
             <a href="/pages/lasao/"><?=__("La SAO");?></a> | 
             <a href="/pages/elequipo/"><?=__("El Equipo");?></a> | 
-            <a href="#modalAvisoLegal" data-toggle="modal"><?=__("Aviso Legal");?></a> |
+            <a href="/pages/aviso-legal/"><?=__("Aviso Legal");?></a> |
             <a href="/pages/contacto/"><?=__("Contacto");?></a>
         </div>
         <div class="span5 creative-commons">
