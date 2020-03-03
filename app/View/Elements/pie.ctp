@@ -131,3 +131,18 @@
         </div>
     </div>
 </footer>
+
+<!-- Ventana de información de terminos y condiciones de uso -->
+<div id="modalAvisoLegal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalAvisoLegalLabel" aria-hidden="true" style="text-align: justify;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+            aria-hidden="true">×</button>
+        <h3 id="modalAvisoLegalLabel"><?=__("Términos y condiciones de uso");?></h3>
+    </div>
+    <div class="modal-body">
+        <?=$this->element('avisoLegal'); ?>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true"><?=__("Cerrar");?></button>
+    </div>
+</div>
