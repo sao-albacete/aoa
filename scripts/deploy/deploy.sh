@@ -63,4 +63,9 @@ mv $deploy_folder "${deploy_folder}_backup_$(timestamp)"
 echo Renombrando nuevo despliegue a despliegue oficial...
 mv $deploy_folder-new $deploy_folder
 
+# Generando version desplegada
+echo Generando versión desplegada...
+cd $deploy_folder
+git describe --tags --long >> version.txt
+
 echo Proceso finalizado con éxito.
