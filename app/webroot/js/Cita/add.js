@@ -17,10 +17,10 @@ $(document).ready(function() {
     // Seleccionar subespecie
     seleccionarSubespecie(divNuevaCita);
 
-    // Seleccioanr fecha de alta
+    // Seleccionar fecha de alta
     seleccionarFecha(divNuevaCita);
 
-	// Seleccioanr hora de alta
+	// Seleccionar hora de alta
     seleccionarHora(divNuevaCita);
 
     // Gestionar tabla de clases de edad/sexo

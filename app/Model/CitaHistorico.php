@@ -93,7 +93,7 @@ class CitaHistorico extends AppModel {
 			'order' => ''
 		)
 	);
-	
+
 	/**
 	 * Validaciones
 	 */
@@ -129,9 +129,9 @@ class CitaHistorico extends AppModel {
 				'message' => 'La fecha de alta es obligatoria.'
 			),
 			'date' => array(
-				'rule' => array('date', 'ymd'),
+				'rule' => array('datetime', 'ymd'),
 				'required' => 'create',
-				'message' => 'La fecha de alta tiene un formato incorrecto.'
+				'message' => 'La fecha de observación tiene un formato incorrecto.'
 			)
 		),
         'cantidad' => array(
@@ -246,30 +246,30 @@ class CitaHistorico extends AppModel {
             'message' => 'El valor debe ser un booleano.'
         )
 	);
-	
+
 	public function guardarHistorico($cita, $usuarioId) {
-		
+
 		try {
-			
+
 			$citaHistorico = $this->pasarCitaACitaHistorico($cita);
 			$citaHistorico['CitaHistorico']['fechaHistorico'] = date("Y-m-d");
 			$citaHistorico['CitaHistorico']['usuarioHistorico'] = $usuarioId;
-			
+
 			$this->create();
-				
+
 			$this->set($citaHistorico);
-				
+
 			if ($this->validates()) {
 				$this->save($citaHistorico);
 			}
 			else {
 				$errors = $this->validationErrors;
-					
+
 				$errorsMessages = "";
 				foreach ($errors as $validationError) {
 					$errorsMessages .= $validationError[0]."\n";
 				}
-					
+
 				return $errorsMessages;
 			}
 		}
@@ -277,9 +277,9 @@ class CitaHistorico extends AppModel {
 			throw $e;
 		}
 	}
-	
+
 	private function pasarCitaACitaHistorico($cita) {
-	
+
 		$citaHistorico['CitaHistorico']['cita_id'] = $cita['Cita']['id'];
 		$citaHistorico['CitaHistorico']['fechaAlta'] = $cita['Cita']['fechaAlta'];
 		$citaHistorico['CitaHistorico']['cantidad'] = $cita['Cita']['cantidad'];
@@ -297,7 +297,7 @@ class CitaHistorico extends AppModel {
 		$citaHistorico['CitaHistorico']['especie_id'] = $cita['Cita']['especie_id'];
 		$citaHistorico['CitaHistorico']['criterio_seleccion_cita_id'] = $cita['Cita']['criterio_seleccion_cita_id'];
 		$citaHistorico['CitaHistorico']['importancia_cita_id'] = $cita['Cita']['importancia_cita_id'];
-		
+
 		return $citaHistorico;
 	}
 }

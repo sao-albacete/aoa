@@ -541,16 +541,20 @@ class CitaController extends AppController
 				$cita["Cita"]["clase_reproduccion_id"] = $this->request->data["Cita"]["clase_reproduccion_id"];
 
 				// Fecha de alta
-				{
-					$fechaAlta = $this->request->data["Cita"]["fechaAlta"];
-					$fechaAltaFormateada = DateUtil::europeanFormatToAmericanFormat($fechaAlta);
-					if ($fechaAltaFormateada !== false) {
-						$cita["Cita"]["fechaAlta"] = $fechaAltaFormateada;
-					} else {
-						$this->Session->setFlash('El formato de la fecha de alta no es correcto, debe indicar una fecha con formato dd/mm/aaaa', 'failure');
-						return;
-					}
+				$fechaAlta = $this->request->data["Cita"]["fechaAlta"];
+				$fechaAltaFormateada = DateUtil::europeanFormatToAmericanFormat($fechaAlta);
+				if ($fechaAltaFormateada == false) {
+					$this->Session->setFlash('El formato de la fecha de observación no es correcto, debe indicar una fecha con formato dd/mm/aaaa', 'failure');
+					return;
 				}
+				// Hora de alta
+				$horaAlta = $this->request->data["Cita"]["horaAlta"];
+				$horaAltaFormateada = DateUtil::formatTime($horaAlta);
+				if ($horaAltaFormateada == false) {
+					$this->Session->setFlash('El formato de la hora de observación no es correcto, debe indicar una hora con formato hh:mm', 'failure');
+					return;
+				}
+				$cita["Cita"]["fechaAlta"] = $fechaAltaFormateada . " " . $horaAltaFormateada;
 
 				// Especie
 				$especieId = $this->request->data["Cita"]["especie_id"];
