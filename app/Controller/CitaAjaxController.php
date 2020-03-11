@@ -10,7 +10,7 @@ App::uses('ConnectionManager', 'Model');
  */
 class CitaAjaxController extends AppController
 {
-    
+
     /**
      * Nombre del controlador
      */
@@ -36,7 +36,7 @@ class CitaAjaxController extends AppController
         'ObservadorSecundario',
         'Lugar'
     ];
-    
+
     // Array de columnas que serán mostradas en la tabla de DataTables.
     private $aColumns = [
         'Ver Detalle',
@@ -51,7 +51,7 @@ class CitaAjaxController extends AppController
         'Clase de Reproducción',
         'Criterio de Selección',
     ];
-    
+
     // Array de columnas por las que se puede ordenar
     private $aSortableColumns = [
         ' ',
@@ -66,7 +66,7 @@ class CitaAjaxController extends AppController
         'ClaseReproduccion.codigo',
         'CriterioSeleccionCita.codigo',
     ];
-    
+
     // Array de columnas por las que se puede ordenar
     private $aSearchableColumns = [
         'ImportanciaCita.descripcion',
@@ -84,7 +84,7 @@ class CitaAjaxController extends AppController
         'CriterioSeleccionCita.codigo',
         'CriterioSeleccionCita.nombre',
     ];
-    
+
     // Array de columnas que queremos obtener de base de datos
     private $aFields = [
         'Cita.id',
@@ -112,7 +112,7 @@ class CitaAjaxController extends AppController
         'CriterioSeleccionCita.codigo',
         'CriterioSeleccionCita.nombre',
     ];
-    
+
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -275,7 +275,7 @@ class CitaAjaxController extends AppController
 
         echo json_encode($output);
     }
-    
+
     public function obtenerCitasEspecieDatatables()
     {
         $this->autoRender = false;
@@ -323,24 +323,24 @@ class CitaAjaxController extends AppController
 
         echo json_encode($output);
     }
-    
+
     private function getPaginationParams()
     {
         $paginationParams = array();
-        
+
         $iLimit = 0;
         $iPage = 1;
         if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
             $iLimit = intval($_GET['iDisplayLength']);
             $iPage = (intval($_GET['iDisplayStart']) / intval($_GET['iDisplayLength'])) + 1;
         }
-        
+
         $paginationParams['iLimit'] = $iLimit;
         $paginationParams['iPage'] = $iPage;
-        
+
         return $paginationParams;
     }
-    
+
     private function getOrderArray()
     {
         $aOrder = array();
@@ -355,13 +355,12 @@ class CitaAjaxController extends AppController
         if (count($aOrder) == 0) {
             $aOrder = array(
                 'Cita.fechaAlta DESC',
-                'Cita.fechaCreacion DESC'
             );
         }
-        
+
         return $aOrder;
     }
-    
+
     private function getTotal()
     {
         if (isset($_GET['iTotal'])) {
@@ -369,10 +368,10 @@ class CitaAjaxController extends AppController
         } else {
             $iTotal = $this->Cita->obtenerNumeroCitas(['Cita.indActivo = 1']);
         }
-        
+
         return $iTotal;
     }
-    
+
     private function getFilteredTotal($aConditions, $iTotal, $aJoins = null)
     {
         if (isset($_GET['iTotal'])) {
@@ -383,7 +382,7 @@ class CitaAjaxController extends AppController
 
         return $iFilteredTotal;
     }
-    
+
     private function getCitas($aConditions, $iLimit, $iPage, $aOrder, $aJoins = null)
     {
         $params = array(
@@ -398,10 +397,10 @@ class CitaAjaxController extends AppController
         }
 
         $citas = $this->Cita->find('all', $params);
-        
+
         return $citas;
-    } 
-    
+    }
+
     private function getOutput($citas, $iFilteredTotal, $iTotal, $usuario, array $aOperations)
     {
         $output = array(
@@ -410,21 +409,21 @@ class CitaAjaxController extends AppController
             "iTotalDisplayRecords" => $iFilteredTotal,
             "aaData" => []
         );
-        
+
         for ($index = 0; $index < count($citas); $index ++) {
-        
+
             /*
              * Observadores secundarios
              */
             $observadoresSecundarios = $this->AsoCitaObservador->obtenerObservadoresPorCita($citas[$index]['Cita']['id']);
-        
+
             /*
              * Clases edad sexo
              */
             $clasesEdadSexo = $this->AsoCitaClaseEdadSexo->obtenerClasesEdadSexoPorCita($citas[$index]['Cita']['id']);
-        
+
             $row = [];
-        
+
             for ($i = 0; $i < count($this->aColumns); $i ++) {
                 if ($this->aColumns[$i] == "Ver Detalle") {
                     $operationsColumn = '';
@@ -464,19 +463,19 @@ class CitaAjaxController extends AppController
                     $row[] = "<span title='" . $citas[$index]['CriterioSeleccionCita']['nombre'] . "'>" . $citas[$index]['CriterioSeleccionCita']['codigo'] . "</span>";
                 }
             }
-        
+
             $output['aaData'][] = $row;
         }
-        
+
         return $output;
     }
-    
+
     private function getFroms()
     {
         $dataSource = ConnectionManager::getDataSource('default');
-    
+
         $prefix = $dataSource->config['database'] . '.' . $dataSource->config['prefix'];
-    
+
         return array(
             $prefix . 'cita AS Cita',
             $prefix . 'aso_cita_observador AS AsoCitaObservador ON (`Cita`.`id` = `AsoCitaObservador`.`cita_id`)',
@@ -492,39 +491,39 @@ class CitaAjaxController extends AppController
     private function mostrarCodigosPbservadores($observadores)
     {
         $out = "";
-        
+
         if (! empty($observadores)) {
-            
+
             foreach ($observadores as $observador) {
-                
+
                 $out .= "<a href='/cita/index?colaboradorId=" . $observador['ObservadorSecundario']['id'] . "' title='" . $observador['ObservadorSecundario']['nombre'] . "'>" . $observador['ObservadorSecundario']['codigo'] . "</a> ";
             }
         }
-        
+
         return $out;
     }
 
     /**
      * Genera el detalle de la cantiadad de aves desglosado por clases de edad/sexo
      *
-     * @param array $clases_edad_sexo            
+     * @param array $clases_edad_sexo
      * @return string lista formada por "#[número de aves] -> [código clase edad/sexo] ([nombre clase edad/sexo])"
      */
     public function mostrarDetalleClaseEdadEexo($clases_edad_sexo)
     {
         $out = "";
-        
+
         if (! empty($clases_edad_sexo)) {
-            
+
             foreach ($clases_edad_sexo as $clase_edad_sexo) {
-                
+
                 $out .= $clase_edad_sexo['AsoCitaClaseEdadSexo']['cantidad'] . " -> " . $clase_edad_sexo['ClaseEdadSexo']['nombre'] . ", ";
             }
         }
-        
+
         return substr($out, 0, - 2);
     }
-    
+
     /**
      * Genera el detalle del lugar: comarca, municipio y cuadrícula UTM
      *
@@ -534,28 +533,28 @@ class CitaAjaxController extends AppController
     public function mostrarDetalleLugar($lugarId)
     {
         $out = "";
-    
+
         if (! empty($lugarId)) {
-            
+
             $lugar = $this->Lugar->obtenerTodoPorId($lugarId);
-            
+
             $out .= 'COMARCA: ' . $lugar['Comarca']['nombre'] . ", MUNICIPIO: " . $lugar['Municipio']['nombre'] . " y CUADRICULA UTM: " . $lugar['CuadriculaUtm']['codigo'];
         }
-    
+
         return $out;
     }
 
     /**
      * Concatena los observadores generando links con el nombre y el codigo del observador.
      *
-     * @param array $observadores            
+     * @param array $observadores
      * @return string cadena de links con el nombre y el codigo del observador
      */
     public function getIconoImportancia($importanciaId, $importanciaDescripcion)
     {
         $out = "";
         $icono = "";
-        
+
         switch ($importanciaId) {
             case Constants::IMPORTANCIA_RAREZA_NACIONAL_ID:
                 $icono = "rareza_nacional.png";
@@ -600,14 +599,14 @@ class CitaAjaxController extends AppController
                 $icono = "";
                 break;
         }
-        
+
         if (! empty($icono)) {
             $out = "<img src='/img/icons/importancia/$icono' title='$importanciaDescripcion' alt='$importanciaDescripcion'/>";
         }
-        
+
         return $out;
     }
-    
+
     function getLastQuery() {
         $dbo = $this->Cita->getDatasource();
         $logs = $dbo->getLog();

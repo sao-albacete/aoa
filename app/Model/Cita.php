@@ -27,7 +27,7 @@ class Cita extends AppModel {
      * @var mixed False or table name
      */
     public $useTable = 'cita';
-    
+
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
@@ -153,7 +153,7 @@ class Cita extends AppModel {
             'counterQuery' => ''
         )
     );
-    
+
     /**
      * Validaciones
      */
@@ -165,9 +165,9 @@ class Cita extends AppModel {
                 'message' => 'Debe seleccionar una fecha de alta.'
             ),
             'date' => array(
-                'rule' => array('date', 'ymd'),
+                'rule' => array('datetime', 'ymd'),
                 'required' => 'create',
-                'message' => 'Debe introducir una fecha de alta con formato correcto (dd/mm/aaaa).'
+                'message' => 'Debe introducir una fecha de observación con formato correcto (dd/mm/aaaa).'
             ),
             'dateAfterOrEqualToday' => array(
                 'rule' => 'dateBeforeOrEqualToday',
@@ -294,18 +294,18 @@ class Cita extends AppModel {
             'message' => 'El valor del indicador de fotos debe ser un booleano.'
         ),
     );
-    
+
     public function dateBeforeOrEqualToday($data) {
-        
+
         $dtFechaAlta = new DateTime($this->data['Cita']['fechaAlta']);
         $dtNow = new DateTime('now');
-        
+
         if($dtFechaAlta < $dtNow || $dtFechaAlta == $dtNow) {
             return true;
         }
         return false;
     }
-    
+
     /*
      * Funciones
      */
@@ -321,9 +321,9 @@ class Cita extends AppModel {
      * @return array
      */
     public function obtenerCitas($conditions, $fields=null, $order=null, $limit = 0, $joins=null) {
-        
+
         $params = array();
-        
+
         if (! empty($conditions)) {
             $params['conditions'] = $conditions;
         }
@@ -339,12 +339,12 @@ class Cita extends AppModel {
         if (! empty($joins)) {
             $params['joins'] = $joins;
         }
-        
+
         $citas = $this -> find(
             'all',
             $params
         );
-    
+
         return $citas;
     }
 
@@ -366,57 +366,57 @@ class Cita extends AppModel {
         if (! empty($joins)) {
             $params['joins'] = $joins;
         }
-        
+
         $numCitas = $this->find('count', $params);
-        
+
         return $numCitas;
     }
-    
+
     /**
      * Obtiene toda la información de la cita por id
      */
     public function obtenerTodoPorId($id_cita) {
-        
+
         $cita = $this -> find(
-            'first', 
+            'first',
             array(
                 'conditions'=>array('Cita.id'=>$id_cita)
             )
         );
-        
+
         return $cita;
     }
-    
+
     /**
      * Obtiene la información básica de la cita por id
      */
     public function obtenerDatosBasicosPorId($id_cita) {
-        
+
         $cita = $this -> find(
-            'first', 
+            'first',
             array(
                 'conditions'=>array('Cita.id'=>$id_cita),
                 'recursive'=>-1
             )
         );
-        
+
         return $cita;
     }
-    
+
     /**
      * Obtiene los distintos años en los que se han dado citas ordenados descendentemente
      */
     public function obtenerAniosCitas() {
-        
+
         $anios = $this -> find(
-            'all', 
+            'all',
             array(
                 'fields'=>array('DISTINCT(YEAR(Cita.fechaAlta)) AS anio'),
                 'order'=>array('anio DESC'),
                 'recursive' => -1
             )
         );
-        
+
         return $anios;
     }
 
@@ -427,9 +427,9 @@ class Cita extends AppModel {
      * @return array
      */
     public function obtenerCitasProvincialesPorIntervaloAnios($especie_id, $anio_desde, $anio_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -438,20 +438,20 @@ class Cita extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasProvincialesPorAnio($especie_id, $anio, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -460,20 +460,20 @@ class Cita extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasProvincialesPorIntervaloFechas($especie_id, $fecha_desde, $fecha_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -482,20 +482,20 @@ class Cita extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorMunicipioIntervaloAnios($especie_id, $municipio, $anio_desde, $anio_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -503,20 +503,20 @@ class Cita extends AppModel {
                 'group'=>array('mes')
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorMunicipioYAnio($especie_id, $municipio, $anio, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.municipio_id'=>$municipio, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -524,16 +524,16 @@ class Cita extends AppModel {
                 'group'=>array('mes')
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorMunicipioIntervaloFechas($especie_id, $municipio, $fecha_desde, $fecha_hasta, $selectField) {
 
         $citas = $this -> find(
@@ -554,11 +554,11 @@ class Cita extends AppModel {
 
         return $out;
     }
-    
+
     public function obtenerCitasPorLugarIntervaloAnios($especie_id, $lugar, $anio_desde, $anio_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -567,20 +567,20 @@ class Cita extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorLugarYAnio($especie_id, $lugar, $anio, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -589,20 +589,20 @@ class Cita extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorLugarIntervaloFechas($especie_id, $lugar, $fecha_desde, $fecha_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Cita.lugar_id'=>$lugar, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -611,21 +611,21 @@ class Cita extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
-    
+
+
     public function obtenerCitasPorCuadriculaUtmIntervaloAnios($especie_id, $cuadricula_utm, $anio_desde, $anio_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, 'YEAR(Cita.fechaAlta) >='=>$anio_desde, 'YEAR(Cita.fechaAlta) <='=>$anio_hasta),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -633,20 +633,20 @@ class Cita extends AppModel {
                 'group'=>array('mes')
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorCuadriculaUtmYAnio($especie_id, $cuadricula_utm, $anio, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, 'YEAR(Cita.fechaAlta)'=>$anio),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -654,20 +654,20 @@ class Cita extends AppModel {
                 'group'=>array('mes')
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerCitasPorCuadriculaUtmIntervaloFechas($especie_id, $cuadricula_utm, $fecha_desde, $fecha_hasta, $selectField) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id, 'Lugar.cuadricula_utm_id'=>$cuadricula_utm, "Cita.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')", "Cita.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"),
                 'fields'=>array("$selectField AS cantidad", "MONTH(Cita.fechaAlta) AS mes"),
@@ -675,53 +675,53 @@ class Cita extends AppModel {
                 'group'=>array('mes')
             )
         );
-        
+
         // Rellenamos un array con los valores para los 12 meses
         $out = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach ($citas as $cita) {
             $out[$cita[0]['mes'] - 1] = $cita[0]['cantidad'];
         }
-        
+
         return $out;
     }
-    
+
     public function obtenerTotalCitasPorMunicipio($especie_id) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('COUNT(Cita.id) as total', 'Lugar.municipio_id as municipio'),
                 'group'=>array('municipio')
             )
         );
-        
+
         return $citas;
     }
-    
+
     public function obtenerTotalCitasPorCuadriculaUtm($especie_id) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('COUNT(Cita.id) as total', 'Lugar.cuadricula_utm_id as cuadriculaUtm'),
                 'group'=>array('cuadriculaUtm')
             )
         );
-        
+
         return $citas;
     }
-    
+
     public function obtenerTotalCitasPorLugar($lugar_id) {
-        
+
         $totalCitas = $this -> find(
-            'count', 
+            'count',
             array(
                 'conditions'=>array('Cita.lugar_id'=>$lugar_id)
             )
         );
-        
+
         return $totalCitas;
     }
 
@@ -732,16 +732,16 @@ class Cita extends AppModel {
      * @return array
      */
     public function obtenerTipoCriaPorMunicipio($especie_id) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('Lugar.municipio_id as municipio', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
                 'group'=>array('municipio')
             )
         );
-        
+
         return $citas;
     }
 
@@ -752,16 +752,16 @@ class Cita extends AppModel {
      * @return array
      */
     public function obtenerTipoCriaPorCuadriculaUtm($especie_id) {
-        
+
         $citas = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Cita.especie_id'=>$especie_id),
                 'fields'=>array('Lugar.cuadricula_utm_id as cuadriculaUtm', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
                 'group'=>array('cuadriculaUtm')
             )
         );
-        
+
         return $citas;
     }
 

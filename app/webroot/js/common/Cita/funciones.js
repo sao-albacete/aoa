@@ -62,6 +62,20 @@ function seleccionarFecha($div)
     });
 }
 
+function seleccionarHora($div)
+{
+	$div.find( "#horaAlta" ).timepicker({
+		timeFormat: 'HH:mm',
+		interval: 30,
+		dynamic: false,
+		dropdown: true,
+		scrollbar: true,
+		onSelect: function(timeText, inst) {
+			$(this).focus();
+		}
+	});
+}
+
 /**
  * Configura la validación del formulario cita
  *
@@ -81,6 +95,9 @@ function validarCita(formCita, divMensajesError)
                 isdate: true,
                 dateBeforeOrEqualToday: true
             },
+			"data[Cita][horaAlta]": {
+				required: true
+			},
             lugar: {
                 validarLugar: true
             },
@@ -99,9 +116,12 @@ function validarCita(formCita, divMensajesError)
         },
         messages: {
             "data[Cita][fechaAlta]": {
-                required: "Debe seleccionar una fecha de alta.",
+                required: "Debe seleccionar una fecha de observación.",
                 isDate: "Debe introducir una fecha de alta con formato correcto (dd/mm/aaaa)."
             },
+			"data[Cita][horaAlta]": {
+				required: "Debe seleccionar una hora de observación."
+			},
             "data[Cita][clase_reproduccion_id]" : {
                 required: "Debe seleccionar un dato de reproducción."
             },

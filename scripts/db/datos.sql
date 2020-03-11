@@ -2734,7 +2734,7 @@ INSERT INTO `privacidad` (`id`, `descripcion`, `indActivo`) VALUES
 --
 
 INSERT INTO `proteccion_clm` (`id`, `codigo`, `nombre`, `indActivo`) VALUES
-(1, 'EN', 'En Peligro', 1),
+(1, 'EN', 'En Peligro de Extinción', 1),
 (2, 'VU', 'Vulnerable', 1),
 (3, 'NC', 'No catalogado', 1),
 (4, 'IE', 'Interés Especial', 1);

@@ -20,6 +20,9 @@ $(document).ready(function() {
     // Seleccioanr fecha de alta
     seleccionarFecha(divNuevaCita);
 
+	// Seleccioanr hora de alta
+    seleccionarHora(divNuevaCita);
+
     // Gestionar tabla de clases de edad/sexo
     gestionarTablaNumeroAves(divNuevaCita);
 
