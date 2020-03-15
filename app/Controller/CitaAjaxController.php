@@ -233,7 +233,7 @@ class CitaAjaxController extends AppController
 		/* Filtrado */
 		$aJoins = array();
 
-		$observadoresSecundariosIds = $this->ObservadorSecundario->getObservadoresSecundariosByNombre($usuario['ObservadorPrincipal']['nombre']);
+		$observadoresSecundariosIds = $this->ObservadorSecundario->getObservadoresSecundariosByCode($usuario['ObservadorPrincipal']['codigo']);
 
 		if (!empty($observadoresSecundariosIds)) {
 
