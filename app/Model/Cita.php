@@ -685,34 +685,6 @@ class Cita extends AppModel {
         return $out;
     }
 
-    public function obtenerTotalCitasPorMunicipio($especie_id) {
-
-        $citas = $this -> find(
-            'all',
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('COUNT(Cita.id) as total', 'Lugar.municipio_id as municipio'),
-                'group'=>array('municipio')
-            )
-        );
-
-        return $citas;
-    }
-
-    public function obtenerTotalCitasPorCuadriculaUtm($especie_id) {
-
-        $citas = $this -> find(
-            'all',
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('COUNT(Cita.id) as total', 'Lugar.cuadricula_utm_id as cuadriculaUtm'),
-                'group'=>array('cuadriculaUtm')
-            )
-        );
-
-        return $citas;
-    }
-
     public function obtenerTotalCitasPorLugar($lugar_id) {
 
         $totalCitas = $this -> find(
@@ -723,46 +695,6 @@ class Cita extends AppModel {
         );
 
         return $totalCitas;
-    }
-
-    /**
-     * Obtiene el tipo de cria por municipio
-     *
-     * @param $especie_id
-     * @return array
-     */
-    public function obtenerTipoCriaPorMunicipio($especie_id) {
-
-        $citas = $this -> find(
-            'all',
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('Lugar.municipio_id as municipio', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
-                'group'=>array('municipio')
-            )
-        );
-
-        return $citas;
-    }
-
-    /**
-     * Obtiene el tipo de cría por cuadrícula UTM
-     *
-     * @param $especie_id
-     * @return array
-     */
-    public function obtenerTipoCriaPorCuadriculaUtm($especie_id) {
-
-        $citas = $this -> find(
-            'all',
-            array(
-                'conditions'=>array('Cita.especie_id'=>$especie_id),
-                'fields'=>array('Lugar.cuadricula_utm_id as cuadriculaUtm', 'MAX(ClaseReproduccion.idTipoCria) as tipoCria'),
-                'group'=>array('cuadriculaUtm')
-            )
-        );
-
-        return $citas;
     }
 
     /**
