@@ -171,8 +171,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <div class="span6">
                 <p><span class='label <?=$this->Especie->obtener_color_proteccion_lr($cita['Especie']['ProteccionLr']['codigo'])?>'> <?=$cita['Especie']['ProteccionLr']['nombre']?></span><?=__(" según el ")?><em><b><?=__("Libro Rojo de las Aves de España")?></b></em></p>
                 <p><span class='label <?=$this->Especie->obtener_color_proteccion_clm($cita['Especie']['ProteccionClm']['codigo'])?>'><?=$cita['Especie']['ProteccionClm']['nombre']?></span><?=__(" en ")?><b><?=__("Castilla - La Mancha")?></b></p>
-                <p><span class='label label-info'><?=$cita['Especie']['EstatusCuantitativoAb']['nombre']?></span><?=__(" en ")?><b><?=__("Albacete")?></b>></p>
-                <p><span class='label label-info'><?=$cita['Especie']['EstatusReproductivoAb']['nombre']?></span><?=__(" en ")?><b><?=__("Albacete")?></b>></p>
+                <p><span class='label label-info'><?=$cita['Especie']['EstatusCuantitativoAb']['nombre']?></span><?=__(" en ")?><b><?=__("Albacete")?></b></p>
+                <p><span class='label label-info'><?=$cita['Especie']['EstatusReproductivoAb']['nombre']?></span><?=__(" en ")?><b><?=__("Albacete")?></b></p>
             </div>
         </div>
         <br>
