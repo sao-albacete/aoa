@@ -39,6 +39,7 @@ class EspecieController extends AppController
 		'Cita',
 		'CitaCount',
 		'CitaMaxTipoCria',
+		'CitaCountMes',
 		'AsoCitaObservador',
 		'AsoCitaClaseEdadSexo',
 		'Municipio',
@@ -228,8 +229,6 @@ class EspecieController extends AppController
 	{
 		$this->layout = 'ajax';
 
-		$validate = true;
-
 		$citas_grafico = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		$title = "";
 
@@ -289,52 +288,97 @@ class EspecieController extends AppController
 			$fecha_hasta = $this->request->data['fechaHasta'];
 		}
 
-		if ($validate) {
-			if ($zonaGeografica == 'provincia') {
-				if ($periodo == "anio") {
-					$title = "Nº de $numeroDe durante el año $anio en la provincia de Albacete";
-					$citas_grafico = $this->Cita->obtenerCitasProvincialesPorAnio($especie_id, $anio, $selectField);
-				} else if ($periodo == "fechas") {
-					$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en la provincia de Albacete";
-					$citas_grafico = $this->Cita->obtenerCitasProvincialesPorIntervaloFechas($especie_id, $fecha_desde, $fecha_hasta, $selectField);
-				} else if ($periodo == "anios") {
-					$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en la provincia de Albacete";
-					$citas_grafico = $this->Cita->obtenerCitasProvincialesPorIntervaloAnios($especie_id, $anio_desde, $anio_hasta, $selectField);
+		if ($zonaGeografica == 'provincia') {
+			if ($periodo == "anio") {
+				$title = "Nº de $numeroDe durante el año $anio en la provincia de Albacete";
+				if ($numeroDe == "citas") {
+					$citas_grafico = $this->CitaCountMes->obtenerCitasProvincialesPorAnio($especie_id, $anio);
+				} else {
+					$citas_grafico = $this->CitaCountMes->obtenerNumAvesProvincialesPorAnio($especie_id, $anio);
 				}
-			} else {
-				if ($zonaGeografica == 'municipio') {
-					if ($periodo == "anio") {
-						$title = "Nº de $numeroDe durante el año $anio en el municipio de $municipio_nombre";
-						$citas_grafico = $this->Cita->obtenerCitasPorMunicipioYAnio($especie_id, $municipio_id, $anio, $selectField);
-					} else if ($periodo == "fechas") {
-
-						$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en el municipio de $municipio_nombre";
-						$citas_grafico = $this->Cita->obtenerCitasPorMunicipioIntervaloFechas($especie_id, $municipio_id, $fecha_desde, $fecha_hasta, $selectField);
-					} else if ($periodo == "anios") {
-						$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en el municipio de $municipio_nombre";
-						$citas_grafico = $this->Cita->obtenerCitasPorMunicipioIntervaloAnios($especie_id, $municipio_id, $anio_desde, $anio_hasta, $selectField);
+			} else if ($periodo == "fechas") {
+				$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en la provincia de Albacete";
+				if ($numeroDe == "citas") {
+					$citas_grafico = $this->CitaCountMes->obtenerCitasProvincialesPorIntervaloFechas($especie_id, $fecha_desde, $fecha_hasta);
+				} else {
+					$citas_grafico = $this->CitaCountMes->obtenerNumAvesProvincialesPorIntervaloFechas($especie_id, $fecha_desde, $fecha_hasta);
+				}
+			} else if ($periodo == "anios") {
+				$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en la provincia de Albacete";
+				if ($numeroDe == "citas") {
+					$citas_grafico = $this->CitaCountMes->obtenerCitasProvincialesPorIntervaloAnios($especie_id, $anio_desde, $anio_hasta);
+				} else {
+					$citas_grafico = $this->CitaCountMes->obtenerNumAvesProvincialesPorIntervaloAnios($especie_id, $anio_desde, $anio_hasta);
+				}
+			}
+		} else {
+			if ($zonaGeografica == 'municipio') {
+				if ($periodo == "anio") {
+					$title = "Nº de $numeroDe durante el año $anio en el municipio de $municipio_nombre";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorMunicipioYAnio($especie_id, $municipio_id, $anio);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorMunicipioYAnio($especie_id, $municipio_id, $anio);
 					}
-				} else if ($zonaGeografica == 'lugar') {
-					if ($periodo == "anio") {
-						$title = "Nº de $numeroDe durante el año $anio en $lugar_nombre";
-						$citas_grafico = $this->Cita->obtenerCitasPorLugarYAnio($especie_id, $lugar_id, $anio, $selectField);
-					} else if ($periodo == "fechas") {
-						$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en $lugar_nombre";
-						$citas_grafico = $this->Cita->obtenerCitasPorLugarIntervaloFechas($especie_id, $lugar_id, $fecha_desde, $fecha_hasta, $selectField);
-					} else if ($periodo == "anios") {
-						$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en $lugar_nombre";
-						$citas_grafico = $this->Cita->obtenerCitasPorLugarIntervaloAnios($especie_id, $lugar_id, $anio_desde, $anio_hasta, $selectField);
+				} else if ($periodo == "fechas") {
+					$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en el municipio de $municipio_nombre";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorMunicipioIntervaloFechas($especie_id, $municipio_id, $fecha_desde, $fecha_hasta);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorMunicipioIntervaloFechas($especie_id, $municipio_id, $fecha_desde, $fecha_hasta);
 					}
-				} else if ($zonaGeografica == 'cuadriculaUtm') {
-					if ($periodo == "anio") {
-						$title = "Nº de $numeroDe durante el año $anio en la cuadrícula UTM $cuadricula_utm_codigo";
-						$citas_grafico = $this->Cita->obtenerCitasPorCuadriculaUtmYAnio($especie_id, $cuadricula_utm_id, $anio, $selectField);
-					} else if ($periodo == "fechas") {
-						$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en la cuadrícula UTM $cuadricula_utm_codigo";
-						$citas_grafico = $this->Cita->obtenerCitasPorCuadriculaUtmIntervaloFechas($especie_id, $cuadricula_utm_id, $fecha_desde, $fecha_hasta, $selectField);
-					} else if ($periodo == "anios") {
-						$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en la cuadrícula UTM $cuadricula_utm_codigo";
-						$citas_grafico = $this->Cita->obtenerCitasPorCuadriculaUtmYMes($especie_id, $cuadricula_utm_id, $anio_desde, $anio_hasta, $selectField);
+				} else if ($periodo == "anios") {
+					$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en el municipio de $municipio_nombre";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorMunicipioIntervaloAnios($especie_id, $municipio_id, $anio_desde, $anio_hasta);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorMunicipioIntervaloAnios($especie_id, $municipio_id, $anio_desde, $anio_hasta);
+					}
+				}
+			} else if ($zonaGeografica == 'lugar') {
+				if ($periodo == "anio") {
+					$title = "Nº de $numeroDe durante el año $anio en $lugar_nombre";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorLugarYAnio($especie_id, $lugar_id, $anio);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorLugarYAnio($especie_id, $lugar_id, $anio);
+					}
+				} else if ($periodo == "fechas") {
+					$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en $lugar_nombre";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorLugarIntervaloFechas($especie_id, $lugar_id, $fecha_desde, $fecha_hasta);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorLugarIntervaloFechas($especie_id, $lugar_id, $fecha_desde, $fecha_hasta);
+					}
+				} else if ($periodo == "anios") {
+					$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en $lugar_nombre";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorLugarIntervaloAnios($especie_id, $lugar_id, $anio_desde, $anio_hasta);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorLugarIntervaloAnios($especie_id, $lugar_id, $anio_desde, $anio_hasta);
+					}
+				}
+			} else if ($zonaGeografica == 'cuadriculaUtm') {
+				if ($periodo == "anio") {
+					$title = "Nº de $numeroDe durante el año $anio en la cuadrícula UTM $cuadricula_utm_codigo";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorCuadriculaUtmYAnio($especie_id, $cuadricula_utm_id, $anio);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorCuadriculaUtmYAnio($especie_id, $cuadricula_utm_id, $anio);
+					}
+				} else if ($periodo == "fechas") {
+					$title = "Nº de $numeroDe desde el $fecha_desde hasta el $fecha_hasta \n en la cuadrícula UTM $cuadricula_utm_codigo";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorCuadriculaUtmIntervaloFechas($especie_id, $cuadricula_utm_id, $fecha_desde, $fecha_hasta);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorCuadriculaUtmIntervaloFechas($especie_id, $cuadricula_utm_id, $fecha_desde, $fecha_hasta);
+					}
+				} else if ($periodo == "anios") {
+					$title = "Nº de $numeroDe desde $anio_desde hasta $anio_hasta en la cuadrícula UTM $cuadricula_utm_codigo";
+					if ($numeroDe == "citas") {
+						$citas_grafico = $this->CitaCountMes->obtenerCitasPorCuadriculaUtmIntervaloAnios($especie_id, $cuadricula_utm_id, $anio_desde, $anio_hasta);
+					} else {
+						$citas_grafico = $this->CitaCountMes->obtenerNumAvesPorCuadriculaUtmIntervaloAnios($especie_id, $cuadricula_utm_id, $anio_desde, $anio_hasta);
 					}
 				}
 			}

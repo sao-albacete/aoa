@@ -70,4 +70,26 @@ class CitaCount extends AppModel {
 
 		return $citas;
 	}
+
+	public function obtenerCitasProvincialesPorAnio($especie_id, $anio) {
+
+		$citas = $this -> find(
+			'list',
+			array(
+				'conditions'=>array('CitaCount.especie_id'=>$especie_id, 'YEAR(CitaCount.fechaAlta)'=>$anio),
+				'fields'=>array("MONTH(CitaCount.fechaAlta) AS mes", "CitaCount.citas_count"),
+				'order'=>array('mes ASC'),
+				'group'=>array('mes'),
+				'recursive'=>-1
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0,0,0,0,0,0,0,0,0,0,0,0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
 }

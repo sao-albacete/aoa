@@ -238,7 +238,7 @@ class CitaController extends AppController
 			if (isset($this->request->query["lugarId"]) && !empty($this->request->query["lugarId"])) {
 				$conditions["Cita.lugar_id"] = $this->request->query["lugarId"];
 				$valuesSubmited["lugarId"] = $this->request->query["lugarId"];
-				$valuesSubmited["lugar"] = $this->request->query["lugar"];
+//				$valuesSubmited["lugar"] = $this->request->query["lugar"];
 
 				// Filtramos las citas privadas salvo las que pertenezcan al usuario
 				if (!isset($usuario)) {
