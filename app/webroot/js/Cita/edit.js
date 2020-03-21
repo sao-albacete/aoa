@@ -25,6 +25,9 @@ $(document).ready(function() {
     // Seleccioanr fecha de alta
     seleccionarFecha($divEditarCita);
 
+	// Seleccionar hora de alta
+	seleccionarHora($divEditarCita);
+
     // Gestionar tabla de clases de edad/sexo
     gestionarTablaNumeroAves($divEditarCita);
 
@@ -105,12 +108,12 @@ $(document).ready(function() {
         });
         return total_numero_aves > 0;
     }, "El número de aves debe ser mayor que cero.");
-    
+
     jQuery.validator.addMethod("dateBeforeOrEqualToday", function(value, element) {
-        
+
         var fechaAlta = $.datepicker.parseDate("dd/mm/yy", value);
-        var now = new Date(); 
-        
+        var now = new Date();
+
         return (fechaAlta < now || fechaAlta == now);
     }, "Debe introducir una fecha de alta anterior o igual a la fecha de hoy.");
 
@@ -168,12 +171,12 @@ $(document).ready(function() {
     $divEditarCita.find("#btnGuardar").click(function(){
 
         if ($divEditarCita.find('#frmEditarCita').valid()) {
-            
+
             var especieId = $divEditarCita.find(".especieId").val();
             var lugarId = $divEditarCita.find("#lugarId").val();
             var fechaAlta = $divEditarCita.find("#fechaAlta").val();
             var citaId = $divEditarCita.find("#citaId").val();
-            
+
             $.ajax({
                 url: "/cita/existenCitas",
                 data: {"especies":especieId,"lugarId":lugarId,"fechaAlta":fechaAlta,"citaId":citaId},
@@ -185,7 +188,7 @@ $(document).ready(function() {
                         items.push( "<img src='/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png' width='34' height='28' alt='alert icon' style='margin-right: 20px;'>" );
                         items.push( "Ya existe una cita creada para la misma especie, fecha y lugar." );
                         items.push( "</h5>" );
-    
+
                         bootbox.alert(items.join( "" ), "Aceptar");
                     }
                     else {
@@ -205,7 +208,7 @@ $(document).ready(function() {
                                     items.push( "<br>" );
                                     items.push( "Para homologar esta cita debes seguir " );
                                     items.push( "<a href='http://www.seo.org/2012/01/25/%C2%BFque-hacer-si-observamos-una-rareza/' target='_blank'>estas instrucciones</a>." );
-                
+
                                     bootbox.confirm(items.join( "" ), "Cancelar", "Continuar", function(result) {
                                         if(result) {
                                             $divEditarCita.find("#frmEditarCita").submit();
@@ -223,7 +226,7 @@ $(document).ready(function() {
                                     items.push( "describíendo con detalle el avistamiento y ampliando toda la información posible.");
                                     items.push( "<br>" );
                                     items.push( "<b>Es importante que adjuntes fotografías</b> aunque sean de mala calidad para apoyar la identificación de la especie.");
-                
+
                                     bootbox.confirm(items.join( "" ), "Cancelar", "Continuar", function(result) {
                                         if(result) {
                                             $divEditarCita.find("#frmEditarCita").submit();
@@ -237,7 +240,7 @@ $(document).ready(function() {
                     }
                 }
             });
-        } 
+        }
     });
     /* FIN guardar */
 });

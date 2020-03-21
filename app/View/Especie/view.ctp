@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // Informamos el título
 $this->set('title_for_layout','Ficha de '.$especie['Especie']['nombreComun']);
@@ -23,7 +23,6 @@ $this->Html->script(array(
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
     'common/maps/geoxml3/geoxml3.js',
     'common/maps/geoxml3/ProjectedOverlay.js',
-    'pleaseWaitDialog',
     'common/maps/functions',
     'Especie/view'
 ), array('inline' => false));
@@ -69,7 +68,7 @@ $this->Html->script(array(
             "bSort": true,
             "aoColumnDefs": [
                 { 'bSortable': false, 'aTargets': [ 0,1,8 ] },
-                { "sClass": "text-center", "aTargets": [ 0,1,2,4,6,7,8,9,10 ] }
+                { "sClass": "text-center", "aTargets": [ 0,1,2,4,5,7,8,9,10,11 ] }
             ],
             "aoColumns": [null,null,null,null,{ "sType": "date-uk" },null,null,null,null,null,null],
             "bInfo": true,
@@ -81,7 +80,7 @@ $this->Html->script(array(
         /* FIN tabla citas */
     });
 </script>
-    
+
 <?php
 
 // Menu
@@ -94,9 +93,9 @@ $this->end();
 <div>
     <fieldset>
         <legend><?=__('Ficha de la Especie'); ?><span class="pull-right"><?=__("Número de citas: " )."<b>".count($especie['Citas'])."</b>";?></span></legend>
-        
+
         <input type="hidden" name="especieId" id="especieId" value="<?=$especie['Especie']['id'];?>"/>
-        
+
         <div class="row-fluid">
             <div class="span12 contenedor_azul">
                 <h3 style="line-height: 20px;">
@@ -141,7 +140,7 @@ $this->end();
                 <p><?=$especie['Especie']['comentarioHistorico'];?></p>
             </div>
         </div>
-        
+
         <br>
 
         <ul class="nav nav-tabs">
@@ -151,9 +150,9 @@ $this->end();
             <li><a data-toggle="tab" href="#fotos"><?=__("Fotos");?></a></li>
         </ul>
         <div id="especie_tab_content" class="tab-content">
-        
+
             <div id="fotos" class="tab-pane fade">
-            
+
                 <?php if(isset($especie['Fotos']) && count($especie['Fotos']) > 0) : ?>
                     <ul class="thumbnails yoxview">
                     <?php foreach ($especie['Fotos'] as $citaFoto) : ?>
@@ -180,8 +179,8 @@ $this->end();
                 <?php endif ?>
             </div>
             <div id="citas" class="tab-pane fade">
-            
-                <table id="tabla_citas" class="table table-striped table-bordered table-hover table-condensed">    
+
+                <table id="tabla_citas" class="table table-striped table-bordered table-hover table-condensed">
                     <thead>
                         <tr>
                             <th><?=__("Ver más");?></th>
@@ -189,6 +188,7 @@ $this->end();
                             <th><?=__("Fotos");?></th>
                             <th><?=__("Especie");?></th>
                             <th><?=__("Fecha");?></th>
+							<th><?=__("Hora");?></th>
                             <th><?=__("Lugar");?></th>
                             <th><?=__("Número de Aves");?></th>
                             <th><?=__("Observador");?></th>
@@ -209,6 +209,7 @@ $this->end();
                             <th><?=__("Fotos");?></th>
                             <th><?=__("Especie");?></th>
                             <th><?=__("Fecha");?></th>
+							<th><?=__("Hora");?></th>
                             <th><?=__("Lugar");?></th>
                             <th><?=__("Número de Aves");?></th>
                             <th><?=__("Observador");?></th>
@@ -228,24 +229,24 @@ $this->end();
                                     <button class="btn btn-mini btn-info pull-right help-button"
                                         data-trigger="click" data-placement="bottom" data-html="true"
                                         data-content="<?=__('Puedes modificar las opciones de abajo para configurar el gráfico a tu gusto. <br> No olvides pulsar el botón <b>Actualizar gráfico</b> para que tus cambios se reflejen en el gráfico.');?>">
-                                        <i class="icon-info-sign"></i> 
+                                        <i class="icon-info-sign"></i>
                                         <?=__("Ayuda");?>
                                     </button>
                             </legend>
-                            
+
                             <form id="frm_estadisticas" action="" method="post" class="form-inline">
-                                
+
                                 <div id="errorMessagesGrafico" class="alert alert-error" style="display: none; padding-left: 14px;">
                                     <h5><?=__('Por favor, corrija los errores en el formulario')?>:</h5>
                                     <ul></ul>
                                 </div>
-                                
+
                                 <!-- Numero -->
                                 <div class="control-group" style="margin-bottom: 20px">
                                     <label class="control-label label-header" for="numeroDe"><?=__("Número de")?></label>
                                     <div class="controls">
-                                        <label class="radio inline"><input name="numeroDe" value="aves" checked="checked" type="radio"> <?=__("Aves")?> </label> 
-                                        <label class="radio inline"> <input name="numeroDe" value="citas" type="radio"> <?=__("Citas")?> </label> 
+                                        <label class="radio inline"><input name="numeroDe" value="aves" checked="checked" type="radio"> <?=__("Aves")?> </label>
+                                        <label class="radio inline"> <input name="numeroDe" value="citas" type="radio"> <?=__("Citas")?> </label>
                                     </div>
                                 </div>
 
@@ -279,7 +280,7 @@ $this->end();
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Periodo -->
                                 <div class="control-group">
                                     <label class="control-label label-header" for="periodo"><?=__("Periodo")?></label>
@@ -348,15 +349,15 @@ $this->end();
                                 <button class="btn btn-mini btn-info pull-right help-button"
                                     data-trigger="click" data-placement="bottom" data-html="true"
                                     data-content="<?=__('<p>Puedes modificar las opciones de abajo para configurar el mapa a tu gusto. <br> No olvides pulsar el botón <b>Actualizar mapa</b> para que tus cambios se reflejen en el mapa.</p>');?>">
-                                    <i class="icon-info-sign"></i> 
+                                    <i class="icon-info-sign"></i>
                                     <?=__("Ayuda");?>
                                 </button>
                             </legend>
-                            
+
                             <form id="frm_mapa_distribucion" action="" method="post">
-                            
+
                                 <?=$this->Session->flash('mensajesMapaContainer');?>
-                            
+
                                 <!-- División geográfica -->
                                 <div class="control-group" style="margin-bottom: 20px">
                                     <label class="control-label label-header" for="divisionGeografica"><?=__("División geográfica")?></label>
@@ -367,7 +368,7 @@ $this->end();
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Tipo distribución -->
                                 <div class="control-group" style="margin-bottom: 20px">
                                     <label class="control-label label-header" for="tipoDistribucion"><?=__("Tipo de distribución")?></label>
@@ -401,10 +402,10 @@ $this->end();
 </div>
 
 <!-- Pie -->
-<?php 
-    $this->start('pie');        
+<?php
+    $this->start('pie');
     echo $this->element('/pie');
-    $this->end(); 
-?>      
+    $this->end();
+?>
 
 <?=$this->Js->writeBuffer();?>

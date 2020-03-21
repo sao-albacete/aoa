@@ -129,6 +129,19 @@ class ObservadorSecundario extends AppModel {
         return $observadores;
     }
 
+	public function getObservadoresSecundariosByCode($code) {
+
+		$nombre = StringUtil::normaliza(strtoupper($code));
+
+		$observadores = $this->find('list', array(
+			'fields' => array('ObservadorSecundario.id'),
+			'conditions' => array('ObservadorSecundario.codigo'=>$code),
+			'recursive'=>-1
+		));
+
+		return $observadores;
+	}
+
     public function existObservadorSecundarioByCode($codigo) {
 
         $observadores = $this->find('count', array(

@@ -31,10 +31,10 @@ $this->end();
 <div>
     <fieldset>
         <legend><?=__('Mis citas'); ?></legend>
-        
+
         <fieldset>
             <legend class="small"><?=__("Mis citas como observador");?></legend>
-            <table id="tabla_citas_observador" class="table table-striped table-bordered table-hover table-condensed">    
+            <table id="tabla_citas_observador" class="table table-striped table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
                         <th><?=__("Acciones");?></th>
@@ -42,6 +42,7 @@ $this->end();
                         <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
+						<th><?=__("Hora");?></th>
                         <th><?=__("Lugar");?></th>
                         <th><?=__("Número de Aves");?></th>
                         <th><?=__("Observador");?></th>
@@ -62,6 +63,7 @@ $this->end();
                         <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
+						<th><?=__("Hora");?></th>
                         <th><?=__("Lugar");?></th>
                         <th><?=__("Número de Aves");?></th>
                         <th><?=__("Observador");?></th>
@@ -75,8 +77,8 @@ $this->end();
 
         <fieldset>
             <legend class="small"><?=__("Mis citas como colaborador");?></legend>
-        
-            <table id="tabla_citas_colaborador" class="table table-striped table-bordered table-hover table-condensed">    
+
+            <table id="tabla_citas_colaborador" class="table table-striped table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
                         <th><?=__("Ver más");?></th>
@@ -84,6 +86,7 @@ $this->end();
                         <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
+						<th><?=__("Hora");?></th>
                         <th><?=__("Lugar");?></th>
                         <th><?=__("Número de Aves");?></th>
                         <th><?=__("Observador");?></th>
@@ -104,6 +107,7 @@ $this->end();
                         <th><?=__("Fotos");?></th>
                         <th><?=__("Especie");?></th>
                         <th><?=__("Fecha");?></th>
+						<th><?=__("Hora");?></th>
                         <th><?=__("Lugar");?></th>
                         <th><?=__("Número de Aves");?></th>
                         <th><?=__("Observador");?></th>
@@ -113,7 +117,7 @@ $this->end();
                     </tr>
                 </tfoot>
             </table>
-        
+
         </fieldset>
     </fieldset>
 </div>

@@ -32,7 +32,7 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
-    
+
     /**
      * Funcion que registra el error en el log cuando falla alguna funcion del modelo
      */
@@ -42,4 +42,12 @@ class AppModel extends Model {
         $this->log($err);
         $this->log($this->data);
     }
+
+	function getLastQuery()
+	{
+		$dbo = ConnectionManager::getDataSource('default');
+		$logs = $dbo->getLog();
+		$lastLog = end($logs['log']);
+		return $lastLog['query'];
+	}
 }

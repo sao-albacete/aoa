@@ -16,3 +16,4 @@ app/[Cc]onfig/database.php
 /app/webroot/img/users/*
 *.bak
 README.md~
+version.txt
