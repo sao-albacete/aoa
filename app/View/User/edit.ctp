@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // Informamos el título
 $this->set('title_for_layout','Editar usuario');
@@ -20,8 +20,8 @@ $this->end();
 ?>
 
 <fieldset>
-	<legend><?php __("Editar tus datos de usuario");?></legend>
-	
+	<legend><?= __("Editar tus datos de usuario");?></legend>
+
 	<div class="well well-small">
 		<?php echo __("Los campos marcados con un asterisco (*) son obligatorios");?>
 	</div>
@@ -31,14 +31,14 @@ $this->end();
 		<h5><?php echo __("Por favor, corrija los errores en el formulario");?>:</h5>
 		<ul></ul>
 	</div>
-	
-	<form action="/user/edit/<?php echo $user['User']['id'];?>" id="UserEditForm" method="post" accept-charset="utf-8" 
+
+	<form action="/user/edit/<?php echo $user['User']['id'];?>" id="UserEditForm" method="post" accept-charset="utf-8"
 			class="form-horizontal" enctype="multipart/form-data">
-	
+
 		<div class="row-fluid">
-		
+
 			<div class="span3" style="text-align: center;">
-			
+
 				<!-- Adjuntar fotos -->
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 					<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
@@ -58,86 +58,86 @@ $this->end();
 						</a>
 					</div>
 				</div>
-			
+
 			</div>
-		
+
 			<div class="span9">
-			
+
 				<div class="control-group">
 			        <label class="control-label" for="UserUsername"><?php echo __("Nombre completo");?> (*)</label>
 			        <div class="controls">
 						<div class="dummy">
-			        		<input name="data[User][username]" placeholder="Escribe tu nombre completo" class="input-xxlarge" 
+			        		<input name="data[User][username]" placeholder="Escribe tu nombre completo" class="input-xxlarge"
 			        			maxlength="250" type="text" id="UserUsername" required="required" value="<?php echo $user['User']['username'];?>"/>
 			        		<span class="badge badge-info" data-trigger="hover"
-								data-content="<?php echo __('Escribe tu nombre completo');?>"><i class="icon-info-sign icon-white"></i> 
+								data-content="<?php echo __('Escribe tu nombre completo');?>"><i class="icon-info-sign icon-white"></i>
 							</span>
 						</div>
 			        </div>
 				</div>
-			        
+
 			    <div class="control-group">
 			        <label class="control-label" for="UserEmail"><?php echo __("Correo electrónico");?> (*)</label>
 			        <div class="controls">
 						<div class="dummy">
-			        		<input name="data[User][email]" placeholder="Escribe tu correo electrónico" class="input-xxlarge" 
+			        		<input name="data[User][email]" placeholder="Escribe tu correo electrónico" class="input-xxlarge"
 			        			type="email" id="UserEmail" required="required" value="<?php echo $user['User']['email'];?>"/>
 			        		<span class="badge badge-info" data-trigger="hover"
-								data-content="<?php echo __('Escribe tu correo electrónico');?>"><i class="icon-info-sign icon-white"></i> 
+								data-content="<?php echo __('Escribe tu correo electrónico');?>"><i class="icon-info-sign icon-white"></i>
 							</span>
 						</div>
 			        </div>
 				</div>
-			        
+
 				<div class="control-group">
 			        <label class="control-label" for="UserPassword"><?php echo __("Contraseña actual");?> (*)</label>
 			        <div class="controls">
 						<div class="dummy">
-			        		<input name="data[User][password]" placeholder="Escribe tu contraseña actual" type="password" 
+			        		<input name="data[User][password]" placeholder="Escribe tu contraseña actual" type="password"
 			        			id="UserPassword" required="required"/>
 			        		<span class="badge badge-info" data-trigger="hover"
-								data-content="<?php echo __('Para confirmar la modificación de tus datos debes escribir tu contraseña');?>"><i class="icon-info-sign icon-white"></i> 
+								data-content="<?php echo __('Para confirmar la modificación de tus datos debes escribir tu contraseña');?>"><i class="icon-info-sign icon-white"></i>
 							</span>
 						</div>
 			        </div>
 				</div>
-				
+
 				<div class="control-group">
 			        <label class="control-label" for="UserNewPassword"><?php echo __("Nueva contraseña");?></label>
 			        <div class="controls">
 						<div class="dummy">
-			        		<input name="data[User][new_password]" placeholder="Escribe tu nueva contraseña" type="password" 
+			        		<input name="data[User][new_password]" placeholder="Escribe tu nueva contraseña" type="password"
 			        			id="UserNewPassword"/>
 			        		<span class="badge badge-info" data-trigger="hover"
-								data-content="<?php echo __('Si deseas modificar tu contraseña, escribela aquí');?>"><i class="icon-info-sign icon-white"></i> 
+								data-content="<?php echo __('Si deseas modificar tu contraseña, escribela aquí');?>"><i class="icon-info-sign icon-white"></i>
 							</span>
 						</div>
 			        </div>
 				</div>
-			        
+
 			    <div class="control-group">
 			        <label class="control-label" for="UserPasswordConfirmation"><?php echo __("Confirmación de nueva contraseña");?></label>
 			        <div class="controls">
 						<div class="dummy">
 			        		<input name="data[User][password_confirmation]" placeholder="Confirma tu nueva contraseña" type="password" id="UserPasswordConfirmation"/>
 			        		<span class="badge badge-info" data-trigger="hover"
-								data-content="<?php echo __('Vuelve a escribir tu nueva contraseña para confirmar que es correcta');?>"><i class="icon-info-sign icon-white"></i> 
+								data-content="<?php echo __('Vuelve a escribir tu nueva contraseña para confirmar que es correcta');?>"><i class="icon-info-sign icon-white"></i>
 							</span>
 						</div>
 			        </div>
-				</div>		    
-			
+				</div>
+
 			</div>
-			
+
 			<div class="control-group">
 				<div class="controls text-center">
 					<a href="/user/view/<?php echo $user['User']['id'];?>" class="btn btn-warning"><?php echo __("Cancelar");?></a>
 		    		<input  class="btn btn-large btn-success" type="submit" value="<?php echo __("Guardar");?>"/>
 		    	</div>
 		    </div>
-			
+
 		</div>
-        
+
 	</form>
 
 </fieldset>
