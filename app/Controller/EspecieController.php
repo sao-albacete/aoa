@@ -35,6 +35,7 @@ class EspecieController extends AppController
 	 */
 	public $uses = array(
 		'Especie',
+		'CitaEspecieCount',
 		'OrdenTaxonomico',
 		'Cita',
 		'CitaCount',
@@ -188,12 +189,30 @@ class EspecieController extends AppController
 		$especiesAb = $this->Especie->find(
 			'all',
 			[
+				'fields' => [
+					'Especie.id',
+					'Especie.nombreIngles',
+					'Especie.nombreComun',
+					'Familia.nombre',
+					'Especie.genero',
+					'Especie.especie',
+					'Especie.subespecie',
+					'Especie.codigoEstatusEsp',
+					'EstatusCuantitativoAb.nombre',
+					'EstatusCuantitativoAb.codigo',
+					'DistribucionAb.nombre',
+					'DistribucionAb.codigo',
+					'ProteccionLr.nombre',
+					'ProteccionLr.codigo',
+					'ProteccionClm.nombre',
+					'ProteccionClm.codigo',
+				],
 				'conditions' => ['Especie.indCitadaAlbacete' => 1, 'Especie.codigoEuring IS NOT NULL'],
 				'order' => ['Especie.codigoAerc ASC', 'Especie.codigoEuring ASC']
 			]
 		);
 		foreach ($especiesAb as $key => $value) {
-			$especiesAb[$key]['Citas'] = $this->Cita->obtenerNumeroCitas(['Cita.especie_id' => $especiesAb[$key]['Especie']['id']]);
+			$especiesAb[$key]['Citas'] = $this->CitaEspecieCount->countCitasPorEspecie($especiesAb[$key]['Especie']['id']);
 		}
 		$this->set('especies_ab', $especiesAb);
 
@@ -443,8 +462,6 @@ class EspecieController extends AppController
 
 					$generarMapaResultados['title'] = "Distribución de categorías de reproducción por municipios";
 					$citas_mapa = $this->CitaMaxTipoCria->obtenerTipoCriaPorMunicipio($especie_id);
-
-					CakeLog::debug('obtenerTipoCriaPorMunicipio -> ' . print_r($citas_mapa, true));
 
 					$generarMapaResultados['elementos'] = array();
 					$index = 0;
