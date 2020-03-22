@@ -54,8 +54,8 @@ $this->end();
                     <th><a href="#modalEstatusProvincialAb" data-toggle="modal"><?=__("Estatus Provincial Albacete");?></a></th>
                     <th><a href="#modalDistribucionProvincialAb" data-toggle="modal"><?=__("Distribución Provincial Albacete");?></a></th>
                     <th><a href="#modalEstatusNacional" data-toggle="modal"><?=__("Estatus Nacional");?></a></th>
-                    <th><a href="#modalProteccionLr" data-toggle="modal"><?=__("Estado de Conservación en España (Libro Rojo)");?></a></th>
                     <th><a href="#modalProteccionClm" data-toggle="modal"><?=__("Nivel Protección Castilla-La Mancha");?></a></th>
+					<th><a href="#modalProteccionLr" data-toggle="modal"><?=__("Estado de Conservación en España (Libro Rojo)");?></a></th>
                 </tr>
             </thead>
             <tbody>
@@ -70,9 +70,9 @@ $this->end();
                         <td style='text-align: center; background-color: #B3DCB3;' title ='<?=$especie_ab['EstatusCuantitativoAb']['nombre']?>'><?=$especie_ab['EstatusCuantitativoAb']['codigo']?></td>
                         <td style='text-align: center; background-color: #B3DCB3;font-size: 28px;' title ='<?=$especie_ab['DistribucionAb']['nombre']?>'><?=$especie_ab['DistribucionAb']['codigo']?></td>
                         <td style='text-align: center;'><?=$especie_ab['Especie']['codigoEstatusEsp']?></td>
-                        <td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
                         <td style='text-align: center;' title ='<?=$especie_ab['ProteccionClm']['nombre']?>'><?=$especie_ab['ProteccionClm']['codigo']?></td>
-                    </tr>
+						<td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
+					</tr>
                 <?php endforeach ?>
             </tbody>
         </table>
@@ -182,8 +182,8 @@ $this->end();
 </div>
 
 <!-- Pie -->
-<?php 
-    $this->start('pie');        
+<?php
+    $this->start('pie');
     echo $this->element('/pie');
-    $this->end(); 
-?>     
+    $this->end();
+?>
