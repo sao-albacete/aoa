@@ -60,6 +60,7 @@ $this->end();
             </thead>
             <tbody>
                 <?php foreach ($especies_ab as $especie_ab) : ?>
+				<?php if (empty($especie_ab['Especie']['subespecie'])) { ?>
                     <tr>
                         <td style='text-align: center;'><?=$especie_ab['Citas']?></td>
                         <td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/search.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
@@ -73,6 +74,21 @@ $this->end();
                         <td style='text-align: center;' title ='<?=$especie_ab['ProteccionClm']['nombre']?>'><?=$especie_ab['ProteccionClm']['codigo']?></td>
 						<td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
 					</tr>
+					<?php } else { ?>
+						<tr>
+							<td style='text-align: center;'><?=$especie_ab['Citas']?></td>
+							<td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/search.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
+							<td></td>
+							<td></td>
+							<td><i><?=$especie_ab['Especie']['genero'] . ' ' . $especie_ab['Especie']['especie']?></i></td>
+							<td><i><?=$especie_ab['Especie']['subespecie']?></i></td>
+							<td style='background-color: #B3DCB3;'></td>
+							<td style='background-color: #B3DCB3;'></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					<?php } ?>
                 <?php endforeach ?>
             </tbody>
         </table>
