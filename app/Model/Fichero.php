@@ -23,7 +23,7 @@ class Fichero extends AppModel {
      * @var mixed False or table name
      */
     public $useTable = 'fichero';
-    
+
     /**
      * Display field
      *
@@ -48,7 +48,7 @@ class Fichero extends AppModel {
             'order' => ''
         )
     );
-    
+
     /**
      * Validaciones
      */
@@ -110,24 +110,24 @@ class Fichero extends AppModel {
                     'message' => 'La fecha es obligatoria.'
             ),
             'date' => array(
-                'rule' => array('date', 'ymd'),
+                'rule' => array('datetime', 'ymd'),
                 'required' => true,
-                'message' => 'Debe introducir una fecha de alta con formato correcto (dd/mm/aaaa).'
+                'message' => 'Debe introducir una fecha de observación con formato correcto (dd/mm/aaaa).'
             )
         )
     );
-    
+
     public function obtenerFotosPortada($orden, $limite) {
-        
+
         $fotos = $this -> find(
-            'all', 
+            'all',
             array(
                 'conditions'=>array('Fichero.indImagenPortada'=>1),
-                'order'=>$orden, 
+                'order'=>$orden,
                 'limit'=>$limite
             )
         );
-        
+
         return $fotos;
     }
 
@@ -145,17 +145,17 @@ class Fichero extends AppModel {
                 $imageExtension = explode(".", $fichero["name"]);
                 $imageExtension = end($imageExtension);
                 $imageExtension = strtolower($imageExtension);
-        
+
                 // Nombre de la imagen
                 $nombre_fisico = uniqid() . "_" . $cita["Cita"]["id"] . "." . $imageExtension;
-        
+
                 // Ruta donde se ubicará la imagen
                 $imageAbsolutePath = IMAGES.'users/'.$usuarioId."/";
                 $imageRelativePath = '/'.IMAGES_URL.'users/'.$usuarioId."/";
-        
+
                 // Validamos la imagen
                 if(FicheroUtility::validar_imagen($nombre_fisico, $imageExtension, $imageAbsolutePath, $fichero["type"], $fichero["tmp_name"])) {
-                    
+
                     // Seteamos los datos recibidos
                     $imagen['Fichero']['nombreFisico']=$nombre_fisico;
                     $imagen['Fichero']['nombre']=$fichero["name"];
@@ -164,10 +164,10 @@ class Fichero extends AppModel {
                     $imagen['Fichero']['tipoMime']=$fichero["type"];
                     $imagen['Fichero']['ruta']=$imageRelativePath;
                     $imagen['Fichero']['indImagenPortada']=$esImagenPortada;
-                    
+
                     $this->create();
                     $this->set($imagen);
-                    
+
                     if($this->validates()) {
                         $this->save($imagen);
                     }
@@ -187,48 +187,48 @@ class Fichero extends AppModel {
             if(file_exists($imageAbsolutePath.$nombre_fisico)) {
                 unlink($imageAbsolutePath.$nombre_fisico);
             }
-            
+
             CakeLog::error(sprintf('[%s] Hubo un error inesperado al intentar subir una imagen', __METHOD__), $e);
         }
 
         return true;
     }
-    
+
     public function subirAvatar($fichero, $usuarioId, $avatarId) {
-    
+
         try {
-                
+
             // Comprobamos si la imagen se ha enviado correctamente por POST
             if ($fichero["error"] > 0) {
                 CakeLog::error("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"]);
                 return false;
             }
             else {
-    
+
                 // Extension de la imagen subida
                 $imageExtension = explode(".", $fichero["name"]);
                 $imageExtension = end($imageExtension);
                 $imageExtension = strtolower($imageExtension);
-    
+
                 // Nombre de la imagen
                 $nombre_fisico = "avatar.".$imageExtension;
-    
+
                 // Ruta donde se ubicará la imagen
                 $imageAbsolutePath = IMAGES.'users/'.$usuarioId."/";
                 $imageRelativePath = '/'.IMAGES_URL.'users/'.$usuarioId."/";
-    
+
                 // Validamos la imagen
                 if(FicheroUtility::validar_imagen($nombre_fisico, $imageExtension, $imageAbsolutePath, $fichero["type"], $fichero["tmp_name"], 200)) {
-                        
+
                     if($avatarId == null || !$this->exists($avatarId)) {
-                        
+
                         // Seteamos los datos recibidos
                         $imagen['Fichero']['nombreFisico']=$nombre_fisico;
                         $imagen['Fichero']['nombre']=$fichero["name"];
-                        $imagen['Fichero']['fechaAlta']=date('y-m-d');
+                        $imagen['Fichero']['fechaAlta']=date('Y-m-d H:i:s');
                         $imagen['Fichero']['tipoMime']=$fichero["type"];
                         $imagen['Fichero']['ruta']=$imageRelativePath;
-                        
+
                         $this->create();
                         $this->set($imagen);
                     }
@@ -236,13 +236,13 @@ class Fichero extends AppModel {
                         $this->read(null, $avatarId);
                         $this->set('nombreFisico', $nombre_fisico);
                         $this->set('nombre', $fichero["name"]);
-                        $this->set('fechaAlta', date('y-m-d'));
+                        $this->set('fechaAlta', date('Y-m-d H:i:s'));
                         $this->set('tipoMime', $fichero["type"]);
                     }
-                    
+
                     if($this->validates()) {
                         $this->save($imagen);
-                            
+
                         return $this->id;
                     }
                     else {
@@ -259,7 +259,7 @@ class Fichero extends AppModel {
             if(file_exists($imageAbsolutePath.$nombre_fisico)) {
                 unlink($imageAbsolutePath.$nombre_fisico);
             }
-                
+
             CakeLog::write('error', $e->getTraceAsString());
         }
     }
