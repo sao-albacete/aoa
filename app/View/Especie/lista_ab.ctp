@@ -51,11 +51,11 @@ $this->end();
                     <th style="vertical-align: middle"><?=__("Familia");?></th>
                     <th style="vertical-align: middle"><?=__("Especie");?></th>
                     <th style="vertical-align: middle"><?=__("Subespecie");?></th>
-                    <th><a href="#modalEstatusProvincialAb" data-toggle="modal"><?=__("Estatus Provincial Albacete");?></a></th>
-                    <th><a href="#modalDistribucionProvincialAb" data-toggle="modal"><?=__("Distribución Provincial Albacete");?></a></th>
-                    <th><a href="#modalEstatusNacional" data-toggle="modal"><?=__("Estatus Nacional");?></a></th>
-                    <th><a href="#modalProteccionClm" data-toggle="modal"><?=__("Nivel Protección Castilla-La Mancha");?></a></th>
-					<th><a href="#modalProteccionLr" data-toggle="modal"><?=__("Estado de Conservación en España (Libro Rojo)");?></a></th>
+                    <th title ='<?=__("Estatus Provincial Albacete");?>'><a href="#modalEstatusProvincialAb" data-toggle="modal"><?=__("EP");?></a></th>
+                    <th title ='<?=__("Distribución Provincial Albacete");?>'><a href="#modalDistribucionProvincialAb" data-toggle="modal"><?=__("DP");?></a></th>
+                    <th title ='<?=__("Estatus Nacional");?>'><a href="#modalEstatusNacional" data-toggle="modal"><?=__("EN");?></a></th>
+                    <th title ='<?=__("Nivel Protección Castilla-La Mancha");?>'><a href="#modalProteccionClm" data-toggle="modal"><?=__("CR");?></a></th>
+					<th title ='<?=__("Estado de Conservación en España (Libro Rojo)");?>'><a href="#modalProteccionLr" data-toggle="modal"><?=__("LR");?></a></th>
                 </tr>
             </thead>
             <tbody>
