@@ -46,6 +46,7 @@ $this->end();
             <thead>
                 <tr>
                     <th style="vertical-align: middle"><?=__("Nº Citas");?></th>
+					<th style="vertical-align: middle"><?=__("Fotos");?></th>
                     <th style="vertical-align: middle"><?=__("Ficha");?></th>
                     <th style="vertical-align: middle"><?=__("Nombre Común");?></th>
                     <th style="vertical-align: middle"><?=__("Familia");?></th>
@@ -62,6 +63,7 @@ $this->end();
                 <?php foreach ($especies_ab as $especie_ab) : ?>
                     <tr>
                         <td style='text-align: center;'><?=$especie_ab['Citas']?></td>
+						<td style='text-align: center;'><?php if($especie_ab['Fotos'] > 0) { echo('<img src="/img/icons/camera.png" alt="Tiene fotos" title="Tiene fotos"/>'); }?></td>
                         <td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/search.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
                         <td title='<?=$especie_ab['Especie']['nombreIngles']?>'><?=$especie_ab['Especie']['nombreComun']?></td>
                         <td><i><?=$especie_ab['Familia']['nombre']?></i></td>
