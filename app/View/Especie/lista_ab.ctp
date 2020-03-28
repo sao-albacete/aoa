@@ -54,8 +54,8 @@ $this->end();
                     <th title ='<?=__("Estatus Provincial Albacete");?>'><a href="#modalEstatusProvincialAb" data-toggle="modal"><?=__("EP");?></a></th>
                     <th title ='<?=__("Distribución Provincial Albacete");?>'><a href="#modalDistribucionProvincialAb" data-toggle="modal"><?=__("DP");?></a></th>
                     <th title ='<?=__("Estatus Nacional");?>'><a href="#modalEstatusNacional" data-toggle="modal"><?=__("EN");?></a></th>
-                    <th title ='<?=__("Estado de Conservación en España (Libro Rojo)");?>'><a href="#modalProteccionLr" data-toggle="modal"><?=__("LR");?></a></th>
                     <th title ='<?=__("Nivel Protección Castilla-La Mancha");?>'><a href="#modalProteccionClm" data-toggle="modal"><?=__("CR");?></a></th>
+					<th title ='<?=__("Estado de Conservación en España (Libro Rojo)");?>'><a href="#modalProteccionLr" data-toggle="modal"><?=__("LR");?></a></th>
                 </tr>
             </thead>
             <tbody>
@@ -70,9 +70,9 @@ $this->end();
                         <td style='text-align: center; background-color: #B3DCB3;' title ='<?=$especie_ab['EstatusCuantitativoAb']['nombre']?>'><?=$especie_ab['EstatusCuantitativoAb']['codigo']?></td>
                         <td style='text-align: center; background-color: #B3DCB3;font-size: 28px;' title ='<?=$especie_ab['DistribucionAb']['nombre']?>'><?=$especie_ab['DistribucionAb']['codigo']?></td>
                         <td style='text-align: center;'><?=$especie_ab['Especie']['codigoEstatusEsp']?></td>
-                        <td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
                         <td style='text-align: center;' title ='<?=$especie_ab['ProteccionClm']['nombre']?>'><?=$especie_ab['ProteccionClm']['codigo']?></td>
-                    </tr>
+						<td style='text-align: center;' title ='<?=$especie_ab['ProteccionLr']['nombre']?>'><?=$especie_ab['ProteccionLr']['codigo']?></td>
+					</tr>
                 <?php endforeach ?>
             </tbody>
         </table>
