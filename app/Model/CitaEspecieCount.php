@@ -47,4 +47,16 @@ class CitaEspecieCount extends AppModel
 				'conditions' => array('CitaEspecieCount.especie_id' => $especieId)
 			));
 	}
+
+	public function countCitasPorEspecieConFoto($especieId)
+	{
+		return $this->find(
+			'count',
+			array(
+				'conditions' => array(
+					'CitaEspecieCount.especie_id' => $especieId,
+					'CitaEspecieCount.indFoto' => true,
+				)
+			));
+	}
 }

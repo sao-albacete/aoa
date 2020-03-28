@@ -213,6 +213,7 @@ class EspecieController extends AppController
 		);
 		foreach ($especiesAb as $key => $value) {
 			$especiesAb[$key]['Citas'] = $this->CitaEspecieCount->countCitasPorEspecie($especiesAb[$key]['Especie']['id']);
+			$especiesAb[$key]['Fotos'] = $this->CitaEspecieCount->countCitasPorEspecieConFoto($especiesAb[$key]['Especie']['id']);
 		}
 		$this->set('especies_ab', $especiesAb);
 

@@ -609,13 +609,5 @@ class CitaAjaxController extends AppController
 
 		return $out;
 	}
-
-	function getLastQuery()
-	{
-		$dbo = $this->Cita->getDatasource();
-		$logs = $dbo->getLog();
-		$lastLog = end($logs['log']);
-		return $lastLog['query'];
-	}
 }
 
