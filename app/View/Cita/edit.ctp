@@ -570,10 +570,46 @@ $this->end();
 				<div class="row">
 					<div class="span3" style="border-right: 1px solid #E4E4E4;">
 						<div>
-							<p><?= __('Puedes añadir cuantas fotos quieras a la cita (de 3 en 3) seleccionandolas con los botones de abajo y pulsando <b>Guardar</b>.') ?></p>
+							<p><?= __('Puedes añadir cuantas fotos quieras a la cita (de 6 en 6) seleccionándolas con los botones de abajo y pulsando <b>Guardar</b>.') ?></p>
 							<p><?= __('Las fotos deben tener formato jpg, jpeg, png o gif y no pueden ocupar más de 2 megas') ?></p>
 						</div>
 						<br/>
+						<div class="fileupload fileupload-new" data-provides="fileupload">
+							<div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
+							</div>
+							<div class="fileupload-preview fileupload-exists thumbnail"
+								 style="width: 100px; height: 100px;"></div>
+							<span class="btn btn-file">
+                            <span class="fileupload-new"><?= __('Seleccionar nueva foto') ?></span>
+                            <span class="fileupload-exists"><?= __('Cambiar') ?></span>
+                            <input type="file" name="fotos[]"/>
+                        </span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><?= __('Quitar') ?></a>
+						</div>
+						<div class="fileupload fileupload-new" data-provides="fileupload">
+							<div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
+							</div>
+							<div class="fileupload-preview fileupload-exists thumbnail"
+								 style="width: 100px; height: 100px;"></div>
+							<span class="btn btn-file">
+                            <span class="fileupload-new"><?= __('Seleccionar nueva foto') ?></span>
+                            <span class="fileupload-exists"><?= __('Cambiar') ?></span>
+                            <input type="file" name="fotos[]"/>
+                        </span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><?= __('Quitar') ?></a>
+						</div>
+						<div class="fileupload fileupload-new" data-provides="fileupload">
+							<div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
+							</div>
+							<div class="fileupload-preview fileupload-exists thumbnail"
+								 style="width: 100px; height: 100px;"></div>
+							<span class="btn btn-file">
+                            <span class="fileupload-new"><?= __('Seleccionar nueva foto') ?></span>
+                            <span class="fileupload-exists"><?= __('Cambiar') ?></span>
+                            <input type="file" name="fotos[]"/>
+                        </span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><?= __('Quitar') ?></a>
+						</div>
 						<div class="fileupload fileupload-new" data-provides="fileupload">
 							<div class="fileupload-new thumbnail" style="width: 100px; height: 100px;">
 							</div>

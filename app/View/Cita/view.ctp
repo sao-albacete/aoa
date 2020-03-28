@@ -153,7 +153,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         <?php if($usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1) :?>
             <a href="/cita/edit/id:<?=$cita['Cita']['id'];?>" role="button"
                 class="btn btn-mini btn-warning" data-toggle="modal"
-                id="btnEditarCita"><i class="icon-plus"></i> <?=__("Editar cita");?></a>
+                id="btnEditarCita"><i class="icon-edit"></i> <?=__("Editar cita");?></a>
             <hr>
         <?php endif;?>
 
