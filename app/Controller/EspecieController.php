@@ -62,7 +62,8 @@ class EspecieController extends AppController
 			'generar_grafico',
 			'generar_mapa',
 			'buscar_especies',
-			'especies_objetivo'
+			'especies_objetivo',
+			'fotos'
 		);
 	}
 
@@ -620,5 +621,9 @@ class EspecieController extends AppController
 			}
 			echo json_encode($subespeciesEncontradas);
 		}
+	}
+
+	public function fotos() {
+
 	}
 }
