@@ -88,7 +88,7 @@ $this->end();
 				$("#fechaHasta").datepicker("option", "minDate", selectedDate);
 			}
 		});
-		// FEcha fin
+		// Fecha fin
 		$("#fechaHasta").datepicker({
 			yearRange: "<?=$anios[count($anios) - 1][0]['anio'];?>:<?=date("Y");?>",
 			changeMonth: true,
@@ -99,7 +99,7 @@ $this->end();
 			}
 		});
 
-		//igura proteccion
+		// Figura proteccion
 		var figuraProteccion = $selectFiguraProteccion.find(':selected').val();
 		var nivelProteccion = "<?php if (isset($valuesSubmited['nivelProteccion'])) {
 			echo $valuesSubmited['nivelProteccion'];
@@ -500,7 +500,7 @@ $this->end();
 		<?php else : ?>
 
 			<fieldset>
-				<legend><?= __("No se han encontado citas."); ?></legend>
+				<legend><?= __("No se han encontrado citas."); ?></legend>
 			</fieldset>
 
 		<?php endif; ?>
