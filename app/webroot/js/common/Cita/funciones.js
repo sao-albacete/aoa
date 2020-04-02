@@ -210,7 +210,7 @@ function validarRarezaCitaSimple(especieId, formCita)
                 items.push( "</h5>" );
                 items.push( "<br>" );
                 items.push( "Para homologar esta cita debes seguir " );
-                items.push( "<a href='http://www.seo.org/2012/01/25/%C2%BFque-hacer-si-observamos-una-rareza/' target='_blank'>estas instrucciones</a>." );
+                items.push( "<a href='https://www.seo.org/wp-content/uploads/2016/03/Ficha_Rarezas_CRSEO.pdf' target='_blank'>estas instrucciones</a>." );
 
                 bootbox.confirm(items.join( "" ), "Cancelar", "Continuar", function(result) {
                     if(result) {
