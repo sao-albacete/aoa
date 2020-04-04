@@ -676,6 +676,7 @@ class EspecieController extends AppController
 				$citaFoto = $this->Cita->obtenerCitas($conditions, $fields);
 				$fotosPorEspecie[$index]['Cita'] = $citaFoto[0]['Cita'];
 				$fotosPorEspecie[$index]['Especie'] = $citaFoto[0]['Especie'];
+				$fotosPorEspecie[$index]['Especie']['subespecie'] = $fotosPorEspecie[$index]['Especie']['subespecie'] ? $fotosPorEspecie[$index]['Especie']['subespecie'] : '';
 				$fotosPorEspecie[$index]['ObservadorPrincipal'] = $citaFoto[0]['ObservadorPrincipal'];
 
 				// Municipio
