@@ -665,6 +665,7 @@ class EspecieController extends AppController
 			$especieId = $this->request->query['especieId'];
 			$offset = $this->request->query['offset'];
 			$fotosPorEspecie = $this->Fichero->obtenerFotosPorEspecie($especieId, $offset, 12);
+			$totalFotosPorEspecie = $this->Fichero->contarFotosPorEspecie($especieId);
 
 			for ($index = 0; $index < count($fotosPorEspecie); $index++) {
 
@@ -687,7 +688,11 @@ class EspecieController extends AppController
 				$fotosPorEspecie[$index]['Cita']['fechaAlta'] = date_format(date_create($fotosPorEspecie[$index]['Cita']['fechaAlta']), "d/m/Y");
 			}
 
-			echo json_encode($fotosPorEspecie);
+			$response = [
+				'fotos' => $fotosPorEspecie,
+				'total' => $totalFotosPorEspecie,
+			];
+			echo json_encode($response);
 		}
 	}
 }

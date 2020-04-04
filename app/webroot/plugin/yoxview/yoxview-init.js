@@ -14,7 +14,7 @@ var jQueryIsLoaded = typeof jQuery != "undefined";
 
 if (!jQueryIsLoaded)
     LoadScript("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
-    
+
 LoadScript(yoxviewPath + "jquery.yoxview-2.21.min.js");
 
 function getYoxviewPath()
@@ -27,8 +27,8 @@ function getYoxviewPath()
         if (currentScriptSrc.match(regex))
             return currentScriptSrc.match(regex)[1];
     }
-    
+
     return null;
 }
 // Remove the next line's comment to apply yoxview without knowing jQuery to all containers with class 'yoxview':
-//LoadScript(yoxviewPath + "yoxview-nojquery.js"); 
+//LoadScript(yoxviewPath + "yoxview-nojquery.js");

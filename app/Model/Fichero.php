@@ -133,6 +133,18 @@ class Fichero extends AppModel
 		return $fotos;
 	}
 
+	public function contarFotosPorEspecie($especieId)
+	{
+		$fotos = $this->find(
+			'count',
+			array(
+				'conditions' => array('Cita.especie_id' => $especieId),
+			)
+		);
+
+		return $fotos;
+	}
+
 	public function obtenerFotosPorEspecie($especieId, $start, $length)
 	{
 		$fotos = $this->find(

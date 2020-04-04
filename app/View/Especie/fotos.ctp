@@ -54,6 +54,7 @@ $this->end();
 		<ul class="thumbnails yoxview">
 
 		</ul>
+		<button class="btn btn-success btn-large cargar-mas-fotos"><?= __('Cargar más fotos') ?>...&nbsp;<i class="icon-repeat icon-white"></i></button>
 	</fieldset>
 </div>
 
