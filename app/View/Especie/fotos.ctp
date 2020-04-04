@@ -37,7 +37,7 @@ $this->end();
 		<form method="get" id="frmBusqueda">
 
 			<div id="divFiltrosBusqueda">
-				<label class="control-label" for="especie"> <?= __("Especie"); ?></label>
+				<label class="control-label" for="especie"> <?= __("Selecciona una especie"); ?></label>
 				<input id="especie" name="especie" class="input-xxlarge"
 					   type="text"
 					   value="<?php if (isset($valuesSubmited['especie'])) {
@@ -51,29 +51,9 @@ $this->end();
 			</div>
 		</form>
 
-		<?php if (count($ultimasFotos) > 0) : ?>
-			<ul class="thumbnails yoxview">
-				<?php foreach ($ultimasFotos as $foto) : ?>
+		<ul class="thumbnails yoxview">
 
-					<li class="span3">
-						<div class="thumbnail text-center">
-							<a href="<?= $foto['Fichero']['ruta'] . $foto['Fichero']['nombreFisico'] ?>"
-							   class="thumbnail">
-								<img src="<?= $foto['Fichero']['ruta'] . $foto['Fichero']['nombreFisico'] ?>"
-									 alt="<?= $foto['Especie']['nombreComun'] ?>"
-									 title="<?= $foto['Especie']['genero'] . " " . $foto['Especie']['especie'] . " " . $foto['Especie']['subespecie'] ?>">
-							</a>
-							<h3><?= $foto['Especie']['nombreComun'] ?></h3>
-							<p><?= __('Foto realizada por ') . $foto['ObservadorPrincipal']['nombre'] . __(' en ') . $foto['Municipio']['nombre'] . __(' el ') . date_format(date_create($foto['Cita']['fechaAlta']), "d/m/Y") ?></p>
-						</div>
-					</li>
-				<?php endforeach ?>
-			</ul>
-		<?php else : ?>
-			<div class="thumbnail" style="width: 360px; height: 270px;">
-				<img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif"/>
-			</div>
-		<?php endif ?>
+		</ul>
 	</fieldset>
 </div>
 
