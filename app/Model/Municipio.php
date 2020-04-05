@@ -20,7 +20,7 @@ class Municipio extends AppModel {
 	 * @var mixed False or table name
 	 */
 	public $useTable = 'municipio';
-	
+
 	/**
 	 * Display field
 	 *
@@ -30,7 +30,7 @@ class Municipio extends AppModel {
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	
+
 	public $belongsTo = array(
 		'Comarca' => array(
 			'className' => 'Comarca',
@@ -61,19 +61,19 @@ class Municipio extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-	
-	
+
+
 	/*
 	 * Funciones
 	 */
-	
+
 	/**
-	 * Obtiene todos los municipios activos ordenados por nombre 
+	 * Obtiene todos los municipios activos ordenados por nombre
 	 */
 	public function obtenerMunicipiosActivosOrdenadosPorNombre() {
-		
+
 		$municipios = $this -> find(
-			'all', 
+			'all',
 			array(
 				'fields'=>array('Municipio.id', 'Municipio.nombre'),
 				'conditions'=>array('Municipio.indActivo'=>1),
@@ -81,8 +81,7 @@ class Municipio extends AppModel {
 				'recursive'=>-1
 			)
 		);
-		
+
 		return $municipios;
 	}
-
 }
