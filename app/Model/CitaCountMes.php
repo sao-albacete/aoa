@@ -137,6 +137,70 @@ class CitaCountMes extends AppModel
 		return $out;
 	}
 
+	public function obtenerCitasPorComarcaYAnio($especie_id, $comarca_id, $anio)
+	{
+
+		$citas = $this->find(
+			'list',
+			array(
+				'joins' => array(
+					array(
+						'table' => 'lugar',
+						'alias' => 'Lugar',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Lugar.id = CitaCountMes.lugar_id'
+						)
+					)
+				),
+				'conditions' => array('CitaCountMes.especie_id' => $especie_id, 'Lugar.comarca_id' => $comarca_id, 'YEAR(CitaCountMes.fechaAlta)' => $anio),
+				'fields' => array("mes", "CitaCountMes.citas_count"),
+				'order' => array('mes ASC'),
+				'group' => array('mes')
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
+
+	public function obtenerNumAvesPorComarcaYAnio($especie_id, $comarca_id, $anio)
+	{
+
+		$citas = $this->find(
+			'list',
+			array(
+				'joins' => array(
+					array(
+						'table' => 'lugar',
+						'alias' => 'Lugar',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Lugar.id = CitaCountMes.lugar_id'
+						)
+					)
+				),
+				'conditions' => array('CitaCountMes.especie_id' => $especie_id, 'Lugar.comarca_id' => $comarca_id, 'YEAR(CitaCountMes.fechaAlta)' => $anio),
+				'fields' => array("mes", "CitaCountMes.num_aves"),
+				'order' => array('mes ASC'),
+				'group' => array('mes')
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
+
 	public function obtenerCitasPorLugarYAnio($especie_id, $lugar_id, $anio)
 	{
 
@@ -515,6 +579,152 @@ class CitaCountMes extends AppModel
 				'conditions' => array(
 					'CitaCountMes.especie_id' => $especie_id,
 					'Lugar.municipio_id' => $municipio,
+					'YEAR(CitaCountMes.fechaAlta) >=' => $anio_desde,
+					'YEAR(CitaCountMes.fechaAlta) <=' => $anio_hasta
+				),
+				'fields' => array("mes", "CitaCountMes.num_aves"),
+				'order' => array('mes ASC'),
+				'group' => array('mes')
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
+
+	public function obtenerCitasPorComarcaIntervaloFechas($especie_id, $comarca_id, $fecha_desde, $fecha_hasta)
+	{
+		$citas = $this->find(
+			'list',
+			array(
+				'joins' => array(
+					array(
+						'table' => 'lugar',
+						'alias' => 'Lugar',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Lugar.id = CitaCountMes.lugar_id'
+						)
+					)
+				),
+				'conditions' => array(
+					'CitaCountMes.especie_id' => $especie_id,
+					'Lugar.comarca_id' => $comarca_id,
+					"CitaCountMes.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')",
+					"CitaCountMes.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"
+				),
+				'fields' => array("mes", "CitaCountMes.citas_count"),
+				'order' => array('mes ASC'),
+				'group' => array('mes')
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
+
+	public function obtenerNumAvesPorComarcaIntervaloFechas($especie_id, $comarca_id, $fecha_desde, $fecha_hasta)
+	{
+		$citas = $this->find(
+			'list',
+			array(
+				'joins' => array(
+					array(
+						'table' => 'lugar',
+						'alias' => 'Lugar',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Lugar.id = CitaCountMes.lugar_id'
+						)
+					)
+				),
+				'conditions' => array(
+					'CitaCountMes.especie_id' => $especie_id,
+					'Lugar.comarca_id' => $comarca_id,
+					"CitaCountMes.fechaAlta >= STR_TO_DATE('$fecha_desde','%d/%m/%Y')",
+					"CitaCountMes.fechaAlta <= STR_TO_DATE('$fecha_hasta','%d/%m/%Y')"
+				),
+				'fields' => array("mes", "CitaCountMes.num_aves"),
+				'order' => array('mes ASC'),
+				'group' => array('mes')
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
+
+	public function obtenerCitasPorComarcaIntervaloAnios($especie_id, $comarca_id, $anio_desde, $anio_hasta)
+	{
+
+		$citas = $this->find(
+			'list',
+			array(
+				'joins' => array(
+					array(
+						'table' => 'lugar',
+						'alias' => 'Lugar',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Lugar.id = CitaCountMes.lugar_id'
+						)
+					)
+				),
+				'conditions' => array(
+					'CitaCountMes.especie_id' => $especie_id,
+					'Lugar.comarca_id' => $comarca_id,
+					'YEAR(CitaCountMes.fechaAlta) >=' => $anio_desde,
+					'YEAR(CitaCountMes.fechaAlta) <=' => $anio_hasta
+				),
+				'fields' => array("mes", "CitaCountMes.citas_count"),
+				'order' => array('mes ASC'),
+				'group' => array('mes')
+			)
+		);
+
+		// Rellenamos un array con los valores para los 12 meses
+		$out = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach ($citas as $mes => $citasCount) {
+			$out[$mes - 1] = $citasCount;
+		}
+
+		return $out;
+	}
+
+	public function obtenerNumAvesPorComarcaIntervaloAnios($especie_id, $comarca_id, $anio_desde, $anio_hasta)
+	{
+
+		$citas = $this->find(
+			'list',
+			array(
+				'joins' => array(
+					array(
+						'table' => 'lugar',
+						'alias' => 'Lugar',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Lugar.id = CitaCountMes.lugar_id'
+						)
+					)
+				),
+				'conditions' => array(
+					'CitaCountMes.especie_id' => $especie_id,
+					'Lugar.comarca_id' => $comarca_id,
 					'YEAR(CitaCountMes.fechaAlta) >=' => $anio_desde,
 					'YEAR(CitaCountMes.fechaAlta) <=' => $anio_hasta
 				),

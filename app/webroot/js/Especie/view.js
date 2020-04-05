@@ -4,19 +4,28 @@
 
 function actualizarZonaGeografica() {
 
-	if ($('#zonaGeografica').val() == "provincia") {
+	if ($('#zonaGeografica').val() == "comarca") {
+		$('#comarcas').show();
+		$('#municipios').hide();
+		$('#lugares').hide();
+		$('#cuadriculas_utm').hide();
+	} else if ($('#zonaGeografica').val() == "provincia") {
+		$('#comarcas').hide();
 		$('#municipios').hide();
 		$('#lugares').hide();
 		$('#cuadriculas_utm').hide();
 	} else if ($('#zonaGeografica').val() == "municipio") {
+		$('#comarcas').hide();
 		$('#municipios').show();
 		$('#lugares').hide();
 		$('#cuadriculas_utm').hide();
 	} else if ($('#zonaGeografica').val() == "lugar") {
+		$('#comarcas').hide();
 		$('#municipios').hide();
 		$('#lugares').show();
 		$('#cuadriculas_utm').hide();
 	} else if ($('#zonaGeografica').val() == "cuadriculaUtm") {
+		$('#comarcas').hide();
 		$('#municipios').hide();
 		$('#lugares').hide();
 		$('#cuadriculas_utm').show();
@@ -59,8 +68,6 @@ jQuery.fn.dataTableExt.oSort['date-uk-desc'] = function (a, b) {
 /* INICIO mapa  */
 var map;
 var parser;
-var parserDocumentUtm;
-var parserDocumentMunicipios;
 
 function initialize() {
 
@@ -90,7 +97,7 @@ function initialize() {
 	});
 
 	// Tratamos el archivo
-	parser.parse(['/kml/UTM_AB.kml', '/kml/municipios_AB.kml']);
+	parser.parse(['/kml/UTM_AB.kml', '/kml/municipios_AB.kml', '/kml/comarcas_AB.kml']);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -261,11 +268,18 @@ function actualizarAreasMapa(data) {
 	if ($("#divisionGeografica").val() == "porUtm") {
 		parser.showDocument(parser.docs[0]);
 		parser.hideDocument(parser.docs[1]);
+		parser.hideDocument(parser.docs[2]);
 		marcarMapa(parser.docs[0], data.elementos);
 	} else if ($("#divisionGeografica").val() == "porMunicipio") {
-		parser.showDocument(parser.docs[1]);
 		parser.hideDocument(parser.docs[0]);
+		parser.showDocument(parser.docs[1]);
+		parser.hideDocument(parser.docs[2]);
 		marcarMapa(parser.docs[1], data.elementos);
+	} else if ($("#divisionGeografica").val() == "porComarca") {
+		parser.hideDocument(parser.docs[0]);
+		parser.hideDocument(parser.docs[1]);
+		parser.showDocument(parser.docs[2]);
+		marcarMapa(parser.docs[2], data.elementos);
 	}
 
 	generarLeyenda();
