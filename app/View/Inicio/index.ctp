@@ -41,7 +41,10 @@ $this->end();
 </div>
 
 <fieldset>
-	<legend><span><?= __("Últimas 100 citas"); ?></span></legend>
+	<legend>
+		<span><?= __("Últimas 100 citas"); ?></span>
+		<a class="btn btn-success btn-large pull-right" href="/cita/"><?= __("Ver todas las citas"); ?></a>
+	</legend>
 
 	<table id="tabla_citas" class="table table-striped table-bordered table-hover table-condensed">
 		<thead>
@@ -87,7 +90,10 @@ $this->end();
 </fieldset>
 
 <fieldset>
-	<legend><span><?= __("Últimas fotos"); ?></span></legend>
+	<legend>
+		<span><?= __("Últimas fotos"); ?></span>
+		<a class="btn btn-success btn-large pull-right" href="/especie/fotos/"><?= __("Ver todas las fotos"); ?></a>
+	</legend>
 
 	<?php if (count($ultimasFotos) > 0) : ?>
 		<ul class="thumbnails yoxview">
@@ -111,7 +117,6 @@ $this->end();
 			<img src="/img/messages/AAAAAA&text=No+hay+fotos_360x270.gif"/>
 		</div>
 	<?php endif ?>
-	<br>
 
 </fieldset>
 
