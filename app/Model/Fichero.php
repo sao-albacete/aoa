@@ -160,6 +160,32 @@ class Fichero extends AppModel
 		return $fotos;
 	}
 
+	public function obtenerFotos($start, $length)
+	{
+		$fotos = $this->find(
+			'all',
+			array(
+				'conditions' => array('Fichero.cita_id IS NOT NULL'),
+				'order' => array('Fichero.fechaAlta'=> 'Desc'),
+				'limit' => $length,
+				'offset' => $start,
+			)
+		);
+		return $fotos;
+	}
+
+	public function contarFotos()
+	{
+		$fotos = $this->find(
+			'count',
+			array(
+				'conditions' => array('Fichero.cita_id IS NOT NULL'),
+			)
+		);
+
+		return $fotos;
+	}
+
 	public function subirImagenCita($fichero, $cita, $usuarioId, $esImagenPortada = 0)
 	{
 

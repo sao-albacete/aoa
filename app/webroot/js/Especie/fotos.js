@@ -2,13 +2,44 @@ $(document).ready(function () {
 
 	var divFiltrarBusqueda = $('#divFiltrosBusqueda');
 	var fotosCargadas = 0;
-	var especieId;
+	var especieId = null;
 
 	divFiltrarBusqueda.find("#especie").val("");
 	divFiltrarBusqueda.find("#especieId").val("");
 
+	// Obtenemos las fotos sin especifica especie
+	$.getJSON("/especie/obtenerFotosPorEspecie", {
+			especieId: especieId,
+			offset: fotosCargadas
+		},
+		function (response) {
+
+			console.log(response);
+			$.each(response.fotos, function (i, item) {
+				fotosCargadas++;
+				insertarFoto(item);
+			});
+			activarYoxview();
+
+			// Si todavía faltan fotos por cargar, entonces mostramos una opción para cargar más fotos
+			if (parseInt(fotosCargadas) == parseInt(response.total)) {
+				$(".cargar-mas-fotos").hide();
+			}
+		})
+		.done(function (response) {
+			console.log("second success");
+		})
+		.fail(function (response) {
+			console.log(response);
+			console.log("error");
+		})
+		.always(function (response) {
+			console.log("complete");
+		});
+	;
+
 	// Ocultamos el botón de cargar más fotos al cargar la página
-	$(".cargar-mas-fotos").hide()
+	// $(".cargar-mas-fotos").hide()
 
 	// Seleccionar especie
 	divFiltrarBusqueda.find("#especie").autocomplete({
@@ -41,7 +72,6 @@ $(document).ready(function () {
 					offset: fotosCargadas
 				},
 				function (response) {
-				console.log(response)
 					// Si la especie seleccionada no tiene fotos, mostramos un mensaje informativo
 					if (response.total == 0) {
 						$(".yoxview").append(

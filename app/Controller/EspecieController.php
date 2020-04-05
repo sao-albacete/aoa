@@ -657,40 +657,46 @@ class EspecieController extends AppController
 	{
 		$this->Especie->recursive = -1;
 
-		$fotosPorEspecie = array();
+		$fotos = array();
+		$totalFotos = 0;
 
 		if ($this->request->is('ajax')) {
 
 			$this->autoRender = false;
 			$especieId = $this->request->query['especieId'];
 			$offset = $this->request->query['offset'];
-			$fotosPorEspecie = $this->Fichero->obtenerFotosPorEspecie($especieId, $offset, 12);
-			$totalFotosPorEspecie = $this->Fichero->contarFotosPorEspecie($especieId);
+			if ($especieId) {
+				$fotos = $this->Fichero->obtenerFotosPorEspecie($especieId, $offset, 12);
+				$totalFotos = $this->Fichero->contarFotosPorEspecie($especieId);
+			} else {
+				$fotos = $this->Fichero->obtenerFotos($offset, 12);
+				$totalFotos = $this->Fichero->contarFotos();
+			}
 
-			for ($index = 0; $index < count($fotosPorEspecie); $index++) {
+			for ($index = 0; $index < count($fotos); $index++) {
 
-				$conditions = array('Cita.id' => $fotosPorEspecie[$index]['Cita']['id']);
+				$conditions = array('Cita.id' => $fotos[$index]['Cita']['id']);
 				$fields = array('Cita.fechaAlta', 'Especie.nombreComun', 'Especie.genero', 'Especie.especie',
 					'Especie.subespecie', 'ObservadorPrincipal.nombre', 'ObservadorPrincipal.codigo',
 					'Lugar.municipio_id');
 
 				$citaFoto = $this->Cita->obtenerCitas($conditions, $fields);
-				$fotosPorEspecie[$index]['Cita'] = $citaFoto[0]['Cita'];
-				$fotosPorEspecie[$index]['Especie'] = $citaFoto[0]['Especie'];
-				$fotosPorEspecie[$index]['Especie']['subespecie'] = $fotosPorEspecie[$index]['Especie']['subespecie'] ? $fotosPorEspecie[$index]['Especie']['subespecie'] : '';
-				$fotosPorEspecie[$index]['ObservadorPrincipal'] = $citaFoto[0]['ObservadorPrincipal'];
+				$fotos[$index]['Cita'] = $citaFoto[0]['Cita'];
+				$fotos[$index]['Especie'] = $citaFoto[0]['Especie'];
+				$fotos[$index]['Especie']['subespecie'] = $fotos[$index]['Especie']['subespecie'] ? $fotos[$index]['Especie']['subespecie'] : '';
+				$fotos[$index]['ObservadorPrincipal'] = $citaFoto[0]['ObservadorPrincipal'];
 
 				// Municipio
 				$municipio = $this->Municipio->read(null, $citaFoto[0]['Lugar']['municipio_id']);
-				$fotosPorEspecie[$index]['Municipio'] = $municipio['Municipio'];
+				$fotos[$index]['Municipio'] = $municipio['Municipio'];
 
 				// Formatear fecha
-				$fotosPorEspecie[$index]['Cita']['fechaAlta'] = date_format(date_create($fotosPorEspecie[$index]['Cita']['fechaAlta']), "d/m/Y");
+				$fotos[$index]['Cita']['fechaAlta'] = date_format(date_create($fotos[$index]['Cita']['fechaAlta']), "d/m/Y");
 			}
 
 			$response = [
-				'fotos' => $fotosPorEspecie,
-				'total' => $totalFotosPorEspecie,
+				'fotos' => $fotos,
+				'total' => $totalFotos,
 			];
 			echo json_encode($response);
 		}
