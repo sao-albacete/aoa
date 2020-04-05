@@ -7,6 +7,9 @@ $(document).ready(function () {
 	divFiltrarBusqueda.find("#especie").val("");
 	divFiltrarBusqueda.find("#especieId").val("");
 
+	// Mostramos spinner para indicar que estamos cargando fotos
+	$('.cargando-fotos').show();
+
 	// Obtenemos las fotos sin especifica especie
 	$.getJSON("/especie/obtenerFotosPorEspecie", {
 			especieId: especieId,
@@ -26,17 +29,13 @@ $(document).ready(function () {
 				$(".cargar-mas-fotos").hide();
 			}
 		})
-		.done(function (response) {
-			console.log("second success");
-		})
 		.fail(function (response) {
-			console.log(response);
-			console.log("error");
+			// console.log("error");
 		})
 		.always(function (response) {
-			console.log("complete");
+			// Ocultamos spinner una vez acabada la carga de fotos o si ocurre un error
+			$('.cargando-fotos').hide();
 		});
-	;
 
 	// Ocultamos el botón de cargar más fotos al cargar la página
 	// $(".cargar-mas-fotos").hide()
@@ -66,6 +65,9 @@ $(document).ready(function () {
 			// Guardamos el id de la especie seleccionada
 			$("#especieId").val(especieId);
 
+			// Mostramos spinner para indicar que estamos cargando fotos
+			$('.cargando-fotos').show();
+
 			// Obtenemos las fotos de la especie seleccionada
 			$.getJSON("/especie/obtenerFotosPorEspecie", {
 					especieId: especieId,
@@ -91,12 +93,19 @@ $(document).ready(function () {
 							$(".cargar-mas-fotos").show()
 						}
 					}
+				})
+				.always(function (response) {
+					// Ocultamos spinner una vez acabada la carga de fotos o si ocurre un error
+					$('.cargando-fotos').hide();
 				});
 			return false;
 		}
 	});
 
 	$(".cargar-mas-fotos").click(function () {
+
+		// Mostramos spinner para indicar que estamos cargando fotos
+		$('.cargando-fotos').show();
 
 		// Obtenemos las fotos de la especie seleccionada
 		$.getJSON("/especie/obtenerFotosPorEspecie", {
@@ -115,6 +124,10 @@ $(document).ready(function () {
 				if (parseInt(fotosCargadas) == parseInt(response.total)) {
 					$(".cargar-mas-fotos").hide();
 				}
+			})
+			.always(function (response) {
+				// Ocultamos spinner una vez acabada la carga de fotos o si ocurre un error
+				$('.cargando-fotos').hide();
 			});
 	});
 });

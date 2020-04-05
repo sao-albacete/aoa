@@ -48,13 +48,16 @@ $this->end();
 					   value="<?php if (isset($valuesSubmited['especieId'])) {
 						   echo $valuesSubmited['especieId'];
 					   } ?>">
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<span class="cargando-fotos">Cargando fotos... <img src="/plugin/jqplot/examples/ajax-loader.gif"/></span>
 			</div>
 		</form>
 
 		<ul class="thumbnails yoxview">
 
 		</ul>
-		<button class="btn btn-success btn-large cargar-mas-fotos"><?= __('Cargar más fotos') ?>...&nbsp;<i class="icon-repeat icon-white"></i></button>
+		<button class="btn btn-success btn-large cargar-mas-fotos"><?= __('Cargar más fotos') ?>...&nbsp;<i
+				class="icon-repeat icon-white"></i></button>
 	</fieldset>
 </div>
 
