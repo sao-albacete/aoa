@@ -256,10 +256,17 @@ $this->end();
                                     <div>
                                         <select id="zonaGeografica" name="zonaGeografica" style="margin-right: 20px;">
                                             <option value="provincia" selected="selected"><?=__("Provincia")?></option>
+											<option value="comarca"><?=__("Comarca")?></option>
                                             <option value="municipio"><?=__("Municipio")?></option>
                                             <option value="lugar"><?=__("Lugar")?></option>
                                             <option value="cuadriculaUtm"><?=__("Cuadricula UTM")?></option>
                                         </select>
+										<!-- Comarcas -->
+										<select name="comarcas" id="comarcas" style="display: none;">
+											<?php foreach ($comarcas as $comarca) : ?>
+												<option value='<?=$comarca['Comarca']['id']?>'><?=$comarca['Comarca']['nombre']?></option>
+											<?php endforeach ?>
+										</select>
                                         <!-- Municipios -->
                                         <select name="municipios" id="municipios" style="display: none;">
                                         <?php foreach ($municipios as $municipio) : ?>
