@@ -36,14 +36,15 @@ $this->end();
 
 		<form method="get" id="frmBusqueda">
 
-			<div id="divFiltrosBusqueda">
+			<div id="divFiltrosBusqueda" class="well">
 				<label class="control-label" for="especie"> <?= __("Selecciona una especie"); ?></label>
 				<input id="especie" name="especie" class="input-xxlarge"
 					   type="text"
 					   value="<?php if (isset($valuesSubmited['especie'])) {
 						   echo $valuesSubmited['especie'];
 					   } ?>"
-					   placeholder="<?= __('Escriba el nombre común o el nombre científico'); ?>">
+					   placeholder="<?= __('Escribe el nombre común o el nombre científico'); ?>">
+				<span class="help-block">Escribe el nombre común o el nombre científico de la especie que quieras buscar y seleccionala.<br>Si quieres ver todas las fotos sin filtrar por especie, borra el contenido de este campo de texto y pulsa la tecla <i>Enter</i>.</span>
 				<input type="hidden" id="especieId" name="especieId"
 					   value="<?php if (isset($valuesSubmited['especieId'])) {
 						   echo $valuesSubmited['especieId'];
@@ -52,6 +53,8 @@ $this->end();
 				<span class="cargando-fotos">Cargando fotos... <img src="/plugin/jqplot/examples/ajax-loader.gif"/></span>
 			</div>
 		</form>
+
+		<hr>
 
 		<ul class="thumbnails yoxview">
 
