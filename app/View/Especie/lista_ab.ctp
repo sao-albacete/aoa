@@ -79,6 +79,7 @@ $this->end();
 					<?php } else { ?>
 						<tr>
 							<td style='text-align: center;'><?=$especie_ab['Citas']?></td>
+							<td style='text-align: center;'><?php if($especie_ab['Fotos'] > 0) { echo('<img src="/img/icons/camera.png" alt="Tiene fotos" title="Tiene fotos"/>'); }?></td>
 							<td style='text-align: center;'><a href='/especie/view/id:<?=$especie_ab['Especie']['id']?>' title='<?=__("Ver ficha de la especie")?>'><img src='/img/icons/search.png' title='Ver ficha de la especie' alt='Ver detalle'/></a></td>
 							<td></td>
 							<td></td>

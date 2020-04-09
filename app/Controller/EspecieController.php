@@ -52,6 +52,7 @@ class EspecieController extends AppController
 		'ProteccionClm',
 		'EstatusCuantitativoAb',
 		'DistribucionAb',
+		'Fichero',
 	);
 
 
@@ -63,7 +64,9 @@ class EspecieController extends AppController
 			'generar_grafico',
 			'generar_mapa',
 			'buscar_especies',
-			'especies_objetivo'
+			'especies_objetivo',
+			'fotos',
+			'obtenerFotosPorEspecie'
 		);
 	}
 
@@ -658,6 +661,83 @@ class EspecieController extends AppController
 				$subespeciesEncontradas[] = $result['Especie']['subespecie'];
 			}
 			echo json_encode($subespeciesEncontradas);
+		}
+	}
+
+	public function fotos()
+	{
+		/*
+         * Obtiene las 10 últimas fotos
+         */
+		$ultimasFotos = $this->Fichero->obtenerFotosPortada(array('Fichero.fechaAlta' => 'Desc'), 12);
+
+		for ($index = 0; $index < count($ultimasFotos); $index++) {
+
+			$conditions = array('Cita.id' => $ultimasFotos[$index]['Cita']['id']);
+			$fields = array('Cita.fechaAlta', 'Especie.nombreComun', 'Especie.genero', 'Especie.especie', 'Especie.subespecie', 'ObservadorPrincipal.nombre', 'ObservadorPrincipal.codigo', 'Lugar.municipio_id');
+
+			$citaFoto = $this->Cita->obtenerCitas($conditions, $fields);
+			$ultimasFotos[$index]['Cita'] = $citaFoto[0]['Cita'];
+			$ultimasFotos[$index]['Especie'] = $citaFoto[0]['Especie'];
+			$ultimasFotos[$index]['ObservadorPrincipal'] = $citaFoto[0]['ObservadorPrincipal'];
+
+			// Municipio
+			$municipio = $this->Municipio->read(null, $citaFoto[0]['Lugar']['municipio_id']);
+			$ultimasFotos[$index]['Municipio'] = $municipio['Municipio'];
+		}
+
+		$this->set('ultimasFotos', $ultimasFotos);
+	}
+
+	/**
+	 * Busca fotos por especies paginadas
+	 */
+	public function obtenerFotosPorEspecie()
+	{
+		$this->Especie->recursive = -1;
+
+		$fotos = array();
+		$totalFotos = 0;
+
+		if ($this->request->is('ajax')) {
+
+			$this->autoRender = false;
+			$especieId = $this->request->query['especieId'];
+			$offset = $this->request->query['offset'];
+			if ($especieId) {
+				$fotos = $this->Fichero->obtenerFotosPorEspecie($especieId, $offset, 12);
+				$totalFotos = $this->Fichero->contarFotosPorEspecie($especieId);
+			} else {
+				$fotos = $this->Fichero->obtenerFotos($offset, 12);
+				$totalFotos = $this->Fichero->contarFotos();
+			}
+
+			for ($index = 0; $index < count($fotos); $index++) {
+
+				$conditions = array('Cita.id' => $fotos[$index]['Cita']['id']);
+				$fields = array('Cita.fechaAlta', 'Especie.nombreComun', 'Especie.genero', 'Especie.especie',
+					'Especie.subespecie', 'ObservadorPrincipal.nombre', 'ObservadorPrincipal.codigo',
+					'Lugar.municipio_id');
+
+				$citaFoto = $this->Cita->obtenerCitas($conditions, $fields);
+				$fotos[$index]['Cita'] = $citaFoto[0]['Cita'];
+				$fotos[$index]['Especie'] = $citaFoto[0]['Especie'];
+				$fotos[$index]['Especie']['subespecie'] = $fotos[$index]['Especie']['subespecie'] ? $fotos[$index]['Especie']['subespecie'] : '';
+				$fotos[$index]['ObservadorPrincipal'] = $citaFoto[0]['ObservadorPrincipal'];
+
+				// Municipio
+				$municipio = $this->Municipio->read(null, $citaFoto[0]['Lugar']['municipio_id']);
+				$fotos[$index]['Municipio'] = $municipio['Municipio'];
+
+				// Formatear fecha
+				$fotos[$index]['Cita']['fechaAlta'] = date_format(date_create($fotos[$index]['Cita']['fechaAlta']), "d/m/Y");
+			}
+
+			$response = [
+				'fotos' => $fotos,
+				'total' => $totalFotos,
+			];
+			echo json_encode($response);
 		}
 	}
 }
