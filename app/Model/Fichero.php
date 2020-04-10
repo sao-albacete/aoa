@@ -1,6 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
-App::uses('FicheroUtility', 'Utility');
+App::uses('ImagenUtil', 'Utility');
 
 /**
  * Fichero Model
@@ -10,6 +10,9 @@ App::uses('FicheroUtility', 'Utility');
  */
 class Fichero extends AppModel
 {
+
+	const ANCHO_IMAGEN_AVATAR = 200;
+	const ANCHO_IMAGEN_CITA = 1024;
 
 	/**
 	 * Use database config
@@ -151,7 +154,7 @@ class Fichero extends AppModel
 			'all',
 			array(
 				'conditions' => array('Cita.especie_id' => $especieId),
-				'order' => array('Fichero.fechaAlta'=> 'Desc'),
+				'order' => array('Fichero.fechaAlta' => 'Desc'),
 				'limit' => $length,
 				'offset' => $start,
 			)
@@ -166,7 +169,7 @@ class Fichero extends AppModel
 			'all',
 			array(
 				'conditions' => array('Fichero.cita_id IS NOT NULL'),
-				'order' => array('Fichero.fechaAlta'=> 'Desc'),
+				'order' => array('Fichero.fechaAlta' => 'Desc'),
 				'limit' => $length,
 				'offset' => $start,
 			)
@@ -186,11 +189,9 @@ class Fichero extends AppModel
 		return $fotos;
 	}
 
-	public function subirImagenCita($fichero, $cita, $usuarioId, $esImagenPortada = 0)
+	public function subirImagenCita($fichero, $cita, $autor, $usuarioId, $esImagenPortada = 0)
 	{
-
 		try {
-
 			// Comprobamos si la imagen se ha enviado correctamente por POST
 			if ($fichero["error"] > 0) {
 				CakeLog::error("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"]);
@@ -208,8 +209,10 @@ class Fichero extends AppModel
 				$imageAbsolutePath = IMAGES . 'users/' . $usuarioId . "/";
 				$imageRelativePath = '/' . IMAGES_URL . 'users/' . $usuarioId . "/";
 
+				$pathImagen = $imageAbsolutePath . $nombre_fisico;
+
 				// Validamos la imagen
-				if (FicheroUtility::validar_imagen($nombre_fisico, $imageExtension, $imageAbsolutePath, $fichero["type"], $fichero["tmp_name"])) {
+				if ($this->generarInagenCita($pathImagen, $imageExtension, $fichero["type"], $fichero["tmp_name"], $autor)) {
 
 					// Seteamos los datos recibidos
 					$imagen['Fichero']['nombreFisico'] = $nombre_fisico;
@@ -230,7 +233,7 @@ class Fichero extends AppModel
 						return false;
 					}
 				} else {
-					CakeLog::write('error', "Error procesando la imagen.");
+					CakeLog::write('error', "Error procesando la imagen de la cita.");
 					return false;
 				}
 			}
@@ -246,17 +249,60 @@ class Fichero extends AppModel
 		return true;
 	}
 
+	private function generarInagenCita($pathImagen, $imageExtension, $imageType, $imageTmpName, $autor)
+	{
+		if (ImagenUtil::validarImagen($imageType, $imageExtension)) {
+
+			// Movemos la imagen a la ruta indicada por parámetro
+			if (move_uploaded_file($imageTmpName, $pathImagen)) {
+
+				$imagen = ImagenUtil::crearImagen($imageType, $pathImagen);
+
+				// Redimensionamos la imagen
+				$imagen = ImagenUtil::redimensionarImagen($imagen, self::ANCHO_IMAGEN_CITA);
+
+				/*
+				 * Insertamos marca de agua
+				 */
+				// Obtenemos el ancho y alto de la imagen
+				$altoImagen = imagesy($imagen);
+				$anchoImagen = imagesx($imagen);
+				// Insertamos autor
+				$textoAutor = "Autor: " . $autor;
+				$imagen = ImagenUtil::insertarTexto($imagen, $textoAutor, 65, $altoImagen - 50);
+
+				// Insertamos fuente
+				$textoAnuario = "Anuario Ornitológico de Albacete";
+				$imagen = ImagenUtil::insertarTexto($imagen, $textoAnuario, 65, $altoImagen - 80);
+
+				// Insertamos logo de la SAO
+				$logoAnuario = IMAGES . "logos/logo_sao_43x43.png";
+				$imagen = ImagenUtil::insertarImagen($imagen, $logoAnuario, ImagenUtil::MIME_TYPE_IMAGE_PNG, 15, $altoImagen - 110);
+
+				// Generamos la imagen al tamaño predeterminado
+				if (!ImagenUtil::generarImagen($imagen, $pathImagen, $imageType)) {
+					return false;
+				}
+			} else {
+				CakeLog::write('error', "Error moviendo la imagen.");
+				return false;
+			}
+		} else {
+			CakeLog::write('error', "Imagen de avatar no válida.");
+			return false;
+		}
+
+		return true;
+	}
+
 	public function subirAvatar($fichero, $usuarioId, $avatarId)
 	{
-
 		try {
-
 			// Comprobamos si la imagen se ha enviado correctamente por POST
 			if ($fichero["error"] > 0) {
 				CakeLog::error("Se ha producido un error al subir la imagen. Código de error: " . $fichero["error"]);
 				return false;
 			} else {
-
 				// Extension de la imagen subida
 				$imageExtension = explode(".", $fichero["name"]);
 				$imageExtension = end($imageExtension);
@@ -270,7 +316,7 @@ class Fichero extends AppModel
 				$imageRelativePath = '/' . IMAGES_URL . 'users/' . $usuarioId . "/";
 
 				// Validamos la imagen
-				if (FicheroUtility::validar_imagen($nombre_fisico, $imageExtension, $imageAbsolutePath, $fichero["type"], $fichero["tmp_name"], 200)) {
+				if ($this -> generarAvatar($nombre_fisico, $imageExtension, $imageAbsolutePath, $fichero["type"], $fichero["tmp_name"])) {
 
 					if ($avatarId == null || !$this->exists($avatarId)) {
 
@@ -297,9 +343,11 @@ class Fichero extends AppModel
 						return $this->id;
 					} else {
 						CakeLog::write('error', print_r($this->invalidFields(), true));
+						return false;
 					}
 				} else {
 					CakeLog::write('error', "Error procesando la imagen.");
+					return false;
 				}
 			}
 		} catch (Exception $e) {
@@ -309,12 +357,42 @@ class Fichero extends AppModel
 			}
 
 			CakeLog::write('error', $e->getTraceAsString());
+			return false;
 		}
+	}
+
+	private function generarAvatar($imageName, $imageExtension, $imageAbsolutePath, $imageType, $imageTmpName)
+	{
+		if (ImagenUtil::validarImagen($imageType, $imageExtension)) {
+
+			$pathImagen = $imageAbsolutePath . $imageName;
+
+			// Movemos la imagen a la ruta indicada por parámetro
+			if (move_uploaded_file($imageTmpName, $pathImagen)) {
+
+				$imagen = ImagenUtil::crearImagen($imageType, $pathImagen);
+
+				// Redimensionamos la imagen
+				$imagen = ImagenUtil::redimensionarImagen($imagen, self::ANCHO_IMAGEN_AVATAR);
+
+				// Generamos la imagen al tamaño predeterminado
+				if (!ImagenUtil::generarImagen($imagen, $pathImagen, $imageType)) {
+					return false;
+				}
+			} else {
+				CakeLog::write('error', "Error moviendo la imagen.");
+				return false;
+			}
+		} else {
+			CakeLog::write('error', "Imagen de avatar no válida.");
+			return false;
+		}
+
+		return true;
 	}
 
 	public function reArrayFiles(&$file_post)
 	{
-
 		$file_ary = array();
 		$file_count = count($file_post['name']);
 		$file_keys = array_keys($file_post);
