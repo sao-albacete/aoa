@@ -20,7 +20,7 @@ $(document).ready(function () {
 		"iDisplayLength": 25,
 		"bProcessing": true,
 		"bServerSide": true,
-		"sAjaxSource": "/citaAjax/obtenerCitasDatatables/" + (new Date().getTime()) + "?iTotal=100",
+		"sAjaxSource": "/citaAjax/obtenerCitasDatatables/" + (new Date().getTime()) + "?iTotal=500",
 		"bPaginate": true,
 		"sPaginationType": "bootstrap",
 		"bLengthChange": true,

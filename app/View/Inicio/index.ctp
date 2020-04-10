@@ -42,7 +42,7 @@ $this->end();
 
 <fieldset>
 	<legend>
-		<span><?= __("Últimas 100 citas"); ?></span>
+		<span><?= __("Últimas 500 citas"); ?></span>
 		<a class="btn btn-success btn-large pull-right" href="/cita/"><?= __("Ver todas las citas"); ?></a>
 	</legend>
 
