@@ -119,7 +119,7 @@ $this->end();
                     <p><span class='label <?=$this->Especie->obtener_color_proteccion_lr($especie['ProteccionLr']['codigo'])?>'><?=$especie['ProteccionLr']['nombre']?></span><?=__(" según el ")?><em><b><?=__("Libro Rojo de las Aves de España")?></b></em></p>
                 <?php endif ?>
                 <?php if(isset($especie['ProteccionClm']['codigo'])) : ?>
-                    <p><span class='label <?=$this->Especie->obtener_color_proteccion_clm($especie['ProteccionClm']['codigo'])?>'><?=$especie['ProteccionClm']['nombre']?></span><?=__(" en ")?><b>Castilla - La Mancha</b></p>
+                    <p><span class='label <?=$this->Especie->obtenerEtiquetaProteccionClmPorCodigo($especie['ProteccionClm']['codigo'])?>'><?=$especie['ProteccionClm']['nombre']?></span><?=__(" en ")?><b>Castilla - La Mancha</b></p>
                 <?php endif ?>
                 <?php if(isset($especie['EstatusCuantitativoAb']['nombre'])) : ?>
                     <p><span class='label label-info'><?=$especie['EstatusCuantitativoAb']['nombre']?></span><?=__(" en ")?><b>Albacete</b></p>
