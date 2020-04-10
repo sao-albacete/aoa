@@ -130,10 +130,10 @@ class ImagenUtil
 	public static function insertarTexto($imagen, $texto, $xPosicion, $yPosicion)
 	{
 		$fuente = FONTS . 'arial.ttf';
-		$colorBlanco = imagecolorallocate($imagen, 255, 255, 255);
+		$colorNegro = imagecolorallocate($imagen, 0, 0, 0);
 
 		// Dibujamos el texto en la imagen dadas unas coordenadas, una fuente y un color.
-		imagefttext($imagen, 14, 0, $xPosicion, $yPosicion, $colorBlanco, $fuente, $texto);
+		imagefttext($imagen, 14, 0, $xPosicion, $yPosicion, $colorNegro, $fuente, $texto);
 
 		return $imagen;
 	}
@@ -142,11 +142,17 @@ class ImagenUtil
 	{
 		$stampImage = self::crearImagen($stampImageType, $stampImageFilename);
 
-		// Set the margins for the stamp and get the height/width of the stamp image
-		$sx = imagesx($stampImage);
-		$sy = imagesy($stampImage);
-
 		imagecopy($imagen, $stampImage, $xPosicion, $yPosicion, 0, 0, imagesx($stampImage), imagesy($stampImage));
+
+		return $imagen;
+	}
+
+	public static function insertarFondoNeutro($imagen, $xPosicion, $yPosicion)
+	{
+		$fondo = imagecreate(400, 70);
+		imagecolorallocatealpha($fondo, 255, 255, 255, 50);
+
+		imagecopy($imagen, $fondo, $xPosicion, $yPosicion, 0, 0, imagesx($fondo), imagesy($fondo));
 
 		return $imagen;
 	}

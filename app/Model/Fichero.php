@@ -266,7 +266,8 @@ class Fichero extends AppModel
 				 */
 				// Obtenemos el ancho y alto de la imagen
 				$altoImagen = imagesy($imagen);
-				$anchoImagen = imagesx($imagen);
+				// Insertamos fondo neutro
+				$imagen = ImagenUtil::insertarFondoNeutro($imagen, 10, $altoImagen - 107);
 				// Insertamos autor
 				$textoAutor = "Autor: " . $autor;
 				$imagen = ImagenUtil::insertarTexto($imagen, $textoAutor, 65, $altoImagen - 50);
@@ -277,7 +278,7 @@ class Fichero extends AppModel
 
 				// Insertamos logo de la SAO
 				$logoAnuario = IMAGES . "logos/logo_sao_43x43.png";
-				$imagen = ImagenUtil::insertarImagen($imagen, $logoAnuario, ImagenUtil::MIME_TYPE_IMAGE_PNG, 15, $altoImagen - 110);
+				$imagen = ImagenUtil::insertarImagen($imagen, $logoAnuario, ImagenUtil::MIME_TYPE_IMAGE_PNG, 15, $altoImagen - 97);
 
 				// Generamos la imagen al tamaño predeterminado
 				if (!ImagenUtil::generarImagen($imagen, $pathImagen, $imageType)) {
