@@ -32,7 +32,7 @@ App::uses('Controller', 'Controller');
  * @link        http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-    
+
     public $components = array(
 //         'DebugKit.Toolbar',
         'Session',
@@ -41,6 +41,9 @@ class AppController extends Controller {
                 'Form' => array(
                     'fields' => array('username' => 'email')
                 ),
+//				'Basic' => [
+//					'passwordHasher' => 'Blowfish'
+//				],
                 'all' => array(
                     'scope' => array('User.indActivo' => 1)
                 )
@@ -55,17 +58,24 @@ class AppController extends Controller {
             'authorize'=>'Controller'
         )
     );
-    
+
     public function isAuthorized($user) {
         return true;
     }
-    
+
     public function beforeFilter() {
         $this->Auth->allow('index', 'view', 'login');
         $this->set('logged_in', $this->Auth->loggedIn());
         $this->set('current_user', $this->Auth->user());
+//		if ($this->request->is('json') || $this->request->is('xml')) {
+//			$this->Auth->authenticate = [
+//				'Basic' => [
+//					'passwordHasher' => 'Blowfish'
+//				]
+//			];
+//		}
     }
-    
+
     public $paginate = array(
         'limit' => 25
     );
