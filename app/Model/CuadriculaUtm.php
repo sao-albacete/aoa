@@ -27,7 +27,7 @@ class CuadriculaUtm extends AppModel {
      */
     public $displayField = 'codigo';
 
-    
+
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
@@ -50,31 +50,31 @@ class CuadriculaUtm extends AppModel {
             'counterQuery' => ''
         )
     );
-    
+
     /*
      * Funciones
      */
-    
+
     /**
      * Obtiene toda la información de un lugar
      */
     public function obtenerDatosBasicosCuadriculaUtmPorCodigo($codigo) {
-    
+
         $cuadriculaUtm = $this->find('first', array(
                 'conditions'=>array('CuadriculaUtm.codigo'=>$codigo),
                 'recursive'=>-1
             ));
-    
+
         return $cuadriculaUtm;
     }
-    
+
     /**
-     * Obtiene todos las cuadrículas URM activas ordenadas por codigo 
+     * Obtiene todos las cuadrículas URM activas ordenadas por codigo
      */
     public function obtenerCuadriculasUtmActivosOrdenadosPorCodigo() {
-        
+
         $cuadriculas_utm = $this -> find(
-            'all', 
+            'all',
             array(
                 'fields'=>array('CuadriculaUtm.id', 'CuadriculaUtm.codigo'),
                 'conditions'=>array('CuadriculaUtm.indActivo'=>1),
@@ -82,7 +82,12 @@ class CuadriculaUtm extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         return $cuadriculas_utm;
     }
+
+	public function obtenerCodigoPorId($id) {
+		$this->id = $id;
+		return $this->field('codigo');
+	}
 }

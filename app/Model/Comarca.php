@@ -51,14 +51,19 @@ class Comarca extends AppModel {
 	);
 
 	public function getAllComarcasBasic() {
-		
+
 		$comarcas = $this->find('all', array(
 			'fields' => array('Comarca.id', 'Comarca.nombre'),
 			'conditions'=>array('Comarca.indActivo'=>1),
 			'order'=>array('Comarca.nombre ASC'),
 			'recursive'=>-1
 		));
-		
+
 		return $comarcas;
+	}
+
+	public function obtenerNombrePorId($id) {
+		$this->id = $id;
+		return $this->field('nombre');
 	}
 }

@@ -26,16 +26,20 @@ class ClaseEdadSexo extends AppModel {
 	 * @var string
 	 */
 	public $displayField = 'nombre';
-	
-	
+
+
 	public function obtenerActivos() {
-		
+
 		$clasesEdadSexo = $this->find('all', array(
       		'conditions' => array('ClaseEdadSexo.indActivo' => 1),
 			'recursive'=>-1
 		));
-		
+
 		return $clasesEdadSexo;
 	}
-	
+
+	public function obtenerNombrePorId($id) {
+		$this->id = $id;
+		return $this->field('nombre');
+	}
 }

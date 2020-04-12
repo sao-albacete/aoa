@@ -4,8 +4,6 @@ App::uses('StringUtil', 'Utility');
 
 /**
  * ObservadorSecundario Model
- *
- * @property Usuario $Usuario
  */
 class ObservadorSecundario extends AppModel {
 
@@ -167,6 +165,16 @@ class ObservadorSecundario extends AppModel {
 
         return $observadores;
     }
+
+	public function obtenerNombrePorId($id) {
+		$this->id = $id;
+		return $this->field('nombre');
+	}
+
+	public function obtenerCodigoPorId($id) {
+		$this->id = $id;
+		return $this->field('codigo');
+	}
 
     /**
      * Funcion que genera un codigo de observador a partir del nombre

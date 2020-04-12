@@ -31,52 +31,44 @@ App::uses('Controller', 'Controller');
  * @package        app.Controller
  * @link        http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends Controller
+{
 
-    public $components = array(
+	public $components = array(
 //         'DebugKit.Toolbar',
-        'Session',
-        'Auth'=>array(
-            'authenticate' => array(
-                'Form' => array(
-                    'fields' => array('username' => 'email')
-                ),
-//				'Basic' => [
-//					'passwordHasher' => 'Blowfish'
-//				],
-                'all' => array(
-                    'scope' => array('User.indActivo' => 1)
-                )
-            ),
-            'loginAction' => array(
-                'controller' => 'user',
-                'action' => 'login'
-            ),
-            'loginRedirect'=>array('controller'=>'inicio', 'action'=>'index'),
-            'logoutRedirect'=>array('controller'=>'inicio', 'action'=>'index'),
-            'authError'=>'No tiene permisos para acceder a esta página',
-            'authorize'=>'Controller'
-        )
-    );
+		'Session',
+		'Auth' => array(
+			'authenticate' => array(
+				'Form',
+				'all' => array(
+					'scope' => array('User.indActivo' => 1),
+					'fields' => array('username' => 'email')
+				)
+			),
+			'loginAction' => array(
+				'controller' => 'user',
+				'action' => 'login'
+			),
+			'loginRedirect' => array('controller' => 'inicio', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'inicio', 'action' => 'index'),
+			'authError' => 'No tiene permisos para acceder a esta página',
+			'authorize' => 'Controller'
+		)
+	);
 
-    public function isAuthorized($user) {
-        return true;
-    }
+	public function isAuthorized($user)
+	{
+		return true;
+	}
 
-    public function beforeFilter() {
-        $this->Auth->allow('index', 'view', 'login');
-        $this->set('logged_in', $this->Auth->loggedIn());
-        $this->set('current_user', $this->Auth->user());
-//		if ($this->request->is('json') || $this->request->is('xml')) {
-//			$this->Auth->authenticate = [
-//				'Basic' => [
-//					'passwordHasher' => 'Blowfish'
-//				]
-//			];
-//		}
-    }
+	public function beforeFilter()
+	{
+		$this->Auth->allow('index', 'view', 'login');
+		$this->set('logged_in', $this->Auth->loggedIn());
+		$this->set('current_user', $this->Auth->user());
+	}
 
-    public $paginate = array(
-        'limit' => 25
-    );
+	public $paginate = array(
+		'limit' => 25
+	);
 }

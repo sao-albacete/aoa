@@ -84,4 +84,9 @@ class Municipio extends AppModel {
 
 		return $municipios;
 	}
+
+	public function obtenerNombrePorId($id) {
+		$this->id = $id;
+		return $this->field('nombre');
+	}
 }
