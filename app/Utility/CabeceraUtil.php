@@ -1,8 +1,7 @@
 <?php
 
-class ImageUtil
+class CabeceraUtil
 {
-
     /*
      * Available header images
      */
@@ -72,17 +71,17 @@ class ImageUtil
     {
         $headerImages = [];
         $selectedIndexes = [];
-        
+
         while(count($headerImages) < $imagesNumber) {
-            
+
             $randomIndex =  rand(0, count(self::$HEADER_IMAGES) - 1);
-            
+
             if(!in_array($randomIndex, $selectedIndexes)) {
                 $headerImages[] = self::$HEADER_IMAGES[$randomIndex];
                 $selectedIndexes[] = $randomIndex;
             }
         }
-        
+
         return $headerImages;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('Constants', 'Utility');
-App::uses('ImageUtil', 'Utility');
+App::uses('CabeceraUtil', 'Utility');
 
 /**
  * Maneja la información a mostrar el la página de inicio
@@ -73,7 +73,7 @@ class InicioController extends AppController {
         // Imagenes de cabecera
         $headerImages = [];
         $headerImages[0] = ['src' => '/img/Pages/especies-objetivo/cabecera_2020.png', 'alt' => 'Especies objetivo 2017'];
-        $headerImages = array_merge($headerImages, ImageUtil::getHeaderImages(7));
+        $headerImages = array_merge($headerImages, CabeceraUtil::getHeaderImages(7));
         $this->set('headerImages', $headerImages);
     }
 }
