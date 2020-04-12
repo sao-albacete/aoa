@@ -133,7 +133,7 @@ class ImagenUtil
 		$colorNegro = imagecolorallocate($imagen, 0, 0, 0);
 
 		// Dibujamos el texto en la imagen dadas unas coordenadas, una fuente y un color.
-		imagefttext($imagen, 14, 0, $xPosicion, $yPosicion, $colorNegro, $fuente, $texto);
+		imagefttext($imagen, 11, 0, $xPosicion, $yPosicion, $colorNegro, $fuente, $texto);
 
 		return $imagen;
 	}
@@ -149,7 +149,7 @@ class ImagenUtil
 
 	public static function insertarFondoNeutro($imagen, $xPosicion, $yPosicion)
 	{
-		$fondo = imagecreate(400, 70);
+		$fondo = imagecreate(400, 50);
 		imagecolorallocatealpha($fondo, 255, 255, 255, 50);
 
 		imagecopy($imagen, $fondo, $xPosicion, $yPosicion, 0, 0, imagesx($fondo), imagesy($fondo));

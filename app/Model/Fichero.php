@@ -266,19 +266,21 @@ class Fichero extends AppModel
 				 */
 				// Obtenemos el ancho y alto de la imagen
 				$altoImagen = imagesy($imagen);
+
 				// Insertamos fondo neutro
-				$imagen = ImagenUtil::insertarFondoNeutro($imagen, 10, $altoImagen - 107);
+				$imagen = ImagenUtil::insertarFondoNeutro($imagen, 10, $altoImagen - 67);
+
 				// Insertamos autor
 				$textoAutor = "Autor: " . $autor;
-				$imagen = ImagenUtil::insertarTexto($imagen, $textoAutor, 65, $altoImagen - 50);
+				$imagen = ImagenUtil::insertarTexto($imagen, $textoAutor, 65, $altoImagen - 27);
 
 				// Insertamos fuente
-				$textoAnuario = "Anuario Ornitológico de Albacete";
-				$imagen = ImagenUtil::insertarTexto($imagen, $textoAnuario, 65, $altoImagen - 80);
+				$textoAnuario = "anuario.albacete.org";
+				$imagen = ImagenUtil::insertarTexto($imagen, $textoAnuario, 65, $altoImagen - 47);
 
 				// Insertamos logo de la SAO
 				$logoAnuario = IMAGES . "logos/logo_sao_43x43.png";
-				$imagen = ImagenUtil::insertarImagen($imagen, $logoAnuario, ImagenUtil::MIME_TYPE_IMAGE_PNG, 15, $altoImagen - 97);
+				$imagen = ImagenUtil::insertarImagen($imagen, $logoAnuario, ImagenUtil::MIME_TYPE_IMAGE_PNG, 15, $altoImagen - 63);
 
 				// Generamos la imagen al tamaño predeterminado
 				if (!ImagenUtil::generarImagen($imagen, $pathImagen, $imageType)) {
