@@ -80,6 +80,13 @@ if (!defined('IMAGES')) {
 }
 
 /**
+ * Path to the public fonts directory.
+ */
+if (!defined('FONTS')) {
+	define('FONTS', WWW_ROOT . 'fonts' . DS);
+}
+
+/**
  * Path to the tests directory.
  */
 if (!defined('TESTS')) {

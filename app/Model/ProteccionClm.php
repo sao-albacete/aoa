@@ -1,10 +1,16 @@
 <?php
 App::uses('AppModel', 'Model');
+
 /**
  * ProteccionesClm Model
  *
  */
 class ProteccionClm extends AppModel {
+
+	const CODIGO_EN_PELIGRO_DE_EXTINCION = "EN";
+	const CODIGO_VULNERABLE = "VU";
+	const CODIGO_NO_CATALOGADO = "NC";
+	const CODIGO_INTERES_ESPECIAL = "IE";
 
 	/**
 	 * Use database config
@@ -12,7 +18,7 @@ class ProteccionClm extends AppModel {
 	 * @var string
 	 */
 	public $useDbConfig = 'default';
-	
+
 	/**
 	 * Use table
 	 *
@@ -27,24 +33,24 @@ class ProteccionClm extends AppModel {
 	 */
 	public $displayField = 'nombre';
 
-	
+
 	/*
 	 * Funciones
 	 */
-	
+
 	/**
 	 * Obtiene todos los registros activos
 	 */
 	public function obtenerActivos() {
-		
+
 		$resultado = $this -> find(
-			'all', 
+			'all',
 			array(
 				'fields'=>array('ProteccionClm.codigo', 'ProteccionClm.nombre'),
 				'conditions'=>array('ProteccionClm.indActivo'=>1)
 			)
 		);
-		
+
 		return $resultado;
 	}
 }

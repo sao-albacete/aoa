@@ -669,30 +669,28 @@ class CitaController extends AppController
 						$privacidad = $this->calcularPrivacidadCita($this->Cita->id, $this->Cita->field('fechaAlta'), $especieId, $this->Cita->field('clase_reproduccion_id'));
 						$this->Cita->saveField('indPrivacidad', $privacidad);
 
-						// Fotos
-						{
-							// Subir
-							if (isset($_FILES["fotos"])) {
+						// Subir fotos
+						if (isset($_FILES["fotos"])) {
 
-								$fotos = $this->Fichero->reArrayFiles($_FILES['fotos']);
-								$falloSubidaImagen = false;
+							$fotos = $this->Fichero->reArrayFiles($_FILES['fotos']);
+							$falloSubidaImagen = false;
 
-								foreach ($fotos as $foto) {
-									if (UPLOAD_ERR_NO_FILE !== $foto['error']) {
-										if (!$this->Fichero->subirImagenCita($foto, $cita, $current_user['id'], 1)) {
-											$falloSubidaImagen = true;
-										}
+							foreach ($fotos as $foto) {
+								if (UPLOAD_ERR_NO_FILE !== $foto['error']) {
+									$observadorPrincipalNombre = $this->ObservadorPrincipal->obtenerNombre($this->request->data["Cita"]["observador_principal_id"]);
+									if (!$this->Fichero->subirImagenCita($foto, $cita, $observadorPrincipalNombre, $current_user['id'], 1)) {
+										$falloSubidaImagen = true;
 									}
 								}
-								if ($falloSubidaImagen) {
-									$warningMessagesList[] = 'Hubo problemas al subir alguna de las imágenes. Compruebe que el formato es correcto (jpg, jpeg, png o gif) y que no ocupan más de 2 megas.';
-								}
 							}
-							// Eliminar
-							if (isset($_POST['fotosEliminar'])) {
-								foreach ($_POST['fotosEliminar'] as $fotoId) {
-									$this->Fichero->delete($fotoId);
-								}
+							if ($falloSubidaImagen) {
+								$warningMessagesList[] = 'Hubo problemas al subir alguna de las imágenes. Compruebe que el formato es correcto (jpg, jpeg, png o gif) y que no ocupan más de 2 megas.';
+							}
+						}
+						// Eliminar
+						if (isset($_POST['fotosEliminar'])) {
+							foreach ($_POST['fotosEliminar'] as $fotoId) {
+								$this->Fichero->delete($fotoId);
 							}
 						}
 						// Indicador tiene fotos
@@ -838,7 +836,8 @@ class CitaController extends AppController
 
 						/* Fichero */
 						if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] != 4) {
-							$this->Fichero->subirImagenCita($_FILES["imagen"], $this->request->data, $current_user['id'], 1);
+							$observadorPrincipalNombre = $this->ObservadorPrincipal->obtenerNombre($this->request->data["Cita"]["observador_principal_id"]);
+							$this->Fichero->subirImagenCita($_FILES["imagen"], $this->request->data, $observadorPrincipalNombre, $current_user['id'], 1);
 							$this->Cita->saveField('indFoto', true);
 						}
 
