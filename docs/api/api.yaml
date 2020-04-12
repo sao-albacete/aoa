@@ -1,0 +1,174 @@
+openapi: 3.0.0
+servers:
+  - description: Official Server
+    url: https://anuario.albacete.org/
+info:
+  description: |
+    Welcome to the Albacete Ornithological Yearbook API Documentation!
+    All of these API end-points are free to use and does not require authentication.
+    The default response format is JSON unless otherwise noted.
+  version: 1.0.0
+  title: Albacete Ornithological Yearbook (AOA) API
+  contact:
+    email: anuario@sao.albacete.org
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: observations
+    description: |
+      The observations end-points are used to fetch observations submitted to AOA.
+      Each end-point supports optional query parameters which allow you to filter the list of observations returned.
+  - name: locations
+    description: With the locations end-points you can find the locations for a given municipality, region or UTM 10x10 cell.
+paths:
+  /observations:
+    get:
+      tags:
+        - observations
+      summary: Get the list of observations of birds seen in Albacete.
+      operationId: getObservations
+      description: Get the list of observations of birds seen in Albacete sorted by date in from newest to oldest.
+      parameters:
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up observations
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: offset
+          description: number of records you wish to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            default: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+            default: 10
+            enum: [10, 25, 50, 100]
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observation'
+        '400':
+          description: bad input parameter
+components:
+  schemas:
+    Observation:
+      type: object
+      properties:
+        observation-date:
+          type: string
+          format: 'date-time'
+          example: '2020-04-12 08:00:00'
+        amount:
+          $ref: '#/components/schemas/AmountDetail'
+        species:
+          $ref: '#/components/schemas/SpeciesBasic'
+        location:
+          $ref: '#/components/schemas/LocationBasic'
+        watcher:
+          $ref: '#/components/schemas/Watcher'
+        source:
+          type: string
+        study:
+          $ref: '#/components/schemas/Study'
+        in-rare-habitat:
+          type: boolean
+        breeding-in-weird-habitat:
+          type: boolean
+        injured:
+          type: boolean
+        rare-behaviour-or-morphology:
+          type: boolean
+        hasPhoto:
+          type: boolean
+        notes:
+          type: string
+    AmountDetail:
+      type: object
+      properties:
+        total:
+          type: integer
+        detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmountItem'
+    AmountItem:
+      type: object
+      properties:
+        gender-and-age:
+          type: string
+        total:
+          type: integer
+    SpeciesBasic:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code formed by three words in uppercase representing the species.
+          example: 'ARA'
+        euring-code:
+          type: integer
+        aerc-code:
+          type: integer
+        common-name:
+          type: string
+        english-name:
+          type: string
+        scientific-name:
+          type: string
+    LocationBasic:
+      type: object
+      properties:
+        name:
+          type: string
+        x-axis:
+          type: number
+        y-axis:
+          type: number
+        utm-10x10-cell:
+          type: string
+          example: 'XH0080'
+        municipality:
+          type: string
+        region:
+          type: string
+    Watcher:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/Collaborator'
+    Collaborator:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    Study:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
