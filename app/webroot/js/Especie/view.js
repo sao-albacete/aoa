@@ -97,7 +97,7 @@ function initialize() {
 	});
 
 	// Tratamos el archivo
-	parser.parse(['/kml/UTM_AB.kml', '/kml/municipios_AB.kml', '/kml/comarcas_AB.kml']);
+	parser.parse(['/kml/UTM_AB.kml', '/kml/municipios_AB.kml']);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -268,18 +268,11 @@ function actualizarAreasMapa(data) {
 	if ($("#divisionGeografica").val() == "porUtm") {
 		parser.showDocument(parser.docs[0]);
 		parser.hideDocument(parser.docs[1]);
-		parser.hideDocument(parser.docs[2]);
 		marcarMapa(parser.docs[0], data.elementos);
 	} else if ($("#divisionGeografica").val() == "porMunicipio") {
-		parser.hideDocument(parser.docs[0]);
 		parser.showDocument(parser.docs[1]);
-		parser.hideDocument(parser.docs[2]);
-		marcarMapa(parser.docs[1], data.elementos);
-	} else if ($("#divisionGeografica").val() == "porComarca") {
 		parser.hideDocument(parser.docs[0]);
-		parser.hideDocument(parser.docs[1]);
-		parser.showDocument(parser.docs[2]);
-		marcarMapa(parser.docs[2], data.elementos);
+		marcarMapa(parser.docs[1], data.elementos);
 	}
 
 	generarLeyenda();
