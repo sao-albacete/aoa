@@ -13,6 +13,9 @@ $(document).ready(function () {
     // Seleccionar fecha
     seleccionarFecha($divNuevaCitaMultiple);
 
+	// Seleccionar hora de alta
+	seleccionarHora($divNuevaCitaMultiple);
+
     // Seleccionar lugar
     seleccionarLugar($divNuevaCitaMultiple);
 
