@@ -360,8 +360,7 @@ class CitaController extends AppController
 						['label' => __('Importancia (descripción)')],
 						['label' => __('Especie (nombre común)')],
 						['label' => __('Especie (nombre científico)')],
-						['label' => __('Fecha')],
-						['label' => __('Hora')],
+						['label' => __('Fecha y hora')],
 						['label' => __('Lugar')],
 						['label' => __('Municipio')],
 						['label' => __('Comarca')],
@@ -382,6 +381,7 @@ class CitaController extends AppController
 					$this->PhpExcel->addTableHeader($table, ['name' => 'Cambria', 'bold' => true]);
 
 					// add data
+					$row = 2;
 					foreach ($citas as $cita) {
 
 						/*
@@ -413,28 +413,40 @@ class CitaController extends AppController
 							$observaciones = __('Lugar confidencial');
 						}
 
-						$this->PhpExcel->addTableRow([
-							$cita['ImportanciaCita']['codigo'],
-							$cita['ImportanciaCita']['descripcion'],
-							$cita['Especie']['nombreComun'],
-							$cita['Especie']['genero'] . ' ' . $cita['Especie']['especie'] . ' ' . $cita['Especie']['subespecie'],
-							$cita['Cita']['fechaAlta'],
-							$cita['Cita']['fechaAlta'],
-							$lugar,
-							$cita['Municipio']['nombre'],
-							$cita['Comarca']['nombre'],
-							$cita['CuadriculaUtm']['codigo'],
-							$cita['Cita']['cantidad'],
-							$cita['ObservadorPrincipal']['codigo'],
-							$cita['ObservadorPrincipal']['nombre'],
-							$this->ObservadorSecundario->mostrarCodigosObservadores($cita['observadoresSecundarios']),
-							$this->ObservadorSecundario->mostrarNombresObservadores($cita['observadoresSecundarios']),
-							$cita['ClaseReproduccion']['codigo'],
-							$cita['ClaseReproduccion']['descripcion'],
-							$cita['CriterioSeleccionCita']['codigo'],
-							$cita['CriterioSeleccionCita']['nombre'],
-							$observaciones,
-						]);
+						$minutos = date_format(date_create($cita['Cita']['fechaAlta']), "i");
+						$hora = date_format(date_create($cita['Cita']['fechaAlta']), "H");
+						$dia = date_format(date_create($cita['Cita']['fechaAlta']), "d");
+						$mes = date_format(date_create($cita['Cita']['fechaAlta']), "m");
+						$anyo = date_format(date_create($cita['Cita']['fechaAlta']), "Y");
+						$fechaYHora = PHPExcel_Shared_Date::FormattedPHPToExcel($anyo, $mes, $dia, $hora, $minutos);
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $row, $cita['ImportanciaCita']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $row, $cita['ImportanciaCita']['descripcion']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(2, $row, $cita['Especie']['nombreComun']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $row, $cita['Especie']['genero'] . ' ' . $cita['Especie']['especie'] . ' ' . $cita['Especie']['subespecie']);
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $row, $fechaYHora);
+						// Más formatos aquí \PHPExcel_Style_NumberFormat
+						$this->PhpExcel->getActiveSheet()
+							->getStyleByColumnAndRow(4, $row)
+							->getNumberFormat()->setFormatCode('dd/mm/yyyy hh:mm');
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $row, $lugar);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(6, $row, $cita['Municipio']['nombre']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $row, $cita['Comarca']['nombre']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(8, $row, $cita['CuadriculaUtm']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $row, $cita['Cita']['cantidad']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $cita['ObservadorPrincipal']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $row, $cita['ObservadorPrincipal']['nombre']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $this->ObservadorSecundario->mostrarCodigosObservadores($cita['observadoresSecundarios']));
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $this->ObservadorSecundario->mostrarNombresObservadores($cita['observadoresSecundarios']));
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $cita['ClaseReproduccion']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $row, $cita['ClaseReproduccion']['descripcion']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $cita['CriterioSeleccionCita']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $row, $cita['CriterioSeleccionCita']['nombre']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $row, $observaciones);
+
+						$row++;
 					}
 
 					// close table and output
@@ -464,7 +476,6 @@ class CitaController extends AppController
 				$citas[$index]['Comarca'] = $lugar['Comarca'];
 				$citas[$index]['Municipio'] = $lugar['Municipio'];
 				$citas[$index]['CuadriculaUtm'] = $lugar['CuadriculaUtm'];
-
 			}
 
 			$this->set('citas', $citas);
