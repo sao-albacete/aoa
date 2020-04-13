@@ -7,6 +7,7 @@ $this->set('title_for_layout', 'Nueva cita múltiple');
  */
 $this->Html->css(array(
     'datatables-bootstrap',
+	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.css',
     'Cita/add_multiple'
 ), null, array('inline' => false));
 
@@ -18,6 +19,7 @@ $this->Html->script(array(
     '/plugin/jquery-validation-1.11.1/dist/additional-methods.min',
     '/plugin/jquery-validation-1.11.1/localization/messages_es',
     '/plugin/DataTables-1.9.4/media/js/jquery.dataTables',
+	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.js',
     'datatables-bootstrap',
     '/plugin/bootbox/bootbox.min',
     'common/Especie/funciones',
@@ -67,6 +69,24 @@ $this->end();
                     </div>
                 </div>
             </div>
+
+			<!-- Hora alta -->
+			<div class="control-group">
+				<label class="control-label" for="horaAlta"> <?php echo __("Hora"); ?> (*)</label>
+
+				<div class="controls">
+					<div class="input-prepend">
+						<label for="horaAlta" class="add-on"><i class="icon-time"></i></label>
+						<input type="text" id="horaAlta"
+							   name="data[Cita][horaAlta]" size="10" class="time-picker"
+							   data-mask="99:99" style="width: auto;"
+							   placeholder="hh:mm"/>
+						<span class="badge badge-info" data-trigger="hover"
+							  data-content="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
+								class="icon-info-sign icon-white"></i> </span>
+					</div>
+				</div>
+			</div>
 
             <!-- Lugar-->
             <div class="control-group">
