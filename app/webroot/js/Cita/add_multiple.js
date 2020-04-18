@@ -61,7 +61,6 @@ $(document).ready(function () {
         });
     });
 
-
     /* INICIO Validación de formulario */
     jQuery.validator.addMethod("isdate", function (value, element) {
         var validDate = /^(\d{2})\/(\d{2})\/(\d{4})?$/;

@@ -188,13 +188,6 @@ class Cita extends AppModel
 				'message' => 'El número de aves debe ser mayor que cero'
 			)
 		),
-		'observaciones' => array(
-			'between' => array(
-				'rule' => array('between', 0, 1000),
-				'required' => true,
-				'message' => 'El texto de observaciones no puede ser mayor de 1000 caracteres.'
-			)
-		),
 		'lugar_id' => array(
 			'required' => array(
 				'rule' => 'notEmpty',

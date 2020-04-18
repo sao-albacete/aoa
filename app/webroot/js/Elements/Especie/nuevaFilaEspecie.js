@@ -25,6 +25,24 @@ $(document).ready(function () {
 
     // Popup ayuda
     $divNuevaEspecie.find('.badge-info').popover();
+
+	// Rich editor para las observaciones
+	$divNuevaEspecie.find('.observaciones').summernote({
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'underline', 'clear']],
+			// ['fontname', ['fontname']],
+			['color', ['color']],
+			['para', ['ul', 'ol'/*, 'paragraph'*/]],
+			// ['table', ['table']],
+			['insert', ['link'/*, 'picture'*/]],
+			// ['view', ['fullscreen', 'codeview']],
+		],
+		lang: 'es-ES', // default: 'en-US'
+		dialogsInBody: false,
+		dialogsFade: true  // Add fade effect on dialogs
+	});
+	$divNuevaEspecie.find('.note-modal').remove()
 });
 
 /**
@@ -46,7 +64,9 @@ function limpiarFormularioEspecie()
         $(this).val(0);
     });
 
-    $divNuevaEspecie.find('.observaciones').val('');
+	$divNuevaEspecie.find('.observaciones').val('');
+	$divNuevaEspecie.find('.observaciones').summernote('reset');
+	$divNuevaEspecie.find('.note-modal').remove();
 
     $divNuevaEspecie.find('.datosReproduccion').val(11);
 

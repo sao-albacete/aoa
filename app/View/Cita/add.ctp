@@ -8,6 +8,7 @@ $this->set('title_for_layout', 'Nueva cita');
 $this->Html->css(array(
 	'datatables-bootstrap',
 	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.css',
+	'/plugin/summernote-0.8.16-dist/summernote.min.css',
 	'Cita/add'
 ), null, array('inline' => false));
 
@@ -22,6 +23,8 @@ $this->Html->script(array(
 	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.js',
 	'datatables-bootstrap',
 	'/plugin/bootbox/bootbox.min',
+	'/plugin/summernote-0.8.16-dist/summernote.min.js',
+	'/plugin/summernote-0.8.16-dist/lang/summernote-es-ES.min.js',
 	'common/Especie/funciones',
 	'common/Lugar/funciones',
 	'common/Cita/funciones',

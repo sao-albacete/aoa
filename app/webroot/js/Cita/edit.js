@@ -68,6 +68,24 @@ $(document).ready(function() {
     // Resaltar checks seleccioandos
     marcarChecksSeleccioandos($divEditarCita);
 
+	// Rich editor para las observaciones
+	$divEditarCita.find('#observaciones').summernote({
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'underline', 'clear']],
+			// ['fontname', ['fontname']],
+			['color', ['color']],
+			['para', ['ul', 'ol'/*, 'paragraph'*/]],
+			// ['table', ['table']],
+			['insert', ['link'/*, 'picture'*/]],
+			// ['view', ['fullscreen', 'codeview']],
+		],
+		lang: 'es-ES', // default: 'en-US'
+		dialogsInBody: false,
+		dialogsFade: true  // Add fade effect on dialogs
+	});
+	$divEditarCita.find('.note-modal').remove();
+
     // Eliminar fotos
     $divEditarCita.find('.quitar-foto').each(function() {
         $(this).click(function() {

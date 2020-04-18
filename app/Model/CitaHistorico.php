@@ -146,13 +146,6 @@ class CitaHistorico extends AppModel {
                 'message' => 'El número de aves debe ser mayor que cero'
             )
         ),
-        'observaciones' => array(
-            'between' => array(
-                'rule' => array('between', 0, 256),
-        		'required' => true,
-                'message' => 'El texto de observaciones no puede ser mayor de 256 caracteres.'
-            )
-        ),
         'cita_id' => array(
         	'required' => array(
         		'rule' => 'notEmpty',

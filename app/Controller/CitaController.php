@@ -548,8 +548,7 @@ class CitaController extends AppController
 				$cita["Cita"]["observador_principal_id"] = $this->request->data["Cita"]["observador_principal_id"];
 				$cita["Cita"]["fuente_id"] = $this->request->data["Cita"]["fuente_id"];
 				$cita["Cita"]["estudio_id"] = $this->request->data["Cita"]["estudio_id"];
-				$observaciones = $this->request->data["Cita"]["observaciones"];
-				$cita["Cita"]["observaciones"] = trim(strip_tags($observaciones));
+				$cita["Cita"]["observaciones"] = $this->request->data["Cita"]["observaciones"];
 				$cita["Cita"]["cantidad"] = $this->request->data["Cita"]["cantidad"];
 				$cita["Cita"]["clase_reproduccion_id"] = $this->request->data["Cita"]["clase_reproduccion_id"];
 
