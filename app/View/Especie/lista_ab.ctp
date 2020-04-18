@@ -33,15 +33,25 @@ $this->end();
 	<fieldset>
 		<legend>
 			<?= __('Lista de Aves de la Provincia de Albacete') ?>
-			<a href="#modalMetodologia" role="button" data-toggle="modal"
-			   class="btn btn-small btn-info pull-right help-button">
-				<i class="icon-info-sign"></i>&nbsp;&nbsp;<?= __("Metodología"); ?>
-			</a>
 		</legend>
 
-		<div class="well text-center">
-			<h4><?= __('Número de especies vistas en la provincia') ?> <span style="margin-left: 20px">&#10140;</span>
-				<span class="badge badge-success especies-ab-count"><?= $especiesAbCount ?></span></h4>
+		<div class="well">
+			<h4>
+				<?= __('Número de especies vistas en la provincia') ?>
+				<span style="margin-left: 20px">&#10140;</span>
+				<span class="badge badge-success especies-ab-count"><?= $especiesAbCount ?></span>
+			</h4>
+			<hr>
+			<div class="btn-group">
+				<a href="#modalMetodologia" role="button" data-toggle="modal"
+				   class="btn btn-small help-button">
+					<i class="icon-info-sign"></i>&nbsp;&nbsp;<?= __("Metodología"); ?>
+				</a>
+				<a href="http://sao.albacete.org/joom/images/pdfs/lista_aves_ab_v2_2011.pdf" target="_blank"
+				   class="btn btn-small">
+					<i class="icon-download-alt"></i>&nbsp;&nbsp;<?= __("Descargar lista de aves"); ?>
+				</a>
+			</div>
 		</div>
 
 		<table id="tbListaAvesAb" class="table table-striped table-bordered table-hover">
@@ -91,7 +101,7 @@ $this->end();
 						<td style='text-align: center; background-color: #B3DCB3;font-size: 28px;'
 							title='<?= $especie_ab['DistribucionAb']['nombre'] ?>'><?= $especie_ab['DistribucionAb']['codigo'] ?></td>
 						<td style='text-align: center;'><?= $especie_ab['Especie']['codigoEstatusEsp'] ?></td>
-						<td style='text-align: center; background-color: <?=$this->Especie->obtenerColorProteccionClmPorCodigo($especie_ab['ProteccionClm']['codigo'])?>;'
+						<td style='text-align: center; background-color: <?= $this->Especie->obtenerColorProteccionClmPorCodigo($especie_ab['ProteccionClm']['codigo']) ?>;'
 							title='<?= $especie_ab['ProteccionClm']['nombre'] ?>'><?= $especie_ab['ProteccionClm']['codigo'] ?></td>
 						<td style='text-align: center;'
 							title='<?= $especie_ab['ProteccionLr']['nombre'] ?>'><?= $especie_ab['ProteccionLr']['codigo'] ?></td>

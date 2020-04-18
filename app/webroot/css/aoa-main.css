@@ -272,7 +272,11 @@ body .modal {
 
 .dataTables_filter,
 .dataTables_paginate {
-    float: right;
+    float: left;
+}
+
+.pagination {
+	margin: 0;
 }
 
 @media (max-width: 800px) {
