@@ -42,8 +42,12 @@ $this->end();
 
 <fieldset>
 	<legend>
-		<span><?= __("Últimas 500 citas"); ?></span>
-		<a class="btn btn-success btn-large pull-right" href="/cita/"><?= __("Ver todas las citas"); ?></a>
+		<span style="margin-right: 40px;"><?= __("Últimas 500 citas"); ?></span>
+		<a class="btn btn-success" href="/cita/">
+			<span style="margin-right: 10px;">&#10140;</span>
+			<?= __("Ver todas las citas"); ?>
+			<i style="margin-left: 10px;" class="icon-eye-open icon-white"></i>
+		</a>
 	</legend>
 
 	<table id="tabla_citas" class="table table-striped table-bordered table-hover table-condensed">
@@ -91,8 +95,12 @@ $this->end();
 
 <fieldset>
 	<legend>
-		<span><?= __("Últimas fotos"); ?></span>
-		<a class="btn btn-success btn-large pull-right" href="/especie/fotos/"><?= __("Ver todas las fotos"); ?></a>
+		<span style="margin-right: 40px;"><?= __("Últimas fotos"); ?></span>
+		<a class="btn btn-success" href="/especie/fotos/">
+			<span style="margin-right: 10px;">&#10140;</span>
+			<?= __("Ver todas las fotos"); ?>
+			<i style="margin-left: 10px;" class="icon-picture icon-white"></i>
+		</a>
 	</legend>
 
 	<?php if (count($ultimasFotos) > 0) : ?>
