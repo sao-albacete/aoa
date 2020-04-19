@@ -25,6 +25,24 @@ $(document).ready(function () {
 
     // Popup ayuda
     $divEditarEspecie.find('.badge-info').popover();
+
+	// Rich editor para las observaciones
+	$divEditarEspecie.find('.observaciones').summernote({
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'underline', 'clear']],
+			// ['fontname', ['fontname']],
+			['color', ['color']],
+			['para', ['ul', 'ol'/*, 'paragraph'*/]],
+			// ['table', ['table']],
+			['insert', ['link'/*, 'picture'*/]],
+			// ['view', ['fullscreen', 'codeview']],
+		],
+		lang: 'es-ES', // default: 'en-US'
+		dialogsInBody: false,
+		dialogsFade: true  // Add fade effect on dialogs
+	});
+	$divEditarEspecie.find('.note-modal').remove()
 });
 
 /**
@@ -63,6 +81,7 @@ function editarFilaEspecie(numeroFila)
     $div.find('.indComportamiento').prop('checked', $('input[name="data[Especie][' + numeroFila + '][indComportamiento]"]').val() != "0");
 
     $div.find('.observaciones').val($('input[name="data[Especie][' + numeroFila + '][observaciones]"]').val());
+	$div.find('.observaciones').summernote("code", $div.find('.observaciones').val());
 
     // Resaltar los checks seleccioandos
     $div.find("input[type=checkbox]").each(function() {

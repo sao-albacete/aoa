@@ -4,6 +4,7 @@
  * CSS
  */
 $this->Html->css(array(
+	'/plugin/summernote-0.8.16-dist/summernote.min.css',
     'Elements/Especie/filaEspecie'
 ), null, array('inline' => false));
 
@@ -11,6 +12,8 @@ $this->Html->css(array(
  * Javascript
  */
 $this->Html->script(array(
+	'/plugin/summernote-0.8.16-dist/summernote.min.js',
+	'/plugin/summernote-0.8.16-dist/lang/summernote-es-ES.min.js',
     'Elements/Especie/filaEspecie',
     'Elements/Especie/nuevaFilaEspecie'
 ), array('inline' => false));

@@ -83,7 +83,7 @@ function insertarFilaEspecie($div, fila)
     content.push('<td style="text-align: center">' + ($indCriaHabitatRaro ? 'Sí' : 'No') + '</td>');
     content.push('<td style="text-align: center">' + ($indHerido ? 'Sí' : 'No') + '</td>');
     content.push('<td style="text-align: center">' + ($indComportamiento ? 'Sí' : 'No') + '</td>');
-    content.push('<td>' + $div.find(".observaciones ").val() + '</td>');
+    // content.push('<td>' + $div.find(".observaciones ").val() + '</td>');
     content.push(insertarBotonesFila(numeroFila));
     content.push('</tr>');
     $tablaEspecies.find('tbody').append(content.join());

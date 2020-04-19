@@ -10,6 +10,7 @@ $this->Html->css(array(
 	'datatables-bootstrap',
 	'Cita/edit',
 	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.css',
+	'/plugin/summernote-0.8.16-dist/summernote.min.css',
 ), null, array('inline' => false));
 
 /**
@@ -27,6 +28,8 @@ $this->Html->script(array(
 	'/plugin/DataTables-1.9.4/media/js/jquery.dataTables',
 	'datatables-bootstrap',
 	'/plugin/bootbox/bootbox.min',
+	'/plugin/summernote-0.8.16-dist/summernote.min.js',
+	'/plugin/summernote-0.8.16-dist/lang/summernote-es-ES.min.js',
 	'common/maps/functions',
 	'common/Especie/funciones',
 	'common/Lugar/funciones',
