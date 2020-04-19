@@ -14,6 +14,8 @@ AOA está desarrollado usando la siguientes tecnologías:
  - Geoxml
  - Bootbox
  - jqplot
+ - SummerNote (versión 0.8.16 https://summernote.org/)
+ - HtmlPurifier (versión 4.12.0 http://htmlpurifier.org)
 
 # Requisitos mínimos
 Para poder instalar AOA en tu entorno local necesitas tener instalado:
