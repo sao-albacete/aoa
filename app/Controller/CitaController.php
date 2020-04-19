@@ -40,6 +40,7 @@ class CitaController extends AppController
 		'ClaseEdadSexo',
 		'Importancia',
 		'Js',
+		'HtmlPurify',
 	];
 
 	/**

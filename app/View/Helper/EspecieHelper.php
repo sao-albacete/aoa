@@ -1,5 +1,4 @@
 <?php
-/* /app/View/Helper/CitaHelper.php */
 
 App::uses('AppHelper', 'View/Helper');
 

@@ -301,7 +301,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     <legend><?=__('Observaciones')?></legend>
 
                     <?php if($cita['Cita']['indPrivacidad'] == 1 || $usuario['observador_principal_id'] == $cita['Cita']['observador_principal_id'] || $usuario['perfil_id'] == 1) :?>
-                        <?=$cita['Cita']['observaciones'];?>
+                        <?=$this->HtmlPurify->purify($cita['Cita']['observaciones']);?>
                     <?php else :?>
                         <h5>
                             <img src='/img/icons/fugue-icons-3.5.6/icons/exclamation-red.png' width='16' height='16' alt='alert icon' style='margin-right: 10px;'>
