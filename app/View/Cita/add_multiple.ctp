@@ -230,7 +230,7 @@ $this->end();
                         <th><?php echo __('Reproducción en hábitat atípico'); ?></th>
                         <th><?php echo __('Herido, accidentado o muerto'); ?></th>
                         <th><?php echo __('Comportamiento o morfología curiosa'); ?></th>
-                        <th><?php echo __('Observaciones'); ?></th>
+<!--                        <th>--><?php //echo __('Observaciones'); ?><!--</th>-->
                         <th><?php echo __('Acciones'); ?></th>
                     </tr>
                 </thead>
