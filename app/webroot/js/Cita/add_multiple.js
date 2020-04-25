@@ -211,6 +211,9 @@ $(document).ready(function () {
 	// Gestioanr tabla de clases de edad/sexo */
 	gestionarTablaNumeroAves($divEditarEspecie);
 
+	// Seleccionar hora de alta
+	seleccionarHora($divEditarEspecie);
+
 	// Resaltar checks seleccioandos
 	marcarChecksSeleccioandos($divEditarEspecie);
 
@@ -244,6 +247,9 @@ $(document).ready(function () {
 
 	// Gestioanr tabla de clases de edad/sexo
 	gestionarTablaNumeroAves($divNuevaEspecie);
+
+	// Seleccionar hora de alta
+	seleccionarHora($divNuevaEspecie);
 
 	// Resaltar checks seleccioandos
 	marcarChecksSeleccioandos($divNuevaEspecie);
