@@ -49,7 +49,9 @@ $(document).ready(function () {
 	// Insertar especie
 	$divNuevaCitaMultiple.find("#btnInsertarEspecie").click(function () {
 		limpiarFormularioEspecie();
+		var horaAltaGeneral = $divNuevaCitaMultiple.find('#horaAltaGeneral') .val();
 		var $modalNuevaEspecie = $('#modalNuevaEspecie');
+		$modalNuevaEspecie.find('#horaAltaNuevaEspecie') .val(horaAltaGeneral);
 		$modalNuevaEspecie.modal();
 
 		$modalNuevaEspecie.on('shown', function () {
@@ -227,7 +229,7 @@ $(document).ready(function () {
 
 	// Rich editor para las observaciones
 	$divEditarEspecie.find('.observaciones').summernote(richTextEditorSettings);
-	$divEditarEspecie.find('.note-modal').remove()
+	$divEditarEspecie.find('.note-modal').remove();
 
 	/*****************/
 	/* Nueva especie */
