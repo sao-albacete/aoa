@@ -622,6 +622,36 @@ class CitaController extends AppController
 					} else {
 						$cita["Cita"]["indComportamiento"] = false;
 					}
+					if (isset($this->request->data["Cita"]["dormidero"])) {
+						$cita["Cita"]["dormidero"] = $this->request->data["Cita"]["dormidero"];
+					} else {
+						$cita["Cita"]["dormidero"] = false;
+					}
+					if (isset($this->request->data["Cita"]["colonia_de_cria"])) {
+						$cita["Cita"]["colonia_de_cria"] = $this->request->data["Cita"]["colonia_de_cria"];
+					} else {
+						$cita["Cita"]["colonia_de_cria"] = false;
+					}
+					if (isset($this->request->data["Cita"]["migracion_activa"])) {
+						$cita["Cita"]["migracion_activa"] = $this->request->data["Cita"]["migracion_activa"];
+					} else {
+						$cita["Cita"]["migracion_activa"] = false;
+					}
+					if (isset($this->request->data["Cita"]["sedimentado"])) {
+						$cita["Cita"]["sedimentado"] = $this->request->data["Cita"]["sedimentado"];
+					} else {
+						$cita["Cita"]["sedimentado"] = false;
+					}
+					if (isset($this->request->data["Cita"]["electrocutado"])) {
+						$cita["Cita"]["electrocutado"] = $this->request->data["Cita"]["electrocutado"];
+					} else {
+						$cita["Cita"]["electrocutado"] = false;
+					}
+					if (isset($this->request->data["Cita"]["atropellado"])) {
+						$cita["Cita"]["atropellado"] = $this->request->data["Cita"]["atropellado"];
+					} else {
+						$cita["Cita"]["atropellado"] = false;
+					}
 				}
 
 				// Indicador de Rareza

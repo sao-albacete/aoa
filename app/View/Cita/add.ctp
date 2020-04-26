@@ -238,6 +238,22 @@ $this->end();
 							<input name="data[Cita][indCriaHabitatRaro]" value="1"
 								   type="checkbox"> <?php echo __("Reproducción en un hábitat atípico"); ?>
 						</label>
+						<label class="checkbox">
+							<input name="data[Cita][dormidero]" value="1"
+								   type="checkbox"> <?php echo __("En dormidero"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][colonia_de_cria]" value="1"
+								   type="checkbox"> <?php echo __("Colonia de cría"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][migracion_activa]" value="1"
+								   type="checkbox"> <?php echo __("Migración activa"); ?>
+						</label>
+						<label class="checkbox" title="<?php echo __("Grupo de aves en migración que permanecen descansando en un mismo sitio un tiempo."); ?>">
+							<input name="data[Cita][sedimentado]" value="1"
+								   type="checkbox"> <?php echo __("Sedimentado"); ?>
+						</label>
 					</div>
 					<div class="span3">
 						<label class="checkbox">
@@ -247,6 +263,14 @@ $this->end();
 						<label class="checkbox">
 							<input name="data[Cita][indComportamiento]" value="1"
 								   type="checkbox"> <?php echo __("Comportamiento o morfología curiosa"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][electrocutado]" value="1"
+								   type="checkbox"> <?php echo __("Electrocutado"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][atropellado]" value="1"
+								   type="checkbox"> <?php echo __("Atropellado"); ?>
 						</label>
 					</div>
 				</div>
