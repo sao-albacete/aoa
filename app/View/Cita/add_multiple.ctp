@@ -228,6 +228,7 @@ $this->end();
                     <tr>
                         <th><?php echo __('Especie'); ?></th>
                         <th><?php echo __('Nº de aves'); ?></th>
+						<th><?php echo __('Hora'); ?></th>
                         <th><?php echo __('Datos reproducción'); ?></th>
                         <th><?php echo __('Vista en hábitat atípico'); ?></th>
                         <th><?php echo __('Reproducción en hábitat atípico'); ?></th>
