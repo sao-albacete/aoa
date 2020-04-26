@@ -75,13 +75,13 @@ $this->end();
 
 			<!-- Hora alta -->
 			<div class="control-group">
-				<label class="control-label" for="horaAlta"> <?php echo __("Hora"); ?> (*)</label>
+				<label class="control-label" for="horaAltaGeneral"> <?php echo __("Hora"); ?> (*)</label>
 
 				<div class="controls">
 					<div class="input-prepend">
-						<label for="horaAlta" class="add-on"><i class="icon-time"></i></label>
-						<input type="text" id="horaAlta"
-							   name="data[Cita][horaAlta]" size="10" class="time-picker"
+						<label for="horaAltaGeneral" class="add-on"><i class="icon-time"></i></label>
+						<input type="text" id="horaAltaGeneral"
+							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
 							   data-mask="99:99" style="width: auto;"
 							   placeholder="hh:mm"/>
 						<span class="badge badge-info" data-trigger="hover"
@@ -228,6 +228,7 @@ $this->end();
                     <tr>
                         <th><?php echo __('Especie'); ?></th>
                         <th><?php echo __('Nº de aves'); ?></th>
+						<th><?php echo __('Hora'); ?></th>
                         <th><?php echo __('Datos reproducción'); ?></th>
                         <th><?php echo __('Vista en hábitat atípico'); ?></th>
                         <th><?php echo __('Reproducción en hábitat atípico'); ?></th>
@@ -305,6 +306,24 @@ $this->end();
 							</button>
 						</div>
 						<input type="hidden" class="especieId" name="data[Cita][especie_id]">
+					</div>
+				</div>
+			</div>
+
+			<!-- Hora alta -->
+			<div class="control-group">
+				<label class="control-label" for="horaAltaNuevaEspecie"> <?php echo __("Hora"); ?> (*)</label>
+
+				<div class="controls">
+					<div class="input-prepend">
+						<label for="horaAltaNuevaEspecie" class="add-on"><i class="icon-time"></i></label>
+						<input type="text" id="horaAltaNuevaEspecie"
+							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
+							   data-mask="99:99" style="width: auto;"
+							   placeholder="hh:mm"/>
+						<span class="badge badge-info" data-trigger="hover"
+							  data-content="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
+								class="icon-info-sign icon-white"></i> </span>
 					</div>
 				</div>
 			</div>
@@ -452,6 +471,24 @@ $this->end();
 							</button>
 						</div>
 						<input type="hidden" class="especieId" name="data[Cita][especie_id]">
+					</div>
+				</div>
+			</div>
+
+			<!-- Hora alta -->
+			<div class="control-group">
+				<label class="control-label" for="horaAltaEditar"> <?php echo __("Hora"); ?> (*)</label>
+
+				<div class="controls">
+					<div class="input-prepend">
+						<label for="horaAltaEditar" class="add-on"><i class="icon-time"></i></label>
+						<input type="text" id="horaAltaEditarEspecie"
+							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
+							   data-mask="99:99" style="width: auto;"
+							   placeholder="hh:mm"/>
+						<span class="badge badge-info" data-trigger="hover"
+							  data-content="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
+								class="icon-info-sign icon-white"></i> </span>
 					</div>
 				</div>
 			</div>

@@ -64,7 +64,7 @@ function seleccionarFecha($div)
 
 function seleccionarHora($div)
 {
-	$div.find( "#horaAlta" ).timepicker({
+	$div.find( ".hora-alta" ).timepicker({
 		timeFormat: 'HH:mm',
 		interval: 30,
 		dynamic: false,

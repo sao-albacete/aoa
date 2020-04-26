@@ -49,7 +49,9 @@ $(document).ready(function () {
 	// Insertar especie
 	$divNuevaCitaMultiple.find("#btnInsertarEspecie").click(function () {
 		limpiarFormularioEspecie();
+		var horaAltaGeneral = $divNuevaCitaMultiple.find('#horaAltaGeneral') .val();
 		var $modalNuevaEspecie = $('#modalNuevaEspecie');
+		$modalNuevaEspecie.find('#horaAltaNuevaEspecie') .val(horaAltaGeneral);
 		$modalNuevaEspecie.modal();
 
 		$modalNuevaEspecie.on('shown', function () {
@@ -90,6 +92,9 @@ $(document).ready(function () {
 				isdate: true,
 				dateBeforeOrEqualToday: true
 			},
+			"data[Cita][horaAlta]": {
+				required: true
+			},
 			lugar: {
 				validarLugar: true
 			},
@@ -104,7 +109,10 @@ $(document).ready(function () {
 			"data[Cita][fechaAlta]": {
 				required: "Debe seleccionar una fecha de alta.",
 				date: "Debe introducir una fecha de alta con formato correcto (dd/mm/aaaa)."
-			}
+			},
+			"data[Cita][horaAlta]": {
+				required: "Debe seleccionar una hora de observación."
+			},
 		},
 		ignore: [],
 		errorContainer: "#errorMessages",
@@ -211,6 +219,9 @@ $(document).ready(function () {
 	// Gestioanr tabla de clases de edad/sexo */
 	gestionarTablaNumeroAves($divEditarEspecie);
 
+	// Seleccionar hora de alta
+	seleccionarHora($divEditarEspecie);
+
 	// Resaltar checks seleccioandos
 	marcarChecksSeleccioandos($divEditarEspecie);
 
@@ -224,7 +235,7 @@ $(document).ready(function () {
 
 	// Rich editor para las observaciones
 	$divEditarEspecie.find('.observaciones').summernote(richTextEditorSettings);
-	$divEditarEspecie.find('.note-modal').remove()
+	$divEditarEspecie.find('.note-modal').remove();
 
 	/*****************/
 	/* Nueva especie */
@@ -244,6 +255,9 @@ $(document).ready(function () {
 
 	// Gestioanr tabla de clases de edad/sexo
 	gestionarTablaNumeroAves($divNuevaEspecie);
+
+	// Seleccionar hora de alta
+	seleccionarHora($divNuevaEspecie);
 
 	// Resaltar checks seleccioandos
 	marcarChecksSeleccioandos($divNuevaEspecie);
@@ -331,6 +345,9 @@ function validarFormularioEspecie($div, $formulario, errorContainer, numeroFila)
 			especie: {
 				validarEspeciePopup: true
 			},
+			"data[Cita][horaAlta]": {
+				required: true
+			},
 			"data[claseEdadSexo][][4]": {
 				validarNumeroAves: true
 			},
@@ -341,7 +358,10 @@ function validarFormularioEspecie($div, $formulario, errorContainer, numeroFila)
 		messages: {
 			"data[Cita][clase_reproduccion_id]": {
 				required: "Debe seleccionar un dato de reproducción."
-			}
+			},
+			"data[Cita][horaAlta]": {
+				required: "Debe seleccionar una hora de observación."
+			},
 		},
 		errorContainer: "#" + errorContainer,
 		errorLabelContainer: "#" + errorContainer + " ul",
@@ -381,6 +401,7 @@ function insertarFilaEspecie($div, fila) {
 	content.push('<tr id="fila' + numeroFila + '">');
 	content.push('<td>' + $div.find(".especie").val() + ' ' + $div.find(".subespecie").val() + '</td>');
 	content.push('<td style="text-align: center">' + $div.find(".totalNumeroAves").val() + '</td>');
+	content.push('<td style="text-align: center">' + $div.find(".hora-alta").val() + '</td>');
 	content.push('<td>' + $div.find(".datosReproduccion option:selected").text() + '</td>');
 	content.push('<td style="text-align: center">' + ($indHabitatRaro ? 'Sí' : 'No') + '</td>');
 	content.push('<td style="text-align: center">' + ($indCriaHabitatRaro ? 'Sí' : 'No') + '</td>');
@@ -395,6 +416,7 @@ function insertarFilaEspecie($div, fila) {
 	$formulario.append('<input type="hidden" value="' + $div.find(".especieId").val() + '" name="data[Especie][' + numeroFila + '][especie_id]">');
 	$formulario.append('<input type="hidden" value="' + $div.find(".especie").val() + '" name="data[Especie][' + numeroFila + '][especie]">');
 	$formulario.append('<input type="hidden" value="' + $div.find(".subespecie").val() + '" name="data[Especie][' + numeroFila + '][subespecie]">');
+	$formulario.append('<input type="hidden" value="' + $div.find(".hora-alta").val() + '" name="data[Especie][' + numeroFila + '][horaAlta]">');
 	$formulario.append('<input type="hidden" value="' + $div.find(".datosReproduccion").val() + '" name="data[Especie][' + numeroFila + '][clase_reproduccion_id]">');
 
 	// Numero de aves
@@ -496,6 +518,7 @@ function editarFilaEspecie(numeroFila) {
 
 	$div.find('.especieId').val($('input[name="data[Especie][' + numeroFila + '][especie_id]"]').val());
 	$div.find('.especie').val($('input[name="data[Especie][' + numeroFila + '][especie]"]').val());
+	$div.find('.hora-alta').val($('input[name="data[Especie][' + numeroFila + '][horaAlta]"]').val());
 	$div.find(".especieSeleccionadaContenedor").show();
 	$div.find(".especieSeleccionada").text($div.find('.especie').val());
 
