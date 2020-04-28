@@ -796,9 +796,9 @@ class CitaController extends AppController
 						$this->Session->setFlash('El formato de la hora de observación no es correcto, debe indicar una hora con formato hh:mm', 'failure');
 						return;
 					}
-					$cita["Cita"]["fechaAlta"] = $fechaAltaFormateada . " " . $horaAltaFormateada;
+					$this->request->data["Cita"]["fechaAlta"] = $fechaAltaFormateada . " " . $horaAltaFormateada;
 				} else {
-					$cita["Cita"]["fechaAlta"] = $fechaAltaFormateada . " 00:00";
+					$this->request->data["Cita"]["fechaAlta"] = $fechaAltaFormateada . " 00:00:00";
 				}
 
 				// Especie
