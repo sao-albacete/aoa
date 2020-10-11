@@ -42,9 +42,9 @@ $this->Html->script(array(
         <legend><?php echo __("Especies objetivo");?></legend>
 
         <ul class="nav nav-pills">
-            <li><a href="#2020">2020</a></li> 
-            <li><a href="#2019">2019</a></li> 
-            <li><a href="#2018">2018</a></li> 
+            <li><a href="#2020">2020</a></li>
+            <li><a href="#2019">2019</a></li>
+            <li><a href="#2018">2018</a></li>
             <li><a href="#2017">2017</a></li>
             <li><a href="#2016">2016</a></li>
             <li><a href="#2015">2015</a></li>
@@ -89,25 +89,25 @@ $this->Html->script(array(
             <div style="margin-left: 2.5%">
             <ul>
                 <li>
-                   <p><?=__('Arrendajo euroasiático (<i>Garrulus glandarius</i>)')?></p> 
+                   <p><?=__('Arrendajo euroasiático (<i>Garrulus glandarius</i>)')?></p>
                 </li>
                 <li>
-                   <p><?=__('Rabilargo ibérico (<i>Cyanopica cyanus</i>)')?></p> 
+                   <p><?=__('Rabilargo ibérico (<i>Cyanopica cyanus</i>)')?></p>
                 </li>
                 <li>
-                   <p><?=__('Urraca común (<i>Pica pica</i>)')?></p> 
+                   <p><?=__('Urraca común (<i>Pica pica</i>)')?></p>
                 </li>
                 <li>
-                   <p><?=__('Chova piquirroja (<i>Pyrrhocorax pyrrhocorax</i>)')?></p> 
+                   <p><?=__('Chova piquirroja (<i>Pyrrhocorax pyrrhocorax</i>)')?></p>
                 </li>
                 <li>
-                   <p><?=__('Grajilla (<i>Corvus monedula</i>)')?></p> 
+                   <p><?=__('Grajilla (<i>Corvus monedula</i>)')?></p>
                 </li>
                 <li>
-                   <p><?=__('Corneja negra (<i>Corvus corone</i>)')?></p> 
+                   <p><?=__('Corneja negra (<i>Corvus corone</i>)')?></p>
                 </li>
                 <li>
-                   <p><?=__('Cuervo grande (<i>Corvus corax</i>)')?></p> 
+                   <p><?=__('Cuervo grande (<i>Corvus corax</i>)')?></p>
                 </li>
 
             </ul>
@@ -175,7 +175,7 @@ $this->Html->script(array(
                     </div>
                 </li>
             </ul>
-            
+
         </div>
 
         <div class="row-fluid">
@@ -388,12 +388,11 @@ $this->Html->script(array(
         </div>
 
         <div class="row-fluid">
-           
 
 			<div class="page-header">
                 <h3 id="2015"><?=__('Especies objetivo 2015')?></h3>
             </div>
-			
+
             <!-- 2015 -->
             <p><?=__('En el año 2015, las especies objetivo que se eligieron fueron: la <strong>collalba gris</strong>, la <strong>collalba rubia</strong>, la <strong>collalba negra</strong>, la <strong>paloma zurita</strong> y la <strong>tórtola europea</strong>.')?></p>
 
@@ -462,7 +461,7 @@ $this->Html->script(array(
             <li><p><?=__('SEO/BirdLife, 2017. <i>La lenta desaparición del gorrión, otra consecuencia de la despoblación rural</i> [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 20 de enero de 2018]. Disponible en Web: <a href="https://www.seo.org/2017/03/20/la-lenta-desparicion-del-gorrion-otra-consecuencia-de-la-despoblacion-rural/" target="_blank">https://www.seo.org/2017/03/20/la-lenta-desparicion-del-gorrion-otra-consecuencia-de-la-despoblacion-rural/</a>')?></p></li>
         </ul>
         <ul>
-            <li><p><?=__('SEO/BirdLife, 2019. <i>Documentos seguimiento de aves SEO/BirdLife</i>. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web: 
+            <li><p><?=__('SEO/BirdLife, 2019. <i>Documentos seguimiento de aves SEO/BirdLife</i>. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web:
                 <a href="https://www.seguimientodeaves.org/seg_doc/tplEspecies.php" target="_blank">https://www.seguimientodeaves.org/seg_doc/tplEspecies.php</a>')?></p></li>
         </ul>
         <ul>
@@ -473,10 +472,10 @@ $this->Html->script(array(
         </ul>
          <ul>
             <li><p><?=__('PECBMS, 2020. <i>Species trends | PECBMS - PECBMS.</i> [en línea][Praha, Czech Republic]. Pan-European Common Bird Monitoring Scheme. Czech Society for Ornithology. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web: <a href="https://pecbms.info/trends-and-indicators/species-trends/sort/taxonomy/" target="_blank">https://pecbms.info/trends-and-indicators/species-trends/sort/taxonomy/</a>')?></p></li>
-        </ul> 
+        </ul>
         <ul>
             <li><p><?=__('EBCC, 2020. <i>European Bird Census Council.</i> [en línea][Sandy, United Kingdom]. European Bird Census Council. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web: <a href="https://www.ebcc.info/" target="_blank">https://www.ebcc.info/</a>')?></p></li>
-        </ul> 
+        </ul>
 
     </fieldset>
 </div>
