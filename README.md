@@ -7,7 +7,7 @@ AOA está desarrollado usando la siguientes tecnologías:
  - CakePHP framework (versión 2.x) Más información sobre el framework [aquí](https://book.cakephp.org/2/es/index.html).
  - MySQL (versión 5.x)
  - Apache (versión 2)
- - Booststrap (versión 2) Más información sobre el framework [aquí](https://getbootstrap.com/2.3.2/). 
+ - Booststrap (versión 2) Más información sobre el framework [aquí](https://getbootstrap.com/2.3.2/).
  - jQuery
  - Google Maps API
  - Datatables
@@ -40,18 +40,18 @@ Ejecuta los siguientes comandos desde tu consola:
     $ sudo mysql_secure_installation
 Para obtener una información más detallada puedes consultar [este enlace](https://www.digitalocean.com/community/tutorials/como-instalar-mysql-en-ubuntu-18-04-es).
 ### Instalar PHP
-Para instalar la versión 5.3 de PHP en tu equipo puedes ejecutar los siguientes comandos desde tu consola:
+Para instalar la versión 5.6 de PHP en tu equipo puedes ejecutar los siguientes comandos desde tu consola:
 
     $ sudo add-apt-repository -y ppa:ondrej/php
     $ sudo apt update
     $ sudo apt install php5.6
-También son necesario instalar algunos paquetes adicionales:
+También es necesario instalar algunos paquetes adicionales:
 
     $ sudo apt-get install php5.6-mbstring php5.6-mcrypt php5.6-mysql php5.6-xml php5.6-curl php5.6-zip php5.6-gd
 
 Para ver todo el proceso completo de instalación de la pila LAMP más en detalle puedes consultar [este enlace](https://www.digitalocean.com/community/tutorials/como-instalar-en-ubuntu-18-04-la-pila-lamp-linux-apache-mysql-y-php-es).
 
-En la actualidad, esta aplicación **no es compatible con PHP 7**. Dado que la versión que viene por defecto en la versión 18.04 de Ubuntu es la 7, puede que tengas que cambiar a la versión 5.6, para ellos, puedes ejecutar estos comandos:
+En la actualidad, esta aplicación **no es compatible con PHP 7**. Dado que la versión que viene por defecto en la versión 18.04 de Ubuntu es la 7, puede que tengas que cambiar a la versión 5.6, para ello, puedes ejecutar estos comandos:
 
     $ sudo a2dismod php7.0
     $ sudo a2enmod php5.6
@@ -59,20 +59,20 @@ En la actualidad, esta aplicación **no es compatible con PHP 7**. Dado que la v
     $ sudo ln -sfn /usr/bin/php5.6 /etc/alternatives/php
 
 # Descarga el código
-Una vez tengas instalado Apache, muévete al directorio /var/www/html y ejecuta el siguiente comando desde tu consola:
+Descarga el código desde este repositorio ejecutando el siguiente comando:
 
     $ git clone https://github.com/sao-albacete/aoa.git
 
-Este comando te descargará todo el código de la aplicación en una carpeta llamada "aoa". Cámbiate a la carpeta *aoa* y crea las siguientes carpetas:
+Este comando te descargará todo el código de la aplicación en una carpeta llamada "aoa". Cámbiate a la carpeta *aoa* y revisa que las siguientes carpetas:
 
- - /var/www/html/aoa/app/tmp/cache
- - /var/www/html/aoa/app/tmp/logs
- - /var/www/html/aoa/app/tmp/sessions
- - /var/www/html/aoa/app/tmp/tests
- - /var/www/html/aoa/app/webroot/img/tmp
- - /var/www/html/aoa/app/webroot/img/users
+ - aoa/app/tmp/cache
+ - aoa/app/tmp/logs
+ - aoa/app/tmp/sessions
+ - aoa/app/tmp/tests
+ - aoa/app/webroot/img/tmp
+ - aoa/app/webroot/img/users
 
-Debes, asegúrarte de que todas ellas tengan permisos de escritura para el usuario que ejecuta tu servidor web (*www-data*), para asegurate de ello, puedes ejecutar este comando:
+Tengan permisos de escritura para el usuario que ejecuta tu servidor web (*www-data*), para asegurate de ello, puedes ejecutar este comando:
 
     $ sudo chown -R www-data /var/www/html/aoa
 
@@ -88,8 +88,8 @@ La aplicación web AOA necesita ejecutarse sobre una base de datos MySQL, por lo
 > "database_name" deberá ser sustituido por el nombre que desees dar a tu base de datos
 Después, crea un usuario con el que te conectarás a la base de datos desde la aplicación del anuario. Puedes usar los siguientes comandos:
 
-    mysql> CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-     
+    mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+
 > Sustituye "username" por el nombre de usuario que quieras y "password" por una contraseña robusta.
 
     mysql> GRANT ALL PRIVILEGES ON database_name.* TO 'username'@'localhost';
@@ -149,18 +149,21 @@ Crear el siguiente fichero (lo puedes llamar *aoa.conf* por ejemplo) en el direc
 
     <VirtualHost *:80>
 
-        ServerName local.anuario.albacete.org
+    	ServerName local.anuario.albacete.org
 
-        ServerAdmin username@domain.com        
-        DocumentRoot /var/www/html/aoa/app/webroot
+    	ErrorLog path/to/folder/aoa/app/tmp/logs/server-error.log
 
-        <Directory /var/www/html/aoa/app/webroot>
+    	ServerAdmin user@email.com
+        DocumentRoot path/to/folder/aoa/app/webroot
+
+        <Directory path/to/folder/aoa/app/webroot>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Order Allow,Deny
                 allow from all
                 Require all granted
         </Directory>
+
     </VirtualHost>
 
 Tras esto, deberás activar el virtual host ejecutando:
@@ -174,6 +177,39 @@ Después tendrás que modificar tu fichero */etc/hosts* para añaidr la siguient
 Por último deberán reinicial el servidor Apache de nuevo.
 
 Una vez hecho podrás acceder a la dirección http://local.anuario.albacete.org/ y ¡voilá! ya tendrás instalado el anuario ornitológico de Albacete online en tu máquina local.
+
+# Posibles problemas durante la instalación
+## Errores de configuración en la base de datos
+Según la versión de MySQL que uses, puedes tener algunos problemas:
+
+- Relacionados con la configuración del charset:
+`SQLSTATE[HY000] [2054] Server sent charset unknown to the client`
+
+- Relacionados con el algoritmo de encriptación de la contraseña del usuario de base de datos
+`SQLSTATE[HY000] [2054] The server requested authentication method unknown to the client`
+
+Para solucionarlos, prueba a modificar tu fichero de configuración de BD `my.cnf`, ubicado en `/etc/mysql` añadiendo lo siguiente al final del fichero:
+
+```
+ [client]
+ default-character-set=utf8
+
+ [mysql]
+ default-character-set=utf8
+
+
+ [mysqld]
+ collation-server = utf8_unicode_ci
+ init-connect='SET NAMES utf8'
+ character-set-server = utf8
+ default_authentication_plugin= mysql_native_password
+```
+
+## Errores inesperados al cargar la página
+Si al intentar cargar la página obtienes un mensaje de error indicando que ocurrió un error insperado, puedes consultar estos ficheros de log para averiguar la causa del error:
+- aoa/app/tmp/logs/debug.log
+- aoa/app/tmp/logs/warning.log
+- aoa/app/tmp/logs/error.log
 
 # Licencia
 [GNU General Public License v2.0](https://github.com/sao-albacete/aoa/blob/master/LICENSE)
