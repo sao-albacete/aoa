@@ -1009,6 +1009,13 @@ class CitaController extends AppController
 					$this->request->data["Cita"]["indCriaHabitatRaro"] = $datosEspecie["indCriaHabitatRaro"];
 					$this->request->data["Cita"]["indHerido"] = $datosEspecie["indHerido"];
 					$this->request->data["Cita"]["indComportamiento"] = $datosEspecie["indComportamiento"];
+					$this->request->data["Cita"]["dormidero"] = $datosEspecie["dormidero"];
+					$this->request->data["Cita"]["colonia_de_cria"] = $datosEspecie["colonia_de_cria"];
+					$this->request->data["Cita"]["migracion_activa"] = $datosEspecie["migracion_activa"];
+					$this->request->data["Cita"]["sedimentado"] = $datosEspecie["sedimentado"];
+					$this->request->data["Cita"]["electrocutado"] = $datosEspecie["electrocutado"];
+					$this->request->data["Cita"]["atropellado"] = $datosEspecie["atropellado"];
+
 
 					$this->request->data["Cita"]["observaciones"] = $datosEspecie["observaciones"];
 
