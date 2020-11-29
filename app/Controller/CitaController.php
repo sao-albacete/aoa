@@ -302,6 +302,48 @@ class CitaController extends AppController
 				$valuesSubmited["colaboradorId"] = $this->request->query["colaboradorId"];
 				$valuesSubmited["colaborador"] = $this->request->query["colaborador"];
 			}
+
+			// Indicadores
+			if (isset($this->request->query["indHabitatRaro"]) && !empty($this->request->query["indHabitatRaro"])) {
+				$conditions["Cita.indHabitatRaro"] = $this->request->query["indHabitatRaro"];
+				$valuesSubmited["indHabitatRaro"] = $this->request->query["indHabitatRaro"];
+			}
+			if (isset($this->request->query["indCriaHabitatRaro"]) && !empty($this->request->query["indCriaHabitatRaro"])) {
+				$conditions["Cita.indCriaHabitatRaro"] = $this->request->query["indCriaHabitatRaro"];
+				$valuesSubmited["indCriaHabitatRaro"] = $this->request->query["indCriaHabitatRaro"];
+			}
+			if (isset($this->request->query["dormidero"]) && !empty($this->request->query["dormidero"])) {
+				$conditions["Cita.dormidero"] = $this->request->query["dormidero"];
+				$valuesSubmited["dormidero"] = $this->request->query["dormidero"];
+			}
+			if (isset($this->request->query["colonia_de_cria"]) && !empty($this->request->query["colonia_de_cria"])) {
+				$conditions["Cita.colonia_de_cria"] = $this->request->query["colonia_de_cria"];
+				$valuesSubmited["colonia_de_cria"] = $this->request->query["colonia_de_cria"];
+			}
+			if (isset($this->request->query["migracion_activa"]) && !empty($this->request->query["migracion_activa"])) {
+				$conditions["Cita.migracion_activa"] = $this->request->query["migracion_activa"];
+				$valuesSubmited["migracion_activa"] = $this->request->query["migracion_activa"];
+			}
+			if (isset($this->request->query["sedimentado"]) && !empty($this->request->query["sedimentado"])) {
+				$conditions["Cita.sedimentado"] = $this->request->query["sedimentado"];
+				$valuesSubmited["sedimentado"] = $this->request->query["sedimentado"];
+			}
+			if (isset($this->request->query["indHerido"]) && !empty($this->request->query["indHerido"])) {
+				$conditions["Cita.indHerido"] = $this->request->query["indHerido"];
+				$valuesSubmited["indHerido"] = $this->request->query["indHerido"];
+			}
+			if (isset($this->request->query["indComportamiento"]) && !empty($this->request->query["indComportamiento"])) {
+				$conditions["Cita.indComportamiento"] = $this->request->query["indComportamiento"];
+				$valuesSubmited["indComportamiento"] = $this->request->query["indComportamiento"];
+			}
+			if (isset($this->request->query["electrocutado"]) && !empty($this->request->query["electrocutado"])) {
+				$conditions["Cita.electrocutado"] = $this->request->query["electrocutado"];
+				$valuesSubmited["electrocutado"] = $this->request->query["electrocutado"];
+			}
+			if (isset($this->request->query["atropellado"]) && !empty($this->request->query["atropellado"])) {
+				$conditions["Cita.atropellado"] = $this->request->query["atropellado"];
+				$valuesSubmited["atropellado"] = $this->request->query["atropellado"];
+			}
 		}
 
 		if (count($conditions) > 0) {
