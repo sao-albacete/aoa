@@ -118,7 +118,7 @@ $this->end();
 					<div class="input-prepend">
 						<label for="horaAlta" class="add-on"><i class="icon-time"></i></label>
 						<input type="text" id="horaAlta"
-							   name="data[Cita][horaAlta]" size="10" class="time-picker"
+							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
 							   data-mask="99:99" style="width: auto;"
 							   placeholder="hh:mm"/>
 						<span class="badge badge-info" data-trigger="hover"

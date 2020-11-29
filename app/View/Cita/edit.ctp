@@ -247,7 +247,7 @@ $this->end();
 								<label for="horaAlta" class="add-on"><i class="icon-time"></i></label>
 								<input type="text" id="horaAlta"
 									   value="<?= date("H:i", strtotime($cita['Cita']['fechaAlta'])); ?>"
-									   name="data[Cita][horaAlta]" size="10" class="time-picker"
+									   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
 									   data-mask="99:99" style="width: auto;"
 									   placeholder="hh:mm"/>
 							</div>

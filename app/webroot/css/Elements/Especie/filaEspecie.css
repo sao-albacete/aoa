@@ -1,9 +1,0 @@
-#modalNuevaEspecie .modal-body,
-#modalEditarEspecie .modal-body {
-    height: 430px;
-}
-
-#modalNuevaEspecie .modal-body textarea,
-#modalEditarEspecie .modal-body textarea {
-    width: 560px;
-}
