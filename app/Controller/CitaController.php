@@ -417,6 +417,16 @@ class CitaController extends AppController
 						['label' => __('Clase de Reproducción (descripción)')],
 						['label' => __('Criterio de Selección (código)')],
 						['label' => __('Criterio de Selección (descripción)')],
+						['label' => __('Especie vista en habitat atípico')],
+						['label' => __('Reproducción en un hábitat atípico')],
+						['label' => __('En dormidero')],
+						['label' => __('Colonia de cría')],
+						['label' => __('Migración activa')],
+						['label' => __('Sedimentado')],
+						['label' => __('Cita de individuo herido, accidentado o muerto')],
+						['label' => __('Comportamiento o morfología curiosa')],
+						['label' => __('Electrocutado')],
+						['label' => __('Atropellado')],
 						['label' => __('Observaciones')],
 					];
 
@@ -487,7 +497,19 @@ class CitaController extends AppController
 						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $row, $cita['ClaseReproduccion']['descripcion']);
 						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $cita['CriterioSeleccionCita']['codigo']);
 						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $row, $cita['CriterioSeleccionCita']['nombre']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $row, $observaciones);
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $row, $cita['Cita']['indHabitatRaro'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(19, $row, $cita['Cita']['indCriaHabitatRaro'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(20, $row, $cita['Cita']['dormidero'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(21, $row, $cita['Cita']['colonia_de_cria'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(22, $row, $cita['Cita']['migracion_activa'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $row, $cita['Cita']['sedimentado'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(24, $row, $cita['Cita']['indHerido'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $row, $cita['Cita']['indComportamiento'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(26, $row, $cita['Cita']['electrocutado'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(27, $row, $cita['Cita']['atropellado'] == "1" ? "Sí" : "");
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(28, $row, strip_tags($observaciones));
 
 						$row++;
 					}

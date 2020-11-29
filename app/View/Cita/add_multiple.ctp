@@ -630,12 +630,10 @@ $this->end();
 			<!-- Observaciones -->
 			<div class="control-group">
 				<label class="control-label" for="observaciones"> <?php echo __("Observaciones"); ?></label>
-
 				<div class="controls">
 					<textarea name="data[Cita][observaciones]" rows="2" class="observaciones span4"></textarea>
 				</div>
 			</div>
-
 		</form>
 
 	</div>

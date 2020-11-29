@@ -437,7 +437,14 @@ function insertarFilaEspecie($div, fila) {
 	$formulario.append('<input type="hidden" value="' + ($sedimentado ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][sedimentado]">');
 	$formulario.append('<input type="hidden" value="' + ($electrocutado ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][electrocutado]">');
 	$formulario.append('<input type="hidden" value="' + ($atropellado ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][atropellado]">');
-	$formulario.append('<input type="hidden" value="' + $div.find(".observaciones").val() + '" name="data[Especie][' + numeroFila + '][observaciones]">');
+
+	// Observaciones
+	let $observaciones = "";
+	if (!$div.find('.observaciones').summernote('isEmpty')) {
+		$observaciones = $div.find(".observaciones").val();
+	}
+
+	$formulario.append('<input type="hidden" value="' + $observaciones + '" name="data[Especie][' + numeroFila + '][observaciones]">');
 }
 
 /**

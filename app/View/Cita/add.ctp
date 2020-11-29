@@ -411,7 +411,6 @@ $this->end();
 			<!-- Observaciones -->
 			<div class="control-group">
 				<label class="control-label" for="observaciones"> <?php echo __("Observaciones"); ?></label>
-
 				<div class="controls">
 					<textarea id="observaciones" name="data[Cita][observaciones]" rows="2" class="span4"></textarea>
 				</div>
