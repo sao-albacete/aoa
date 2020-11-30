@@ -722,6 +722,35 @@ class CitaController extends AppController
 					}
 				}
 
+				/*
+				 * Precisión
+				 */
+				$precision = $this->request->data["Cita"]["precision"];
+				if ($precision == "cantidad_exacta") {
+					$cita["Cita"]["cantidad_exacta"] = true;
+					$cita["Cita"]["cantidad_aproximada"] = false;
+					$cita["Cita"]["cantidad_precisa"] = false;
+					$cita["Cita"]["cantidad_estimada"] = false;
+				}
+				else if ($precision == "cantidad_aproximada") {
+					$cita["Cita"]["cantidad_exacta"] = false;
+					$cita["Cita"]["cantidad_aproximada"] = true;
+					$cita["Cita"]["cantidad_precisa"] = false;
+					$cita["Cita"]["cantidad_estimada"] = false;
+				}
+				else if ($precision == "cantidad_precisa") {
+					$cita["Cita"]["cantidad_exacta"] = false;
+					$cita["Cita"]["cantidad_aproximada"] = false;
+					$cita["Cita"]["cantidad_precisa"] = true;
+					$cita["Cita"]["cantidad_estimada"] = false;
+				}
+				else if ($precision == "cantidad_estimada") {
+					$cita["Cita"]["cantidad_exacta"] = false;
+					$cita["Cita"]["cantidad_aproximada"] = false;
+					$cita["Cita"]["cantidad_precisa"] = false;
+					$cita["Cita"]["cantidad_estimada"] = true;
+				}
+
 				// Indicador de Rareza
 				if ($especie['Especie']['indRareza'] == 1) {
 					$this->request->data["Cita"]["indRarezaHomologada"] = 2;
@@ -933,6 +962,23 @@ class CitaController extends AppController
 				 */
 				if ($especie['Especie']['indRareza'] == 1) {
 					$this->request->data["Cita"]["indRarezaHomologada"] = 2;
+				}
+
+				/*
+				 * Precisión
+				 */
+				$precision = $this->request->data["Cita"]["precision"];
+				if ($precision == "cantidad_exacta") {
+					$this->request->data["Cita"]["cantidad_exacta"] = 1;
+				}
+				else if ($precision == "cantidad_aproximada") {
+					$this->request->data["Cita"]["cantidad_aproximada"] = 1;
+				}
+				else if ($precision == "cantidad_precisa") {
+					$this->request->data["Cita"]["cantidad_precisa"] = 1;
+				}
+				else if ($precision == "cantidad_estimada") {
+					$this->request->data["Cita"]["cantidad_estimada"] = 1;
 				}
 
 				$this->Cita->create();
@@ -1287,8 +1333,23 @@ class CitaController extends AppController
 			throw new ForbiddenException(sprintf('El usuario con email %s no tiene permisos ver la cita con id %s', $current_user['email'], $citaId));
 		}
 
+		$precision = "";
+		if ($cita["Cita"]["cantidad_exacta"] == true) {
+			$precision = "Número exacto";
+		}
+		else if ($cita["Cita"]["cantidad_aproximada"] == true) {
+			$precision = "Número aproximado";
+		}
+		else if ($cita["Cita"]["cantidad_precisa"] == true) {
+			$precision = "Conteo preciso";
+		}
+		else if ($cita["Cita"]["cantidad_estimada"] == true) {
+			$precision = "Estima";
+		}
+
 		// Seteamos los datos a mostrar en la vista
 		$this->set('cita', $cita);
+		$this->set('precision', $precision);
 		$this->set('usuario', $current_user);
 	}
 

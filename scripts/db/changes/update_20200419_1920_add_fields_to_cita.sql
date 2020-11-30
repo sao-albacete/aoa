@@ -13,7 +13,7 @@ alter table `%prefix%_cita`
     add `atropellado` boolean DEFAULT false COMMENT 'Indica si la observación se ha realizado sobre un individuo o individuos que han sufrido un atropello' AFTER `indComportamiento`;
 
 alter table `%prefix%_cita`
-    add `cantidad_exacta` boolean DEFAULT false COMMENT 'Indica si el conteo de invividuos ha sido exacto' AFTER `cantidad`;
+    add `cantidad_exacta` boolean DEFAULT true COMMENT 'Indica si el conteo de invividuos ha sido exacto' AFTER `cantidad`;
 alter table `%prefix%_cita`
     add `cantidad_aproximada` boolean DEFAULT false COMMENT 'Indica si el conteo de individuos ha sido aproximado' AFTER `cantidad`;
 alter table `%prefix%_cita`
@@ -36,7 +36,7 @@ alter table `%prefix%_cita_historico`
     add `atropellado` boolean DEFAULT false COMMENT 'Indica si la observación se ha realizado sobre un individuo o individuos que han sufrido un atropello' AFTER `indComportamiento`;
 
 alter table `%prefix%_cita_historico`
-    add `cantidad_exacta` boolean DEFAULT false COMMENT 'Indica si el conteo de invividuos ha sido exacto' AFTER `cantidad`;
+    add `cantidad_exacta` boolean DEFAULT true COMMENT 'Indica si el conteo de invividuos ha sido exacto' AFTER `cantidad`;
 alter table `%prefix%_cita_historico`
     add `cantidad_aproximada` boolean DEFAULT false COMMENT 'Indica si el conteo de individuos ha sido aproximado' AFTER `cantidad`;
 alter table `%prefix%_cita_historico`

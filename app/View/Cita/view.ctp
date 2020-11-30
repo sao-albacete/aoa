@@ -193,7 +193,7 @@ $this->end();
 			<div class="span6">
 
 				<table class="table table-striped table-bordered table-condensed">
-					<caption><?= __('Número de individuos') ?></caption>
+					<caption><?= __('Número de individuos') ?> (<?= $precision; ?>)</caption>
 					<thead>
 					<tr>
 						<th><?= __('Edad/Sexo') ?></th>

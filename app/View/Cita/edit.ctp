@@ -276,8 +276,45 @@ $this->end();
 				<!-- Datos cita -->
 				<div class="span6">
 
+					<label class="control-label" for="indeterminado"> <?php echo __("Número de aves"); ?> (*)
+						<br>
+						<span class="badge badge-info" data-trigger="hover" style="font-weight: normal; margin-top: 5px;"
+							  data-content='<?php echo __("Rellene los cuadros con el número de individuos observados en función de la edad y el sexo."); ?>'><i
+									class="icon-info-sign icon-white"></i> </span>
+					</label>
+
 					<!-- Número de aves-->
 					<div class="dummy" style="display: inline; text-align: center;">
+
+						<div class="opcionesCantidad" style="margin-bottom: 10px;">
+							<label class="radio inline" for="cantidad_exacta">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_exacta" value="cantidad_exacta" <?php if ($cita['Cita']['cantidad_exacta'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_precisa">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_precisa" value="cantidad_precisa" <?php if ($cita['Cita']['cantidad_precisa'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_estimada">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_estimada" value="cantidad_estimada" <?php if ($cita['Cita']['cantidad_estimada'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_aproximada">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_aproximada" value="cantidad_aproximada" <?php if ($cita['Cita']['cantidad_aproximada'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
 
 						<?= $this->element('Cita/tablaNumeroAves'); ?>
 
