@@ -113,6 +113,16 @@ class UserController extends AppController
     {
         if ($this->request->is('post')) {
 
+			/*
+			 * Comprobamos si se ha introducido un codigo en el honeypot, y e ese caso, no continuamos
+			 */
+			if ($this->request->data["codigo"] != "5asdf45asdf4sa5df4asdf55as7df" || $this->request->data["codigo2"] != "") {
+				CakeLog::error('[' . __METHOD__ . '] Intento de creación de usuario fraudulento con email: ' . $this->request->data["User"]["email"]);
+				$this->Session->setFlash(__('Tu usuario ha sido creado. Para activarlo, te hemos enviado un email a tu dirección de correo electrónico. Por favor, sigue las instrucciones que en él se indican.'), "success");
+				$this->redirect(array("action" => "login"));
+				return;
+			}
+
             /*
              * Comprobamos si el usuario ya existe y está activo
              */

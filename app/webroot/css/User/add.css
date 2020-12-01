@@ -9,6 +9,10 @@
     border-radius: 5px;
 }
 
+#codigo, #codigo2 {
+	display: none;
+}
+
 div.error-message {
   display: none;
 }
