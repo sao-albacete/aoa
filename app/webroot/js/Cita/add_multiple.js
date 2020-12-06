@@ -400,13 +400,25 @@ function insertarFilaEspecie($div, fila) {
 		$electrocutado = $div.find(".electrocutado").is(":checked"),
 		$atropellado = $div.find(".atropellado").is(":checked"),
 		numeroFila = fila ? fila : $tablaEspecies.find('tbody tr').length,
+		$precision = $div.find('input:radio[name="data[Especie][precision]"]:checked').val(),
 		$formulario = $('#frmNuevaCitaMultiple');
+
+	$precisionTexto = "";
+	if ($precision == "cantidad_exacta") {
+		$precisionTexto = "Número exacto";
+	} else if ($precision == "cantidad_precisa") {
+		$precisionTexto = "Conteo preciso";
+	} else if ($precision == "cantidad_estimada") {
+		$precisionTexto = "Estima";
+	} else if ($precision == "cantidad_aproximada") {
+		$precisionTexto = "Número aproximado";
+	}
 
 	// Insertar fila en la tabla de especies
 	let content = "";
 	content += '<tr id="fila' + numeroFila + '">';
 	content += '<td>' + $div.find(".especie").val() + ' ' + $div.find(".subespecie").val() + '</td>';
-	content += "<td style=\"text-align: center;\">" + $div.find(".totalNumeroAves").val() + '</td>';
+	content += "<td style=\"text-align: center;\">" + $div.find(".totalNumeroAves").val() + " (" + $precisionTexto + ")" + '</td>';
 	content += "<td style=\"text-align: center;\">" + $div.find(".hora-alta").val() + '</td>';
 	content += insertarBotonesFila(numeroFila);
 	content += '</tr>';
@@ -420,6 +432,10 @@ function insertarFilaEspecie($div, fila) {
 	$formulario.append('<input type="hidden" value="' + $div.find(".datosReproduccion").val() + '" name="data[Especie][' + numeroFila + '][clase_reproduccion_id]">');
 
 	// Numero de aves
+	if ($formulario.find("input[name=\"data[Especie][" + numeroFila + "][precision]\"]").length == 0) {
+		$formulario.append('<input type="hidden" value="' + $precision + '" name="data[Especie][' + numeroFila + '][precision]">');
+	}
+	$formulario.find("input[name=\"data[Especie][" + numeroFila + "][precision]\"]").val($div.find('input:radio[name="data[Especie][precision]"]:checked').val())
 	$formulario.append('<input type="hidden" value="' + $div.find(".totalNumeroAves").val() + '" name="data[Especie][' + numeroFila + '][cantidad]">');
 	$div.find(".numero_aves").each(function () {
 		if ($(this).val() != "0" && $(this).val() != "") {
@@ -541,6 +557,9 @@ function editarFilaEspecie(numeroFila) {
 	$div.find(".subespecieSeleccionada").text($div.find('.subespecie').val());
 
 	$div.find('.datosReproduccion').val($('input[name="data[Especie][' + numeroFila + '][clase_reproduccion_id]"]').val());
+
+	$div.find("input[name='data[Especie][precision]']").val([$('input[name="data[Especie][' + numeroFila + '][precision]"]').val()])
+
 	$div.find('.totalNumeroAves').val($('input[name="data[Especie][' + numeroFila + '][cantidad]"]').val());
 	$div.find(".numeroTotalAvesDiv").show();
 	$div.find(".numeroTotalAvesTexto").text($div.find('.totalNumeroAves').val());

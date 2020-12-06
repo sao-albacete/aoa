@@ -1099,6 +1099,31 @@ class CitaController extends AppController
 
 					$this->request->data["Cita"]["especie_id"] = $datosEspecie["especie_id"];
 					$this->request->data["Cita"]["cantidad"] = $datosEspecie["cantidad"];
+					$precision = $datosEspecie["precision"];
+					if ($precision == "cantidad_exacta") {
+						$this->request->data["Cita"]["cantidad_exacta"] = true;
+						$this->request->data["Cita"]["cantidad_aproximada"] = false;
+						$this->request->data["Cita"]["cantidad_precisa"] = false;
+						$this->request->data["Cita"]["cantidad_estimada"] = false;
+					}
+					else if ($precision == "cantidad_aproximada") {
+						$this->request->data["Cita"]["cantidad_exacta"] = false;
+						$this->request->data["Cita"]["cantidad_aproximada"] = true;
+						$this->request->data["Cita"]["cantidad_precisa"] = false;
+						$this->request->data["Cita"]["cantidad_estimada"] = false;
+					}
+					else if ($precision == "cantidad_precisa") {
+						$this->request->data["Cita"]["cantidad_exacta"] = false;
+						$this->request->data["Cita"]["cantidad_aproximada"] = false;
+						$this->request->data["Cita"]["cantidad_precisa"] = true;
+						$this->request->data["Cita"]["cantidad_estimada"] = false;
+					}
+					else if ($precision == "cantidad_estimada") {
+						$this->request->data["Cita"]["cantidad_exacta"] = false;
+						$this->request->data["Cita"]["cantidad_aproximada"] = false;
+						$this->request->data["Cita"]["cantidad_precisa"] = false;
+						$this->request->data["Cita"]["cantidad_estimada"] = true;
+					}
 
 					// Hora de alta
 					$horaAlta = $datosEspecie["horaAlta"];

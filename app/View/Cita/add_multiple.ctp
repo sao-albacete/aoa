@@ -334,6 +334,28 @@ $this->end();
 				<div class="controls">
 					<div class="dummy" style="display: inline;">
 
+						<div class="opcionesCantidadAlta" style="margin-bottom: 10px;">
+							<label class="radio inline" for="nueva_cantidad_exacta">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_exacta" value="cantidad_exacta" checked/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="nueva_cantidad_precisa">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_precisa" value="cantidad_precisa"/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="nueva_cantidad_estimada">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_estimada" value="cantidad_estimada"/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="nueva_cantidad_aproximada">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_aproximada" value="cantidad_aproximada"/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
+
 						<?php echo $this->element('Cita/tablaNumeroAves'); ?>
 
 						<div class="numeroTotalAvesDiv" style="margin-top: 5px; display: none;">
@@ -526,6 +548,28 @@ $this->end();
 
 				<div class="controls">
 					<div class="dummy" style="display: inline;">
+
+						<div class="opcionesCantidadEdicion" style="margin-bottom: 10px;">
+							<label class="radio inline" for="cantidad_exacta">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_exacta" value="cantidad_exacta"/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_precisa">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_precisa" value="cantidad_precisa"/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_estimada">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_estimada" value="cantidad_estimada"/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_aproximada">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_aproximada" value="cantidad_aproximada"/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
 
 						<?php echo $this->element('Cita/tablaNumeroAves'); ?>
 
