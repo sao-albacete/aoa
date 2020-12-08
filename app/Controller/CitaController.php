@@ -302,6 +302,48 @@ class CitaController extends AppController
 				$valuesSubmited["colaboradorId"] = $this->request->query["colaboradorId"];
 				$valuesSubmited["colaborador"] = $this->request->query["colaborador"];
 			}
+
+			// Indicadores
+			if (isset($this->request->query["indHabitatRaro"]) && !empty($this->request->query["indHabitatRaro"])) {
+				$conditions["Cita.indHabitatRaro"] = $this->request->query["indHabitatRaro"];
+				$valuesSubmited["indHabitatRaro"] = $this->request->query["indHabitatRaro"];
+			}
+			if (isset($this->request->query["indCriaHabitatRaro"]) && !empty($this->request->query["indCriaHabitatRaro"])) {
+				$conditions["Cita.indCriaHabitatRaro"] = $this->request->query["indCriaHabitatRaro"];
+				$valuesSubmited["indCriaHabitatRaro"] = $this->request->query["indCriaHabitatRaro"];
+			}
+			if (isset($this->request->query["dormidero"]) && !empty($this->request->query["dormidero"])) {
+				$conditions["Cita.dormidero"] = $this->request->query["dormidero"];
+				$valuesSubmited["dormidero"] = $this->request->query["dormidero"];
+			}
+			if (isset($this->request->query["colonia_de_cria"]) && !empty($this->request->query["colonia_de_cria"])) {
+				$conditions["Cita.colonia_de_cria"] = $this->request->query["colonia_de_cria"];
+				$valuesSubmited["colonia_de_cria"] = $this->request->query["colonia_de_cria"];
+			}
+			if (isset($this->request->query["migracion_activa"]) && !empty($this->request->query["migracion_activa"])) {
+				$conditions["Cita.migracion_activa"] = $this->request->query["migracion_activa"];
+				$valuesSubmited["migracion_activa"] = $this->request->query["migracion_activa"];
+			}
+			if (isset($this->request->query["sedimentado"]) && !empty($this->request->query["sedimentado"])) {
+				$conditions["Cita.sedimentado"] = $this->request->query["sedimentado"];
+				$valuesSubmited["sedimentado"] = $this->request->query["sedimentado"];
+			}
+			if (isset($this->request->query["indHerido"]) && !empty($this->request->query["indHerido"])) {
+				$conditions["Cita.indHerido"] = $this->request->query["indHerido"];
+				$valuesSubmited["indHerido"] = $this->request->query["indHerido"];
+			}
+			if (isset($this->request->query["indComportamiento"]) && !empty($this->request->query["indComportamiento"])) {
+				$conditions["Cita.indComportamiento"] = $this->request->query["indComportamiento"];
+				$valuesSubmited["indComportamiento"] = $this->request->query["indComportamiento"];
+			}
+			if (isset($this->request->query["electrocutado"]) && !empty($this->request->query["electrocutado"])) {
+				$conditions["Cita.electrocutado"] = $this->request->query["electrocutado"];
+				$valuesSubmited["electrocutado"] = $this->request->query["electrocutado"];
+			}
+			if (isset($this->request->query["atropellado"]) && !empty($this->request->query["atropellado"])) {
+				$conditions["Cita.atropellado"] = $this->request->query["atropellado"];
+				$valuesSubmited["atropellado"] = $this->request->query["atropellado"];
+			}
 		}
 
 		if (count($conditions) > 0) {
@@ -367,6 +409,7 @@ class CitaController extends AppController
 						['label' => __('Comarca')],
 						['label' => __('Cuadrícula UTM')],
 						['label' => __('Número de Aves')],
+						['label' => __('Precisión')],
 						['label' => __('Observador (código)')],
 						['label' => __('Observador (nombre)')],
 						['label' => __('Colaboradores (códigos)')],
@@ -375,6 +418,16 @@ class CitaController extends AppController
 						['label' => __('Clase de Reproducción (descripción)')],
 						['label' => __('Criterio de Selección (código)')],
 						['label' => __('Criterio de Selección (descripción)')],
+						['label' => __('Especie vista en habitat atípico')],
+						['label' => __('Reproducción en un hábitat atípico')],
+						['label' => __('En dormidero')],
+						['label' => __('Colonia de cría')],
+						['label' => __('Migración activa')],
+						['label' => __('Sedimentado')],
+						['label' => __('Cita de individuo herido, accidentado o muerto')],
+						['label' => __('Comportamiento o morfología curiosa')],
+						['label' => __('Electrocutado')],
+						['label' => __('Atropellado')],
 						['label' => __('Observaciones')],
 					];
 
@@ -437,15 +490,40 @@ class CitaController extends AppController
 						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $row, $cita['Comarca']['nombre']);
 						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(8, $row, $cita['CuadriculaUtm']['codigo']);
 						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $row, $cita['Cita']['cantidad']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row, $cita['ObservadorPrincipal']['codigo']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $row, $cita['ObservadorPrincipal']['nombre']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $this->ObservadorSecundario->mostrarCodigosObservadores($cita['observadoresSecundarios']));
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $this->ObservadorSecundario->mostrarNombresObservadores($cita['observadoresSecundarios']));
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $cita['ClaseReproduccion']['codigo']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $row, $cita['ClaseReproduccion']['descripcion']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $cita['CriterioSeleccionCita']['codigo']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $row, $cita['CriterioSeleccionCita']['nombre']);
-						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $row, $observaciones);
+						if ($cita["Cita"]["cantidad_exacta"] == true) {
+							$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row, "Número exacto");
+						}
+						else if ($cita["Cita"]["cantidad_aproximada"] == true) {
+							$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row, "Número aproximado");
+						}
+						else if ($cita["Cita"]["cantidad_precisa"] == true) {
+							$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row, "Conteo preciso");
+						}
+						else if ($cita["Cita"]["cantidad_estimada"] == true) {
+							$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row, "Estima");
+						}
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $row, $cita['ObservadorPrincipal']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $row, $cita['ObservadorPrincipal']['nombre']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $row, $this->ObservadorSecundario->mostrarCodigosObservadores($cita['observadoresSecundarios']));
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $row, $this->ObservadorSecundario->mostrarNombresObservadores($cita['observadoresSecundarios']));
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $row, $cita['ClaseReproduccion']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(16, $row, $cita['ClaseReproduccion']['descripcion']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $row, $cita['CriterioSeleccionCita']['codigo']);
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $row, $cita['CriterioSeleccionCita']['nombre']);
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(19, $row, $cita['Cita']['indHabitatRaro'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(20, $row, $cita['Cita']['indCriaHabitatRaro'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(21, $row, $cita['Cita']['dormidero'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(22, $row, $cita['Cita']['colonia_de_cria'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $row, $cita['Cita']['migracion_activa'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(24, $row, $cita['Cita']['sedimentado'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $row, $cita['Cita']['indHerido'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(26, $row, $cita['Cita']['indComportamiento'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(27, $row, $cita['Cita']['electrocutado'] == "1" ? "Sí" : "");
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(28, $row, $cita['Cita']['atropellado'] == "1" ? "Sí" : "");
+
+						$this->PhpExcel->getActiveSheet()->setCellValueByColumnAndRow(29, $row, strip_tags($observaciones));
 
 						$row++;
 					}
@@ -626,6 +704,65 @@ class CitaController extends AppController
 					} else {
 						$cita["Cita"]["indComportamiento"] = false;
 					}
+					if (isset($this->request->data["Cita"]["dormidero"])) {
+						$cita["Cita"]["dormidero"] = $this->request->data["Cita"]["dormidero"];
+					} else {
+						$cita["Cita"]["dormidero"] = false;
+					}
+					if (isset($this->request->data["Cita"]["colonia_de_cria"])) {
+						$cita["Cita"]["colonia_de_cria"] = $this->request->data["Cita"]["colonia_de_cria"];
+					} else {
+						$cita["Cita"]["colonia_de_cria"] = false;
+					}
+					if (isset($this->request->data["Cita"]["migracion_activa"])) {
+						$cita["Cita"]["migracion_activa"] = $this->request->data["Cita"]["migracion_activa"];
+					} else {
+						$cita["Cita"]["migracion_activa"] = false;
+					}
+					if (isset($this->request->data["Cita"]["sedimentado"])) {
+						$cita["Cita"]["sedimentado"] = $this->request->data["Cita"]["sedimentado"];
+					} else {
+						$cita["Cita"]["sedimentado"] = false;
+					}
+					if (isset($this->request->data["Cita"]["electrocutado"])) {
+						$cita["Cita"]["electrocutado"] = $this->request->data["Cita"]["electrocutado"];
+					} else {
+						$cita["Cita"]["electrocutado"] = false;
+					}
+					if (isset($this->request->data["Cita"]["atropellado"])) {
+						$cita["Cita"]["atropellado"] = $this->request->data["Cita"]["atropellado"];
+					} else {
+						$cita["Cita"]["atropellado"] = false;
+					}
+				}
+
+				/*
+				 * Precisión
+				 */
+				$precision = $this->request->data["Cita"]["precision"];
+				if ($precision == "cantidad_exacta") {
+					$cita["Cita"]["cantidad_exacta"] = true;
+					$cita["Cita"]["cantidad_aproximada"] = false;
+					$cita["Cita"]["cantidad_precisa"] = false;
+					$cita["Cita"]["cantidad_estimada"] = false;
+				}
+				else if ($precision == "cantidad_aproximada") {
+					$cita["Cita"]["cantidad_exacta"] = false;
+					$cita["Cita"]["cantidad_aproximada"] = true;
+					$cita["Cita"]["cantidad_precisa"] = false;
+					$cita["Cita"]["cantidad_estimada"] = false;
+				}
+				else if ($precision == "cantidad_precisa") {
+					$cita["Cita"]["cantidad_exacta"] = false;
+					$cita["Cita"]["cantidad_aproximada"] = false;
+					$cita["Cita"]["cantidad_precisa"] = true;
+					$cita["Cita"]["cantidad_estimada"] = false;
+				}
+				else if ($precision == "cantidad_estimada") {
+					$cita["Cita"]["cantidad_exacta"] = false;
+					$cita["Cita"]["cantidad_aproximada"] = false;
+					$cita["Cita"]["cantidad_precisa"] = false;
+					$cita["Cita"]["cantidad_estimada"] = true;
 				}
 
 				// Indicador de Rareza
@@ -841,6 +978,23 @@ class CitaController extends AppController
 					$this->request->data["Cita"]["indRarezaHomologada"] = 2;
 				}
 
+				/*
+				 * Precisión
+				 */
+				$precision = $this->request->data["Cita"]["precision"];
+				if ($precision == "cantidad_exacta") {
+					$this->request->data["Cita"]["cantidad_exacta"] = 1;
+				}
+				else if ($precision == "cantidad_aproximada") {
+					$this->request->data["Cita"]["cantidad_aproximada"] = 1;
+				}
+				else if ($precision == "cantidad_precisa") {
+					$this->request->data["Cita"]["cantidad_precisa"] = 1;
+				}
+				else if ($precision == "cantidad_estimada") {
+					$this->request->data["Cita"]["cantidad_estimada"] = 1;
+				}
+
 				$this->Cita->create();
 
 				$this->Cita->set($this->request->data);
@@ -959,6 +1113,31 @@ class CitaController extends AppController
 
 					$this->request->data["Cita"]["especie_id"] = $datosEspecie["especie_id"];
 					$this->request->data["Cita"]["cantidad"] = $datosEspecie["cantidad"];
+					$precision = $datosEspecie["precision"];
+					if ($precision == "cantidad_exacta") {
+						$this->request->data["Cita"]["cantidad_exacta"] = true;
+						$this->request->data["Cita"]["cantidad_aproximada"] = false;
+						$this->request->data["Cita"]["cantidad_precisa"] = false;
+						$this->request->data["Cita"]["cantidad_estimada"] = false;
+					}
+					else if ($precision == "cantidad_aproximada") {
+						$this->request->data["Cita"]["cantidad_exacta"] = false;
+						$this->request->data["Cita"]["cantidad_aproximada"] = true;
+						$this->request->data["Cita"]["cantidad_precisa"] = false;
+						$this->request->data["Cita"]["cantidad_estimada"] = false;
+					}
+					else if ($precision == "cantidad_precisa") {
+						$this->request->data["Cita"]["cantidad_exacta"] = false;
+						$this->request->data["Cita"]["cantidad_aproximada"] = false;
+						$this->request->data["Cita"]["cantidad_precisa"] = true;
+						$this->request->data["Cita"]["cantidad_estimada"] = false;
+					}
+					else if ($precision == "cantidad_estimada") {
+						$this->request->data["Cita"]["cantidad_exacta"] = false;
+						$this->request->data["Cita"]["cantidad_aproximada"] = false;
+						$this->request->data["Cita"]["cantidad_precisa"] = false;
+						$this->request->data["Cita"]["cantidad_estimada"] = true;
+					}
 
 					// Hora de alta
 					$horaAlta = $datosEspecie["horaAlta"];
@@ -979,6 +1158,13 @@ class CitaController extends AppController
 					$this->request->data["Cita"]["indCriaHabitatRaro"] = $datosEspecie["indCriaHabitatRaro"];
 					$this->request->data["Cita"]["indHerido"] = $datosEspecie["indHerido"];
 					$this->request->data["Cita"]["indComportamiento"] = $datosEspecie["indComportamiento"];
+					$this->request->data["Cita"]["dormidero"] = $datosEspecie["dormidero"];
+					$this->request->data["Cita"]["colonia_de_cria"] = $datosEspecie["colonia_de_cria"];
+					$this->request->data["Cita"]["migracion_activa"] = $datosEspecie["migracion_activa"];
+					$this->request->data["Cita"]["sedimentado"] = $datosEspecie["sedimentado"];
+					$this->request->data["Cita"]["electrocutado"] = $datosEspecie["electrocutado"];
+					$this->request->data["Cita"]["atropellado"] = $datosEspecie["atropellado"];
+
 
 					$this->request->data["Cita"]["observaciones"] = $datosEspecie["observaciones"];
 
@@ -1186,8 +1372,23 @@ class CitaController extends AppController
 			throw new ForbiddenException(sprintf('El usuario con email %s no tiene permisos ver la cita con id %s', $current_user['email'], $citaId));
 		}
 
+		$precision = "";
+		if ($cita["Cita"]["cantidad_exacta"] == true) {
+			$precision = "Número exacto";
+		}
+		else if ($cita["Cita"]["cantidad_aproximada"] == true) {
+			$precision = "Número aproximado";
+		}
+		else if ($cita["Cita"]["cantidad_precisa"] == true) {
+			$precision = "Conteo preciso";
+		}
+		else if ($cita["Cita"]["cantidad_estimada"] == true) {
+			$precision = "Estima";
+		}
+
 		// Seteamos los datos a mostrar en la vista
 		$this->set('cita', $cita);
+		$this->set('precision', $precision);
 		$this->set('usuario', $current_user);
 	}
 

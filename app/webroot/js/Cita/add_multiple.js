@@ -44,7 +44,7 @@ $(document).ready(function () {
 	});
 
 	// Popup ayuda
-	$divNuevaCitaMultiple.find('.badge-info').popover();
+	// $divNuevaCitaMultiple.find('.badge-info').popover();
 
 	// Insertar especie
 	$divNuevaCitaMultiple.find("#btnInsertarEspecie").click(function () {
@@ -216,7 +216,7 @@ $(document).ready(function () {
 	// Seleccionar subespecie
 	seleccionarSubespecie($divEditarEspecie);
 
-	// Gestioanr tabla de clases de edad/sexo */
+	// Gestioanr tabla de clases de edad/sexo
 	gestionarTablaNumeroAves($divEditarEspecie);
 
 	// Seleccionar hora de alta
@@ -231,7 +231,7 @@ $(document).ready(function () {
 	});
 
 	// Popup ayuda
-	$divEditarEspecie.find('.badge-info').popover();
+	// $divEditarEspecie.find('.badge-info').popover();
 
 	// Rich editor para las observaciones
 	$divEditarEspecie.find('.observaciones').summernote(richTextEditorSettings);
@@ -388,29 +388,41 @@ function validarFormularioEspecie($div, $formulario, errorContainer, numeroFila)
  * @param fila
  */
 function insertarFilaEspecie($div, fila) {
-	var $tablaEspecies = $('#tablaEspecies'),
+	let $tablaEspecies = $('#tablaEspecies'),
 		$indHabitatRaro = $div.find(".indHabitatRaro").is(":checked"),
 		$indCriaHabitatRaro = $div.find(".indCriaHabitatRaro").is(":checked"),
 		$indHerido = $div.find(".indHerido").is(":checked"),
 		$indComportamiento = $div.find(".indComportamiento").is(":checked"),
+		$dormidero = $div.find(".dormidero").is(":checked"),
+		$coloniaDeCria = $div.find(".colonia_de_cria").is(":checked"),
+		$migracionActiva = $div.find(".migracion_activa").is(":checked"),
+		$sedimentado = $div.find(".sedimentado").is(":checked"),
+		$electrocutado = $div.find(".electrocutado").is(":checked"),
+		$atropellado = $div.find(".atropellado").is(":checked"),
 		numeroFila = fila ? fila : $tablaEspecies.find('tbody tr').length,
+		$precision = $div.find('input:radio[name="data[Especie][precision]"]:checked').val(),
 		$formulario = $('#frmNuevaCitaMultiple');
 
+	$precisionTexto = "";
+	if ($precision == "cantidad_exacta") {
+		$precisionTexto = "Número exacto";
+	} else if ($precision == "cantidad_precisa") {
+		$precisionTexto = "Conteo preciso";
+	} else if ($precision == "cantidad_estimada") {
+		$precisionTexto = "Estima";
+	} else if ($precision == "cantidad_aproximada") {
+		$precisionTexto = "Número aproximado";
+	}
+
 	// Insertar fila en la tabla de especies
-	content = [];
-	content.push('<tr id="fila' + numeroFila + '">');
-	content.push('<td>' + $div.find(".especie").val() + ' ' + $div.find(".subespecie").val() + '</td>');
-	content.push('<td style="text-align: center">' + $div.find(".totalNumeroAves").val() + '</td>');
-	content.push('<td style="text-align: center">' + $div.find(".hora-alta").val() + '</td>');
-	content.push('<td>' + $div.find(".datosReproduccion option:selected").text() + '</td>');
-	content.push('<td style="text-align: center">' + ($indHabitatRaro ? 'Sí' : 'No') + '</td>');
-	content.push('<td style="text-align: center">' + ($indCriaHabitatRaro ? 'Sí' : 'No') + '</td>');
-	content.push('<td style="text-align: center">' + ($indHerido ? 'Sí' : 'No') + '</td>');
-	content.push('<td style="text-align: center">' + ($indComportamiento ? 'Sí' : 'No') + '</td>');
-	// content.push('<td>' + $div.find(".observaciones ").val() + '</td>');
-	content.push(insertarBotonesFila(numeroFila));
-	content.push('</tr>');
-	$tablaEspecies.find('tbody').append(content.join());
+	let content = "";
+	content += '<tr id="fila' + numeroFila + '">';
+	content += '<td>' + $div.find(".especie").val() + ' ' + $div.find(".subespecie").val() + '</td>';
+	content += "<td style=\"text-align: center;\">" + $div.find(".totalNumeroAves").val() + " (" + $precisionTexto + ")" + '</td>';
+	content += "<td style=\"text-align: center;\">" + $div.find(".hora-alta").val() + '</td>';
+	content += insertarBotonesFila(numeroFila);
+	content += '</tr>';
+	$tablaEspecies.find('tbody').append(content);
 
 	// Insertar hiddens en el formulario de envio
 	$formulario.append('<input type="hidden" value="' + $div.find(".especieId").val() + '" name="data[Especie][' + numeroFila + '][especie_id]">');
@@ -420,6 +432,10 @@ function insertarFilaEspecie($div, fila) {
 	$formulario.append('<input type="hidden" value="' + $div.find(".datosReproduccion").val() + '" name="data[Especie][' + numeroFila + '][clase_reproduccion_id]">');
 
 	// Numero de aves
+	if ($formulario.find("input[name=\"data[Especie][" + numeroFila + "][precision]\"]").length == 0) {
+		$formulario.append('<input type="hidden" value="' + $precision + '" name="data[Especie][' + numeroFila + '][precision]">');
+	}
+	$formulario.find("input[name=\"data[Especie][" + numeroFila + "][precision]\"]").val($div.find('input:radio[name="data[Especie][precision]"]:checked').val())
 	$formulario.append('<input type="hidden" value="' + $div.find(".totalNumeroAves").val() + '" name="data[Especie][' + numeroFila + '][cantidad]">');
 	$div.find(".numero_aves").each(function () {
 		if ($(this).val() != "0" && $(this).val() != "") {
@@ -431,7 +447,20 @@ function insertarFilaEspecie($div, fila) {
 	$formulario.append('<input type="hidden" value="' + ($indCriaHabitatRaro ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][indCriaHabitatRaro]">');
 	$formulario.append('<input type="hidden" value="' + ($indHerido ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][indHerido]">');
 	$formulario.append('<input type="hidden" value="' + ($indComportamiento ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][indComportamiento]">');
-	$formulario.append('<input type="hidden" value="' + $div.find(".observaciones").val() + '" name="data[Especie][' + numeroFila + '][observaciones]">');
+	$formulario.append('<input type="hidden" value="' + ($dormidero ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][dormidero]">');
+	$formulario.append('<input type="hidden" value="' + ($coloniaDeCria ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][colonia_de_cria]">');
+	$formulario.append('<input type="hidden" value="' + ($migracionActiva ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][migracion_activa]">');
+	$formulario.append('<input type="hidden" value="' + ($sedimentado ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][sedimentado]">');
+	$formulario.append('<input type="hidden" value="' + ($electrocutado ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][electrocutado]">');
+	$formulario.append('<input type="hidden" value="' + ($atropellado ? 1 : 0) + '" name="data[Especie][' + numeroFila + '][atropellado]">');
+
+	// Observaciones
+	let $observaciones = "";
+	if (!$div.find('.observaciones').summernote('isEmpty')) {
+		$observaciones = $div.find(".observaciones").val();
+	}
+
+	$formulario.append('<input type="hidden" value="' + $observaciones + '" name="data[Especie][' + numeroFila + '][observaciones]">');
 }
 
 /**
@@ -456,7 +485,7 @@ function eliminarFilaEspecie(numeroFila) {
 function insertarBotonesFila(numeroFila) {
 	var columnaBotones = '';
 
-	columnaBotones += '<td style="text-align: center">';
+	columnaBotones += '<td style="text-align: center;">';
 	columnaBotones += "<a href='javascript: eliminarFilaEspecie(" + numeroFila + ");' title='Eliminar especie'><img src='/img/icons/delete.png' alt='Eliminar especie'/></a>";
 	columnaBotones += '&nbsp;&nbsp;';
 	columnaBotones += "<a href='javascript: editarFilaEspecie(" + numeroFila + ");' title='Editar especie'><img src='/img/icons/edit.png' alt='Editar especie'/></a>";
@@ -528,6 +557,9 @@ function editarFilaEspecie(numeroFila) {
 	$div.find(".subespecieSeleccionada").text($div.find('.subespecie').val());
 
 	$div.find('.datosReproduccion').val($('input[name="data[Especie][' + numeroFila + '][clase_reproduccion_id]"]').val());
+
+	$div.find("input[name='data[Especie][precision]']").val([$('input[name="data[Especie][' + numeroFila + '][precision]"]').val()])
+
 	$div.find('.totalNumeroAves').val($('input[name="data[Especie][' + numeroFila + '][cantidad]"]').val());
 	$div.find(".numeroTotalAvesDiv").show();
 	$div.find(".numeroTotalAvesTexto").text($div.find('.totalNumeroAves').val());
@@ -543,6 +575,12 @@ function editarFilaEspecie(numeroFila) {
 	$div.find('.indCriaHabitatRaro').prop('checked', $('input[name="data[Especie][' + numeroFila + '][indCriaHabitatRaro]"]').val() != "0");
 	$div.find('.indHerido').prop('checked', $('input[name="data[Especie][' + numeroFila + '][indHerido]"]').val() != "0");
 	$div.find('.indComportamiento').prop('checked', $('input[name="data[Especie][' + numeroFila + '][indComportamiento]"]').val() != "0");
+	$div.find('.dormidero').prop('checked', $('input[name="data[Especie][' + numeroFila + '][dormidero]"]').val() != "0");
+	$div.find('.colonia_de_cria').prop('checked', $('input[name="data[Especie][' + numeroFila + '][colonia_de_cria]"]').val() != "0");
+	$div.find('.migracion_activa').prop('checked', $('input[name="data[Especie][' + numeroFila + '][migracion_activa]"]').val() != "0");
+	$div.find('.sedimentado').prop('checked', $('input[name="data[Especie][' + numeroFila + '][sedimentado]"]').val() != "0");
+	$div.find('.electrocutado').prop('checked', $('input[name="data[Especie][' + numeroFila + '][electrocutado]"]').val() != "0");
+	$div.find('.atropellado').prop('checked', $('input[name="data[Especie][' + numeroFila + '][atropellado]"]').val() != "0");
 
 	$div.find('.observaciones').val($('input[name="data[Especie][' + numeroFila + '][observaciones]"]').val());
 	$div.find('.observaciones').summernote("code", $div.find('.observaciones').val());

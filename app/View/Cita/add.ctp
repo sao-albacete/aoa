@@ -176,6 +176,28 @@ $this->end();
 				<div class="controls">
 					<div class="dummy" style="display: inline;">
 
+						<div class="opcionesCantidad" style="margin-bottom: 10px;">
+							<label class="radio inline" for="cantidad_exacta">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_exacta" value="cantidad_exacta" checked/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_precisa">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_precisa" value="cantidad_precisa"/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_estimada">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_estimada" value="cantidad_estimada"/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_aproximada">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_aproximada" value="cantidad_aproximada"/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
+
 						<?php echo $this->element('Cita/tablaNumeroAves'); ?>
 
 						<div class="numeroTotalAvesDiv" style="margin-top: 5px; display: none;">
@@ -238,6 +260,22 @@ $this->end();
 							<input name="data[Cita][indCriaHabitatRaro]" value="1"
 								   type="checkbox"> <?php echo __("Reproducción en un hábitat atípico"); ?>
 						</label>
+						<label class="checkbox">
+							<input name="data[Cita][dormidero]" value="1"
+								   type="checkbox"> <?php echo __("En dormidero"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][colonia_de_cria]" value="1"
+								   type="checkbox"> <?php echo __("Colonia de cría"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][migracion_activa]" value="1"
+								   type="checkbox"> <?php echo __("Migración activa"); ?>
+						</label>
+						<label class="checkbox" title="<?php echo __("Grupo de aves en migración que permanecen descansando en un mismo sitio un tiempo."); ?>">
+							<input name="data[Cita][sedimentado]" value="1"
+								   type="checkbox"> <?php echo __("Sedimentado"); ?>
+						</label>
 					</div>
 					<div class="span3">
 						<label class="checkbox">
@@ -247,6 +285,14 @@ $this->end();
 						<label class="checkbox">
 							<input name="data[Cita][indComportamiento]" value="1"
 								   type="checkbox"> <?php echo __("Comportamiento o morfología curiosa"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][electrocutado]" value="1"
+								   type="checkbox"> <?php echo __("Electrocutado"); ?>
+						</label>
+						<label class="checkbox">
+							<input name="data[Cita][atropellado]" value="1"
+								   type="checkbox"> <?php echo __("Atropellado"); ?>
 						</label>
 					</div>
 				</div>
@@ -387,7 +433,6 @@ $this->end();
 			<!-- Observaciones -->
 			<div class="control-group">
 				<label class="control-label" for="observaciones"> <?php echo __("Observaciones"); ?></label>
-
 				<div class="controls">
 					<textarea id="observaciones" name="data[Cita][observaciones]" rows="2" class="span4"></textarea>
 				</div>

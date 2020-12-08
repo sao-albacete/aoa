@@ -66,8 +66,8 @@ $this->end();
                                         name="data[Cita][fechaAlta]" size="10" class="date-picker"
                                         data-mask="99/99/9999" style="width: auto;"
                                         placeholder="dd/mm/aaaa"/>
-                        <span class="badge badge-info" data-trigger="hover"
-                              data-content="<?php echo __('Seleccione un día pulsando el calendario o escriba una fecha con formato ') . date('d/m/Y') ?>"><i
+                        <span class="badge badge-info"
+                              title="<?php echo __('Seleccione un día pulsando el calendario o escriba una fecha con formato ') . date('d/m/Y') ?>"><i
                                 class="icon-info-sign icon-white"></i> </span>
                     </div>
                 </div>
@@ -84,8 +84,8 @@ $this->end();
 							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
 							   data-mask="99:99" style="width: auto;"
 							   placeholder="hh:mm"/>
-						<span class="badge badge-info" data-trigger="hover"
-							  data-content="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
+						<span class="badge badge-info"
+							  title="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
 								class="icon-info-sign icon-white"></i> </span>
 					</div>
 				</div>
@@ -99,8 +99,8 @@ $this->end();
                     <div class="dummy">
                         <input type="text" id="lugar" name="lugar" class="input-xxlarge"
                                placeholder="Escriba el nombre del lugar, municipio, comarca o cuadrícula UTM"/>
-                        <span class="badge badge-info" data-trigger="hover"
-                              data-content='<?php echo __("Escriba tres letras y seleccione un lugar del listado. También puede seleccionarlo a través de la tabla. Si no lo encuentra, puede crear uno nuevo."); ?>'><i
+                        <span class="badge badge-info"
+                              title='<?php echo __("Escriba tres letras y seleccione un lugar del listado. También puede seleccionarlo a través de la tabla. Si no lo encuentra, puede crear uno nuevo."); ?>'><i
                                 class="icon-info-sign icon-white"></i> </span>
 
                         <div id="lugarSeleccionadoContenedor" style="margin-top: 5px; display: none;">
@@ -128,8 +128,8 @@ $this->end();
                     <div class="dummy">
                         <input id="observador" name="observador" class="input-xxlarge" type="text"
                                placeholder="Escriba el código o el nombre del observador">
-                        <span class="badge badge-info" data-trigger="hover"
-                              data-content='<?php echo __("Escriba al menos tres letras y seleccione de la lista los observadores que quiera incluir en la cita."); ?>'><i
+                        <span class="badge badge-info"
+                              title='<?php echo __("Escriba al menos tres letras y seleccione de la lista los observadores que quiera incluir en la cita."); ?>'><i
                                 class="icon-info-sign icon-white"></i> </span>
 
                         <div id="observadorSeleccionadoDiv" style="margin-top: 5px;">
@@ -153,8 +153,8 @@ $this->end();
                         <input id="colaboradores" name="colaboradores" class="input-xxlarge"
                                type="text"
                                placeholder="Escriba el código o el nombre del colaborador">
-                        <span class="badge badge-info" data-trigger="hover"
-                              data-content='<?php echo __("Escriba al menos tres letras y seleccione de la lista los colaboradores que quiera incluir en la cita."); ?>'><i
+                        <span class="badge badge-info"
+                              title='<?php echo __("Escriba al menos tres letras y seleccione de la lista los colaboradores que quiera incluir en la cita."); ?>'><i
                                 class="icon-info-sign icon-white"></i> </span>
 
                         <div id="colaboradoresSeleccionadosDiv"
@@ -192,8 +192,8 @@ $this->end();
                         }
                         ?>
                     </select>
-                    <span class="badge badge-info" data-trigger="hover"
-                          data-content='<?php echo __("Seleccione la fuente de la que proviene la cita."); ?>'><i
+                    <span class="badge badge-info"
+                          title='<?php echo __("Seleccione la fuente de la que proviene la cita."); ?>'><i
                             class="icon-info-sign icon-white"></i> </span>
                 </div>
             </div>
@@ -215,8 +215,8 @@ $this->end();
                         }
                         ?>
                     </select>
-                    <span class="badge badge-info" data-trigger="hover"
-                          data-content='<?php echo __("Seleccione el tipo de estudio asociado a la cita."); ?>'><i
+                    <span class="badge badge-info"
+                          title='<?php echo __("Seleccione el tipo de estudio asociado a la cita."); ?>'><i
                             class="icon-info-sign icon-white"></i> </span>
                 </div>
             </div>
@@ -226,15 +226,10 @@ $this->end();
                 <caption><?php echo __('Especies'); ?></caption>
                 <thead>
                     <tr>
-                        <th><?php echo __('Especie'); ?></th>
-                        <th><?php echo __('Nº de aves'); ?></th>
-						<th><?php echo __('Hora'); ?></th>
-                        <th><?php echo __('Datos reproducción'); ?></th>
-                        <th><?php echo __('Vista en hábitat atípico'); ?></th>
-                        <th><?php echo __('Reproducción en hábitat atípico'); ?></th>
-                        <th><?php echo __('Herido, accidentado o muerto'); ?></th>
-                        <th><?php echo __('Comportamiento o morfología curiosa'); ?></th>
-                        <th><?php echo __('Acciones'); ?></th>
+                        <th style="text-align: left"><?php echo __('Especie'); ?></th>
+                        <th style="text-align: left"><?php echo __('Nº de aves'); ?></th>
+						<th style="text-align: left"><?php echo __('Hora'); ?></th>
+                        <th style="text-align: left"><?php echo __('Acciones'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -284,8 +279,8 @@ $this->end();
 			<!-- Especie-->
 			<div class="control-group">
 				<label class="control-label" for="especie"> <?php echo __("Especie"); ?> (*)
-					<span class="badge badge-info" data-trigger="hover"
-						  data-content="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.'); ?>">
+					<span class="badge badge-info"
+						  title="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.'); ?>">
                             <i class="icon-info-sign icon-white"></i>
                     </span>
 				</label>
@@ -321,8 +316,8 @@ $this->end();
 							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
 							   data-mask="99:99" style="width: auto;"
 							   placeholder="hh:mm"/>
-						<span class="badge badge-info" data-trigger="hover"
-							  data-content="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
+						<span class="badge badge-info"
+							  title="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
 								class="icon-info-sign icon-white"></i> </span>
 					</div>
 				</div>
@@ -331,13 +326,35 @@ $this->end();
 			<!-- Número de aves-->
 			<div class="control-group">
 				<label class="control-label" for="indeterminado"> <?php echo __("Número de aves"); ?> (*)
-					<span class="badge badge-info" data-trigger="hover" style="font-weight: normal; margin-top: 5px;"
-						  data-content='<?php echo __("Rellene los cuadros con el número de individuos observados en función de la edad y el sexo."); ?>'><i
+					<span class="badge badge-info" style="font-weight: normal; margin-top: 5px;"
+						  title='<?php echo __("Rellene los cuadros con el número de individuos observados en función de la edad y el sexo."); ?>'><i
 							class="icon-info-sign icon-white"></i> </span>
 				</label>
 
 				<div class="controls">
 					<div class="dummy" style="display: inline;">
+
+						<div class="opcionesCantidadAlta" style="margin-bottom: 10px;">
+							<label class="radio inline" for="nueva_cantidad_exacta">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_exacta" value="cantidad_exacta" checked/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="nueva_cantidad_precisa">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_precisa" value="cantidad_precisa"/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="nueva_cantidad_estimada">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_estimada" value="cantidad_estimada"/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="nueva_cantidad_aproximada">
+								<input type="radio" name="data[Especie][precision]" id="nueva_cantidad_aproximada" value="cantidad_aproximada"/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
 
 						<?php echo $this->element('Cita/tablaNumeroAves'); ?>
 
@@ -353,8 +370,8 @@ $this->end();
 			<!-- Datos de reproducción -->
 			<div class="control-group">
 				<label class="control-label"> <?php echo __("Datos reproducción"); ?> (*)
-					<span class="badge badge-info" data-trigger="hover"
-						  data-content='<?php echo __("Seleccione el tipo de reproducción observado."); ?>'>
+					<span class="badge badge-info"
+						  title='<?php echo __("Seleccione el tipo de reproducción observado."); ?>'>
                                 <i class="icon-info-sign icon-white"></i> </span>
 				</label>
 
@@ -386,28 +403,56 @@ $this->end();
 			<!-- Otros datos -->
 			<div class="control-group">
 				<label class="control-label"> <?php echo __("Otros datos"); ?>
-					<span class="badge badge-info" data-trigger="hover" style="font-weight: normal;"
-						  data-content='<?php echo __("Seleccione alguna de estas opciones si coinciden con lo observado."); ?>'><i
-							class="icon-info-sign icon-white"></i> </span>
+					<span class="badge badge-info" style="font-weight: normal;"
+						  title='<?php echo __("Seleccione alguna de estas opciones si coinciden con lo observado."); ?>'><i
+								class="icon-info-sign icon-white"></i> </span>
 				</label>
 
-				<div class="controls">
-					<label class="checkbox">
-						<input class="indHabitatRaro" name="data[Cita][indHabitatRaro]" value="1"
-							   type="checkbox"> <?php echo __("Especie vista en habitat atípico"); ?>
-					</label>
-					<label class="checkbox">
-						<input class="indCriaHabitatRaro" name="data[Cita][indCriaHabitatRaro]" value="1"
-							   type="checkbox"> <?php echo __("Reproducción en un hábitat atípico"); ?>
-					</label>
-					<label class="checkbox">
-						<input class="indHerido" name="data[Cita][indHerido]" value="1"
-							   type="checkbox"> <?php echo __("Cita de individuo herido, accidentado o muerto"); ?>
-					</label>
-					<label class="checkbox">
-						<input class="indComportamiento" name="data[Cita][indComportamiento]" value="1"
-							   type="checkbox"> <?php echo __("Comportamiento o morfología curiosa"); ?>
-					</label>
+				<div class="controls row-fluid">
+					<div class="span6">
+						<label class="checkbox">
+							<input class="indHabitatRaro" name="data[Cita][indHabitatRaro]" value="1"
+								   type="checkbox"> <?php echo __("Especie vista en habitat atípico"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="indCriaHabitatRaro" name="data[Cita][indCriaHabitatRaro]" value="1"
+								   type="checkbox"> <?php echo __("Reproducción en un hábitat atípico"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="dormidero" name="data[Cita][dormidero]" value="1"
+								   type="checkbox"> <?php echo __("En dormidero"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="colonia_de_cria" name="data[Cita][colonia_de_cria]" value="1"
+								   type="checkbox"> <?php echo __("Colonia de cría"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="migracion_activa" name="data[Cita][migracion_activa]" value="1"
+								   type="checkbox"> <?php echo __("Migración activa"); ?>
+						</label>
+						<label class="checkbox" title="<?php echo __("Grupo de aves en migración que permanecen descansando en un mismo sitio un tiempo."); ?>">
+							<input class="sedimentado" name="data[Cita][sedimentado]" value="1"
+								   type="checkbox"> <?php echo __("Sedimentado"); ?>
+						</label>
+					</div>
+					<div class="span6">
+						<label class="checkbox">
+							<input class="indHerido" name="data[Cita][indHerido]" value="1"
+								   type="checkbox"> <?php echo __("Cita de individuo herido, accidentado o muerto"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="indComportamiento" name="data[Cita][indComportamiento]" value="1"
+								   type="checkbox"> <?php echo __("Comportamiento o morfología curiosa"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="electrocutado" name="data[Cita][electrocutado]" value="1"
+								   type="checkbox"> <?php echo __("Electrocutado"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="atropellado" name="data[Cita][atropellado]" value="1"
+								   type="checkbox"> <?php echo __("Atropellado"); ?>
+						</label>
+					</div>
 				</div>
 			</div>
 
@@ -449,8 +494,8 @@ $this->end();
 			<!-- Especie-->
 			<div class="control-group">
 				<label class="control-label" for="especie"> <?php echo __("Especie"); ?> (*)
-					<span class="badge badge-info" data-trigger="hover"
-						  data-content="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.'); ?>">
+					<span class="badge badge-info"
+						  title="<?php echo __('Escribe tres letras del nombre común, género o especie y selecciona una especie de la lista. Además, una vez seleccionada una especie, podrás seleccioanr su subespecie escribiendo su primera letra y seleccioando una del listado.'); ?>">
                             <i class="icon-info-sign icon-white"></i>
                     </span>
 				</label>
@@ -486,8 +531,8 @@ $this->end();
 							   name="data[Cita][horaAlta]" size="10" class="time-picker hora-alta"
 							   data-mask="99:99" style="width: auto;"
 							   placeholder="hh:mm"/>
-						<span class="badge badge-info" data-trigger="hover"
-							  data-content="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
+						<span class="badge badge-info"
+							  title="<?php echo __('Seleccione la hora desde el desplegable o escriba una hora con formato hh:mm') ?>"><i
 								class="icon-info-sign icon-white"></i> </span>
 					</div>
 				</div>
@@ -496,13 +541,35 @@ $this->end();
 			<!-- Número de aves-->
 			<div class="control-group">
 				<label class="control-label" for="indeterminado"> <?php echo __("Número de aves"); ?> (*)
-					<span class="badge badge-info" data-trigger="hover" style="font-weight: normal; margin-top: 5px;"
-						  data-content='<?php echo __("Rellene los cuadros con el número de individuos observados en función de la edad y el sexo."); ?>'><i
+					<span class="badge badge-info" style="font-weight: normal; margin-top: 5px;"
+						  title='<?php echo __("Rellene los cuadros con el número de individuos observados en función de la edad y el sexo."); ?>'><i
 							class="icon-info-sign icon-white"></i> </span>
 				</label>
 
 				<div class="controls">
 					<div class="dummy" style="display: inline;">
+
+						<div class="opcionesCantidadEdicion" style="margin-bottom: 10px;">
+							<label class="radio inline" for="cantidad_exacta">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_exacta" value="cantidad_exacta"/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_precisa">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_precisa" value="cantidad_precisa"/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_estimada">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_estimada" value="cantidad_estimada"/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_aproximada">
+								<input type="radio" name="data[Especie][precision]" id="cantidad_aproximada" value="cantidad_aproximada"/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
 
 						<?php echo $this->element('Cita/tablaNumeroAves'); ?>
 
@@ -518,8 +585,8 @@ $this->end();
 			<!-- Datos de reproducción -->
 			<div class="control-group">
 				<label class="control-label"> <?php echo __("Datos reproducción"); ?> (*)
-					<span class="badge badge-info" data-trigger="hover"
-						  data-content='<?php echo __("Seleccione el tipo de reproducción observado."); ?>'>
+					<span class="badge badge-info"
+						  title='<?php echo __("Seleccione el tipo de reproducción observado."); ?>'>
                                 <i class="icon-info-sign icon-white"></i> </span>
 				</label>
 
@@ -551,40 +618,66 @@ $this->end();
 			<!-- Otros datos -->
 			<div class="control-group">
 				<label class="control-label"> <?php echo __("Otros datos"); ?>
-					<span class="badge badge-info" data-trigger="hover" style="font-weight: normal;"
-						  data-content='<?php echo __("Seleccione alguna de estas opciones si coinciden con lo observado."); ?>'><i
-							class="icon-info-sign icon-white"></i> </span>
+					<span class="badge badge-info" style="font-weight: normal;"
+						  title='<?php echo __("Seleccione alguna de estas opciones si coinciden con lo observado."); ?>'><i
+								class="icon-info-sign icon-white"></i> </span>
 				</label>
 
-				<div class="controls">
-					<label class="checkbox">
-						<input class="indHabitatRaro" name="data[Cita][indHabitatRaro]" value="1"
-							   type="checkbox"> <?php echo __("Especie vista en habitat atípico"); ?>
-					</label>
-					<label class="checkbox">
-						<input class="indCriaHabitatRaro" name="data[Cita][indCriaHabitatRaro]" value="1"
-							   type="checkbox"> <?php echo __("Reproducción en un hábitat atípico"); ?>
-					</label>
-					<label class="checkbox">
-						<input class="indHerido" name="data[Cita][indHerido]" value="1"
-							   type="checkbox"> <?php echo __("Cita de individuo herido, accidentado o muerto"); ?>
-					</label>
-					<label class="checkbox">
-						<input class="indComportamiento" name="data[Cita][indComportamiento]" value="1"
-							   type="checkbox"> <?php echo __("Comportamiento o morfología curiosa"); ?>
-					</label>
+				<div class="controls row-fluid">
+					<div class="span6">
+						<label class="checkbox">
+							<input class="indHabitatRaro" name="data[Cita][indHabitatRaro]" value="1"
+								   type="checkbox"> <?php echo __("Especie vista en habitat atípico"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="indCriaHabitatRaro" name="data[Cita][indCriaHabitatRaro]" value="1"
+								   type="checkbox"> <?php echo __("Reproducción en un hábitat atípico"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="dormidero" name="data[Cita][dormidero]" value="1"
+								   type="checkbox"> <?php echo __("En dormidero"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="colonia_de_cria" name="data[Cita][colonia_de_cria]" value="1"
+								   type="checkbox"> <?php echo __("Colonia de cría"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="migracion_activa" name="data[Cita][migracion_activa]" value="1"
+								   type="checkbox"> <?php echo __("Migración activa"); ?>
+						</label>
+						<label class="checkbox" title="<?php echo __("Grupo de aves en migración que permanecen descansando en un mismo sitio un tiempo."); ?>">
+							<input class="sedimentado" name="data[Cita][sedimentado]" value="1"
+								   type="checkbox"> <?php echo __("Sedimentado"); ?>
+						</label>
+					</div>
+					<div class="span6">
+						<label class="checkbox">
+							<input class="indHerido" name="data[Cita][indHerido]" value="1"
+								   type="checkbox"> <?php echo __("Cita de individuo herido, accidentado o muerto"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="indComportamiento" name="data[Cita][indComportamiento]" value="1"
+								   type="checkbox"> <?php echo __("Comportamiento o morfología curiosa"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="electrocutado" name="data[Cita][electrocutado]" value="1"
+								   type="checkbox"> <?php echo __("Electrocutado"); ?>
+						</label>
+						<label class="checkbox">
+							<input class="atropellado" name="data[Cita][atropellado]" value="1"
+								   type="checkbox"> <?php echo __("Atropellado"); ?>
+						</label>
+					</div>
 				</div>
 			</div>
 
 			<!-- Observaciones -->
 			<div class="control-group">
 				<label class="control-label" for="observaciones"> <?php echo __("Observaciones"); ?></label>
-
 				<div class="controls">
 					<textarea name="data[Cita][observaciones]" rows="2" class="observaciones span4"></textarea>
 				</div>
 			</div>
-
 		</form>
 
 	</div>

@@ -276,8 +276,45 @@ $this->end();
 				<!-- Datos cita -->
 				<div class="span6">
 
+					<label class="control-label" for="indeterminado"> <?php echo __("Número de aves"); ?> (*)
+						<br>
+						<span class="badge badge-info" data-trigger="hover" style="font-weight: normal; margin-top: 5px;"
+							  data-content='<?php echo __("Rellene los cuadros con el número de individuos observados en función de la edad y el sexo."); ?>'><i
+									class="icon-info-sign icon-white"></i> </span>
+					</label>
+
 					<!-- Número de aves-->
 					<div class="dummy" style="display: inline; text-align: center;">
+
+						<div class="opcionesCantidad" style="margin-bottom: 10px;">
+							<label class="radio inline" for="cantidad_exacta">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_exacta" value="cantidad_exacta" <?php if ($cita['Cita']['cantidad_exacta'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Número exacto"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_precisa">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_precisa" value="cantidad_precisa" <?php if ($cita['Cita']['cantidad_precisa'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Conteo preciso"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_estimada">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_estimada" value="cantidad_estimada" <?php if ($cita['Cita']['cantidad_estimada'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Estima"); ?>
+							</label>
+
+							<label class="radio inline" for="cantidad_aproximada">
+								<input type="radio" name="data[Cita][precision]" id="cantidad_aproximada" value="cantidad_aproximada" <?php if ($cita['Cita']['cantidad_aproximada'] == true) {
+									echo "checked='checked'";
+								} ?>/>
+								<?php echo __("Número aproximado"); ?>
+							</label>
+						</div>
 
 						<?= $this->element('Cita/tablaNumeroAves'); ?>
 
@@ -400,53 +437,69 @@ $this->end();
 					<fieldset class="fsCustom" style="margin-top: 20px;">
 						<legend>Indicadores de la cita</legend>
 
-						<div class="control-group">
-							<label class="control-label width300 marginRight20" for="cbxIndHabitatRaro"
-								   title="<?= __("Individuo/s visto en habitat raro"); ?>"> <?= __("Habitat raro"); ?></label>
-							<div class="controls">
-								<div class="dummy">
-									<input name="data[Cita][indHabitatRaro]" id="cbxIndHabitatRaro" value="1"
-										   type="checkbox" <?php if ($cita['Cita']['indHabitatRaro'] == true) {
-										echo "checked='checked'";
-									} ?>>
-								</div>
-							</div>
+						<div class="span5">
+							<label class="checkbox">
+								<input name="data[Cita][indHabitatRaro]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['indHabitatRaro'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Especie vista en habitat atípico"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][indCriaHabitatRaro]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['indCriaHabitatRaro'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Reproducción en un hábitat atípico"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][dormidero]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['dormidero'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("En dormidero"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][colonia_de_cria]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['colonia_de_cria'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Colonia de cría"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][migracion_activa]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['migracion_activa'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Migración activa"); ?>
+							</label>
+							<label class="checkbox" title="<?php echo __("Grupo de aves en migración que permanecen descansando en un mismo sitio un tiempo."); ?>">
+								<input name="data[Cita][sedimentado]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['sedimentado'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Sedimentado"); ?>
+							</label>
 						</div>
-						<div class="control-group">
-							<label class="control-label width300 marginRight20" for="cbxIndCriaHabitatRaro"
-								   title="<?= __("Individuo/s visto criando en habitat raro"); ?>"> <?= __("Criando en habitat raro"); ?></label>
-							<div class="controls">
-								<div class="dummy">
-									<input name="data[Cita][indCriaHabitatRaro]" id="cbxIndCriaHabitatRaro" value="1"
-										   type="checkbox" <?php if ($cita['Cita']['indCriaHabitatRaro'] == true) {
-										echo "checked='checked'";
-									} ?>>
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label width300 marginRight20" for="cbxIndHerido"
-								   title="<?= __("Individuo/s herido, accidentado o muerto"); ?>"> <?= __("Herido, accidentado o muerto"); ?></label>
-							<div class="controls">
-								<div class="dummy">
-									<input name="data[Cita][indHerido]" id="cbxIndHerido" value="1"
-										   type="checkbox" <?php if ($cita['Cita']['indHerido'] == true) {
-										echo "checked='checked'";
-									} ?>>
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label width300 marginRight20" for="cbxIndComportamiento"
-								   title="<?= __("Indivudo/s con comportamiento o morfología curiosa"); ?>"> <?= __("Comportamiento o morfología curiosa"); ?></label>
-							<div class="controls">
-								<div class="dummy">
-									<input name="data[Cita][indComportamiento]" id="cbxIndComportamiento" value="1"
-										   type="checkbox" <?php if ($cita['Cita']['indComportamiento'] == true) {
-										echo "checked='checked'";
-									} ?>>
-								</div>
-							</div>
+						<div class="span5">
+							<label class="checkbox">
+								<input name="data[Cita][indHerido]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['indHerido'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Cita de individuo herido, accidentado o muerto"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][indComportamiento]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['indComportamiento'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Comportamiento o morfología curiosa"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][electrocutado]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['electrocutado'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Electrocutado"); ?>
+							</label>
+							<label class="checkbox">
+								<input name="data[Cita][atropellado]" value="1"
+									   type="checkbox" <?php if ($cita['Cita']['atropellado'] == true) {
+									echo "checked='checked'";
+								} ?>> <?php echo __("Atropellado"); ?>
+							</label>
 						</div>
 					</fieldset>
 

@@ -127,6 +127,7 @@ $this->end();
 				<li><a href="#donde" data-toggle="tab"><?= __("¿Dónde?") ?> </a></li>
 				<li><a href="#cuando" data-toggle="tab"><?= __("¿Cuándo?") ?></a></li>
 				<li><a href="#quien" data-toggle="tab"><?= __("¿Quién?") ?></a></li>
+				<li><a href="#indicadores" data-toggle="tab"><?= __("Indicadores") ?></a></li>
 			</ul>
 
 			<form method="get" id="frmBusqueda">
@@ -348,6 +349,77 @@ $this->end();
 									   type="text"
 									   placeholder="Escriba el código o el nombre del colaborador">
 								<input type="hidden" id="colaboradorSeleccionado" name="colaboradorId"/>
+							</div>
+						</div>
+					</div>
+					<!-- Indicadores -->
+					<div class="tab-pane" id="indicadores">
+						<div class="control-group">
+							<div class="controls row-fluid">
+								<div class="span2">
+									<label class="checkbox">
+										<input id="indHabitatRaro" name="indHabitatRaro" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['indHabitatRaro'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Especie vista en habitat atípico"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="indCriaHabitatRaro" name="indCriaHabitatRaro" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['indCriaHabitatRaro'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Reproducción en un hábitat atípico"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="dormidero" name="dormidero" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['dormidero'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("En dormidero"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="colonia_de_cria" name="colonia_de_cria" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['colonia_de_cria'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Colonia de cría"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="migracion_activa" name="migracion_activa" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['migracion_activa'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Migración activa"); ?>
+									</label>
+									<label class="checkbox" title="<?php echo __("Grupo de aves en migración que permanecen descansando en un mismo sitio un tiempo."); ?>">
+										<input id="sedimentado" name="sedimentado" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['sedimentado'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Sedimentado"); ?>
+									</label>
+								</div>
+								<div class="span3">
+									<label class="checkbox">
+										<input id="indHerido" name="indHerido" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['indHerido'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Cita de individuo herido, accidentado o muerto"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="indComportamiento" name="indComportamiento" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['indComportamiento'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Comportamiento o morfología curiosa"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="electrocutado" name="electrocutado" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['electrocutado'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Electrocutado"); ?>
+									</label>
+									<label class="checkbox">
+										<input id="atropellado" name="atropellado" value="1"
+											   type="checkbox" <?php if ($valuesSubmited['atropellado'] == true) {
+											echo "checked='checked'";
+										} ?>> <?php echo __("Atropellado"); ?>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
