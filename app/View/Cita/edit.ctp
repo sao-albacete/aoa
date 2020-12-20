@@ -627,7 +627,7 @@ $this->end();
 					<div class="span3" style="border-right: 1px solid #E4E4E4;">
 						<div>
 							<p><?= __('Puedes añadir cuantas fotos quieras a la cita (de 6 en 6) seleccionándolas con los botones de abajo y pulsando <b>Guardar</b>.') ?></p>
-							<p><?= __('Las fotos deben tener formato jpg, jpeg, png o gif y no pueden ocupar más de 2 megas') ?></p>
+							<p><?= __("Las fotos deben tener formato jpg, jpeg, png o gif y no pueden ocupar más de $imageMaxSize") ?></p>
 						</div>
 						<br/>
 						<div class="fileupload fileupload-new" data-provides="fileupload">

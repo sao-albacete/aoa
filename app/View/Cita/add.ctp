@@ -407,7 +407,7 @@ $this->end();
 			<div class="control-group">
 				<label class="control-label" for="imagen"> <?php echo __("Adjuntar foto principal"); ?>
 					<br> <span class="badge badge-info" data-trigger="hover" style="font-weight: normal;"
-							   data-content='<?php echo __("Seleccione la imagen principal de la cita. Una vez creada la cita podrá adjuntar más imágenes"); ?>'><i
+							   data-content='<?php echo __("Seleccione la imagen principal de la cita. El tamaño máximo de la imagen debe ser de $imageMaxSize. Una vez creada la cita podrá adjuntar más imágenes"); ?>'><i
 							class="icon-info-sign icon-white"></i> </span> </label>
 
 				<div class="controls">

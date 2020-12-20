@@ -5,6 +5,7 @@ App::uses('DateUtil', 'Utility');
 App::uses('Constants', 'Utility');
 App::uses('EmailUtil', 'Utility');
 App::uses('MessageUtil', 'Utility');
+App::uses('ImagenUtil', 'Utility');
 
 /**
  * Maneja la información a mostrar el la página de inicio
@@ -588,6 +589,7 @@ class CitaController extends AppController
 		// Pasamos los datos de la cita y el usuario registrado a la vista
 		$this->set('cita', $cita);
 		$this->set('usuario', $current_user);
+		$this->set('imageMaxSize', ImagenUtil::obtenerTamanioMaximoImagen());
 
 		// Carga los datos de los combos a mostrar en la vista
 		$this->cargarCombosCita();
@@ -908,6 +910,8 @@ class CitaController extends AppController
 		$current_user = $this->Auth->user();
 		$this->set('usuario', $current_user);
 
+		$this->set('imageMaxSize', ImagenUtil::obtenerTamanioMaximoImagen());
+
 		// Carga los combos necesarios para la pantalla de alta
 		$this->cargarCombosCita();
 
@@ -1009,7 +1013,24 @@ class CitaController extends AppController
 						$citaHistorico = $this->CitaHistorico->guardarHistorico($this->Cita->obtenerDatosBasicosPorId($this->Cita->id), $current_user['id']);
 
 						/* Fichero */
-						if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] != 4) {
+						$imageUploadError = "";
+						if (isset($_FILES["imagen"])) {
+							// El fichero excede el tamaño máximo permitido
+							if ($_FILES["imagen"]["error"] == 1 || $_FILES["imagen"]["error"] == 2) {
+								CakeLog::warning(sprintf('[%s] %s', __METHOD__, "La imagen excede el tamaño máximo permitido. Código de error -> " . $_FILES["imagen"]["error"]));
+								$imageUploadError .= "La imagen que intenta subir excede el máximo tamaño permitido de " . ImagenUtil::obtenerTamanioMaximoImagen() . " bytes.";
+							}
+							// El fichero fue sólo parcialmente subido o no se subió ningún fichero
+							else if ($_FILES["imagen"]["error"] == 3 || $_FILES["imagen"]["error"] == 4) {
+								CakeLog::warning(sprintf('[%s] %s', __METHOD__, "El fichero fue sólo parcialmente subido o no se subió ningún fichero. Código de error -> " . $_FILES["imagen"]["error"]));
+								$imageUploadError .= "No se ha podido adjuntar correctamente la imagen a la cita, por favor, vuelva a intentarlo.";
+							}
+							// Hubo un error inesperado al subir el fichero
+							else if ($_FILES["imagen"]["error"] > 4) {
+								CakeLog::error(sprintf('[%s] %s', __METHOD__, "Hubo un error inesperado al subir el fichero. Código de error -> " . $_FILES["imagen"]["error"]));
+								$imageUploadError .= "No se ha podido adjuntar la imagen a la cita. Por favor, vuelva a intentarlo y si el problema persiste contacte con nostros a través del email <a href='mailto:anuario@sao.albacete.org'>anuario@sao.albacete.org</a>";
+							}
+							// La imagen se ha subido correctamente
 							$observadorPrincipalNombre = $this->ObservadorPrincipal->obtenerNombre($this->request->data["Cita"]["observador_principal_id"]);
 							$this->Fichero->subirImagenCita($_FILES["imagen"], $this->request->data, $observadorPrincipalNombre, $current_user['id'], 1);
 							$this->Cita->saveField('indFoto', true);
@@ -1039,7 +1060,12 @@ class CitaController extends AppController
 						}
 
 						$dataSource->commit();
-						$this->Session->setFlash(__('La cita se ha creado correctamente.'), 'success');
+						if (empty($imageUploadError)) {
+							$this->Session->setFlash(__('La cita se ha creado correctamente.'), 'success');
+						} else {
+							$this->Session->setFlash(__('La cita se ha creado correctamente pero no se ha podido adjuntar la imagen principal por el siguiente motivo: ' . $imageUploadError), 'warning');
+						}
+
 						return $this->redirect(array(
 							"action" => "edit",
 							"id" => $this->Cita->id
@@ -1054,12 +1080,12 @@ class CitaController extends AppController
 
 					$errors = $this->Cita->validationErrors;
 
-					$errorsMessages = "";
+					$imageUploadError = "";
 					foreach ($errors as $validationError) {
-						$errorsMessages .= $validationError[0] . "\n";
+						$imageUploadError .= $validationError[0] . "\n";
 					}
 
-					$this->Session->setFlash($errorsMessages, "failure");
+					$this->Session->setFlash($imageUploadError, "failure");
 				}
 			} catch (Exception $e) {
 				$dataSource->rollback();

@@ -156,4 +156,12 @@ class ImagenUtil
 
 		return $imagen;
 	}
+
+	public static function obtenerTamanioMaximoImagen() {
+		$tamanioMaximo = ini_get('upload_max_filesize');
+		if (ini_get('post_max_size') < $tamanioMaximo) {
+			$tamanioMaximo = ini_get('post_max_size');
+		}
+		return $tamanioMaximo;
+	}
 }
