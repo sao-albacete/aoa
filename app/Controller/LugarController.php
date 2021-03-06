@@ -108,7 +108,7 @@ class LugarController extends AppController {
             // Nombre
             $this->request->data["Lugar"]["nombre"] = $this->request->data["nombre"];
 
-            // Cuadricula UTM
+            // Cuadricula UTM- TODO: crear una fórmula que detecte el UTM a partir de las corodenadads lat/lng
             {
                 $this->request->data["Lugar"]["cuadricula_utm_id"] = 1;
             }
