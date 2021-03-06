@@ -303,13 +303,7 @@ class LugarController extends AppController {
             // Nombre
             $lugar["Lugar"]["nombre"] = $this->request->data["nombre"];
 
-            // Cuadricula UTM
-            {
-                $cuadriculaUtm = $this->CuadriculaUtm->obtenerDatosBasicosCuadriculaUtmPorCodigo($this->request->data["cuadriculaUtmCodigo"]);
-                $lugar["Lugar"]["cuadricula_utm_id"] = $cuadriculaUtm["CuadriculaUtm"]["id"];
-            }
-
-            // Coordenadas UTM
+            // Coordenadas Lugar
             {
                 $lugar["Lugar"]["lat"] = $this->request->data["lat"];
                 $lugar["Lugar"]["lng"] = $this->request->data["lng"];
