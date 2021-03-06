@@ -220,7 +220,8 @@ function clickMunicipioListener(mapsMouseEvent, placemark){
 	// Descarmacar municipios
 
 
-	var content = "<b>Municipio:</b> " + placemark.name
+  var nombreLugar = $("#txtNombre").val()
+	var content = "<b>Municipio:</b> " + placemark.name + "<br><b>Lugar:</b> " + nombreLugar
 	latLng = mapsMouseEvent.latLng;
 	placemarker(latLng.lat(), latLng.lng(), content)
 	// marker = new google.maps.Marker({

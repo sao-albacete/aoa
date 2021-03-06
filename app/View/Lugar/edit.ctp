@@ -32,9 +32,13 @@ $this->end();
 
 <script type="text/javascript">
 function add_init_lugar_marker(){
+  var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
+  var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
+	var content = "<b>Municipio:</b> " + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
+
   placemarker(<?php echo $lugar['Lugar']['lat'];?>,
               <?php echo $lugar['Lugar']['lng'];?>,
-              "<?php echo $lugar['Lugar']['nombre'];?>");
+              content);
 }
 $(document).ready(function() {
   google.maps.event.addDomListener(window, 'load', add_init_lugar_marker);
