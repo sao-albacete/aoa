@@ -80,19 +80,19 @@ $(document).ready(function() {
 	/* FIN cambio de cuadricula UTM */
 
 	/** INICIO Validación de formulario **/
-	
+
 	$('#frmEditarLugar').validate({
 		rules: {
 			nombre : {
 		     	maxlength: 100
 	     	},
-	     	coordenadaX: {
+	     	lat: {
 		     	number: true,
-		     	maxlength: 6
+		     	maxlength: 11
 	     	},
-	     	coordenadaY: {
+	     	lng: {
 	     		number: true,
-		     	maxlength: 7
+		     	maxlength: 11
 	     	}
 		},
 		messages: {
@@ -106,13 +106,13 @@ $(document).ready(function() {
 		     	required: "Debe introducir un nombre.",
 		     	maxlength: "El nombre no puede tener más de 100 caracteres."
 	     	},
-	     	coordenadaX : {
-	     		number: "La coordenada X debe ser un numero.",
-		     	maxlength: "La coordenada X no puede tener más de 6 cifras."
+	     	lat : {
+	     		number: "La coordenada Latitud debe ser un numero.",
+		     	maxlength: "La coordenada Latitud no puede tener más de 10 cifras."
 	     	},
-	     	coordenadaY : {
-	     		number: "La coordenada Y debe ser un numero.",
-		     	maxlength: "La coordenada Y no puede tener más de 7 cifras."
+	     	lng : {
+	     		number: "La coordenada Longitud debe ser un numero.",
+		     	maxlength: "La coordenada Longitud no puede tener más de 10 cifras."
 	     	}
 	    },
 		errorContainer: "#errorMessagesGrafico",
