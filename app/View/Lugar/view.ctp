@@ -73,7 +73,23 @@
         // Tratamos el archivo
         geoXmlUtm.parse('/kml/UTM_AB.kml');
 
+
+
         // Eventos
+        function placemarker(lat, lng, name){
+          new google.maps.Marker({
+                         position: new google.maps.LatLng(lat, lng),
+                         map: map,
+                         animation:google.maps.Animation.Drop,
+                         title: name,
+                      });
+
+        }
+
+        placemarker(<?php echo $lugar['Lugar']['lat'];?>,
+                    <?php echo $lugar['Lugar']['lng'];?>,
+                    "<?php echo $lugar['Lugar']['nombre'];?>");
+
         function kmlColor (kmlIn) {
             var kmlColor = {};
             if (kmlIn) {
@@ -191,9 +207,9 @@
                 <!-- Coordenadas UTM -->
                 <div class="control-group">
                     <div class="controls form-inline">
-                        <label class="control-label" for="txtCoordenadasUtm"> <?php echo __("Coordenadas UTM");?></label>
-                        <input class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+                        <label class="control-label" for="txtCoordenadasUtm"> <?php echo __("Latitud y Longitud"); ?></label>
                         <input class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                        <input class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
                     </div>
                 </div>
 

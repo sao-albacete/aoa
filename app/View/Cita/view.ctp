@@ -93,6 +93,19 @@ $this->end();
 
 
 		var highlightOptions = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
+		function placemarker(lat, lng, name){
+			new google.maps.Marker({
+										 position: new google.maps.LatLng(lat, lng),
+										 map: map,
+										 animation:google.maps.Animation.Drop,
+										 title: name,
+									});
+
+		}
+
+		placemarker(<?= $cita['Lugar']['Lugar']['lat']; ?>, 
+		            <?= $cita['Lugar']['Lugar']['lng']; ?>,
+								"<?= $cita['Lugar']['Lugar']['nombre']; ?>");
 
 		// Se obtienen los datos del xml (kml)
 		function useTheData(doc) {
