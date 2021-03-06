@@ -46,15 +46,6 @@ $(document).ready(function() {
 });
 
 
-function clickablePolygon(p) {
-  google.maps.event.addListener(
-    p.polygon,
-    "click",
-    function (mapsMouseEvent) { clickMunicipioListener(mapsMouseEvent, p); }
-  );
-}
-
-
 
 </script>
 

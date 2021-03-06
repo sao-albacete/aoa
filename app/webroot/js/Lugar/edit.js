@@ -169,69 +169,27 @@ function limpiar() {
 	$("#selectMunicipio").empty();
 	$("#selectMunicipio").prop("disabled", true);
 
-	// // Descarmacar municipios
-	// var cuadriculaUtmAMarcar = new Object();
-	// cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
-	// marcarMapa(parser.docs[0], cuadriculaUtmAMarcar);
-
 	// Descarmacar municipios
 	var municipioAMarcar = new Object();
 	municipioAMarcar.tipo = "municipio";
 	marcarMapa(parser.docs[0], municipioAMarcar);
 }
-//
-// /**
-//  * Carga el combo de formularios y lo habilita
-//  *
-//  * @param codigoCuadriculaUtm
-//  */
-// function loadMunicipioSelect(codigoCuadriculaUtm) {
-//
-// 	$("#selectMunicipio").load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
-//
-//     if(codigoCuadriculaUtm != "") {
-// 		$("#selectMunicipio").prop("disabled", false);
-// 	}
-// 	else {
-// 		$("#selectMunicipio").prop("disabled", true);
-// 	}
-// }
 
-// /**
-//  * Carga las coordenadas de la cuadricula UTM seleccionada
-//  *
-//  * @param codigoCuadriculaUtm
-//  */
-// function loadCoordenadasUtm(codigoCuadriculaUtm) {
-//
-// 	$.ajax({
-// 		url: "/cuadriculaUtm/cargarDatosCoordenadaUtm",
-// 		data: {"codigoCuadriculaUtm":codigoCuadriculaUtm},
-// 		success: function( dataReturn ) {
-// 			$("#txtCoordenadasUtmArea").val(dataReturn.CuadriculaUtm.area);
-// 			$("#txtCoordenadasUtmX").val(dataReturn.CuadriculaUtm.coordenadaX);
-// 			$("#txtCoordenadasUtmY").val(dataReturn.CuadriculaUtm.coordenadaY);
-// 		},
-// 		dataType: "json"
-// 	});
-// }
+function clickablePolygon(p) {
+  google.maps.event.addListener(
+    p.polygon,
+    "click",
+    function (mapsMouseEvent) { clickMunicipioListener(mapsMouseEvent, p); }
+  );
+}
 
 function clickMunicipioListener(mapsMouseEvent, placemark){
 	// Descarmacar municipios
-
-
   var nombreLugar = $("#txtNombre").val()
 	var content = "<b>Municipio:</b> " + placemark.name + "<br><b>Lugar:</b> " + nombreLugar
 	latLng = mapsMouseEvent.latLng;
 	placemarker(latLng.lat(), latLng.lng(), content)
-	// marker = new google.maps.Marker({
-	// 							 position: latLng,
-	// 							 title: content,
-	// 							 map: map,
-	// 							 zIndex: 5,
-	// 							 // icon: "http://www.codeshare.co.uk/images/blue-pin.png",
-	// 							 animation:google.maps.Animation.Drop,
-	// });
+
 
 	var municipioAMarcar = new Object();
 	municipioAMarcar.tipo = "municipio";
