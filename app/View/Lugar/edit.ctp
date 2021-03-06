@@ -21,7 +21,7 @@ $this->Html->script(array(
     '/plugin/bootbox/bootbox.min',
     'common/maps/functions',
     'Lugar/edit',
-    'Lugar/add_edit'
+    'Lugar/common'
 ), array('inline' => false));
 
 // Menu
@@ -31,6 +31,15 @@ $this->end();
 ?>
 
 <script type="text/javascript">
+function marcarMunicipio(parserDocs) {
+    //Marcar municipio en el mapa
+    var municipioAMarcar = {};
+    municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
+    municipioAMarcar.tipo = "municipio";
+    marcarMapa(parserDocs[0], municipioAMarcar);
+    onClickAnyMunicipio(parserDocs);
+}
+
 function add_init_lugar_marker(){
   var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
   var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";

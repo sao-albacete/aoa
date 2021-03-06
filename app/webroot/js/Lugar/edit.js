@@ -175,6 +175,8 @@ function limpiar() {
 	marcarMapa(parser.docs[0], municipioAMarcar);
 }
 
+
+
 function clickablePolygon(p) {
   google.maps.event.addListener(
     p.polygon,

@@ -17,6 +17,7 @@
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
         'common/maps/geoxml3/geoxml3.js',
         'common/maps/geoxml3/ProjectedOverlay.js',
+        'Lugar/common',
     ), array('inline' => false));
 
     // Menu
@@ -37,12 +38,19 @@
 
 <script type="text/javascript">
 <!--
-    var map;
+
+    function marcarMunicipio(parserDocs) {
+        //Marcar municipio en el mapa
+        var municipioAMarcar = {};
+        municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
+        municipioAMarcar.tipo = "municipio";
+        marcarMapa(parserDocs[0], municipioAMarcar);
+        onClickAnyMunicipio(parserDocs);
+    }
 
     function initialize() {
 
         var myLatlng = new google.maps.LatLng(38.70, -1.70);
-
         var mapOptions = {
             zoom:8,
             center: myLatlng,
@@ -56,106 +64,22 @@
             map: map,
             singleInfoWindow: true,
             zoom: false,
-            afterParse: useTheData
+            afterParse: marcarMunicipio
         });
 
         // Tratamos el archivo
         geoXmlMunicipios.parse('/kml/municipios_AB.kml');
 
-        // GeoXML para añadir eventos
-        geoXmlUtm = new geoXML3.parser({
-            map: map,
-            singleInfoWindow: true,
-            zoom: false,
-            afterParse: useTheData
-        });
-
-        // Tratamos el archivo
-        geoXmlUtm.parse('/kml/UTM_AB.kml');
-
-
-
-        // Eventos
-        function placemarker(lat, lng, name){
-          new google.maps.Marker({
-                         position: new google.maps.LatLng(lat, lng),
-                         map: map,
-                         animation:google.maps.Animation.Drop,
-                         title: name,
-                      });
-
-        }
+        var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
+        var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
+      	var content = "<b>Municipio:</b> " + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
 
         placemarker(<?php echo $lugar['Lugar']['lat'];?>,
                     <?php echo $lugar['Lugar']['lng'];?>,
-                    "<?php echo $lugar['Lugar']['nombre'];?>");
-
-        function kmlColor (kmlIn) {
-            var kmlColor = {};
-            if (kmlIn) {
-                aa = kmlIn.substr(0,2);
-                bb = kmlIn.substr(2,2);
-                gg = kmlIn.substr(4,2);
-                rr = kmlIn.substr(6,2);
-                kmlColor.color = "#" + rr + gg + bb;
-                kmlColor.opacity = parseInt(aa,16)/256;
-            } else {
-                // defaults
-                kmlColor.color = randomColor();
-                kmlColor.opacity = 0.45;
-            }
-                return kmlColor;
-        }
-
-        function randomColor(){
-            var color="#";
-            var colorNum = Math.random()*8388607.0;  // 8388607 = Math.pow(2,23)-1
-            var colorStr = colorNum.toString(16);
-            color += colorStr.substring(0,colorStr.indexOf('.'));
-            return color;
-        };
-
-
-        var highlightOptions = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-
-        // Se obtienen los datos del xml (kml)
-        function useTheData(doc){
-            var currentBounds = map.getBounds();
-            if (!currentBounds) currentBounds=new google.maps.LatLngBounds();
-
-            geoXmlDoc = doc[0];
-
-            for (var i = 0; i < geoXmlDoc.placemarks.length; i++) {
-
-                var placemark = geoXmlDoc.placemarks[i];
-
-                //alert(placemark.name);
-
-                if (placemark.polygon) {
-
-                    var kmlStrokeColor = kmlColor(placemark.style.color);
-                    var kmlFillColor = kmlColor(placemark.style.fillcolor);
-
-                    var normalStyle = {
-                        strokeColor: kmlStrokeColor.color,
-                        strokeWeight: placemark.style.width,
-                        strokeOpacity: kmlStrokeColor.opacity,
-                        fillColor: kmlFillColor.color,
-                        fillOpacity: kmlFillColor.opacity
-                    };
-
-                    placemark.polygon.normalStyle = normalStyle;
-
-                    if(placemark.name == '<?php echo $lugar['CuadriculaUtm']['codigo'];?>') {
-                        placemark.polygon.setOptions(highlightOptions);
-                    }
-                }
-            }
-        };
-    }
+                    content);
 
     google.maps.event.addDomListener(window, 'load', initialize);
-//-->
+
 </script>
 
 <div>

@@ -9,6 +9,33 @@ var highlightMunicipio = {fillColor: "#ff0000", strokeColor: "#000000", fillOpac
 var highlightClearCuadriculaUtm = {fillColor: "#000000", strokeColor: "#002673", fillOpacity: 0, strokeWidth: 10};
 var highlightClearMunicipio = {fillColor: "#000000", strokeColor: "#FF0A09", fillOpacity: 0, strokeWidth: 10};
 
+
+
+function kmlColor (kmlIn) {
+    var kmlColor = {};
+    if (kmlIn) {
+        aa = kmlIn.substr(0,2);
+        bb = kmlIn.substr(2,2);
+        gg = kmlIn.substr(4,2);
+        rr = kmlIn.substr(6,2);
+        kmlColor.color = "#" + rr + gg + bb;
+        kmlColor.opacity = parseInt(aa,16)/256;
+    } else {
+        // defaults
+        kmlColor.color = randomColor();
+        kmlColor.opacity = 0.45;
+    }
+        return kmlColor;
+}
+
+function randomColor(){
+    var color="#";
+    var colorNum = Math.random()*8388607.0;  // 8388607 = Math.pow(2,23)-1
+    var colorStr = colorNum.toString(16);
+    color += colorStr.substring(0,colorStr.indexOf('.'));
+    return color;
+};
+
 /**
  * Marca el municipio seleccionado
  *
@@ -64,14 +91,7 @@ function onClickAnyMunicipio(parserDocs) {
 
     }
 }
-function marcarMunicipio(parserDocs) {
-    //Marcar municipio en el mapa
-    var municipioAMarcar = {};
-    municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
-    municipioAMarcar.tipo = "municipio";
-    marcarMapa(parserDocs[0], municipioAMarcar);
-    onClickAnyMunicipio(parserDocs);
-}
+
 
 function placemarker(lat, lng, content){
 	if (typeof(infoWindow) !== "undefined") {
