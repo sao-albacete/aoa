@@ -92,6 +92,32 @@ function onClickAnyMunicipio(parserDocs) {
     }
 }
 
+function initialize_map() {
+
+	var myLatlng = new google.maps.LatLng(38.70, -1.70);
+
+	var mapOptions = {
+		zoom:8,
+		center: myLatlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"),
+        mapOptions);
+
+    // GeoXML para añadir eventos
+    parser = new geoXML3.parser({
+		map: map,
+		singleInfoWindow: false,
+		suppressInfoWindows: true,
+		zoom: false,
+		afterParse: marcarMunicipio
+	});
+
+	// Tratamos el archivo
+    parser.parse(['/kml/municipios_AB.kml']);
+
+
+}
 
 function placemarker(lat, lng, content){
 	if (typeof(infoWindow) !== "undefined") {
@@ -105,7 +131,6 @@ function placemarker(lat, lng, content){
 				 position: new google.maps.LatLng(lat, lng),
 				 map: map,
 				 animation:google.maps.Animation.Drop,
-				 title: content,
 	});
 
 	infoWindow = new google.maps.InfoWindow({content: content});

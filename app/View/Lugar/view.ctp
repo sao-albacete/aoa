@@ -37,10 +37,9 @@
 </style>
 
 <script type="text/javascript">
-<!--
 
     function marcarMunicipio(parserDocs) {
-        //Marcar municipio en el mapa
+        // Marcar municipio en el mapa
         var municipioAMarcar = {};
         municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
         municipioAMarcar.tipo = "municipio";
@@ -48,37 +47,22 @@
         onClickAnyMunicipio(parserDocs);
     }
 
-    function initialize() {
+    function add_init_lugar_marker(){
+      var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
+      var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
+      var content = "<b>Municipio:</b>" + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
 
-        var myLatlng = new google.maps.LatLng(38.70, -1.70);
-        var mapOptions = {
-            zoom:8,
-            center: myLatlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("map_canvas"),
-            mapOptions);
+      placemarker(<?php echo $lugar['Lugar']['lat'];?>,
+                  <?php echo $lugar['Lugar']['lng'];?>,
+                  content);
+    }
 
-         // GeoXML para añadir eventos
-        geoXmlMunicipios = new geoXML3.parser({
-            map: map,
-            singleInfoWindow: true,
-            zoom: false,
-            afterParse: marcarMunicipio
-        });
+    $(document).ready(function() {
+      google.maps.event.addDomListener(window, 'load', add_init_lugar_marker);
 
-        // Tratamos el archivo
-        geoXmlMunicipios.parse('/kml/municipios_AB.kml');
+    });
 
-        var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
-        var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
-      	var content = "<b>Municipio:</b> " + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
-
-        placemarker(<?php echo $lugar['Lugar']['lat'];?>,
-                    <?php echo $lugar['Lugar']['lng'];?>,
-                    content);
-
-    google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initialize_map);
 
 </script>
 

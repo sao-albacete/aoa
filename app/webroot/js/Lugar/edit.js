@@ -4,34 +4,9 @@ var parser;
 
 
 
-function initialize() {
-
-	var myLatlng = new google.maps.LatLng(38.70, -1.70);
-
-	var mapOptions = {
-		zoom:8,
-		center: myLatlng,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById("map_canvas"),
-        mapOptions);
-
-    // GeoXML para añadir eventos
-    parser = new geoXML3.parser({
-		map: map,
-		singleInfoWindow: false,
-		suppressInfoWindows: true,
-		zoom: false,
-		afterParse: marcarMunicipio
-	});
-
-	// Tratamos el archivo
-    parser.parse(['/kml/municipios_AB.kml']);
 
 
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize_map);
 
 $(document).ready(function() {
 

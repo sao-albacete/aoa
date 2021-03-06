@@ -1,78 +1,78 @@
-var map;
-var parser;
+// var map;
+// var parser;
+//
+// var highlightCuadriculaUtm = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
+// var highlightMunicipio = {fillColor: "#ff0000", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
+// var highlightClearCuadriculaUtm = {fillColor: "#000000", strokeColor: "#002673", fillOpacity: 0, strokeWidth: 10};
+// var highlightClearMunicipio = {fillColor: "#000000", strokeColor: "#FF0A09", fillOpacity: 0, strokeWidth: 10};
+//
+// function initialize() {
+//
+//     var myLatlng = new google.maps.LatLng(38.70, -1.70);
+//
+//     var mapOptions = {
+//         zoom:8,
+//         center: myLatlng,
+//         mapTypeId: google.maps.MapTypeId.ROADMAP
+//     };
+//     map = new google.maps.Map(document.getElementById("map_canvas"),
+//         mapOptions);
+//
+//     // GeoXML para añadir eventos
+//     parser = new geoXML3.parser({
+//         map: map,
+//         singleInfoWindow: true,
+//         zoom: false
+//     });
+//
+//     // Tratamos el archivo
+//     parser.parse(['/kml/municipios_AB.kml','/kml/UTM_AB.kml']);
+// }
 
-var highlightCuadriculaUtm = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-var highlightMunicipio = {fillColor: "#ff0000", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-var highlightClearCuadriculaUtm = {fillColor: "#000000", strokeColor: "#002673", fillOpacity: 0, strokeWidth: 10};
-var highlightClearMunicipio = {fillColor: "#000000", strokeColor: "#FF0A09", fillOpacity: 0, strokeWidth: 10};
-
-function initialize() {
-
-    var myLatlng = new google.maps.LatLng(38.70, -1.70);
-
-    var mapOptions = {
-        zoom:8,
-        center: myLatlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById("map_canvas"),
-        mapOptions);
-
-    // GeoXML para añadir eventos
-    parser = new geoXML3.parser({
-        map: map,
-        singleInfoWindow: true,
-        zoom: false
-    });
-    
-    // Tratamos el archivo
-    parser.parse(['/kml/municipios_AB.kml','/kml/UTM_AB.kml']);
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize_map);
 
 $(document).ready(function() {
 
     /* INICIO cambio de cuadricula UTM */
     $("#selectCuadriculaUtm").change(function() {
-        
+
         // Cargar combo de municipios
         loadMunicipioSelect($(this).val());
-        
+
         // Cargar datos de cuadrícula UTM
         loadCoordenadasUtm($(this).val());
-        
+
         // Marcar cuadrícula UTM
         var cuadriculaUtmAMarcar = {};
         cuadriculaUtmAMarcar.codigo = $(this).val();
         cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
-        
+
         marcarMapa(parser.docs[1], cuadriculaUtmAMarcar);
-        
+
         // Descarmacar municipios
         var municipioAMarcar = {};
         municipioAMarcar.tipo = "municipio";
-        
+
         marcarMapa(parser.docs[0], municipioAMarcar);
     });
     /* FIN cambio de cuadricula UTM */
-    
+
     /* INICIO cambio de cuadricula UTM */
     $("#selectMunicipio").change(function() {
-        
+
         if($(this).val() != "") {
-            
+
             $.ajax({
                 url: "/municipio/obtenerDatosMunicipio",
                 data: {"municipioId":$(this).val()},
                 success: function( data ) {
-                    
+
                     var datosMunicipio = JSON.parse(data);
-                    
+
                     var municipioAMarcar = {};
                     municipioAMarcar.codigo = datosMunicipio.Municipio.nombre;
                     municipioAMarcar.tipo = "municipio";
-                    
+
                     marcarMapa(parser.docs[0], municipioAMarcar);
                 }
             });
@@ -142,7 +142,7 @@ $(document).ready(function() {
             var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
             var nombreLugar = $('#txtNombre').val();
             var municipioId = $('#selectMunicipio').val();
-            
+
             $.ajax({
                 url: "/lugar/cargarLugaresSimilares",
                 data: {"codigoCuadriculaUtm":codigoCuadriculaUtm, "nombreLugar":nombreLugar, "municipioId":municipioId},
@@ -161,7 +161,7 @@ $(document).ready(function() {
                         items.push( "</table>" );
                         items.push( "<br>" );
                         items.push( "<p>¿Está seguro de que desea crear un nuevo lugar?</p>" );
-    
+
                         bootbox.confirm(items.join( "" ), "Cancelar", "Aceptar", function(result) {
                             if(result) {
                                 $("#frmNuevoLugar").submit();
@@ -174,10 +174,10 @@ $(document).ready(function() {
                 },
                 dataType: "json"
             });
-        } 
+        }
     });
     /* FIN guardar lugar */
-    
+
     /* INICIO popup ayuda */
     $('.help-button').popover();
     /* FIN popup ayuda */
@@ -193,12 +193,12 @@ function limpiar() {
     $("#frmNuevoLugar").find("input[type=text], select").val("");
     selectMunicipio.empty();
     selectMunicipio.prop("disabled", true);
-    
+
     // Descarmacar municipios
     var cuadriculaUtmAMarcar = {};
     cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
     marcarMapa(parser.docs[1], cuadriculaUtmAMarcar);
-    
+
     // Descarmacar municipios
     var municipioAMarcar = {};
     municipioAMarcar.tipo = "municipio";
@@ -207,7 +207,7 @@ function limpiar() {
 
 /**
  * Carga el combo de formularios y lo habilita
- * 
+ *
  * @param codigoCuadriculaUtm
  */
 function loadMunicipioSelect(codigoCuadriculaUtm) {
@@ -226,7 +226,7 @@ function loadMunicipioSelect(codigoCuadriculaUtm) {
 
 /**
  * Carga las coordenadas de la cuadricula UTM seleccionada
- * 
+ *
  * @param codigoCuadriculaUtm
  */
 function loadCoordenadasUtm(codigoCuadriculaUtm) {
@@ -245,18 +245,18 @@ function loadCoordenadasUtm(codigoCuadriculaUtm) {
 
 /**
  * Marca la cuadricula UTM o municipio seleccionados
- * 
+ *
  * @param parserDoc
  * @param elementoAMarcar
  */
 function marcarMapa(parserDoc, elementoAMarcar){
-    
+
     for (var i = 0; i < parserDoc.placemarks.length; i++) {
-        
+
         var placemark = parserDoc.placemarks[i];
-        
+
         if (placemark.polygon) {
-            
+
             var kmlStrokeColor = kmlColor(placemark.style.color);
             var kmlFillColor = kmlColor(placemark.style.fillcolor);
 
@@ -267,9 +267,9 @@ function marcarMapa(parserDoc, elementoAMarcar){
                 fillColor: kmlFillColor.color,
                 fillOpacity: kmlFillColor.opacity
             };
-            
+
             if(placemark.name == elementoAMarcar.codigo) {
-                    
+
                 if(elementoAMarcar.tipo == "cuadriculaUtm") {
                     placemark.polygon.setOptions(highlightCuadriculaUtm);
                 }
