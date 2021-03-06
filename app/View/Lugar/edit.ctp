@@ -154,7 +154,7 @@ $(document).ready(function() {
                         <div id="divBotonesBusqueda" class="control-group"
                             style="margin-top: 20px;">
                             <div class="controls" style="text-align: center;">
-                                <a id="btnLimpiar" class="btn btn-warning" href="#"><i class="icon-trash"></i> <?php echo __("Limpiar");?></a>
+                                <!-- <a id="btnLimpiar" class="btn btn-warning" href="#"><i class="icon-trash"></i> <?php echo __("Limpiar");?></a> -->
                                 <a id="btnGuardar" class="btn btn-success btn-large" href="#"><i class="icon-ok"></i> <?php echo __("Guardar");?></a>
                             </div>
                         </div>
