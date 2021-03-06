@@ -110,8 +110,7 @@ class LugarController extends AppController {
 
             // Cuadricula UTM
             {
-                $cuadriculaUtm = $this->CuadriculaUtm->obtenerDatosBasicosCuadriculaUtmPorCodigo($this->request->data["cuadriculaUtmCodigo"]);
-                $this->request->data["Lugar"]["cuadricula_utm_id"] = $cuadriculaUtm["CuadriculaUtm"]["id"];
+                $this->request->data["Lugar"]["cuadricula_utm_id"] = 1;
             }
 
             // Comarca

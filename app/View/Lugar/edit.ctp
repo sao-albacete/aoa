@@ -20,8 +20,8 @@ $this->Html->script(array(
     '/plugin/jquery-validation-1.11.1/localization/messages_es',
     '/plugin/bootbox/bootbox.min',
     'common/maps/functions',
+    'Lugar/common',
     'Lugar/edit',
-    'Lugar/common'
 ), array('inline' => false));
 
 // Menu
@@ -138,7 +138,7 @@ $(document).ready(function() {
                             <!-- Coordenadas Lugar Lat,Lng -->
                             <div class="control-group">
                                 <div class="controls form-inline">
-                                    <label class="control-label" for="txtCoordenadasUtmX"> <?php echo __("Latitud y Longitud");?></label>
+                                    <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud");?></label>
                                     <input name="lat" class="input-mini" id="txtCoordenadasLat" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
                                     <input name="lng" class="input-mini" id="txtCoordenadasLng" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
 
@@ -154,7 +154,7 @@ $(document).ready(function() {
                         <div id="divBotonesBusqueda" class="control-group"
                             style="margin-top: 20px;">
                             <div class="controls" style="text-align: center;">
-                                <!-- <a id="btnLimpiar" class="btn btn-warning" href="#"><i class="icon-trash"></i> <?php echo __("Limpiar");?></a> -->
+                                <a id="btnLimpiar" class="btn btn-warning" href="#"><i class="icon-trash"></i> <?php echo __("Limpiar");?></a>
                                 <a id="btnGuardar" class="btn btn-success btn-large" href="#"><i class="icon-ok"></i> <?php echo __("Guardar");?></a>
                             </div>
                         </div>

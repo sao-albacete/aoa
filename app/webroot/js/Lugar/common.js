@@ -36,6 +36,93 @@ function randomColor(){
     return color;
 };
 
+function clickablePolygon(p) {
+  google.maps.event.addListener(
+    p.polygon,
+    "click",
+    function (mapsMouseEvent) { clickMunicipioListener(mapsMouseEvent, p); }
+  );
+}
+
+function onChangeMunicipioSelect() {
+
+    if($(this).val() != "") {
+
+        $.ajax({
+            url: "/municipio/obtenerDatosMunicipio",
+            data: {"municipioId":$(this).val()},
+            success: function( data ) {
+
+                var datosMunicipio = JSON.parse(data);
+
+                var municipioAMarcar = {};
+                municipioAMarcar.codigo = datosMunicipio.Municipio.nombre;
+                municipioAMarcar.tipo = "municipio";
+
+                marcarMapa(parser.docs[0], municipioAMarcar);
+            }
+        });
+    }
+}
+
+
+
+validate_rules = {
+    rules: {
+        nombre : {
+             maxlength: 100
+         },
+         lat: {
+           number: true,
+           maxlength: 11
+         },
+         lng: {
+           number: true,
+           maxlength: 11
+         }
+    },
+    messages: {
+          municipioId : {
+             required: "Debe seleccionar un municipio."
+         },
+         nombre : {
+             required: "Debe introducir un nombre.",
+             maxlength: "El nombre no puede tener más de 100 caracteres."
+         },
+         lat : {
+          number: "La coordenada Latitud debe ser un numero.",
+          maxlength: "La coordenada Latitud no puede tener más de 10 cifras."
+        },
+        lng : {
+          number: "La coordenada Longitud debe ser un numero.",
+          maxlength: "La coordenada Longitud no puede tener más de 10 cifras."
+        }
+    },
+    errorContainer: "#errorMessagesGrafico",
+    errorLabelContainer : "#errorMessagesGrafico ul",
+    wrapper: "li",
+    invalidHandler: function(event, validator) {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+    },
+    onfocusout: false
+}
+
+function clickMunicipioListener(mapsMouseEvent, placemark){
+	// Descarmacar municipios
+  var nombreLugar = ($("#txtNombre").val() != "") ? $("#txtNombre").val() : "[a rellenar]"
+	var content = "<b>Municipio:</b> " + placemark.name + "<br><b>Nombre Lugar:</b> " + nombreLugar
+	latLng = mapsMouseEvent.latLng;
+	placemarker(latLng.lat(), latLng.lng(), content)
+
+	var municipioAMarcar = new Object();
+	municipioAMarcar.tipo = "municipio";
+	marcarMapa(parser.docs[0], municipioAMarcar);
+  $("#selectMunicipio option:contains("+placemark.name+")").attr('selected', 'selected');
+  placemark.polygon.setOptions(highlightMunicipio);
+	$("#txtCoordenadasLat").val(latLng.lat().toFixed(8));
+	$("#txtCoordenadasLng").val(latLng.lng().toFixed(8));
+}
+
 /**
  * Marca el municipio seleccionado
  *
