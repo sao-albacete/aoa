@@ -44,7 +44,6 @@
         municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
         municipioAMarcar.tipo = "municipio";
         marcarMapa(parserDocs[0], municipioAMarcar);
-        onClickAnyMunicipio(parserDocs);
     }
 
     function add_init_lugar_marker(){
@@ -107,9 +106,9 @@
                 <!-- Coordenadas UTM -->
                 <div class="control-group">
                     <div class="controls form-inline">
-                        <label class="control-label" for="txtCoordenadasUtm"> <?php echo __("Latitud y Longitud"); ?></label>
-                        <input class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
-                        <input class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+                        <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud"); ?></label>
+                        <input name="lat" class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                        <input name="lng" class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
                     </div>
                 </div>
 
