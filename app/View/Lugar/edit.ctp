@@ -31,29 +31,6 @@ $this->end();
 
 <script type="text/javascript">
 
-function marcarCuadriculaUtmYMunicipio(parserDocs) {
-    
-    //Marcar cuadrícula UTM
-    var cuadriculaUtmAMarcar = {};
-    cuadriculaUtmAMarcar.codigo = "<?php echo $lugar['CuadriculaUtm']['codigo'];?>";
-    cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
-    
-    marcarMapa(parserDocs[0], cuadriculaUtmAMarcar);
-    
-    $.ajax({
-        url: "/municipio/obtenerDatosMunicipio",
-        data: {"municipioId":$("#selectMunicipio").val()},
-        success: function( data ) {
-            
-            var datosMunicipio = JSON.parse(data);
-            
-            var municipioAMarcar = {};
-            municipioAMarcar.codigo = datosMunicipio.Municipio.nombre;
-            municipioAMarcar.tipo = "municipio";
-            
-            marcarMapa(parserDocs[1], municipioAMarcar);
-        }
-    });
 }
 
 </script>
@@ -107,29 +84,6 @@ function marcarCuadriculaUtmYMunicipio(parserDocs) {
                             </div>
 
                             <!-- Cuadrícula UTM -->
-                            <div class="control-group">
-                                <div class="controls form-inline">
-                                    <!-- Cuadricula UTM -->
-                                    <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?> (*)</label>
-                                    <select id="selectCuadriculaUtm" name="cuadriculaUtmCodigo"
-                                        class="input-xlarge required">
-                                        <option value=""><?php echo __("-- Seleccione --");?></option>
-                                        <?php
-                                        foreach($cuadriculasUtm as $cuadriculaUtm) {
-                                            if($lugar['CuadriculaUtm']['codigo'] == $cuadriculaUtm['CuadriculaUtm']['codigo']) {
-                                                echo "<option value='".$cuadriculaUtm['CuadriculaUtm']['codigo']."' selected='selected'>".$cuadriculaUtm['CuadriculaUtm']['codigo']."</option>";
-                                            }
-                                            else {
-                                                echo "<option value='".$cuadriculaUtm['CuadriculaUtm']['codigo']."'>".$cuadriculaUtm['CuadriculaUtm']['codigo']."</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Seleccione una cuadrícula UTM. Puede consultar los códigos de cuadrícula en el mapa. Un vez seleccione una cuadrícula, se cargarán los municipios asociados.');?>"><i
-                                            class="icon-info-sign icon-white"></i> </span>
-                                </div>
-                            </div>
 
                             <!-- Municipio -->
                             <div class="control-group">

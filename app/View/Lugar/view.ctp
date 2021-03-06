@@ -176,14 +176,6 @@
                         </div>
                     </div>
 
-                    <!-- Cuadrícula UTM -->
-                    <div class="control-group">
-                        <div class="controls form-inline">
-                            <!-- Cuadricula UTM -->
-                            <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?></label>
-                            <input class="input-xlarge" readonly="readonly" type="text" value="<?php echo $lugar['CuadriculaUtm']['codigo'];?>"/>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Municipio -->
