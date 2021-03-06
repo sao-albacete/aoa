@@ -1,10 +1,8 @@
 var map;
 var parser;
 
-var highlightCuadriculaUtm = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-var highlightMunicipio = {fillColor: "#ff0000", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-var highlightClearCuadriculaUtm = {fillColor: "#000000", strokeColor: "#002673", fillOpacity: 0, strokeWidth: 10};
-var highlightClearMunicipio = {fillColor: "#000000", strokeColor: "#FF0A09", fillOpacity: 0, strokeWidth: 10};
+
+
 
 function initialize() {
 
@@ -21,63 +19,43 @@ function initialize() {
     // GeoXML para añadir eventos
     parser = new geoXML3.parser({
 		map: map,
-		singleInfoWindow: true,
+		singleInfoWindow: false,
+		suppressInfoWindows: true,
 		zoom: false,
-		afterParse: marcarCuadriculaUtmYMunicipio
+		afterParse: marcarMunicipio
 	});
-	
+
 	// Tratamos el archivo
-    parser.parse(['/kml/UTM_AB.kml', '/kml/municipios_AB.kml']);
+    parser.parse(['/kml/municipios_AB.kml']);
+
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
 $(document).ready(function() {
 
-	$("#selectCuadriculaUtm").change(function() {
-		
-		// Cargar combo de municipios
-		loadMunicipioSelect($(this).val());
-		
-		// Cargar datos de cuadrícula UTM
-		loadCoordenadasUtm($(this).val());
-		
-		// Marcar cuadrícula UTM
-		var cuadriculaUtmAMarcar = new Object();
-		cuadriculaUtmAMarcar.codigo = $(this).val();
-		cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
-		
-		marcarMapa(parser.docs[0], cuadriculaUtmAMarcar);
-		
-		// Descarmacar municipios
-		var municipioAMarcar = new Object();
-		municipioAMarcar.tipo = "municipio";
-		
-		marcarMapa(parser.docs[1], municipioAMarcar);
-	});
-	
 	/* INICIO cambio de cuadricula UTM */
 	$("#selectMunicipio").change(function() {
-		
+
 		if($(this).val() != "") {
-			
+
 			$.ajax({
 				url: "/municipio/obtenerDatosMunicipio",
 				data: {"municipioId":$(this).val()},
 				success: function( data ) {
-					
+
 					var datosMunicipio = JSON.parse(data);
-					
+
 					var municipioAMarcar = new Object();
 					municipioAMarcar.codigo = datosMunicipio.Municipio.nombre;
 					municipioAMarcar.tipo = "municipio";
-					
-					marcarMapa(parser.docs[1], municipioAMarcar);
+
+					marcarMapa(parser.docs[0], municipioAMarcar);
 				}
 			});
 		}
 	});
-	/* FIN cambio de cuadricula UTM */
 
 	/** INICIO Validación de formulario **/
 
@@ -143,7 +121,7 @@ $(document).ready(function() {
 			var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
 			var nombreLugar = $('#txtNombre').val();
 			var municipioId = $('#selectMunicipio').val();
-			
+
 			$.ajax({
 				url: "/lugar/cargarLugaresSimilares",
 				data: {"codigoCuadriculaUtm":codigoCuadriculaUtm, "nombreLugar":nombreLugar, "municipioId":municipioId},
@@ -164,7 +142,7 @@ $(document).ready(function() {
 						items.push( "</table>" );
 						items.push( "<br>" );
 						items.push( "<p>¿Está seguro de que desea actualizar el lugar con estos datos?</p>" );
-	
+
 						bootbox.confirm(items.join( "" ), function(result) {
 							if(result) {
 								$("#frmEditarLugar").submit();
@@ -177,7 +155,7 @@ $(document).ready(function() {
 				},
 				dataType: "json"
 			});
-        } 
+        }
 	});
 	/* FIN guardar lugar */
 });
@@ -186,102 +164,87 @@ $(document).ready(function() {
  * Limpia el formulario
  */
 function limpiar() {
-	
+
 	$("#frmEditarLugar").find("input[type=text], select").val("");
 	$("#selectMunicipio").empty();
 	$("#selectMunicipio").prop("disabled", true);
-	
-	// Descarmacar municipios
-	var cuadriculaUtmAMarcar = new Object();
-	cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
-	marcarMapa(parser.docs[0], cuadriculaUtmAMarcar);
-	
+
+	// // Descarmacar municipios
+	// var cuadriculaUtmAMarcar = new Object();
+	// cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
+	// marcarMapa(parser.docs[0], cuadriculaUtmAMarcar);
+
 	// Descarmacar municipios
 	var municipioAMarcar = new Object();
 	municipioAMarcar.tipo = "municipio";
-	marcarMapa(parser.docs[1], municipioAMarcar);
+	marcarMapa(parser.docs[0], municipioAMarcar);
 }
+//
+// /**
+//  * Carga el combo de formularios y lo habilita
+//  *
+//  * @param codigoCuadriculaUtm
+//  */
+// function loadMunicipioSelect(codigoCuadriculaUtm) {
+//
+// 	$("#selectMunicipio").load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
+//
+//     if(codigoCuadriculaUtm != "") {
+// 		$("#selectMunicipio").prop("disabled", false);
+// 	}
+// 	else {
+// 		$("#selectMunicipio").prop("disabled", true);
+// 	}
+// }
 
-/**
- * Carga el combo de formularios y lo habilita
- * 
- * @param codigoCuadriculaUtm
- */
-function loadMunicipioSelect(codigoCuadriculaUtm) {
+// /**
+//  * Carga las coordenadas de la cuadricula UTM seleccionada
+//  *
+//  * @param codigoCuadriculaUtm
+//  */
+// function loadCoordenadasUtm(codigoCuadriculaUtm) {
+//
+// 	$.ajax({
+// 		url: "/cuadriculaUtm/cargarDatosCoordenadaUtm",
+// 		data: {"codigoCuadriculaUtm":codigoCuadriculaUtm},
+// 		success: function( dataReturn ) {
+// 			$("#txtCoordenadasUtmArea").val(dataReturn.CuadriculaUtm.area);
+// 			$("#txtCoordenadasUtmX").val(dataReturn.CuadriculaUtm.coordenadaX);
+// 			$("#txtCoordenadasUtmY").val(dataReturn.CuadriculaUtm.coordenadaY);
+// 		},
+// 		dataType: "json"
+// 	});
+// }
 
-	$("#selectMunicipio").load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
+function clickMunicipioListener(mapsMouseEvent, placemark){
+	// Descarmacar municipios
 
-    if(codigoCuadriculaUtm != "") {
-		$("#selectMunicipio").prop("disabled", false);
-	}
-	else {
-		$("#selectMunicipio").prop("disabled", true);
-	}
-}
 
-/**
- * Carga las coordenadas de la cuadricula UTM seleccionada
- * 
- * @param codigoCuadriculaUtm
- */
-function loadCoordenadasUtm(codigoCuadriculaUtm) {
+	var content = "<b>Municipio:</b> " + placemark.name
+	latLng = mapsMouseEvent.latLng;
+	placemarker(latLng.lat(), latLng.lng(), content)
+	// marker = new google.maps.Marker({
+	// 							 position: latLng,
+	// 							 title: content,
+	// 							 map: map,
+	// 							 zIndex: 5,
+	// 							 // icon: "http://www.codeshare.co.uk/images/blue-pin.png",
+	// 							 animation:google.maps.Animation.Drop,
+	// });
 
-	$.ajax({
-		url: "/cuadriculaUtm/cargarDatosCoordenadaUtm",
-		data: {"codigoCuadriculaUtm":codigoCuadriculaUtm},
-		success: function( dataReturn ) {
-			$("#txtCoordenadasUtmArea").val(dataReturn.CuadriculaUtm.area);
-			$("#txtCoordenadasUtmX").val(dataReturn.CuadriculaUtm.coordenadaX);
-			$("#txtCoordenadasUtmY").val(dataReturn.CuadriculaUtm.coordenadaY);
-		},
-		dataType: "json"
-	});
-}
+	var municipioAMarcar = new Object();
+	municipioAMarcar.tipo = "municipio";
+	marcarMapa(parser.docs[0], municipioAMarcar);
+  $("#selectMunicipio option:contains("+placemark.name+")").attr('selected', 'selected');
+  placemark.polygon.setOptions(highlightMunicipio);
+	$("#txtCoordenadasLat").val(latLng.lat());
+	$("#txtCoordenadasLng").val(latLng.lng());
+	// debugger;
 
-/**
- * Marca la cuadricula UTM o municipio seleccionados
- * 
- * @param parserDoc
- * @param elementoAMarcar
- */
-function marcarMapa(parserDoc, elementoAMarcar){
-	
-	for (var i = 0; i < parserDoc.placemarks.length; i++) {
-		
-		var placemark = parserDoc.placemarks[i];
-		
-		if (placemark.polygon) {
-			
-			var kmlStrokeColor = kmlColor(placemark.style.color);
-			var kmlFillColor = kmlColor(placemark.style.fillcolor);
-			
-			var normalStyle = {
-				strokeColor: kmlStrokeColor.color,
-				strokeWeight: placemark.style.width,
-				strokeOpacity: kmlStrokeColor.opacity,
-				fillColor: kmlFillColor.color,
-				fillOpacity: kmlFillColor.opacity
-			};
-
-			placemark.polygon.normalStyle = normalStyle;
-			
-			if(placemark.name == elementoAMarcar.codigo) {
-					
-				if(elementoAMarcar.tipo == "cuadriculaUtm") {
-					placemark.polygon.setOptions(highlightCuadriculaUtm);
-				}
-				else if(elementoAMarcar.tipo == "municipio") {
-					placemark.polygon.setOptions(highlightMunicipio);
-				}
-			}
-			else {
-				if(elementoAMarcar.tipo == "cuadriculaUtm") {
-					placemark.polygon.setOptions(highlightClearCuadriculaUtm);
-				}
-				else if(elementoAMarcar.tipo == "municipio") {
-					placemark.polygon.setOptions(highlightClearMunicipio);
-				}
-			}
-		}
-	}
+  // var municipioAMarcar = {};
+  // municipioAMarcar.codigo = placemark.name;
+  // municipioAMarcar.tipo = "municipio";
+  //
+  // marcarMapa(parserDocs[0], municipioAMarcar);
+  // debugger;
 }

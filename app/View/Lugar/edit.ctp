@@ -20,7 +20,8 @@ $this->Html->script(array(
     '/plugin/jquery-validation-1.11.1/localization/messages_es',
     '/plugin/bootbox/bootbox.min',
     'common/maps/functions',
-    'Lugar/edit'
+    'Lugar/edit',
+    'Lugar/add_edit'
 ), array('inline' => false));
 
 // Menu
@@ -30,8 +31,26 @@ $this->end();
 ?>
 
 <script type="text/javascript">
-
+function add_init_lugar_marker(){
+  placemarker(<?php echo $lugar['Lugar']['lat'];?>,
+              <?php echo $lugar['Lugar']['lng'];?>,
+              "<?php echo $lugar['Lugar']['nombre'];?>");
 }
+$(document).ready(function() {
+  google.maps.event.addDomListener(window, 'load', add_init_lugar_marker);
+
+});
+
+
+function clickablePolygon(p) {
+  google.maps.event.addListener(
+    p.polygon,
+    "click",
+    function (mapsMouseEvent) { clickMunicipioListener(mapsMouseEvent, p); }
+  );
+}
+
+
 
 </script>
 
@@ -42,7 +61,7 @@ $this->end();
             <button class="btn btn-mini btn-info pull-right help-button"
                 data-trigger="click" data-placement="left" data-html="true"
                 data-content="<?php echo __('Para editar el lugar, modifique los datos que desee en el formulario y pulse <b>Guardar</b>. <br> Puede consultar las cuadrículas UTM de la provincia de Albacete en el mapa haciendo clic sobre cualqueira de ellas.');?>">
-                <i class="icon-info-sign"></i> 
+                <i class="icon-info-sign"></i>
                 <?php echo __("Ayuda");?>
             </button>
         </legend>
@@ -73,7 +92,7 @@ $this->end();
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <!-- Nombre -->
-                                    <label class="control-label" for="txtNombre"> <?php echo __("Nombre");?> (*)</label> 
+                                    <label class="control-label" for="txtNombre"> <?php echo __("Nombre");?> (*)</label>
                                     <input id="txtNombre" name="nombre"
                                         class="input-xlarge required" type="text"
                                         value="<?php echo $lugar['Lugar']['nombre'];?>" maxlength="100">
@@ -85,12 +104,14 @@ $this->end();
 
                             <!-- Cuadrícula UTM -->
 
+
                             <!-- Municipio -->
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <!-- Municipio -->
                                     <label class="control-label" for="selectMunicipio"><?php echo __("Municipio");?> (*)</label>
-                                    <select id="selectMunicipio" name="municipioId"
+                                    <!-- Se podría marcar el select con el atributo disabled  para evitar que se pudiera cambiar manualmente -->
+                                    <select readonly="readonly" id="selectMunicipio" name="municipioId"
                                         class="input-xlarge required">
                                         <option value=""><?php echo __("-- Seleccione --");?></option>
                                             <?php
@@ -110,19 +131,15 @@ $this->end();
                                 </div>
                             </div>
 
-                            <!-- Coordenadas UTM -->
+                            <!-- Coordenadas Lugar Lat,Lng -->
                             <div class="control-group">
                                 <div class="controls form-inline">
-                                    <label class="control-label" for="txtCoordenadasUtmX"> <?php echo __("Coordenadas UTM");?></label>
-                                    <input id="txtCoordenadasUtmArea" readonly="readonly"
-                                        class="input-mini" type="text"
-                                        value="<?php echo $lugar['CuadriculaUtm']['area'];?>"> 
-                                    <input id="txtCoordenadasUtmX" name="coordenadaX" class="input-mini" type="text" readonly="readonly"
-                                        value="<?php echo $lugar['Lugar']['coordenadaX'];?>" maxlength="6">
-                                    <input id="txtCoordenadasUtmY" name="coordenadaY" class="input-mini" type="text" readonly="readonly"
-                                        value="<?php echo $lugar['Lugar']['coordenadaY'];?>" maxlength="7">
+                                    <label class="control-label" for="txtCoordenadasUtmX"> <?php echo __("Latitud y Longitud");?></label>
+                                    <input name="lat" class="input-mini" id="txtCoordenadasLat" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                                    <input name="lng" class="input-mini" id="txtCoordenadasLng" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+
                                     <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Coordenadas UTM x e y del lugar.');?>"><i
+                                        data-content="<?php echo __('Coordenadas EPSG 3857 del lugar.');?>"><i
                                             class="icon-info-sign icon-white"></i> </span>
                                 </div>
                             </div>
