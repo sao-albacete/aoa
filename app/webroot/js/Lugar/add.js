@@ -8,7 +8,7 @@ onClickAnyMunicipio(parserDocs);
 
 $(document).ready(function() {
 
-    /* INICIO cambio de cuadricula UTM */
+    /* INICIO cambio de municipio */
     $("#selectMunicipio").change(onChangeMunicipioSelect);
     /* FIN cambio de cuadricula UTM */
 

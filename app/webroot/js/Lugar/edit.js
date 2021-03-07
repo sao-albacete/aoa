@@ -5,7 +5,7 @@ google.maps.event.addDomListener(window, 'load', initialize_map);
 
 $(document).ready(function() {
 
-	/* INICIO cambio de cuadricula UTM */
+	/* INICIO cambio de municipio */
 	$("#selectMunicipio").change(onChangeMunicipioSelect);
 
 	/** INICIO Validación de formulario **/
