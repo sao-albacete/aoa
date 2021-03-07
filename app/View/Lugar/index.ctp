@@ -47,6 +47,8 @@
                infoWindow = new google.maps.InfoWindow({content: iwContent});
 
                infoWindow.open(map, marker);
+               //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
+               setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','') }, 300);
 
             });
             return marker;
