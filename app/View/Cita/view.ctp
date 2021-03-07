@@ -18,7 +18,8 @@ $this->Html->script(array(
 	'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
 	'common/maps/geoxml3/geoxml3.js',
 	'common/maps/geoxml3/ProjectedOverlay.js',
-	'Cita/view'
+  'Lugar/common',
+	'Cita/view',
 ), array('inline' => false));
 
 // Menu
@@ -29,121 +30,29 @@ $this->end();
 
 <script type="text/javascript">
 
-	var map;
+function marcarMunicipio(parserDocs) {
+    // Marcar municipio en el mapa
+    var municipioAMarcar = {};
+    municipioAMarcar.codigo = "<?php echo $cita['Lugar']['Municipio']['nombre'];?>";
+    municipioAMarcar.tipo = "municipio";
+    marcarMapa(parserDocs[0], municipioAMarcar);
+    add_init_lugar_marker();
+}
 
-	function initialize() {
+function add_init_lugar_marker(){
+  var nombreLugar = "<?php echo $cita['Lugar']['Lugar']['nombre'];?>";
+  var nombreMunicipio = "<?php echo $cita['Lugar']['Municipio']['nombre']; ?>";
+  var content = "<b>Municipio:</b>" + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
 
-		var myLatlng = new google.maps.LatLng(38.70, -1.70);
+  placemarker(<?php echo $cita['Lugar']['Lugar']['lat'];?>,
+              <?php echo $cita['Lugar']['Lugar']['lng'];?>,
+              content);
 
-		var mapOptions = {
-			zoom: 8,
-			center: myLatlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		map = new google.maps.Map(document.getElementById("map_canvas"),
-			mapOptions);
+  //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
+  setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
+}
 
-		// GeoXML para añadir eventos
-		geoXmlUtm = new geoXML3.parser({
-			map: map,
-			singleInfoWindow: true,
-			zoom: false,
-			afterParse: useTheData
-		});
-
-		// Tratamos el archivo
-		geoXmlUtm.parse('/kml/UTM_AB.kml');
-
-		// GeoXML para añadir eventos
-		geoXmlMunicipios = new geoXML3.parser({
-			map: map,
-			singleInfoWindow: true,
-			zoom: false,
-			afterParse: useTheData
-		});
-
-		// Tratamos el archivo
-		geoXmlMunicipios.parse('/kml/municipios_AB.kml');
-
-		// Eventos
-		function kmlColor(kmlIn) {
-			var kmlColor = {};
-			if (kmlIn) {
-				aa = kmlIn.substr(0, 2);
-				bb = kmlIn.substr(2, 2);
-				gg = kmlIn.substr(4, 2);
-				rr = kmlIn.substr(6, 2);
-				kmlColor.color = "#" + rr + gg + bb;
-				kmlColor.opacity = parseInt(aa, 16) / 256;
-			} else {
-				// defaults
-				kmlColor.color = randomColor();
-				kmlColor.opacity = 0.45;
-			}
-			return kmlColor;
-		}
-
-		function randomColor() {
-			var color = "#";
-			var colorNum = Math.random() * 8388607.0;  // 8388607 = Math.pow(2,23)-1
-			var colorStr = colorNum.toString(16);
-			color += colorStr.substring(0, colorStr.indexOf('.'));
-			return color;
-		}
-
-
-		var highlightOptions = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-		function placemarker(lat, lng, name){
-			new google.maps.Marker({
-										 position: new google.maps.LatLng(lat, lng),
-										 map: map,
-										 animation:google.maps.Animation.Drop,
-										 title: name,
-									});
-
-		}
-
-		placemarker(<?= $cita['Lugar']['Lugar']['lat']; ?>, 
-		            <?= $cita['Lugar']['Lugar']['lng']; ?>,
-								"<?= $cita['Lugar']['Lugar']['nombre']; ?>");
-
-		// Se obtienen los datos del xml (kml)
-		function useTheData(doc) {
-			var currentBounds = map.getBounds();
-			if (!currentBounds) currentBounds = new google.maps.LatLngBounds();
-
-			geoXmlDoc = doc[0];
-
-			for (var i = 0; i < geoXmlDoc.placemarks.length; i++) {
-
-				var placemark = geoXmlDoc.placemarks[i];
-
-				//alert(placemark.name);
-
-				if (placemark.polygon) {
-
-					var kmlStrokeColor = kmlColor(placemark.style.color);
-					var kmlFillColor = kmlColor(placemark.style.fillcolor);
-
-					var normalStyle = {
-						strokeColor: kmlStrokeColor.color,
-						strokeWeight: placemark.style.width,
-						strokeOpacity: kmlStrokeColor.opacity,
-						fillColor: kmlFillColor.color,
-						fillOpacity: kmlFillColor.opacity
-					};
-
-					placemark.polygon.normalStyle = normalStyle;
-
-					if (placemark.name == '<?=$cita['Lugar']['CuadriculaUtm']['codigo'];?>') {
-						placemark.polygon.setOptions(highlightOptions);
-					}
-				}
-			}
-		}
-	}
-
-	google.maps.event.addDomListener(window, 'load', initialize);
+	google.maps.event.addDomListener(window, 'load', initialize_map);
 </script>
 
 <!-- Cuerpo -->

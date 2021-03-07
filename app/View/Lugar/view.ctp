@@ -44,6 +44,7 @@
         municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
         municipioAMarcar.tipo = "municipio";
         marcarMapa(parserDocs[0], municipioAMarcar);
+        add_init_lugar_marker();
     }
 
     function add_init_lugar_marker(){
@@ -54,12 +55,10 @@
       placemarker(<?php echo $lugar['Lugar']['lat'];?>,
                   <?php echo $lugar['Lugar']['lng'];?>,
                   content);
+      //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
+      setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
     }
 
-    $(document).ready(function() {
-      google.maps.event.addDomListener(window, 'load', add_init_lugar_marker);
-
-    });
 
     google.maps.event.addDomListener(window, 'load', initialize_map);
 
