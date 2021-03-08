@@ -283,10 +283,45 @@ body .modal {
     .header .brand {
         font-size: 25px;
     }
+    /* QUITAR COLUMNAS DE LA VISTA MOVIL */
+    /* cabecera de tabla */
+
+    #tabla_citas > thead > tr > th:nth-child(2), #tabla_citas > thead > tr > th:nth-child(3), #tabla_citas > thead > tr > th:nth-child(6), #tabla_citas > thead > tr > th:nth-child(10), #tabla_citas > thead > tr > th:nth-child(11), #tabla_citas > thead > tr > th:nth-child(12) {
+      display: none;
+    }
+
+    /* cuerpo de tabla */
+
+    #tabla_citas > tbody > tr > td:nth-child(2), #tabla_citas > tbody > tr > td:nth-child(3), #tabla_citas > tbody > tr > td:nth-child(6), #tabla_citas > tbody > tr > td:nth-child(10), #tabla_citas > tbody > tr > td:nth-child(11), #tabla_citas > tbody > tr > td:nth-child(12) {
+      display: none;
+    }
+    /* fin de tabla */
+
+    #tabla_citas > tfoot > tr > th:nth-child(2), #tabla_citas > tfoot > tr > th:nth-child(3), #tabla_citas > tfoot > tr > th:nth-child(6), #tabla_citas > tfoot > tr > th:nth-child(10), #tabla_citas > tfoot > tr > th:nth-child(11), #tabla_citas > tfoot > tr > th:nth-child(12){
+      display: none;
+    }
 }
 
 @media (max-width: 600px) {
     .header .brand {
         font-size: 20px;
     }
+    /* QUITAR COLUMNAS DE LA VISTA MOVIL */
+    /* cabecera de tabla */
+
+    #tabla_citas > thead > tr > th:nth-child(2), #tabla_citas > thead > tr > th:nth-child(3), #tabla_citas > thead > tr > th:nth-child(6), #tabla_citas > thead > tr > th:nth-child(8), #tabla_citas > thead > tr > th:nth-child(9), #tabla_citas > thead > tr > th:nth-child(10), #tabla_citas > thead > tr > th:nth-child(11), #tabla_citas > thead > tr > th:nth-child(12) {
+      display: none;
+    }
+
+    /* cuerpo de tabla */
+
+    #tabla_citas > tbody > tr > td:nth-child(2), #tabla_citas > tbody > tr > td:nth-child(3), #tabla_citas > tbody > tr > td:nth-child(6), #tabla_citas > tbody > tr > td:nth-child(8), #tabla_citas > tbody > tr > td:nth-child(9), #tabla_citas > tbody > tr > td:nth-child(10), #tabla_citas > tbody > tr > td:nth-child(11), #tabla_citas > tbody > tr > td:nth-child(12) {
+      display: none;
+    }
+    /* fin de tabla */
+
+    #tabla_citas > tfoot > tr > th:nth-child(2), #tabla_citas > tfoot > tr > th:nth-child(3), #tabla_citas > tfoot > tr > th:nth-child(6), #tabla_citas > tfoot > tr > th:nth-child(8), #tabla_citas > tfoot > tr > th:nth-child(9), #tabla_citas > tfoot > tr > th:nth-child(10), #tabla_citas > tfoot > tr > th:nth-child(11), #tabla_citas > tfoot > tr > th:nth-child(12){
+      display: none;
+    }
+
 }
