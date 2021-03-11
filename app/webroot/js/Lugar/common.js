@@ -206,6 +206,7 @@ function initialize_map() {
 
 }
 
+
 function placemarker(lat, lng, content){
 	if (typeof(infoWindow) !== "undefined") {
 			//limpiamos el marcador y el infobox actual
@@ -224,5 +225,12 @@ function placemarker(lat, lng, content){
 	infoWindow.open(map, marker);
   //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 200);
+
+}
+
+function placemarker_lugar_municipio(lat, lng, nombreLugar, nombreMunicipio){
+  var content = "<b>Municipio: </b>" + nombreMunicipio + "<br><b>Lugar: </b> " + nombreLugar;
+
+  placemarker(lat, lng, content);
 
 }

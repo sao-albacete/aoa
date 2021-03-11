@@ -54,6 +54,7 @@ class LugarController extends AppController {
             'cargarCoordenadasUtm',
             'cargarLugaresSimilares',
             'obtenerLugares',
+            'obtenerLugar',
             'obtenerLugaresPorNombre',
             'guardarLugarAjax'
         );
@@ -541,6 +542,51 @@ class LugarController extends AppController {
         }
     }
 
+    /**
+     * Obtiene los lugares que coincidan en su nombre, municipio, comarca o cuadricula UTM con el valor recibido
+     */
+    public function obtenerLugar() {
+
+        $response = [];
+
+        if ($this->request->is('ajax')) {
+
+            $this->autoRender = false;
+
+            $results = $this->Lugar->find(
+                'all',
+                [
+                    'fields' => [
+                        'Lugar.id',
+                        'Lugar.nombre',
+                        'Lugar.lng',
+                        'Municipio.nombre',
+                        'Comarca.nombre',
+                        'Lugar.lat',
+                    ],
+                    'conditions' => [
+                        'Lugar.id = ' => $this->request->query['id']
+                    ]
+                ]
+            );
+
+            $lugaresEncontrados = [];
+            foreach($results as $result) {
+                $lugaresEncontrados[] = [
+                    "id" => $result['Lugar']['id'],
+                    "nombre" => $result['Lugar']['nombre'],
+                    "municipio" => $result['Municipio']['nombre'],
+                    "comarca" => $result['Comarca']['nombre'],
+                    "lat" => $result['Lugar']['lat'],
+                    "lng" => $result['Lugar']['lng']
+                ];
+            }
+
+            echo json_encode($lugaresEncontrados);
+        }
+    }
+
+// .", "
     /**
      * Obtiene los lugares que coincidan en su nombre
      */

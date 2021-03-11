@@ -36,7 +36,7 @@
 
             google.maps.event.addListener(marker, 'click', function() {
                var iwContent = '<b>Lugar</b>: <a href="/lugar/view/id:'+lugarId+'">'+lugarNombre + '</a> <a href="/cita/index?lugarId='+lugarId+'">(Ver citas)</a>' +
-                  '<br><b>Municipio</b>:' + municipioNombre +  '<a href="/cita/index?municipioId='+municipioId+'">(Ver citas)</a>';
+                  '<br><b>Municipio</b>:' + municipioNombre +  ' <a href="/cita/index?municipioId='+municipioId+'"> (Ver citas)</a>';
 
                 if (typeof(infoWindow) !== "undefined") {
               			//limpiamos el marcador y el infobox actual

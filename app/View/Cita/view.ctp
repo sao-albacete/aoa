@@ -42,11 +42,10 @@ function marcarMunicipio(parserDocs) {
 function add_init_lugar_marker(){
   var nombreLugar = "<?php echo $cita['Lugar']['Lugar']['nombre'];?>";
   var nombreMunicipio = "<?php echo $cita['Lugar']['Municipio']['nombre']; ?>";
-  var content = "<b>Municipio:</b>" + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
 
-  placemarker(<?php echo $cita['Lugar']['Lugar']['lat'];?>,
+  placemarker_lugar_municipio(<?php echo $cita['Lugar']['Lugar']['lat'];?>,
               <?php echo $cita['Lugar']['Lugar']['lng'];?>,
-              content);
+              nombreLugar, nombreMunicipio);
 
   //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
