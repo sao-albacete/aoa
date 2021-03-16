@@ -449,22 +449,20 @@ class LugarController extends AppController {
             // Nombre
             $this->request->data["Lugar"]["nombre"] = $this->request->query["nombreLugar"];
 
-            // Cuadricula UTM
-            {
-                $cuadriculaUtm = $this->CuadriculaUtm->obtenerDatosBasicosCuadriculaUtmPorCodigo($this->request->query["codigoCuadriculaUtm"]);
-                $this->request->data["Lugar"]["cuadricula_utm_id"] = $cuadriculaUtm["CuadriculaUtm"]["id"];
-            }
 
             // Comarca
             {
                 $this->Municipio->id = $this->request->query["municipioId"];
                 $this->request->data["Lugar"]["comarca_id"] = $this->Municipio->field('comarca_id');
             }
-
-            // Coordenadas UTM
+            // Cuadricula UTM. TODO: recalcular a partir de las coordenadas o eliminar campo
             {
-                $this->request->data["Lugar"]["coordenadaX"] = $this->request->query["coordenadaX"];
-                $this->request->data["Lugar"]["coordenadaY"] = $this->request->query["coordenadaY"];
+                $this->request->data["Lugar"]["cuadricula_utm_id"] = 1;
+            }
+            // Coordenadas
+            {
+                $this->request->data["Lugar"]["lat"] = $this->request->query["lat"];
+                $this->request->data["Lugar"]["lng"] = $this->request->query["lng"];
             }
 
             // Usuario

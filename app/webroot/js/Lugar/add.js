@@ -1,12 +1,26 @@
-
-
 google.maps.event.addDomListener(window, 'load', initialize_map);
-function marcarMunicipio(parserDocs){
-onClickAnyMunicipio(parserDocs);
 
+function marcarMunicipio(parserDocs){
+  onClickAnyMunicipio(parserDocs);
+}
+
+/**
+ * Limpia el formulario
+ */
+function limpiarFormularioLugar() {
+
+    var $formularioNuevoLugar = $('#frmNuevoLugar');
+
+    $formularioNuevoLugar.find("input[type=text], select").val("");
+
+    $formularioNuevoLugar.find(".selectMunicipio").empty();
+    $formularioNuevoLugar.find(".selectMunicipio").prop("disabled", true);
 }
 
 $(document).ready(function() {
+
+    var $formularioNuevoLugar = $('#frmNuevoLugar'),
+        divNuevoLugar = $('#modalNuevoLugar');
 
     /* INICIO cambio de municipio */
     $("#selectMunicipio").change(onChangeMunicipioSelect);
@@ -18,10 +32,21 @@ $(document).ready(function() {
 
     /* INICIO limpiar formulario */
     $("#btnLimpiar").click(function(){
-        limpiar();
+        limpiarFormularioLugar();
     });
     /* FIN limpiar formulario */
 
+
+    // Cancelar creación de nuevo lugar
+    divNuevoLugar.find('#btnCancelar').click(function () {
+        $('#modalNuevoLugar').modal('hide');
+    });
+
+    // Limpiar formulario de nuevo lugar
+    divNuevoLugar.find('#btnGuardar').click(function () {
+        guardarLugar(divNuevoLugar);
+    });
+    /* FIN limpiar formulario */
     /* INICIO popup ayuda */
     $('.badge-info').popover();
     /* FIN popup ayuda */
@@ -57,41 +82,95 @@ function limpiar() {
   municipioAMarcar.tipo = "municipio";
   marcarMapa(parser.docs[0], municipioAMarcar);
 }
+//
+// /**
+//  * Carga el combo de formularios y lo habilita
+//  *
+//  * @param codigoCuadriculaUtm
+//  */
+// function loadMunicipioSelect(codigoCuadriculaUtm) {
+//
+//     var selectMunicipio = $("#selectMunicipio");
+//
+//     selectMunicipio.load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
+//
+//     if(codigoCuadriculaUtm != "") {
+//         selectMunicipio.prop("disabled", false);
+//     }
+//     else {
+//         selectMunicipio.prop("disabled", true);
+//     }
+// }
+//
+// /**
+//  * Carga las coordenadas de la cuadricula UTM seleccionada
+//  *
+//  * @param codigoCuadriculaUtm
+//  */
+// function loadCoordenadasUtm(codigoCuadriculaUtm) {
+//
+//     $.ajax({
+//         url: "/cuadriculaUtm/cargarDatosCoordenadaUtm",
+//         data: {"codigoCuadriculaUtm":codigoCuadriculaUtm},
+//         success: function( dataReturn ) {
+//             $("#txtCoordenadasUtmArea").val(dataReturn.CuadriculaUtm.area);
+//             $("#txtCoordenadasUtmX").val(dataReturn.CuadriculaUtm.coordenadaX);
+//             $("#txtCoordenadasUtmY").val(dataReturn.CuadriculaUtm.coordenadaY);
+//         },
+//         dataType: "json"
+//     });
+// }
 
-/**
- * Carga el combo de formularios y lo habilita
- *
- * @param codigoCuadriculaUtm
- */
-function loadMunicipioSelect(codigoCuadriculaUtm) {
+function guardarLugar($div)
+{
+    if ($('#frmNuevoLugar').valid()) {
+      debugger;
+      var $formularioNuevoLugar = $div.find('#frmNuevoLugar'),
+          nombreLugar = $formularioNuevoLugar.find('#txtNombre').val(),
+          municipioId = $formularioNuevoLugar.find('#selectMunicipio').val(),
+          lat = $formularioNuevoLugar.find('#txtCoordenadasLat').val(),
+          lng = $formularioNuevoLugar.find('#txtCoordenadasLng').val();
 
-    var selectMunicipio = $("#selectMunicipio");
+      $.ajax({
+          url: "/lugar/guardarLugarAjax",
+          data: {
+              "nombreLugar":nombreLugar,
+              "municipioId":municipioId,
+              "lat":lat,
+              "lng":lng
+          },
+          success: function( respuesta ) {
 
-    selectMunicipio.load('/municipio/cargarMunicipios/codigoCuadriculaUtm:' + codigoCuadriculaUtm);
+              if(respuesta.status == 0) {
 
-    if(codigoCuadriculaUtm != "") {
-        selectMunicipio.prop("disabled", false);
-    }
-    else {
-        selectMunicipio.prop("disabled", true);
-    }
-}
+                  var textoLugar = [];
+                  textoLugar.push(respuesta.lugar.Lugar.nombre);
+                  textoLugar.push(respuesta.lugar.Municipio.nombre);
+                  textoLugar.push(respuesta.lugar.Comarca.nombre);
 
-/**
- * Carga las coordenadas de la cuadricula UTM seleccionada
- *
- * @param codigoCuadriculaUtm
- */
-function loadCoordenadasUtm(codigoCuadriculaUtm) {
+                  $("#lugar").val(textoLugar.join(', '));
+                  $("#lugarSeleccionadoContenedor").show();
+                  $("#lugarSeleccionado").text(textoLugar.join(', '));
+                  $('#lugarId').val(respuesta.lugar.Lugar.id).trigger("change");
 
-    $.ajax({
-        url: "/cuadriculaUtm/cargarDatosCoordenadaUtm",
-        data: {"codigoCuadriculaUtm":codigoCuadriculaUtm},
-        success: function( dataReturn ) {
-            $("#txtCoordenadasUtmArea").val(dataReturn.CuadriculaUtm.area);
-            $("#txtCoordenadasUtmX").val(dataReturn.CuadriculaUtm.coordenadaX);
-            $("#txtCoordenadasUtmY").val(dataReturn.CuadriculaUtm.coordenadaY);
-        },
-        dataType: "json"
-    });
+                  $('#modalNuevoLugar').modal('hide');
+              }
+              else {
+                  if (respuesta.errores) {
+                      $div.find('#errorMessagesNuevoLugar ul').html('');
+
+                      for (error in respuesta.errores) {
+                          $div.find('#errorMessagesNuevoLugar ul').append('<li>' + error + '</li>');
+                      }
+
+                      $('#errorMessagesNuevoLugar').show();
+
+                  } else {
+                      console.log('Ha ocurrido un error inesperado al guardar el lugar');
+                  }
+              }
+          },
+          dataType: "json"
+      });
+    }//end .valid()
 }
