@@ -42,6 +42,7 @@ $this->Html->script(array(
         <legend><?php echo __("Especies objetivo");?></legend>
 
         <ul class="nav nav-pills">
+        	<li><a href="#2021">2021</a></li>
             <li><a href="#2020">2020</a></li>
             <li><a href="#2019">2019</a></li>
             <li><a href="#2018">2018</a></li>
@@ -81,6 +82,110 @@ $this->Html->script(array(
 
         <div class="row-fluid">
             <div class="page-header">
+                <h3 id="2021"><?=__('Especies objetivo 2021')?></h3>
+            </div>
+
+            <!-- 2021 -->
+            <p><?=__('Las cogujadas, terreras, alondras, ... esas aves tan crípticas y que pasan tan desapercibidas son el grupo de aves que hemos elegido este año 2021 como especies objetivo, los <strong>ALÁUDIDOS</strong> más comunes:')?></p>
+            <div style="margin-left: 2.5%">
+            <ul>
+                <li>
+                   <p><?=__('Calandria común (<i>Melanocorypha calandra</i>)')?></p>
+                </li>
+                <li>
+                   <p><?=__('Terrera común (<i>Calandrella brachydactyla</i>)')?></p>
+                </li>
+                <li>
+                   <p><?=__('Terrera marismeña (<i>Calandrella rufescens</i>)')?></p>
+                </li>
+                <li>
+                   <p><?=__('Cogujada común (<i>Galerida cristata</i>)')?></p>
+                </li>
+                <li>
+                   <p><?=__('Cogujada montesina (<i>Galerida theklae</i>)')?></p>
+                </li>
+                <li>
+                   <p><?=__('Alondra totovía (<i>Lullula arborea</i>)')?></p>
+                </li>
+                <li>
+                   <p><?=__('Alondra común (<i>Alauda arvensis</i>)')?></p>
+                </li>
+            </ul>
+            </div>
+            <p><?=__('En Europa, durante el periodo de estudio 2007-2016, la tendencia general de los alaúdidos es de declive moderado, muy acusados especialmente en la terrera común y la alondra común. Sólo la cogujada común y la alondra totovía parece que tienen unas tendencias positivas (PECBMS, 2020; EBCC, 2020).')?></p>
+            <p><?=__('En España, la tendencia es muy similar. En primavera, los resultados del programa SACRE de SEO/BirdLife (Escandell y Escudero, 2020) que analizan la tendencia de las aves comunes en el periodo 1998-2019, la tendencia es de declive moderado para la alondra común, cogujada común y calandria común, mientras que alondra totovía, cogujada montesina y terrera común tienen una tendencia de aumento moderado. En invierno, los datos del programa SACIN de SEO/BirdLife (Escandell y Escudero, 2020) indican tendencias similares a las encontradas en primavera para alondra común, cogujada común y calandria común, aumento moderado para la alondra totovía e incierta para la cogujada montesina. Para la terrera marismeña, tanto en el Atlas de las Aves Reproductoras de España de 2003 (Marti y Del Moral), como en el Atlas de las Aves en Invierno en España 2007-2010 (SEO/BirdLife), indicaban que la tendencia de la especie era regresiva.')?></p>
+            <p><?=__('En Albacete, hasta fin de 2014, fecha en la que nace el anuario ornitológico de Albacete (AOA), prácticamente no había citas de aláudidos. De algunas como la alondra totovía, sólo se disponían de 10 citas, del resto no más de 55 citas que tenía la terrera marismeña. Desde entonces y hasta fin de 2020, el número de citas ha ido aumentando, hasta alcanzar las 279 de la cogujada común o las 321 de la calandria. Sin embargo, las citas de terrera marismeña no han mejorado, pues antes de la creación del anuario había 55 recopiladas, mientras que sólo 48 se han introducido a posteriori.')?></p>
+            <p><?=__('2021 es su año, ayúdanos a conseguir más información y conocer mejor a este grupo de aves tanto tiempo olvidadas.')?></p>
+
+            <ul class="thumbnails yoxview">
+                <li class="offset1"></li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/calandria.jpg">
+                            <img src="/img/Pages/especies-objetivo/calandria.jpg" alt="Calandria común" title="Calandria común">
+                        </a>
+                        <h4>Calandria común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/terrera_comun .jpg">
+                            <img src="/img/Pages/especies-objetivo/terrera_comun .jpg" alt="Terrera común" title="Terrera común">
+                        </a>
+                        <h4>Terrera común</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/terrera_marismeña.jpg">
+                            <img src="/img/Pages/especies-objetivo/terrera_marismeña.jpg" alt="Terrera marismeña" title="Terrera marismeña">
+                        </a>
+                        <h4>Terrera marismeña</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/cogujada_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/cogujada_comun.jpg" alt="Cogujada común" title="Cogujada común">
+                        </a>
+                        <h4>Cogujada común</h4>
+                    </div>
+                </li>
+                
+            </ul>
+            <ul class="thumbnails yoxview">
+                <li class="offset1"></li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/cogujada_montesina.jpg">
+                            <img src="/img/Pages/especies-objetivo/cogujada_montesina.jpg" alt="Cogujada montesina" title="Cogujada montesina">
+                        </a>
+                        <h4>Cogujada montesina</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/totovia.jpg">
+                            <img src="/img/Pages/especies-objetivo/totovia.jpg" alt="Alondra totovía" title="Alondra totovía">
+                        </a>
+                        <h4>Alondra totovía</h4>
+                    </div>
+                </li>
+                <li class="span2">
+                    <div class="thumbnail text-center">
+                        <a href="/img/Pages/especies-objetivo/alondra_comun.jpg">
+                            <img src="/img/Pages/especies-objetivo/alondra_comun.jpg" alt="Alondra común" title="Alondra común">
+                        </a>
+                        <h4>Alondra común</h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div class="row-fluid">
+            <div class="page-header">
                 <h3 id="2020"><?=__('Especies objetivo 2020')?></h3>
             </div>
 
@@ -114,7 +219,7 @@ $this->Html->script(array(
             </div>
             <p><?=__('En Europa, durante el periodo de estudio 2007-2016, la tendencia general de los córvidos es de estabilidad, con ligeros aumentos de la chova piquirroja de un porcentaje de cambio de 34, y de pequeñas tendencias negativas del arrendajo euroasiático y de la corneja negra PECBMS, 2019; EBCC, 2019).')?></p>
             <p><?=__('En España, la tendencia es muy similar. En primavera, los resultados del programa SACRE de SEO/BirdLife (Escandell, 2019) que analizan la tendencia de las aves comunes en el periodo 1998-2018, salvo el arrendajo euroasiático, la chova piquirroja y el rabilargo ibérico, las otras cuatro especies mostraban tendencias de moderado declive. Este declive sigue produciéndose a corto plazo (2008-2018) para la corneja negra y el cuervo grande, mientras que para el resto de especies, la tendencia es incierta o estable. En invierno, los datos del programa SACIN de SEO/BirdLife (Escandell , 2019) indican que la mayoría de las especies presentan una tendencia incierta o de estabilidad, salvo el cuervo grande y la grajilla occidental, además del arrendajo euroasiático (para la Región mediterránea sur) que presentan moderadas tendencias positivas. ')?></p>
-            <p><?=__('En Albacete, hasta fin de 2015, fecha en la que nace el anuario ornitológico de Albacete (AOA), los córvidos prácticamente no se citaban. Posteriormente a esa fecha el número de citas ha ido aumentando. Del rabilargo ibérico sólo se disponían de 10 citas en el periodo anterior al anuario, pero tras su creación, ya se disponen de 38 citas (hasta fin de 2019). Más llamativo es el caso de la urraca común y la corneja negra, que pasaron de 57 y 38 citas antes al AOA a 216 y 228 citas respectivamente desde su creación.')?></p>
+            <p><?=__('En Albacete, hasta fin de 2014, fecha en la que nace el anuario ornitológico de Albacete (AOA), los córvidos prácticamente no se citaban. Posteriormente a esa fecha el número de citas ha ido aumentando. Del rabilargo ibérico sólo se disponían de 10 citas en el periodo anterior al anuario, pero tras su creación, ya se disponen de 38 citas (hasta fin de 2019). Más llamativo es el caso de la urraca común y la corneja negra, que pasaron de 57 y 38 citas antes al AOA a 216 y 228 citas respectivamente desde su creación.')?></p>
 
             <ul class="thumbnails yoxview">
                 <li class="offset1"></li>
@@ -446,6 +551,30 @@ $this->Html->script(array(
 
         <p><?=__('<strong>Referencias:</strong>')?></p>
         <ul>
+            <li><p><?=__('EBCC, 2020. <i>European Bird Census Council.</i> [en línea][Sandy, United Kingdom]. European Bird Census Council. [fecha de consulta: 10 de febrero de 2021]. Disponible en Web: <a href="https://www.ebcc.info/" target="_blank">https://www.ebcc.info/</a>')?></p></li>
+        </ul>
+        <ul>
+            <li><p><?=__('Escandell, V. 2019. <i>Programa Sacre.</i> En, SEO/BirdLife. Programas de seguimiento y grupos de trabajo de SEO/BirdLife 2018, pp. 4-10. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020].  Disponible en Web: <a href="https://doi.org/10.31170/0073" target="_blank">https://doi.org/10.31170/0073</a>')?></p></li>
+        </ul>
+         <ul>
+            <li><p><?=__('Escandell, V. 2019. <i>Programa Sacin.</i> En, SEO/BirdLife. Programas de seguimiento y grupos de trabajo de SEO/BirdLife 2018, pp. 4-10. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020].  Disponible en Web: <a href="https://doi.org/10.31170/0073" target="_blank">https://doi.org/10.31170/0073</a>')?></p></li>
+        </ul>
+        <ul>
+            <li><p><?=__('Escandell, V. y Escudero, E. 2020. <i>Programa Sacre.</i> En, SEO/BirdLife. Programas de seguimiento y grupos de trabajo de SEO/BirdLife 2020, pp. 6-9. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 10 de febrero de 2021].  Disponible en Web: <a href="https://seo.org/boletin/seguimiento/boletin/2019/pdf/Seguimiento%202019%20LR.pdf" target="_blank">https://seo.org/boletin/seguimiento/boletin/2019/pdf/Seguimiento%202019%20LR.pdf</a>')?></p></li>
+        </ul>
+        <ul>
+            <li><p><?=__('Escandell, V. y Escudero, E. 2020. <i>Programa Sacin.</i> En, SEO/BirdLife. Programas de seguimiento y grupos de trabajo de SEO/BirdLife 2020, pp. 12-15. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 10 de febrero de 2021].  Disponible en Web: <a href="https://seo.org/boletin/seguimiento/boletin/2019/pdf/Seguimiento%202019%20LR.pdf" target="_blank">https://seo.org/boletin/seguimiento/boletin/2019/pdf/Seguimiento%202019%20LR.pdf</a>')?></p></li>
+        </ul>
+        <ul>
+            <li><p><?=__('Martí, R. & Del Moral, J. C. (Eds.), 2003. <i>Atlas de las Aves Reproductoras de España.</i> Dirección General de Conservación de la Naturaleza-Sociedad Española de Ornitología. Madrid.')?></p></li>
+        </ul>
+        <ul>
+            <li><p><?=__('PECBMS, 2020. <i>Species trends | PECBMS - PECBMS.</i> [en línea][Praha, Czech Republic]. Pan-European Common Bird Monitoring Scheme. Czech Society for Ornithology. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web: <a href="https://pecbms.info/trends-and-indicators/species-trends/sort/taxonomy/" target="_blank">https://pecbms.info/trends-and-indicators/species-trends/sort/taxonomy/</a>')?></p></li>
+        </ul>
+        <ul>
+            <li><p><?=__('SEO/BirdLife, 2012. <i>Atlas de las aves en invierno en España 2007-2010.</i> Ministerio de Agricultura, Alimentación y Medio Ambiente-SEO/BirdLife. Madrid.')?></p></li>
+        </ul>
+        <ul>
             <li><p><?=__('SEO/BirdLife, 2013a. <i>Resultados del programa Sacin 2008-2013.</i> SEO/BirdLife. Madrid.')?></p></li>
         </ul>
         <ul>
@@ -461,21 +590,12 @@ $this->Html->script(array(
             <li><p><?=__('SEO/BirdLife, 2017. <i>La lenta desaparición del gorrión, otra consecuencia de la despoblación rural</i> [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 20 de enero de 2018]. Disponible en Web: <a href="https://www.seo.org/2017/03/20/la-lenta-desparicion-del-gorrion-otra-consecuencia-de-la-despoblacion-rural/" target="_blank">https://www.seo.org/2017/03/20/la-lenta-desparicion-del-gorrion-otra-consecuencia-de-la-despoblacion-rural/</a>')?></p></li>
         </ul>
         <ul>
-            <li><p><?=__('SEO/BirdLife, 2019. <i>Documentos seguimiento de aves SEO/BirdLife</i>. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web:
+            <li><p><?=__('SEO/BirdLife, 2019,2020. <i>Documentos seguimiento de aves SEO/BirdLife</i>. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 10 de febrero de 2021]. Disponible en Web:
                 <a href="https://www.seguimientodeaves.org/seg_doc/tplEspecies.php" target="_blank">https://www.seguimientodeaves.org/seg_doc/tplEspecies.php</a>')?></p></li>
         </ul>
-        <ul>
-            <li><p><?=__('Escandell, V. 2019. <i>Programa Sacre.</i> En, SEO/BirdLife. Programas de seguimiento y grupos de trabajo de SEO/BirdLife 2018, pp. 4-10. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020].  Disponible en Web: <a href="https://doi.org/10.31170/0073" target="_blank">https://doi.org/10.31170/0073</a>')?></p></li>
-        </ul>
-         <ul>
-            <li><p><?=__('Escandell, V. 2019. <i>Programa Sacin.</i> En, SEO/BirdLife. Programas de seguimiento y grupos de trabajo de SEO/BirdLife 2018, pp. 4-10. [en línea] [Madrid, España]. SEO/BirdLife. [fecha de consulta: 1 de febrero de 2020].  Disponible en Web: <a href="https://doi.org/10.31170/0073" target="_blank">https://doi.org/10.31170/0073</a>')?></p></li>
-        </ul>
-         <ul>
-            <li><p><?=__('PECBMS, 2020. <i>Species trends | PECBMS - PECBMS.</i> [en línea][Praha, Czech Republic]. Pan-European Common Bird Monitoring Scheme. Czech Society for Ornithology. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web: <a href="https://pecbms.info/trends-and-indicators/species-trends/sort/taxonomy/" target="_blank">https://pecbms.info/trends-and-indicators/species-trends/sort/taxonomy/</a>')?></p></li>
-        </ul>
-        <ul>
-            <li><p><?=__('EBCC, 2020. <i>European Bird Census Council.</i> [en línea][Sandy, United Kingdom]. European Bird Census Council. [fecha de consulta: 1 de febrero de 2020]. Disponible en Web: <a href="https://www.ebcc.info/" target="_blank">https://www.ebcc.info/</a>')?></p></li>
-        </ul>
+        
+         
+        
 
     </fieldset>
 </div>
