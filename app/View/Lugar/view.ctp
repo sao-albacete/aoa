@@ -50,17 +50,14 @@
     function add_init_lugar_marker(){
       var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
       var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
-      var content = "<b>Municipio:</b>" + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
-
-      placemarker(<?php echo $lugar['Lugar']['lat'];?>,
-                  <?php echo $lugar['Lugar']['lng'];?>,
-                  content);
+      placemarker_lugar_municipio(<?php echo $lugar['Lugar']['lat'];?>,
+                  <?php echo $lugar['Lugar']['lng'];?>, nombreLugar, nombreMunicipio);
       //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
       setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
     }
 
 
-    google.maps.event.addDomListener(window, 'load', initialize_map);
+    google.maps.event.addDomListener(window, 'load', initialize_map_view);
 
 </script>
 
@@ -113,7 +110,7 @@
             </div>
 
             <div class="span6">
-                <div id="map_canvas" style="width:560px; height:400px;" class="contenedor_gris"></div>
+                <div id="map_canvas_view" style="width:560px; height:400px;" class="contenedor_gris"></div>
             </div>
         </div>
 
