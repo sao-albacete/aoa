@@ -30,7 +30,14 @@ $this->Html->script(array(
     'common/Cita/funciones',
     'common/ObservadorPrimario/funciones',
     'common/ObservadorSecundario/funciones',
-    'Cita/add_multiple'
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+    'https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js',
+    'common/maps/geoxml3/geoxml3.js',
+    'common/maps/geoxml3/ProjectedOverlay.js',
+    'Lugar/common',
+    'Lugar/add',
+    'Cita/add_multiple',
+
 ), array('inline' => false));
 
 // Menu
@@ -38,6 +45,7 @@ $this->start('menu');
 echo $this->element('/menu');
 $this->end();
 ?>
+
 
 <!-- Cuerpo -->
 <div id="divNuevaCitaMultiple">
@@ -110,6 +118,8 @@ $this->end();
                     </div>
                     <div style="margin-top: 5px;">
                         <button class="btn btn-warning btn-mini btnVaciarLugar" type="button"><i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar"); ?></button>
+                        <button id="btnSeleccionarLugarMapa" class="btn btn-mini btn-primary btnSeleccionarLugarMapa" type="button"><i class="icon-map-marker"></i> <?php echo __("Seleccionar desde mapa"); ?></button>
+
                         <a href="#modalSeleccioanrLugar" role="button"
                            class="btn btn-mini btn-info" data-toggle="modal"
                            id="btnSeleccionarLugar"><i class="icon-zoom-in"></i> <?php echo __("Seleccionar desde tabla"); ?>
@@ -690,6 +700,7 @@ $this->end();
 
 <!-- SELECCIONAR LUGAR -->
 <?php echo $this->element('Lugar/seleccionarLugar'); ?>
+
 
 <!-- NUEVO LUGAR -->
 <?php echo $this->element('Lugar/nuevoLugar'); ?>

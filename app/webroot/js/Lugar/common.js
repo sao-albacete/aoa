@@ -1,4 +1,5 @@
 var map;
+var map_cluster;
 var parser;
 
 var marker;
@@ -177,6 +178,32 @@ function onClickAnyMunicipio(parserDocs) {
             clickablePolygon(p);
 
     }
+}
+
+function initialize_map_cluster() {
+
+	var myLatlng = new google.maps.LatLng(38.70, -1.70);
+
+	var mapOptions = {
+		zoom:8,
+		center: myLatlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map_cluster = new google.maps.Map(document.getElementById("map_canvas"),
+        mapOptions);
+    // GeoXML para añadir eventos
+    parser = new geoXML3.parser({
+		map: map,
+		singleInfoWindow: false,
+		suppressInfoWindows: true,
+		zoom: false,
+		afterParse: marcarMunicipioCluster
+	});
+
+	// Tratamos el archivo
+    parser.parse(['/kml/municipios_AB.kml']);
+
+
 }
 
 function initialize_map() {

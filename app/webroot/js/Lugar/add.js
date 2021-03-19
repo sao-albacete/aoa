@@ -124,7 +124,6 @@ function limpiar() {
 function guardarLugar($div)
 {
     if ($('#frmNuevoLugar').valid()) {
-      debugger;
       var $formularioNuevoLugar = $div.find('#frmNuevoLugar'),
           nombreLugar = $formularioNuevoLugar.find('#txtNombre').val(),
           municipioId = $formularioNuevoLugar.find('#selectMunicipio').val(),

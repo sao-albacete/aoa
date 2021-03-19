@@ -54,6 +54,7 @@ class LugarController extends AppController {
             'cargarCoordenadasUtm',
             'cargarLugaresSimilares',
             'obtenerLugares',
+            'obtenerTodosLugaresActivos',
             'obtenerLugar',
             'obtenerLugaresPorNombre',
             'guardarLugarAjax'
@@ -534,6 +535,49 @@ class LugarController extends AppController {
                     "id" => $result['Lugar']['id'],
                     "value" => $result['Lugar']['nombre'].", ".$result['Municipio']['nombre'].", ".$result['Comarca']['nombre'].", ".$result['CuadriculaUtm']['codigo']
                 ];
+            }
+
+            echo json_encode($lugaresEncontrados);
+        }
+    }
+
+    /**
+     * Obtiene los lugares activos
+     */
+    public function obtenerTodosLugaresActivos() {
+
+        $response = [];
+
+        if ($this->request->is('ajax')) {
+
+            $this->autoRender = false;
+
+
+            $results = $this->Lugar->find(
+                'all',
+                [
+                    'fields' => [
+                      'Lugar.id',
+                      'Lugar.nombre',
+                      'Lugar.lng',
+                      'Lugar.lat',
+                      'Municipio.nombre',
+                      'Municipio.id',
+                    ],
+                    'conditions'=>array('Lugar.indActivo'=>1)
+                ]
+            );
+
+            $lugaresEncontrados = [];
+            foreach($results as $result) {
+              $lugaresEncontrados[] = [
+                  "id" => $result['Lugar']['id'],
+                  "nombre" => $result['Lugar']['nombre'],
+                  "municipio" => $result['Municipio']['nombre'],
+                  "munID" => $result['Municipio']['id'],
+                  "lat" => $result['Lugar']['lat'],
+                  "lng" => $result['Lugar']['lng']
+              ];
             }
 
             echo json_encode($lugaresEncontrados);

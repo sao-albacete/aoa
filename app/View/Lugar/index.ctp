@@ -58,25 +58,20 @@
     function marcarMunicipio(parserDocs) {
         //no marcaremos los municipios, la funcion se llama asi para aprovechar el commons.js,
         // aquí cargarmos los lugares en el cluster
-        const locations = [
-        <?php   foreach ($lugares as $lugar) { ?>
-                { lat: '<?php echo $lugar["Lugar"]["lat"] ?>',
-                  lng: '<?php echo $lugar["Lugar"]["lng"] ?>',
-                  id: '<?php echo $lugar["Lugar"]["id"] ?>',
-                  lugarNombre: '<?php echo $lugar["Lugar"]["nombre"] ?>',
-                  munNombre: '<?php echo $lugar['Municipio']['nombre'] ?>',
-                  munId: '<?php echo $lugar['Municipio']['id'] ?>'
-                },
-        <?php } ?>
-        ];
-        const markers = locations.map((location, i) => {
-            return addMarkerCluster(location["lat"], location["lng"], location["id"], location["lugarNombre"], location["munNombre"], location["munId"]);
-          });
-          // Add a marker clusterer to manage the markers.
-          new MarkerClusterer(map, markers, {
-            imagePath:
-              "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-          });
+        $.getJSON("/lugar/obtenerTodosLugaresActivos", {},
+  				function (datosMunicipio) {
+                const markers = datosMunicipio.map((location, i) => {
+                    return addMarkerCluster(location["lat"], location["lng"], location["id"], location["nombre"], location["municipio"], location["munID"]);
+                  });
+                  // Add a marker clusterer to manage the markers.
+                  new MarkerClusterer(map, markers, {
+                    imagePath:
+                      "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+                  });
+            }
+        );
+
+
     }
 
     google.maps.event.addDomListener(window, 'load', initialize_map);
