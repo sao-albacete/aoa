@@ -31,7 +31,7 @@ $this->end();
 ?>
 
 <script type="text/javascript">
-function marcarMunicipio(parserDocs) {
+function marcarMunicipioClick(parserDocs) {
     //Marcar municipio en el mapa
     var municipioAMarcar = {};
     municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";

@@ -1,6 +1,8 @@
 var map;
-var map_cluster;
+var map_readonly;
+
 var parser;
+var parser_readonly;
 
 var marker;
 var infoWindow;
@@ -110,10 +112,11 @@ validate_rules = {
 
 function clickMunicipioListener(mapsMouseEvent, placemark){
 	// Descarmacar municipios
+
   var nombreLugar = ($("#txtNombre").val() != "") ? $("#txtNombre").val() : "[a rellenar]"
 	var content = "<b>Municipio:</b> " + placemark.name + "<br><b>Nombre Lugar:</b> " + nombreLugar
 	latLng = mapsMouseEvent.latLng;
-	placemarker(latLng.lat(), latLng.lng(), content)
+	placemarker(latLng.lat(), latLng.lng(), content, map=map)
 
 	var municipioAMarcar = new Object();
 	municipioAMarcar.tipo = "municipio";
@@ -180,32 +183,7 @@ function onClickAnyMunicipio(parserDocs) {
     }
 }
 
-function initialize_map_cluster() {
-
-	var myLatlng = new google.maps.LatLng(38.70, -1.70);
-
-	var mapOptions = {
-  		zoom:8,
-  		center: myLatlng,
-  		mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map_cluster = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-    // GeoXML para añadir eventos
-    parser = new geoXML3.parser({
-  		map: map_cluster,
-  		singleInfoWindow: false,
-  		suppressInfoWindows: true,
-  		zoom: false,
-  		afterParse: marcarMunicipioCluster
-	});
-
-	// Tratamos el archivo
-    parser.parse(['/kml/municipios_AB.kml']);
-
-
-}
-
-function initialize_map() {
+function initialize_map_handler(canvas) {
 
 	var myLatlng = new google.maps.LatLng(38.70, -1.70);
 
@@ -214,26 +192,46 @@ function initialize_map() {
 		center: myLatlng,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    map = new google.maps.Map(document.getElementById("map_canvas"),
-        mapOptions);
+    var active_map;
 
-    // GeoXML para añadir eventos
-    parser = new geoXML3.parser({
-		map: map,
-		singleInfoWindow: false,
-		suppressInfoWindows: true,
-		zoom: false,
-		afterParse: marcarMunicipio
-	});
+    if(canvas == 'map_canvas_view'){
+      map_readonly = new google.maps.Map(document.getElementById(canvas),
+          mapOptions);
 
-	// Tratamos el archivo
-    parser.parse(['/kml/municipios_AB.kml']);
+      // GeoXML para añadir eventos
+      parser_readonly = new geoXML3.parser({
+        map: map_readonly, 		singleInfoWindow: false, 		suppressInfoWindows: true,
+        zoom: false, 		afterParse: marcarMunicipio
+     });
+     // Tratamos el archivo
+        parser_readonly.parse(['/kml/municipios_AB.kml']);
+    }else{
+      map = new google.maps.Map(document.getElementById(canvas),
+          mapOptions);
+
+      // GeoXML para añadir eventos
+      parser = new geoXML3.parser({
+        map: map, 		singleInfoWindow: false, 		suppressInfoWindows: true,
+        zoom: false, 		afterParse: marcarMunicipioClick
+     });
+     // Tratamos el archivo
+        parser.parse(['/kml/municipios_AB.kml']);
+    }
+
+
 
 
 }
 
+function initialize_map_view(){
+  return initialize_map_handler(canvas="map_canvas_view")
+}
 
-function placemarker(lat, lng, content){
+function initialize_map(){
+  return initialize_map_handler(canvas="map_canvas")
+}
+
+function placemarker(lat, lng, content, mapobj=map){
 	if (typeof(infoWindow) !== "undefined") {
 			//limpiamos el marcador y el infobox actual
 				marker.setMap(null);
@@ -243,12 +241,12 @@ function placemarker(lat, lng, content){
 	}
 	marker = new google.maps.Marker({
 				 position: new google.maps.LatLng(lat, lng),
-				 map: map,
+				 map: mapobj,
 				 animation:google.maps.Animation.Drop,
 	});
 
 	infoWindow = new google.maps.InfoWindow({content: content});
-	infoWindow.open(map, marker);
+	infoWindow.open(mapobj, marker);
   //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 200);
 
@@ -257,6 +255,6 @@ function placemarker(lat, lng, content){
 function placemarker_lugar_municipio(lat, lng, nombreLugar, nombreMunicipio){
   var content = "<b>Municipio: </b>" + nombreMunicipio + "<br><b>Lugar: </b> " + nombreLugar;
 
-  placemarker(lat, lng, content);
+  placemarker(lat, lng, content, mapobj=map_readonly);
 
 }

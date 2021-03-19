@@ -1,6 +1,6 @@
-google.maps.event.addDomListener(window, 'load', initialize_map);
 
-function marcarMunicipio(parserDocs){
+
+function marcarMunicipioClick(parserDocs){
   onClickAnyMunicipio(parserDocs);
 }
 

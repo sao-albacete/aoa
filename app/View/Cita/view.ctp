@@ -51,7 +51,7 @@ function add_init_lugar_marker(){
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
 }
 
-	google.maps.event.addDomListener(window, 'load', initialize_map);
+	google.maps.event.addDomListener(window, 'load', initialize_map_view);
 </script>
 
 <!-- Cuerpo -->

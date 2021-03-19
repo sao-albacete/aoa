@@ -27,6 +27,10 @@ $this->Html->script(array(
 
 ?>
 
+<script>
+google.maps.event.addDomListener(window, 'load', initialize_map);
+
+</script>
 <div id="modalNuevoLugar" style="overflow:scroll !important; height:500px !important" class="modal hide fade" tabindex="-1"
      role="dialog" aria-labelledby="myModalNuevoLugar" aria-hidden="true">
     <div class="modal-header">

@@ -30,7 +30,7 @@ $(document).ready(function () {
 	seleccionarLugar(divNuevaCita);
 
   // Seleccionar en mapa
-  divNuevaCita.find("#btnSeleccionarLugarMapa").click(function () {
+  $("#btnSeleccionarLugarMapa").click(function () {
     limpiarFormularioLugar();
     $('#modalSeleccionarLugarMapa').modal();
   });

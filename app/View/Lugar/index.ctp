@@ -18,6 +18,7 @@
       'common/maps/geoxml3/geoxml3.js',
       'common/maps/geoxml3/ProjectedOverlay.js',
       'Lugar/common',
+      'Lugar/cluster',
     ), array('inline' => false));
 
     // Menu
@@ -27,53 +28,11 @@
 ?>
 
 <script type="text/javascript">
-    function addMarkerCluster(lat, lng, lugarId, lugarNombre, municipioNombre, municipioId, comarcaNombre){
-            var marker = new google.maps.Marker({
-          				 position: new google.maps.LatLng(lat, lng),
-          				 map: map,
-                   // title: lugarNombre,
-          	});
-
-            google.maps.event.addListener(marker, 'click', function() {
-               var iwContent = '<b>Lugar</b>: <a href="/lugar/view/id:'+lugarId+'">'+lugarNombre + '</a> <a href="/cita/index?lugarId='+lugarId+'">(Ver citas)</a>' +
-                  '<br><b>Municipio</b>:' + municipioNombre +  ' <a href="/cita/index?municipioId='+municipioId+'"> (Ver citas)</a>'+
-                  '<br><b>Comarca</b>:' + comarcaNombre;
-
-                if (typeof(infoWindow) !== "undefined") {
-              			//limpiamos el marcador y el infobox actual
-              				google.maps.event.clearInstanceListeners(infoWindow);  // just in case handlers continue to stick around
-              				infoWindow.close();
-              				infoWindow = null;
-              	}
-               infoWindow = new google.maps.InfoWindow({content: iwContent});
-
-               infoWindow.open(map, marker);
-               //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
-               setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','') }, 300);
-
-            });
-            return marker;
-    }
 
 
-    function marcarMunicipioCluster(parserDocs) {
-        //no marcaremos los municipios, la funcion se llama asi para aprovechar el commons.js,
-        // aquí cargarmos los lugares en el cluster
-        $.getJSON("/lugar/obtenerTodosLugaresActivos", {},
-  				function (datosMunicipio) {
-                const markers = datosMunicipio.map((location, i) => {
-                    return addMarkerCluster(location["lat"], location["lng"], location["id"], location["nombre"], location["municipio"], location["munID"], location["comarca"]);
-                  });
-                  // Add a marker clusterer to manage the markers.
-                  new MarkerClusterer(map_cluster, markers, {
-                    imagePath:
-                      "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-                  });
-            }
-        );
-    }
 
-    google.maps.event.addDomListener(window, 'load', initialize_map_cluster);
+    google.maps.event.addDomListener(window, 'load', initialize_map_cluster_index);
+
     $(document).ready(function() {
 
         /* INICIO Tabla de lugares */
@@ -113,7 +72,7 @@
         <hr>
         <div class="span6" style="width:100% !important;">
             <fieldset>
-                <div id="map_canvas" style="height:400px; " class="span12"></div>
+                <div id="map_canvas_cluster" style="height:400px; " class="span12"></div>
             </fieldset>
         </div>
         <table id="tablaLugares" class="table table-striped table-bordered table-hover table-condensed">

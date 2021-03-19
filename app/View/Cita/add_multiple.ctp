@@ -31,7 +31,6 @@ $this->Html->script(array(
     'common/ObservadorPrimario/funciones',
     'common/ObservadorSecundario/funciones',
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
-    'https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js',
     'common/maps/geoxml3/geoxml3.js',
     'common/maps/geoxml3/ProjectedOverlay.js',
     'Lugar/common',

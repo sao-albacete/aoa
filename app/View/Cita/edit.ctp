@@ -37,6 +37,7 @@ $this->Html->script(array(
 	'common/ObservadorPrimario/funciones',
 	'common/ObservadorSecundario/funciones',
   'Lugar/common',
+  'Cita/add',
 	'Cita/edit'
 ), array('inline' => false));
 
@@ -47,6 +48,7 @@ $this->end();
 ?>
 
 <script type="text/javascript">
+google.maps.event.addDomListener(window, 'load', initialize_map_view);
 
 $(document).ready(function(){
   function onChangeLugar() {
@@ -59,6 +61,11 @@ $(document).ready(function(){
                 if (data.length){
                   var lugar = data[0];
                   placemarker_lugar_municipio(lugar.lat, lugar.lng, lugar.nombre, lugar.municipio)
+                  var municipioAMarcar = {};
+                  municipioAMarcar.codigo = lugar.municipio;
+                  municipioAMarcar.tipo = "municipio";
+
+                  marcarMapa(parser_readonly.docs[0], municipioAMarcar);
                 }
             } );
       }
@@ -88,7 +95,6 @@ function add_init_lugar_marker(){
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
 }
 
-	google.maps.event.addDomListener(window, 'load', initialize_map);
 </script>
 
 <?php if (isset($warnings)): ?>
@@ -501,6 +507,8 @@ function add_init_lugar_marker(){
 									<button class="btnVaciarLugar btn btn-warning btn-mini" type="button">
 										<i class="icon-trash" style="margin-right: 10px;"></i><?= __("Limpiar"); ?>
 									</button>
+                  <button id="btnSeleccionarLugarMapa" class="btn btn-mini btn-primary btnSeleccionarLugarMapa" type="button"><i class="icon-map-marker"></i> <?php echo __("Seleccionar desde mapa"); ?></button>
+
 									<a href="#modalSeleccioanrLugar" role="button"
 									   class="btn btn-mini btn-info" data-toggle="modal"
 									   id="btnSeleccionarLugar"><i
@@ -514,7 +522,7 @@ function add_init_lugar_marker(){
 									   value="<?= $cita['Lugar']['Lugar']['id'] ?>">
 							</div>
 						</div>
-						<div id="map_canvas" class="span12" style="height: 400px"></div>
+						<div id="map_canvas_view" class="span12" style="height: 400px"></div>
 					</div>
 					<fieldset class="fsCustom" style="margin-top: 20px;">
 						<legend>Observaciones</legend>
@@ -720,6 +728,7 @@ function add_init_lugar_marker(){
 
 <!-- SELECCIONAR LUGAR -->
 <?= $this->element('Lugar/seleccionarLugar'); ?>
+<?php echo $this->element('Lugar/seleccionarLugarMapa'); ?>
 
 <!-- NUEVO LUGAR -->
 <?= $this->element('Lugar/nuevoLugar'); ?>

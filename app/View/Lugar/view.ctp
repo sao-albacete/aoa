@@ -67,7 +67,6 @@
 <div>
     <fieldset>
         <legend><?php echo __('Detalle del lugar: '); echo '<b>'.$lugar['Lugar']['nombre'].'</b>' ?></legend>
-
         <div class="row-fluid">
             <div id="divDetalleLugar" class="span6">
 

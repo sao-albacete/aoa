@@ -31,7 +31,9 @@ $this->start('menu');
 echo $this->element('/menu');
 $this->end();
 ?>
-
+<script>
+google.maps.event.addDomListener(window, 'load', initialize_map);
+</script>
 <div>
     <fieldset>
         <legend>
