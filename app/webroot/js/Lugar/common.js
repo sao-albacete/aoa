@@ -200,11 +200,13 @@ function initialize_map_handler(canvas) {
 
       // GeoXML para añadir eventos
       parser_readonly = new geoXML3.parser({
-        map: map_readonly, 		singleInfoWindow: false, 		suppressInfoWindows: true,
+        map: map_readonly, 		singleInfoWindow: true, 		suppressInfoWindows: false,
         zoom: false, 		afterParse: marcarMunicipio
      });
      // Tratamos el archivo
         parser_readonly.parse(['/kml/municipios_AB.kml']);
+        //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
+        window.setInterval(function (){ $(".ui-corner-all").remove();  }, 2000);
     }else{
       map = new google.maps.Map(document.getElementById(canvas),
           mapOptions);
