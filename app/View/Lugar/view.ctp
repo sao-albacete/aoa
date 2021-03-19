@@ -52,8 +52,8 @@
       var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
       placemarker_lugar_municipio(<?php echo $lugar['Lugar']['lat'];?>,
                   <?php echo $lugar['Lugar']['lng'];?>, nombreLugar, nombreMunicipio);
-      //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
-      setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
+
+
     }
 
 
@@ -64,6 +64,12 @@
 <div>
     <fieldset>
         <legend><?php echo __('Detalle del lugar: '); echo '<b>'.$lugar['Lugar']['nombre'].'</b>' ?></legend>
+        <?php if ($current_user['perfil_id'] == 1) : ?>
+          <a href="/lugar/edit/id:<?= $lugar['Lugar']['id']; ?>" role="button"
+             class="btn btn-mini btn-warning" data-toggle="modal"
+             id="btnEditarLugar"><i class="icon-edit"></i> <?= __("Editar lugar"); ?></a>
+          <hr>
+        <?php endif; ?>
         <div class="row-fluid">
             <div id="divDetalleLugar" class="span6">
 
