@@ -563,6 +563,7 @@ class LugarController extends AppController {
                       'Lugar.lat',
                       'Municipio.nombre',
                       'Municipio.id',
+                      'Comarca.nombre',
                     ],
                     'conditions'=>array('Lugar.indActivo'=>1)
                 ]
@@ -575,6 +576,7 @@ class LugarController extends AppController {
                   "nombre" => $result['Lugar']['nombre'],
                   "municipio" => $result['Municipio']['nombre'],
                   "munID" => $result['Municipio']['id'],
+                  "comarca" => $result['Comarca']['nombre'],
                   "lat" => $result['Lugar']['lat'],
                   "lng" => $result['Lugar']['lng']
               ];

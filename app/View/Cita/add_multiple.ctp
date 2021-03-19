@@ -700,7 +700,7 @@ $this->end();
 
 <!-- SELECCIONAR LUGAR -->
 <?php echo $this->element('Lugar/seleccionarLugar'); ?>
-
+<?php echo $this->element('Lugar/seleccionarLugarMapa'); ?>
 
 <!-- NUEVO LUGAR -->
 <?php echo $this->element('Lugar/nuevoLugar'); ?>

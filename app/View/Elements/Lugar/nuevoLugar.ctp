@@ -109,12 +109,14 @@ $this->Html->script(array(
 
     <div class="modal-footer">
         <button id="btnLimpiar" class="btnLimpiar btn btn-warning"><i class="icon-trash"></i> <?php echo __("Limpiar");?></button>
-        <button id="btnCancelar" class="btnCancelar btn btn-danger" aria-hidden="true"><i class="icon-remove"></i> <?php echo __("Cancelar"); ?></button>
+        <button id="btnCancelarNuevo" class="btnCancelar btn btn-danger" aria-hidden="true"><i class="icon-remove"></i> <?php echo __("Cancelar"); ?></button>
         <button id="btnGuardar" class="btnAceptar btn btn-success" aria-hidden="true"><i class="icon-ok"></i> <?php echo __("Aceptar"); ?></button>
     </div>
 </div>
 
 <script type="text/javascript">
+// Cancelar creación de nuevo lugar
+
 
     // Centrar popup nuevo lugar
 //    var popupNuevoLugar = $('#modalNuevoLugar');

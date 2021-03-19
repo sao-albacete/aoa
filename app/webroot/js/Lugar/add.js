@@ -21,6 +21,7 @@ $(document).ready(function() {
 
     var $formularioNuevoLugar = $('#frmNuevoLugar'),
         divNuevoLugar = $('#modalNuevoLugar');
+        divSelectLugarMapa = $('#modalSeleccionarLugarMapa');
 
     /* INICIO cambio de municipio */
     $("#selectMunicipio").change(onChangeMunicipioSelect);
@@ -36,16 +37,20 @@ $(document).ready(function() {
     });
     /* FIN limpiar formulario */
 
-
-    // Cancelar creación de nuevo lugar
-    divNuevoLugar.find('#btnCancelar').click(function () {
+    // Cancelar modal de nuevo lugar
+    divNuevoLugar.find('#btnCancelarNuevo').click(function () {
         $('#modalNuevoLugar').modal('hide');
     });
-
     // Limpiar formulario de nuevo lugar
     divNuevoLugar.find('#btnGuardar').click(function () {
         guardarLugar(divNuevoLugar);
     });
+    // Cancelar modal de seleccionar lugar con mapa
+    divSelectLugarMapa.find('#btnCancelarMapa').click(function () {
+        $('#modalSeleccionarLugarMapa').modal('hide');
+    });
+
+
     /* FIN limpiar formulario */
     /* INICIO popup ayuda */
     $('.badge-info').popover();
