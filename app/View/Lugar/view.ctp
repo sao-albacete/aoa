@@ -104,12 +104,19 @@
                     </div>
                 </div>
 
+                <!-- Coordenadas WGS 84 -->
+                <div class="control-group">
+                    <div class="controls form-inline">
+                        <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud WGS 84"); ?></label>
+                        <input name="lat" class="input-small" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                        <input name="lng" class="input-small" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+                    </div>
+                </div>
                 <!-- Coordenadas UTM -->
                 <div class="control-group">
                     <div class="controls form-inline">
-                        <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud"); ?></label>
-                        <input name="lat" class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
-                        <input name="lng" class="input-mini" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+                        <label class="control-label"> <?php echo __("Cuadrícula UTM Norte y Este"); ?></label>
+                        <input name="utm" class="input-xlarge" readonly="readonly" type="text" value="<?php echo $lugar['CuadriculaUtm']['codigo'].': '.$lugar['CuadriculaUtm']['coordenadaY'].' N '.$lugar['CuadriculaUtm']['coordenadaX'].' E';?>">
                     </div>
                 </div>
 

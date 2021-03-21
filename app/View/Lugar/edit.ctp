@@ -135,15 +135,15 @@ $(document).ready(function() {
                                 </div>
                             </div>
 
-                            <!-- Coordenadas Lugar Lat,Lng -->
+                            <!-- Coordenadas Lugar Lat,Lng WGS 84 -->
                             <div class="control-group">
                                 <div class="controls form-inline">
-                                    <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud");?></label>
-                                    <input name="lat" class="input-mini" id="txtCoordenadasLat" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
-                                    <input name="lng" class="input-mini" id="txtCoordenadasLng" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+                                    <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud WGS 84");?></label>
+                                    <input name="lat" class="input-small" id="txtCoordenadasLat" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                                    <input name="lng" class="input-small" id="txtCoordenadasLng" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
 
                                     <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Coordenadas EPSG 3857 del lugar.');?>"><i
+                                        data-content="<?php echo __('Coordenadas WGS84 del lugar.');?>"><i
                                             class="icon-info-sign icon-white"></i> </span>
                                 </div>
                             </div>

@@ -95,7 +95,7 @@ google.maps.event.addDomListener(window, 'load', initialize_map);
                         <input name="lng" class="input-mini" id="txtCoordenadasLng" readonly="readonly" type="text" value="">
 
                         <span class="badge badge-info" data-trigger="hover"
-                            data-content="<?php echo __('Coordenadas EPSG 3857 del lugar.');?>"><i
+                            data-content="<?php echo __('Coordenadas WGS84 del lugar.');?>"><i
                                 class="icon-info-sign icon-white"></i> </span>
                     </div>
                 </div>

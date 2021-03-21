@@ -110,9 +110,15 @@ class LugarController extends AppController {
             // Nombre
             $this->request->data["Lugar"]["nombre"] = $this->request->data["nombre"];
 
-            // Cuadricula UTM- TODO: crear una fórmula que detecte el UTM a partir de las corodenadads lat/lng
+            // Cuadricula UTM
             {
-                $this->request->data["Lugar"]["cuadricula_utm_id"] = 1;
+                $utm_id = $this->getUTMfromLngLat($this->request->data["lng"], $this->request->data["lat"]);
+                if($utm_id){
+                  $this->request->data["Lugar"]["cuadricula_utm_id"] = $utm_id;
+                }else{
+                  $this->Session->setFlash(__('Cuadrícula UTM no encontrada.'), 'failure');
+                  $this->redirect(array('controller' => 'Lugar', 'action' => 'add'));
+                }
             }
 
             // Comarca
@@ -233,6 +239,20 @@ class LugarController extends AppController {
         $this->set('cuadriculasUtm', $cuadriculasUtm);
     }
 
+    private function getUTMfromLngLat($lng, $lat){
+        require_once ('gpointconverter.php');
+
+        // Setup the graph
+        $gpoint = new GPointConverter();
+        $gpoint->setLongLat($lng, $lat);
+        $gpoint->convertLLtoTM(False);
+        $cuadriculaUtm = $this->CuadriculaUtm->obtenerCuadriculaUtmPorCoordenadas((int) $gpoint->N(), (int) $gpoint->E());
+        if(count($cuadriculaUtm)){
+          CakeLog::info("obtenerCuadriculaUtmPorCoordenadas UTM:".$cuadriculaUtm['CuadriculaUtm']['id']);
+          return $cuadriculaUtm['CuadriculaUtm']['id'];
+        }else{ return 0; }
+
+    }
     public function edit() {
 
         // Opcion seleccionada del menu
@@ -308,6 +328,18 @@ class LugarController extends AppController {
             {
                 $lugar["Lugar"]["lat"] = $this->request->data["lat"];
                 $lugar["Lugar"]["lng"] = $this->request->data["lng"];
+            }
+            // Cuadricula UTM.
+            {
+                $utm_id = $this->getUTMfromLngLat($this->request->data["lng"], $this->request->data["lat"]);
+                if($utm_id){
+                  $lugar["Lugar"]["cuadricula_utm_id"] = $utm_id;
+                }else{
+                  $lugar_id = $this->request->data["lugarId"];
+                  $this->Session->setFlash(__('Cuadrícula UTM no encontrada.'), 'failure');
+                  $this->redirect(array('action' => 'edit', "id"=>$lugar_id));
+                }
+
             }
 
             // Comarca
@@ -456,14 +488,25 @@ class LugarController extends AppController {
                 $this->Municipio->id = $this->request->query["municipioId"];
                 $this->request->data["Lugar"]["comarca_id"] = $this->Municipio->field('comarca_id');
             }
-            // Cuadricula UTM. TODO: recalcular a partir de las coordenadas o eliminar campo
-            {
-                $this->request->data["Lugar"]["cuadricula_utm_id"] = 1;
-            }
+
             // Coordenadas
             {
                 $this->request->data["Lugar"]["lat"] = $this->request->query["lat"];
                 $this->request->data["Lugar"]["lng"] = $this->request->query["lng"];
+            }
+            // Cuadricula UTM.
+            {
+              $utm_id = $this->getUTMfromLngLat($this->request->query["lng"], $this->request->query["lat"]);
+              if($utm_id){
+                $this->request->data["Lugar"]["cuadricula_utm_id"] = $utm_id;
+              }else{
+                $this->Lugar->validationErrors['cuadricula_utm_id'] = ['Cuadrícula UTM no encontrada.'];
+                $response['status'] = 1;
+                $response['errores'] = $this->Lugar->validationErrors;
+                CakeLog::error("Cuadrícula UTM no encontrada.");
+              }
+
+
             }
 
             // Usuario
