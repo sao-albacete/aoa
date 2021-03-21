@@ -12,7 +12,8 @@ var highlightMunicipio = {fillColor: "#ff0000", strokeColor: "#000000", fillOpac
 var highlightClearCuadriculaUtm = {fillColor: "#000000", strokeColor: "#002673", fillOpacity: 0, strokeWidth: 10};
 var highlightClearMunicipio = {fillColor: "#000000", strokeColor: "#FF0A09", fillOpacity: 0, strokeWidth: 10};
 
-
+var PNOAWMTS;
+var RasterWMTS;
 
 function kmlColor (kmlIn) {
     var kmlColor = {};
@@ -183,42 +184,89 @@ function onClickAnyMunicipio(parserDocs) {
     }
 }
 
+function create_other_WMTS(){
+   //Define el WMTS del PNOA como mapa base
+   PNOAWMTS = new google.maps.ImageMapType({
+           alt: "WMTS del PNOA",
+           getTileUrl: function(tile, zoom) {
+               var url = "http://www.ign.es/wmts/pnoa-ma?request=getTile&layer=OI.OrthoimageCoverage&TileMatrixSet=GoogleMapsCompatible&TileMatrix=" + zoom + "&TileCol=" + tile.x + "&TileRow=" + tile.y + "&format=image/jpeg";
+               return url;
+           },
+           isPng: false,
+           maxZoom: 20,
+           minZoom: 1,
+           name: "PNOA",
+           tileSize: new google.maps.Size(256, 256)
+   });
+
+    //Define el WMTS de Mapa Raster como mapa base
+    RasterWMTS = new google.maps.ImageMapType({
+       alt: "RasterIGN",
+       getTileUrl: function(tile, zoom) {
+         var url = "http://www.ign.es/wmts/mapa-raster?request=getTile&layer=MTN&TileMatrixSet=GoogleMapsCompatible&TileMatrix=" + zoom
+      + "&TileCol=" + tile.x + "&TileRow=" + tile.y + "&format=image/jpeg";
+       return url;
+       },
+       isPng: false,
+       maxZoom: 20,
+       minZoom: 1,
+       name: "RasterIGN",
+       tileSize: new google.maps.Size(256, 256)
+    });
+}
+
+create_other_WMTS();
+
+//con esto eliminamos la molesta cajas de Close o tooltips que se queda al pasar el ratón
+//por el x del infobox o en el dropbox de las capas.
+window.setInterval(function (){ $(".ui-corner-all").remove();  }, 300);
+
 function initialize_map_handler(canvas) {
 
 	var myLatlng = new google.maps.LatLng(38.70, -1.70);
 
 	var mapOptions = {
-		zoom:8,
-		center: myLatlng,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+    		zoom:8,
+    		center: myLatlng,
+    		//mapTypeId:
+        mapTypeId: 'roadmap',
+         mapTypeControlOptions: {
+           mapTypeIds: ['roadmap', 'satellite', 'PNOA', 'Raster'], //Añade las capas base
+           style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+         }
     };
     var active_map;
 
     if(canvas == 'map_canvas_view'){
       map_readonly = new google.maps.Map(document.getElementById(canvas),
           mapOptions);
+      active_map = map_readonly;
 
       // GeoXML para añadir eventos
       parser_readonly = new geoXML3.parser({
         map: map_readonly, 		singleInfoWindow: true, 		suppressInfoWindows: false,
         zoom: false, 		afterParse: marcarMunicipio
      });
-     // Tratamos el archivo
         parser_readonly.parse(['/kml/municipios_AB.kml']);
-        //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
-        window.setInterval(function (){ $(".ui-corner-all").remove();  }, 2000);
+        //parser_readonly.parse(['/kml/UTM_AB.kml']);
+        //
+
     }else{
       map = new google.maps.Map(document.getElementById(canvas),
           mapOptions);
-
+      active_map = map;
       // GeoXML para añadir eventos
       parser = new geoXML3.parser({
         map: map, 		singleInfoWindow: false, 		suppressInfoWindows: true,
         zoom: false, 		afterParse: marcarMunicipioClick
      });
-     // Tratamos el archivo
+
         parser.parse(['/kml/municipios_AB.kml']);
+        // parser.parse(['/kml/UTM_AB.kml']);
     }
+
+    active_map.mapTypes.set('PNOA', PNOAWMTS); //Definición de la capa de fondo
+    active_map.mapTypes.set('Raster', RasterWMTS); //Definición de la capa de fondo
 
 
 
@@ -234,7 +282,7 @@ function initialize_map(){
 }
 
 function placemarker(lat, lng, content, mapobj=map){
-	if (typeof(infoWindow) !== "undefined") {
+	if (marker && typeof(infoWindow) !== "undefined") {
 			//limpiamos el marcador y el infobox actual
 				marker.setMap(null);
 				google.maps.event.clearInstanceListeners(infoWindow);  // just in case handlers continue to stick around

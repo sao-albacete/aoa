@@ -110,7 +110,11 @@ function initialize_map_cluster(clusterFunction) {
 	var mapOptions = {
   		zoom:8,
   		center: myLatlng,
-  		mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: 'roadmap',
+      mapTypeControlOptions: {
+         mapTypeIds: ['roadmap', 'satellite', 'PNOA', 'Raster'], //Añade las capas base
+         style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+       }
     };
     map_cluster = new google.maps.Map(document.getElementById("map_canvas_cluster"), mapOptions);
     // GeoXML para añadir eventos
@@ -124,6 +128,7 @@ function initialize_map_cluster(clusterFunction) {
 
 	// Tratamos el archivo
     parser_cluster.parse(['/kml/municipios_AB.kml']);
-
+    map_cluster.mapTypes.set('PNOA', PNOAWMTS); //Definición de la capa de fondo
+    map_cluster.mapTypes.set('Raster', RasterWMTS); //Definición de la capa de fondo
 
 }
