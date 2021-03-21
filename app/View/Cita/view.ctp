@@ -283,7 +283,7 @@ function add_init_lugar_marker(){
 								<?= $cita['Lugar']['Comarca']['nombre']; ?>
 							</p>
 						</div>
-						<div id="map_canvas" class="span12" style="height:400px;"></div>
+						<div id="map_canvas_view" class="span12" style="height:400px;"></div>
 
 					<?php else : ?>
 
