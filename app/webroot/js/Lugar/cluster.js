@@ -5,6 +5,7 @@ var parser;
 var marker;
 var infoWindow;
 
+
 function addMarkerClusterIndex(lat, lng, lugarId, lugarNombre, municipioNombre, municipioId, comarcaNombre){
         var marker = new google.maps.Marker({
                position: new google.maps.LatLng(lat, lng),
@@ -44,7 +45,7 @@ function marcarMunicipioCluster(parserDocs, addmarkerFunct) {
               // Add a marker clusterer to manage the markers.
               new MarkerClusterer(map_cluster, markers, {
                 imagePath:
-                  "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+                  "https://unpkg.com/@googlemaps/markerclustererplus@1.0.3/images/m",
               });
         }
     );
