@@ -12,15 +12,16 @@ $this->Html->css(array(
  */
 $this->Html->script(array(
     // 'Elements/Lugar/nuevoLugar',
-    'https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
-    'common/maps/geoxml3/geoxml3.js',
-    'common/maps/geoxml3/ProjectedOverlay.js',
+
     '/plugin/jquery-validation-1.11.1/dist/jquery.validate.min',
     '/plugin/jquery-validation-1.11.1/dist/additional-methods.min',
     '/plugin/jquery-validation-1.11.1/localization/messages_es',
     '/plugin/bootbox/bootbox.min',
     'common/maps/functions',
+    'https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+    'common/maps/geoxml3/geoxml3.js',
+    'common/maps/geoxml3/ProjectedOverlay.js',
     'Lugar/cluster',
 
 ), array('inline' => false));

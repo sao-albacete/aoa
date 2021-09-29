@@ -219,7 +219,8 @@ create_other_WMTS();
 
 //con esto eliminamos la molesta cajas de Close o tooltips que se queda al pasar el ratón
 //por el x del infobox o en el dropbox de las capas.
-window.setInterval(function (){ $(".ui-corner-all").remove();  }, 300);
+//cuidado porque si se activa, entonces el datetime-picker se autocierra y no se muestra
+//window.setInterval(function (){ $(".ui-corner-all").remove();  }, 300);
 
 function initialize_map_handler(canvas) {
 

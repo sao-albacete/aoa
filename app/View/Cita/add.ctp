@@ -16,14 +16,11 @@ $this->Html->css(array(
  * Javascript
  */
 $this->Html->script(array(
+  '/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.js',
 	'/plugin/jquery-validation-1.11.1/dist/jquery.validate.min',
 	'/plugin/jquery-validation-1.11.1/dist/additional-methods.min',
 	'/plugin/jquery-validation-1.11.1/localization/messages_es',
 	'/plugin/DataTables-1.9.4/media/js/jquery.dataTables',
-	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.js',
-  'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
-  'common/maps/geoxml3/geoxml3.js',
-  'common/maps/geoxml3/ProjectedOverlay.js',
 	'datatables-bootstrap',
 	'/plugin/bootbox/bootbox.min',
 	'/plugin/summernote-0.8.16-dist/summernote.min.js',
@@ -33,8 +30,12 @@ $this->Html->script(array(
 	'common/Cita/funciones',
 	'common/ObservadorPrimario/funciones',
 	'common/ObservadorSecundario/funciones',
+  'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+  'common/maps/geoxml3/geoxml3.js',
+  'common/maps/geoxml3/ProjectedOverlay.js',
   'Lugar/common',
 	'Cita/add'
+
 ), array('inline' => false));
 
 // Menu
