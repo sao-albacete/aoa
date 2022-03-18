@@ -19,7 +19,7 @@ class Lugar extends AppModel {
 	 * @var mixed False or table name
 	 */
 	public $useTable = 'lugar';
-	
+
 	/**
 	 * Display field
 	 *
@@ -65,7 +65,7 @@ class Lugar extends AppModel {
 			'order' => ''
 		)
 	);
-	
+
 	/**
 	 * Validaciones
 	 */
@@ -130,56 +130,56 @@ class Lugar extends AppModel {
                 'message' => 'El id de la cuadrícula UTM debe ser un numero.'
             )
         ),
-        'coordenadaX' => array(
+				'lng' => array(
         	'maxLength' => array(
-        		'rule' => array('maxLength', 999999),
-        		'message' => 'La coordenada X no puede tener más de 6 cifras.',
+        		'rule' => array('maxLength', 999),
+        		'message' => 'La longitud no puede tener más de 3 cifras.',
         		'required' => true,
         	),
-            'numeric' => array(
-                'rule' => 'naturalNumber',
-                'message' => 'La coordenada X debe ser un numero.',
+            'decimal' => array(
+                'rule' => 'decimal',
+                'message' => 'La coordenada X debe ser un decimal.',
                 'required' => true,
             )
         ),
-        'coordenadaY' => array(
+        'lat' => array(
         	'maxLength' => array(
-        		'rule' => array('maxLength', 9999999),
-        		'message' => 'La coordenada Y no puede tener más de 7 cifras.',
+        		'rule' => array('maxLength', 99),
+        		'message' => 'La latitud no puede tener más de 2 cifras.',
         		'required' => true,
         	),
-            'numeric' => array(
-                'rule' => 'naturalNumber',
-                'message' => 'La coordenada Y debe ser un numero.',
+            'decimal' => array(
+                'rule' => 'decimal',
+                'message' => 'La coordenada Y debe ser un decimal.',
                 'required' => true,
             )
         )
 	);
-	
+
 	/*
 	 * Funciones
 	 */
-	
+
 	/**
 	 * Obtiene toda la información de un lugar
 	 */
 	public function obtenerTodoPorId($lugar_id) {
-		
+
 		$lugar = $this -> find(
-			'first', 
+			'first',
 			array(
 				'conditions'=>array('Lugar.id'=>$lugar_id)
 			)
 		);
-		
+
 		return $lugar;
 	}
-	
+
 	/**
-	 * Obtiene todos los lugares activos ordenados por nombre 
+	 * Obtiene todos los lugares activos ordenados por nombre
 	 */
 	public function obtenerLugaresActivosOrdenadosPorNombre($indBasicData=true) {
-		
+
 		if($indBasicData == true) {
 			$lugares = $this -> find(
 				'all',
@@ -193,7 +193,7 @@ class Lugar extends AppModel {
 		}
 		else {
 			$lugares = $this->find(
-				'all', 
+				'all',
 				array(
 					'fields' => array('Lugar.id', 'Lugar.nombre', 'Municipio.nombre', 'CuadriculaUtm.codigo', 'Comarca.nombre'),
 					'conditions'=>array('Lugar.indActivo'=>1),
@@ -201,22 +201,22 @@ class Lugar extends AppModel {
 				)
 			);
 		}
-		
+
 		return $lugares;
 	}
-	
+
 	/**
 	 * Obtiene toda la información de un lugar
 	 */
 	public function obtenerLugaresPorMunicipioYCodigoCuadriculaUtm($cuadriculaUtmId, $municipioId) {
-	
+
 		$lugares = $this -> find(
 			'all',
 			array(
 				'conditions'=>array('Lugar.cuadricula_utm_id'=>$cuadriculaUtmId, 'Lugar.municipio_id'=>$municipioId)
 			)
 		);
-	
+
 		return $lugares;
 	}
 }

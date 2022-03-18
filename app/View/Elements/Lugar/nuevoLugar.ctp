@@ -11,12 +11,27 @@ $this->Html->css(array(
  * Javascript
  */
 $this->Html->script(array(
-    'Elements/Lugar/nuevoLugar'
+    // 'Elements/Lugar/nuevoLugar',
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+    'common/maps/geoxml3/geoxml3.js',
+    'common/maps/geoxml3/ProjectedOverlay.js',
+    '/plugin/jquery-validation-1.11.1/dist/jquery.validate.min',
+    '/plugin/jquery-validation-1.11.1/dist/additional-methods.min',
+    '/plugin/jquery-validation-1.11.1/localization/messages_es',
+    '/plugin/bootbox/bootbox.min',
+    'common/maps/functions',
+    'Lugar/common',
+    'Lugar/add',
+
 ), array('inline' => false));
 
 ?>
 
-<div id="modalNuevoLugar" class="modal hide fade" tabindex="-1"
+<script>
+google.maps.event.addDomListener(window, 'load', initialize_map);
+
+</script>
+<div id="modalNuevoLugar" style="overflow:scroll !important; height:500px !important" class="modal hide fade" tabindex="-1"
      role="dialog" aria-labelledby="myModalNuevoLugar" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -36,7 +51,6 @@ $this->Html->script(array(
         </div>
 
         <form method="post" id="frmNuevoLugar">
-
             <div>
 
                 <!-- Nombre -->
@@ -48,29 +62,10 @@ $this->Html->script(array(
                                 class="icon-info-sign icon-white"></i>
                         </span>
                     </label>
-                    <input name="nombre" class="txtNombre input-xxlarge required" type="text" maxlength="100"
+                    <input id="txtNombre" name="nombre" class="txtNombre input-xxlarge required" type="text" maxlength="100"
                            value="<?php if(isset($valuesSubmited['nombre'])){echo $valuesSubmited['nombre'];}?>">
                 </div>
 
-                <!-- Cuadrícula UTM -->
-                <div class="control-group">
-
-                    <label class="control-label"><?php echo __("Cuadrícula UTM");?> (*)
-                        <span class="badge badge-info" data-trigger="hover" data-toggle="popover"
-                              data-content="<?php echo __('Seleccione una cuadrícula UTM. Puede consultar los códigos de cuadrícula en el mapa. Un vez seleccione una cuadrícula, se cargarán los municipios asociados.');?>"><i
-                                class="icon-info-sign icon-white"></i>
-                        </span>
-                    </label>
-                    <select name="cuadriculaUtmCodigo"
-                            class="selectCuadriculaUtm input-xxlarge required">
-                        <option value=""><?php echo __("-- Seleccione --");?></option>
-                        <?php
-                        foreach($cuadriculasUtm as $cuadriculaUtm) {
-                            echo '<option value="'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'">'.$cuadriculaUtm["CuadriculaUtm"]["codigo"].'</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
 
                 <!-- Municipio -->
                 <div class="control-group">
@@ -81,41 +76,51 @@ $this->Html->script(array(
                                 class="icon-info-sign icon-white"></i>
                         </span>
                     </label>
-                    <select name="municipioId" class="selectMunicipio input-xxlarge required" disabled="disabled">
+                    <select name="municipioId" id="selectMunicipio" class=" input-xxlarge required" disabled="disabled">
+                      <option value=""><?php echo __("-- Seleccione --"); ?></option>
+
+                          <?php
+                              foreach($municipios as $municipio) {
+                                  echo "<option value='".$municipio['Municipio']['id']."'>".$municipio['Municipio']['nombre']."</option>";
+                              }
+                          ?>
                     </select>
                 </div>
 
-                <!-- Coordenadas UTM -->
+                <!-- Coordenadas Lugar Lat,Lng -->
                 <div class="control-group">
+                    <div class="controls form-inline">
+                        <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud");?></label>
+                        <input name="lat" class="input-mini" id="txtCoordenadasLat" readonly="readonly" type="text" value="">
+                        <input name="lng" class="input-mini" id="txtCoordenadasLng" readonly="readonly" type="text" value="">
 
-                    <label class="control-label"> <?php echo __("Coordenadas UTM");?>
-                        <span class="badge badge-info" data-trigger="hover" data-toggle="popover"
-                              data-content="<?php echo __('Coordenadas UTM x e y del lugar.');?>">
-                            <i class="icon-info-sign icon-white"></i>
-                        </span>
-                    </label>
-                    <input name="area" readonly="readonly"
-                           class="txtCoordenadasUtmArea input-mini" type="text"
-                           value="<?php if(isset($valuesSubmited['area'])){echo $valuesSubmited['area'];}?>">
-                    <input name="coordenadaX" class="txtCoordenadasUtmX input-small" type="text" readonly="readonly"
-                           value="<?php if(isset($valuesSubmited['coordenadaX'])){echo $valuesSubmited['coordenadaX'];}?>" maxlength="6">
-                    <input name="coordenadaY" class="txtCoordenadasUtmY input-small" type="text" readonly="readonly"
-                           value="<?php if(isset($valuesSubmited['coordenadaY'])){echo $valuesSubmited['coordenadaY'];}?>" maxlength="7">
+                        <span class="badge badge-info" data-trigger="hover"
+                            data-content="<?php echo __('Coordenadas WGS84 del lugar.');?>"><i
+                                class="icon-info-sign icon-white"></i> </span>
+                    </div>
                 </div>
 
+            </div>
+            <div class="span6" style="width:100% !important;">
+                <fieldset>
+                    <legend class="small" style="font-size: 16px;"><?=__('Mapa'); ?></legend>
+                    <div id="map_canvas" style="height:200px;" class="span12"></div>
+                </fieldset>
             </div>
 
         </form>
     </div>
 
     <div class="modal-footer">
-        <button class="btnLimpiar btn btn-warning"><i class="icon-trash"></i> <?php echo __("Limpiar");?></button>
-        <button class="btnCancelar btn btn-danger" aria-hidden="true"><i class="icon-remove"></i> <?php echo __("Cancelar"); ?></button>
-        <button class="btnAceptar btn btn-success" aria-hidden="true"><i class="icon-ok"></i> <?php echo __("Aceptar"); ?></button>
+        <button id="btnLimpiar" class="btnLimpiar btn btn-warning"><i class="icon-trash"></i> <?php echo __("Limpiar");?></button>
+        <button id="btnCancelarNuevo" class="btnCancelar btn btn-danger" aria-hidden="true"><i class="icon-remove"></i> <?php echo __("Cancelar"); ?></button>
+        <button id="btnGuardar" class="btnAceptar btn btn-success" aria-hidden="true"><i class="icon-ok"></i> <?php echo __("Aceptar"); ?></button>
     </div>
 </div>
 
 <script type="text/javascript">
+// Cancelar creación de nuevo lugar
+
 
     // Centrar popup nuevo lugar
 //    var popupNuevoLugar = $('#modalNuevoLugar');

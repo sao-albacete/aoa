@@ -29,6 +29,12 @@ $(document).ready(function () {
 	// Seleccionar lugar
 	seleccionarLugar(divNuevaCita);
 
+  // Seleccionar en mapa
+  $("#btnSeleccionarLugarMapa").click(function () {
+    limpiarFormularioLugar();
+    $('#modalSeleccionarLugarMapa').modal();
+  });
+
 	// Vaciar lugar
 	divNuevaCita.find(".btnVaciarLugar").click(function () {
 		vaciarLugarSeleccioando(divNuevaCita)
@@ -39,6 +45,8 @@ $(document).ready(function () {
 		limpiarFormularioLugar();
 		$('#modalNuevoLugar').modal();
 	});
+
+
 
 	// Seleccionar observador
 	seleccionarObservador(divNuevaCita);

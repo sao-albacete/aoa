@@ -20,7 +20,8 @@ $this->Html->script(array(
     '/plugin/jquery-validation-1.11.1/localization/messages_es',
     '/plugin/bootbox/bootbox.min',
     'common/maps/functions',
-    'Lugar/edit'
+    'Lugar/common',
+    'Lugar/edit',
 ), array('inline' => false));
 
 // Menu
@@ -30,31 +31,30 @@ $this->end();
 ?>
 
 <script type="text/javascript">
-
-function marcarCuadriculaUtmYMunicipio(parserDocs) {
-    
-    //Marcar cuadrícula UTM
-    var cuadriculaUtmAMarcar = {};
-    cuadriculaUtmAMarcar.codigo = "<?php echo $lugar['CuadriculaUtm']['codigo'];?>";
-    cuadriculaUtmAMarcar.tipo = "cuadriculaUtm";
-    
-    marcarMapa(parserDocs[0], cuadriculaUtmAMarcar);
-    
-    $.ajax({
-        url: "/municipio/obtenerDatosMunicipio",
-        data: {"municipioId":$("#selectMunicipio").val()},
-        success: function( data ) {
-            
-            var datosMunicipio = JSON.parse(data);
-            
-            var municipioAMarcar = {};
-            municipioAMarcar.codigo = datosMunicipio.Municipio.nombre;
-            municipioAMarcar.tipo = "municipio";
-            
-            marcarMapa(parserDocs[1], municipioAMarcar);
-        }
-    });
+function marcarMunicipioClick(parserDocs) {
+    //Marcar municipio en el mapa
+    var municipioAMarcar = {};
+    municipioAMarcar.codigo = "<?php echo $lugar['Municipio']['nombre'];?>";
+    municipioAMarcar.tipo = "municipio";
+    marcarMapa(parserDocs[0], municipioAMarcar);
+    onClickAnyMunicipio(parserDocs);
 }
+
+function add_init_lugar_marker(){
+  var nombreLugar = "<?php echo $lugar['Lugar']['nombre'];?>";
+  var nombreMunicipio = "<?php echo $lugar['Municipio']['nombre']; ?>";
+	var content = "<b>Municipio:</b> " + nombreMunicipio + "<br><b>Lugar:</b> " + nombreLugar;
+
+  placemarker(<?php echo $lugar['Lugar']['lat'];?>,
+              <?php echo $lugar['Lugar']['lng'];?>,
+              content);
+}
+$(document).ready(function() {
+  google.maps.event.addDomListener(window, 'load', add_init_lugar_marker);
+
+});
+
+
 
 </script>
 
@@ -65,7 +65,7 @@ function marcarCuadriculaUtmYMunicipio(parserDocs) {
             <button class="btn btn-mini btn-info pull-right help-button"
                 data-trigger="click" data-placement="left" data-html="true"
                 data-content="<?php echo __('Para editar el lugar, modifique los datos que desee en el formulario y pulse <b>Guardar</b>. <br> Puede consultar las cuadrículas UTM de la provincia de Albacete en el mapa haciendo clic sobre cualqueira de ellas.');?>">
-                <i class="icon-info-sign"></i> 
+                <i class="icon-info-sign"></i>
                 <?php echo __("Ayuda");?>
             </button>
         </legend>
@@ -96,7 +96,7 @@ function marcarCuadriculaUtmYMunicipio(parserDocs) {
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <!-- Nombre -->
-                                    <label class="control-label" for="txtNombre"> <?php echo __("Nombre");?> (*)</label> 
+                                    <label class="control-label" for="txtNombre"> <?php echo __("Nombre");?> (*)</label>
                                     <input id="txtNombre" name="nombre"
                                         class="input-xlarge required" type="text"
                                         value="<?php echo $lugar['Lugar']['nombre'];?>" maxlength="100">
@@ -107,36 +107,15 @@ function marcarCuadriculaUtmYMunicipio(parserDocs) {
                             </div>
 
                             <!-- Cuadrícula UTM -->
-                            <div class="control-group">
-                                <div class="controls form-inline">
-                                    <!-- Cuadricula UTM -->
-                                    <label class="control-label" for="selectCuadriculaUtm"><?php echo __("Cuadrícula UTM");?> (*)</label>
-                                    <select id="selectCuadriculaUtm" name="cuadriculaUtmCodigo"
-                                        class="input-xlarge required">
-                                        <option value=""><?php echo __("-- Seleccione --");?></option>
-                                        <?php
-                                        foreach($cuadriculasUtm as $cuadriculaUtm) {
-                                            if($lugar['CuadriculaUtm']['codigo'] == $cuadriculaUtm['CuadriculaUtm']['codigo']) {
-                                                echo "<option value='".$cuadriculaUtm['CuadriculaUtm']['codigo']."' selected='selected'>".$cuadriculaUtm['CuadriculaUtm']['codigo']."</option>";
-                                            }
-                                            else {
-                                                echo "<option value='".$cuadriculaUtm['CuadriculaUtm']['codigo']."'>".$cuadriculaUtm['CuadriculaUtm']['codigo']."</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Seleccione una cuadrícula UTM. Puede consultar los códigos de cuadrícula en el mapa. Un vez seleccione una cuadrícula, se cargarán los municipios asociados.');?>"><i
-                                            class="icon-info-sign icon-white"></i> </span>
-                                </div>
-                            </div>
+
 
                             <!-- Municipio -->
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <!-- Municipio -->
                                     <label class="control-label" for="selectMunicipio"><?php echo __("Municipio");?> (*)</label>
-                                    <select id="selectMunicipio" name="municipioId"
+                                    <!-- Se podría marcar el select con el atributo disabled  para evitar que se pudiera cambiar manualmente -->
+                                    <select readonly="readonly" id="selectMunicipio" name="municipioId"
                                         class="input-xlarge required">
                                         <option value=""><?php echo __("-- Seleccione --");?></option>
                                             <?php
@@ -156,19 +135,15 @@ function marcarCuadriculaUtmYMunicipio(parserDocs) {
                                 </div>
                             </div>
 
-                            <!-- Coordenadas UTM -->
+                            <!-- Coordenadas Lugar Lat,Lng WGS 84 -->
                             <div class="control-group">
                                 <div class="controls form-inline">
-                                    <label class="control-label" for="txtCoordenadasUtmX"> <?php echo __("Coordenadas UTM");?></label>
-                                    <input id="txtCoordenadasUtmArea" readonly="readonly"
-                                        class="input-mini" type="text"
-                                        value="<?php echo $lugar['CuadriculaUtm']['area'];?>"> 
-                                    <input id="txtCoordenadasUtmX" name="coordenadaX" class="input-mini" type="text" readonly="readonly"
-                                        value="<?php echo $lugar['Lugar']['coordenadaX'];?>" maxlength="6">
-                                    <input id="txtCoordenadasUtmY" name="coordenadaY" class="input-mini" type="text" readonly="readonly"
-                                        value="<?php echo $lugar['Lugar']['coordenadaY'];?>" maxlength="7">
+                                    <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud WGS 84");?></label>
+                                    <input name="lat" class="input-small" id="txtCoordenadasLat" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                                    <input name="lng" class="input-small" id="txtCoordenadasLng" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+
                                     <span class="badge badge-info" data-trigger="hover"
-                                        data-content="<?php echo __('Coordenadas UTM x e y del lugar.');?>"><i
+                                        data-content="<?php echo __('Coordenadas WGS84 del lugar.');?>"><i
                                             class="icon-info-sign icon-white"></i> </span>
                                 </div>
                             </div>

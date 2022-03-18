@@ -67,7 +67,7 @@ function seleccionarLugar($div)
                 this.value = ui.item.value;
                 $div.find("#lugarSeleccionadoContenedor").show();
                 $div.find("#lugarSeleccionado").text(ui.item.value);
-                $div.find("#lugarId").val(ui.item.id);
+                $div.find("#lugarId").val(ui.item.id).trigger("change");
             }
             return false;
         }
@@ -93,7 +93,7 @@ function seleccionarLugarPorNombre($div)
             if (ui.item) {
                 this.value = ui.item.value;
                 $div.find("#lugarSeleccionado").text(ui.item.value);
-                $div.find("#lugarId").val(ui.item.id);
+                $div.find("#lugarId").val(ui.item.id).trigger("change");
             }
             return false;
         }
