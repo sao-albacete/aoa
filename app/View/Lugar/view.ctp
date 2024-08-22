@@ -116,7 +116,7 @@
                 <div class="control-group">
                     <div class="controls form-inline">
                         <label class="control-label"> <?php echo __("Cuadrícula UTM Norte y Este"); ?></label>
-                        <input name="utm" class="input-xlarge" readonly="readonly" type="text" value="<?php echo $lugar['CuadriculaUtm']['codigo'].': '.$lugar['CuadriculaUtm']['lng'].' N '.$lugar['CuadriculaUtm']['lat'].' E';?>">
+                        <input name="utm" class="input-xlarge" readonly="readonly" type="text" value="<?php echo $lugar['CuadriculaUtm']['codigo'].': '.$lugar['CuadriculaUtm']['coordenadaX'].' N '.$lugar['CuadriculaUtm']['coordenadaY'].' E';?>">
                     </div>
                 </div>
 

@@ -75,10 +75,10 @@ class CuadriculaUtm extends AppModel {
         $cuadriculaUtm = $this->find('first', array(
                 'fields' => array('CuadriculaUtm.id'),
                 'conditions'=>array('AND' => array(
-                                    'CuadriculaUtm.lat >'=>$utm_norte - 5000,
-                                    'CuadriculaUtm.lat <='=>$utm_norte +5000,
-                                    'CuadriculaUtm.lng >'=>$utm_este -5000,
-                                    'CuadriculaUtm.lng <='=>$utm_este + 5000)),
+                                    'CuadriculaUtm.coordenadaY >'=>$utm_norte - 5000,
+                                    'CuadriculaUtm.coordenadaY <='=>$utm_norte +5000,
+                                    'CuadriculaUtm.coordenadaX >'=>$utm_este -5000,
+                                    'CuadriculaUtm.coordenadaX <='=>$utm_este + 5000)),
                 'recursive'=>-1
             ));
 

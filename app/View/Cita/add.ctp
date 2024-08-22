@@ -57,7 +57,7 @@ google.maps.event.addDomListener(window, 'load', initialize_map);
 			Los campos marcados con un asterisco (*) son obligatorios
 		</div>
 
-		<div id="errorMessagesGrafico" class="alert alert-error"
+		<div id="errorMessagesGrafico" clviewass="alert alert-error"
 			 style="display: none; padding-left: 14px;">
 			<h5>Por favor, corrija los errores en el formulario:</h5>
 			<ul></ul>

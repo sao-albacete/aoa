@@ -56,16 +56,16 @@ $(document).ready(function() {
     $('.badge-info').popover();
     /* FIN popup ayuda */
 
-    /* INICIO guardar lugar */
-    $("#btnGuardar").click(function(){
-        if ($('#frmNuevoLugar').valid()) {
+    // /* INICIO guardar lugar */
+    // $("#btnGuardar").click(function(){
+    //     if ($('#frmNuevoLugar').valid()) {
 
-            var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
-            var nombreLugar = $('#txtNombre').val();
-            var municipioId = $('#selectMunicipio').val();
-            $("#frmNuevoLugar").submit();
-        }
-    });
+    //         var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
+    //         var nombreLugar = $('#txtNombre').val();
+    //         var municipioId = $('#selectMunicipio').val();
+    //         $("#frmNuevoLugar").submit();
+    //     }
+    // });
     /* FIN guardar lugar */
 
     /* INICIO popup ayuda */

@@ -34,7 +34,7 @@ $(document).ready(function() {
 	/* FIN popup ayuda */
 
 	/* INICIO guardar lugar */
-	$("#btnGuardar").click(function(){
+	$('#frmEditarLugar').find("#btnGuardar").click(function(){
 		if ($('#frmEditarLugar').valid()) {
 
 			// var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
