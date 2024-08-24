@@ -11,7 +11,7 @@ $(document).ready(function(){
         if ( $(this).hasClass('row_selected') ) {
             $(this).removeClass('row_selected');
 
-            $("#lugarId").val("");
+            $("#lugarId").val("").trigger('change');
             $("#lugar").val("");
         }
         // Seleccionar
@@ -19,7 +19,8 @@ $(document).ready(function(){
             oTable.$('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
 
-            $("#lugarId").val($(this).attr("id"));
+            $("#lugarId").val($(this).attr("id")).trigger('change');
+            console.log('onChange');
 
             var textoLugar = "";
             $divSeleccionarLugar.find(".tablaLugares tbody tr.row_selected td").each(function(){

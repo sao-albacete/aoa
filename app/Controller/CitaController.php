@@ -917,7 +917,7 @@ class CitaController extends AppController
 
 				$dataSource = $this->Cita->getDataSource();
 				$dataSource->begin();
-
+				
 				// Fecha de alta
 				$fechaAlta = $this->request->data["Cita"]["fechaAlta"];
 				$fechaAltaFormateada = DateUtil::europeanFormatToAmericanFormat($fechaAlta);

@@ -1,7 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * CuadriculasUtm Model
+ * CuadriculasUtm Model. coordenadaX and coordenadaY points to the center of the square UTM (10km width/height), using WGS 84.
  *
  */
 class CuadriculaUtm extends AppModel {
@@ -27,7 +27,7 @@ class CuadriculaUtm extends AppModel {
      */
     public $displayField = 'codigo';
 
-    
+
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
@@ -50,31 +50,48 @@ class CuadriculaUtm extends AppModel {
             'counterQuery' => ''
         )
     );
-    
+
     /*
      * Funciones
      */
-    
+
     /**
      * Obtiene toda la información de un lugar
      */
     public function obtenerDatosBasicosCuadriculaUtmPorCodigo($codigo) {
-    
+
         $cuadriculaUtm = $this->find('first', array(
                 'conditions'=>array('CuadriculaUtm.codigo'=>$codigo),
                 'recursive'=>-1
             ));
-    
+
         return $cuadriculaUtm;
     }
-    
+
     /**
-     * Obtiene todos las cuadrículas URM activas ordenadas por codigo 
+     * Obtiene la cuadricula UTM que incluye las coordenadas UTM.
+     */
+    public function obtenerCuadriculaUtmPorCoordenadas($utm_norte, $utm_este) {
+        $cuadriculaUtm = $this->find('first', array(
+                'fields' => array('CuadriculaUtm.id'),
+                'conditions'=>array('AND' => array(
+                                    'CuadriculaUtm.coordenadaY >'=>$utm_norte - 5000,
+                                    'CuadriculaUtm.coordenadaY <='=>$utm_norte +5000,
+                                    'CuadriculaUtm.coordenadaX >'=>$utm_este -5000,
+                                    'CuadriculaUtm.coordenadaX <='=>$utm_este + 5000)),
+                'recursive'=>-1
+            ));
+
+        return $cuadriculaUtm;
+    }
+
+    /**
+     * Obtiene todos las cuadrículas UTM activas ordenadas por codigo
      */
     public function obtenerCuadriculasUtmActivosOrdenadosPorCodigo() {
-        
+
         $cuadriculas_utm = $this -> find(
-            'all', 
+            'all',
             array(
                 'fields'=>array('CuadriculaUtm.id', 'CuadriculaUtm.codigo'),
                 'conditions'=>array('CuadriculaUtm.indActivo'=>1),
@@ -82,7 +99,7 @@ class CuadriculaUtm extends AppModel {
                 'recursive'=>-1
             )
         );
-        
+
         return $cuadriculas_utm;
     }
 }

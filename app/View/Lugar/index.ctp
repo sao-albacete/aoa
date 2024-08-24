@@ -1,25 +1,37 @@
-<?php 
+<?php
     // Informamos el título
     $this->set('title_for_layout','Lugares');
-    
+
     /**
      * CSS
      */
     $this->Html->css(array('datatables-bootstrap'), null, array('inline' => false));
-    
+
     /**
      * Javascript
      */
-    $this->Html->script(array('/plugin/DataTables-1.9.4/media/js/jquery.dataTables', 'datatables-bootstrap'), array('inline' => false));
-    
+    $this->Html->script(array(
+      '/plugin/DataTables-1.9.4/media/js/jquery.dataTables',
+      'datatables-bootstrap',
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+      'https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js',
+      'common/maps/geoxml3/geoxml3.js',
+      'common/maps/geoxml3/ProjectedOverlay.js',
+      'Lugar/common',
+      'Lugar/cluster',
+    ), array('inline' => false));
+
     // Menu
-    $this->start('menu');        
+    $this->start('menu');
     echo $this->element('/menu');
-    $this->end(); 
+    $this->end();
 ?>
 
 <script type="text/javascript">
-<!--
+
+
+
+    google.maps.event.addDomListener(window, 'load', initialize_map_cluster_index);
 
     $(document).ready(function() {
 
@@ -46,19 +58,23 @@
         /* FIN Tabla de lugares */
 
     });
-//-->
+
 </script>
 
 <div>
     <fieldset>
         <legend><?php echo __('Lugares'); ?></legend>
-        
+
         <a href="/lugar/add" role="button"
             class="btn btn-mini btn-warning" data-toggle="modal"
             id="btnNuevoLugar"><i class="icon-plus"></i> <?php echo __("Nuevo lugar");?></a>
-            
-        <hr>
 
+        <hr>
+        <div class="span6" style="width:100% !important;">
+            <fieldset>
+                <div id="map_canvas_cluster" style="height:400px; " class="span12"></div>
+            </fieldset>
+        </div>
         <table id="tablaLugares" class="table table-striped table-bordered table-hover table-condensed">
             <thead>
                 <tr>
@@ -70,7 +86,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php 
+                <?php
                     foreach ($lugares as $lugar) {
                         echo "<tr id='".$lugar["Lugar"]["id"]."'>";
                         echo     "<td style='text-align: center;'><a href='/lugar/view/id:".$lugar['Lugar']['id']."' title='".__("Ver detalle del lugar")."'><img src='/img/icons/search.png' title='Ver detalle del lugar' alt='Ver detalle'/></a></td>";
@@ -96,8 +112,8 @@
 </div>
 
 <!-- Pie -->
-<?php 
-    $this->start('pie');        
+<?php
+    $this->start('pie');
     echo $this->element('/pie');
-    $this->end(); 
+    $this->end();
 ?>

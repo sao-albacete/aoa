@@ -14,6 +14,11 @@ $(document).ready(function () {
 
 	// Seleccionar lugar
 	seleccionarLugar($divNuevaCitaMultiple);
+  // Seleccionar en mapa
+  $divNuevaCitaMultiple.find("#btnSeleccionarLugarMapa").click(function () {
+    limpiarFormularioLugar();
+    $('#modalSeleccionarLugarMapa').modal();
+  });
 
 	// Vaciar lugar
 	$divNuevaCitaMultiple.find(".btnVaciarLugar").click(function () {

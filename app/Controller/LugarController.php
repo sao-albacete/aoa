@@ -6,31 +6,31 @@ App::uses('EmailUtil', 'Utility');
 
 /**
  * Maneja la información de los lugares
- * 
+ *
  * @author vcanizares
  */
 class LugarController extends AppController {
-    
+
     /**
      * Nombre del controlador
      */
     public $name = 'Lugar';
-    
+
     /**
      * Constantes
      */
     const ID_OPCION_MENU = Constants::MENU_LOCALIZACION_ID;
-    
+
     /**
      * Componentes
      */
     public $components = array();
-    
+
     /**
      * Helpers
      */
     public $helpers = array();
-    
+
     /**
      * Modelos
      */
@@ -42,7 +42,7 @@ class LugarController extends AppController {
         'AsoCuadriculaUtmMunicipio',
         'Cita'
     );
-    
+
     public function beforeFilter() {
 
         parent::beforeFilter();
@@ -54,16 +54,18 @@ class LugarController extends AppController {
             'cargarCoordenadasUtm',
             'cargarLugaresSimilares',
             'obtenerLugares',
+            'obtenerTodosLugaresActivos',
+            'obtenerLugar',
             'obtenerLugaresPorNombre',
             'guardarLugarAjax'
         );
     }
-    
+
     /**
      * Función que se ejecuta al carga la página inicial
      */
     public function index() {
-        
+
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
@@ -76,12 +78,12 @@ class LugarController extends AppController {
         ));
         $this->set('lugares', $lugares);
     }
-    
+
     /**
      * Función que se ejecuta al carga la página inicial
      */
     public function mis_lugares() {
-        
+
         // Usuario
         $current_user = $this->Auth->user();
 
@@ -94,9 +96,9 @@ class LugarController extends AppController {
         ));
         $this->set('lugares', $lugares);
     }
-    
+
     public function add() {
-        
+
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
@@ -110,8 +112,13 @@ class LugarController extends AppController {
 
             // Cuadricula UTM
             {
-                $cuadriculaUtm = $this->CuadriculaUtm->obtenerDatosBasicosCuadriculaUtmPorCodigo($this->request->data["cuadriculaUtmCodigo"]);
-                $this->request->data["Lugar"]["cuadricula_utm_id"] = $cuadriculaUtm["CuadriculaUtm"]["id"];
+                $utm_id = $this->getUTMfromLngLat($this->request->data["lng"], $this->request->data["lat"]);
+                if($utm_id){
+                  $this->request->data["Lugar"]["cuadricula_utm_id"] = $utm_id;
+                }else{
+                  $this->Session->setFlash(__('Cuadrícula UTM no encontrada.'), 'failure');
+                  $this->redirect(array('controller' => 'Lugar', 'action' => 'add'));
+                }
             }
 
             // Comarca
@@ -122,8 +129,8 @@ class LugarController extends AppController {
 
             // Coordenadas UTM
             {
-                $this->request->data["Lugar"]["coordenadaX"] = $this->request->data["coordenadaX"];
-                $this->request->data["Lugar"]["coordenadaY"] = $this->request->data["coordenadaY"];
+                $this->request->data["Lugar"]["lat"] = $this->request->data["lat"];
+                $this->request->data["Lugar"]["lng"] = $this->request->data["lng"];
             }
 
             // Usuario
@@ -231,9 +238,23 @@ class LugarController extends AppController {
         $cuadriculasUtm = $this->CuadriculaUtm->obtenerCuadriculasUtmActivosOrdenadosPorCodigo();
         $this->set('cuadriculasUtm', $cuadriculasUtm);
     }
-    
+
+    private function getUTMfromLngLat($lng, $lat){
+        require_once ('gpointconverter.php');
+
+        // Setup the graph
+        $gpoint = new GPointConverter();
+        $gpoint->setLongLat($lng, $lat);
+        $gpoint->convertLLtoTM(False);
+        $cuadriculaUtm = $this->CuadriculaUtm->obtenerCuadriculaUtmPorCoordenadas((int) $gpoint->N(), (int) $gpoint->E());
+        if(count($cuadriculaUtm)){
+          CakeLog::info("obtenerCuadriculaUtmPorCoordenadas UTM:".$cuadriculaUtm['CuadriculaUtm']['id']);
+          return $cuadriculaUtm['CuadriculaUtm']['id'];
+        }else{ return 0; }
+
+    }
     public function edit() {
-    
+
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
@@ -270,15 +291,9 @@ class LugarController extends AppController {
             }
 
             /*
-             * Cuadricula UTM
-            */
-            $cuadriculasUtm = $this->CuadriculaUtm->obtenerCuadriculasUtmActivosOrdenadosPorCodigo();
-            $this->set('cuadriculasUtm', $cuadriculasUtm);
-
-            /*
              * Municipio
             */
-            $municipios = $this->AsoCuadriculaUtmMunicipio->obtenerMunicipiosPorCuadriculaUtm($lugar['Lugar']['cuadricula_utm_id']);
+            $municipios = $this->Municipio->obtenerMunicipiosActivosOrdenadosPorNombre();
             $this->set('municipios', $municipios);
         }
         elseif ($this->request->is('post')) {
@@ -309,16 +324,22 @@ class LugarController extends AppController {
             // Nombre
             $lugar["Lugar"]["nombre"] = $this->request->data["nombre"];
 
-            // Cuadricula UTM
+            // Coordenadas Lugar
             {
-                $cuadriculaUtm = $this->CuadriculaUtm->obtenerDatosBasicosCuadriculaUtmPorCodigo($this->request->data["cuadriculaUtmCodigo"]);
-                $lugar["Lugar"]["cuadricula_utm_id"] = $cuadriculaUtm["CuadriculaUtm"]["id"];
+                $lugar["Lugar"]["lat"] = $this->request->data["lat"];
+                $lugar["Lugar"]["lng"] = $this->request->data["lng"];
             }
-
-            // Coordenadas UTM
+            // Cuadricula UTM.
             {
-                $lugar["Lugar"]["coordenadaX"] = $this->request->data["coordenadaX"];
-                $lugar["Lugar"]["coordenadaY"] = $this->request->data["coordenadaY"];
+                $utm_id = $this->getUTMfromLngLat($this->request->data["lng"], $this->request->data["lat"]);
+                if($utm_id){
+                  $lugar["Lugar"]["cuadricula_utm_id"] = $utm_id;
+                }else{
+                  $lugar_id = $this->request->data["lugarId"];
+                  $this->Session->setFlash(__('Cuadrícula UTM no encontrada.'), 'failure');
+                  $this->redirect(array('action' => 'edit', "id"=>$lugar_id));
+                }
+
             }
 
             // Comarca
@@ -353,9 +374,9 @@ class LugarController extends AppController {
             }
         }
     }
-    
+
     public function view() {
-        
+
         // Opcion seleccionada del menu
         $this->set('id_opcion_seleccionada', $this::ID_OPCION_MENU);
 
@@ -377,7 +398,7 @@ class LugarController extends AppController {
 
         $this->set('lugar', $lugar);
     }
-    
+
     /**
      * Funcion que se ejecuta cuando queremos eliminar un lugar previamente dado de alta
      */
@@ -426,9 +447,9 @@ class LugarController extends AppController {
         $this->Session->setFlash(__('El lugar no ha podido ser eliminado. Por favor, inténtelo de nuevo.'), 'failure');
         $this->redirect(array('action' => 'mis_lugares'));
     }
-    
+
     public function cargarLugaresSimilares() {
-        
+
         if ($this->request->is('ajax')) {
 
             $this->autoRender = false;
@@ -461,11 +482,6 @@ class LugarController extends AppController {
             // Nombre
             $this->request->data["Lugar"]["nombre"] = $this->request->query["nombreLugar"];
 
-            // Cuadricula UTM
-            {
-                $cuadriculaUtm = $this->CuadriculaUtm->obtenerDatosBasicosCuadriculaUtmPorCodigo($this->request->query["codigoCuadriculaUtm"]);
-                $this->request->data["Lugar"]["cuadricula_utm_id"] = $cuadriculaUtm["CuadriculaUtm"]["id"];
-            }
 
             // Comarca
             {
@@ -473,10 +489,24 @@ class LugarController extends AppController {
                 $this->request->data["Lugar"]["comarca_id"] = $this->Municipio->field('comarca_id');
             }
 
-            // Coordenadas UTM
+            // Coordenadas
             {
-                $this->request->data["Lugar"]["coordenadaX"] = $this->request->query["coordenadaX"];
-                $this->request->data["Lugar"]["coordenadaY"] = $this->request->query["coordenadaY"];
+                $this->request->data["Lugar"]["lat"] = $this->request->query["lat"];
+                $this->request->data["Lugar"]["lng"] = $this->request->query["lng"];
+            }
+            // Cuadricula UTM.
+            {
+              $utm_id = $this->getUTMfromLngLat($this->request->query["lng"], $this->request->query["lat"]);
+              if($utm_id){
+                $this->request->data["Lugar"]["cuadricula_utm_id"] = $utm_id;
+              }else{
+                $this->Lugar->validationErrors['cuadricula_utm_id'] = ['Cuadrícula UTM no encontrada.'];
+                $response['status'] = 1;
+                $response['errores'] = $this->Lugar->validationErrors;
+                CakeLog::error("Cuadrícula UTM no encontrada.");
+              }
+
+
             }
 
             // Usuario
@@ -514,7 +544,7 @@ class LugarController extends AppController {
      * Obtiene los lugares que coincidan en su nombre, municipio, comarca o cuadricula UTM con el valor recibido
      */
     public function obtenerLugares() {
-        
+
         $response = [];
 
         if ($this->request->is('ajax')) {
@@ -554,6 +584,96 @@ class LugarController extends AppController {
         }
     }
 
+    /**
+     * Obtiene los lugares activos
+     */
+    public function obtenerTodosLugaresActivos() {
+
+        $response = [];
+
+        if ($this->request->is('ajax')) {
+
+            $this->autoRender = false;
+
+
+            $results = $this->Lugar->find(
+                'all',
+                [
+                    'fields' => [
+                      'Lugar.id',
+                      'Lugar.nombre',
+                      'Lugar.lng',
+                      'Lugar.lat',
+                      'Municipio.nombre',
+                      'Municipio.id',
+                      'Comarca.nombre',
+                    ],
+                    'conditions'=>array('Lugar.indActivo'=>1)
+                ]
+            );
+
+            $lugaresEncontrados = [];
+            foreach($results as $result) {
+              $lugaresEncontrados[] = [
+                  "id" => $result['Lugar']['id'],
+                  "nombre" => $result['Lugar']['nombre'],
+                  "municipio" => $result['Municipio']['nombre'],
+                  "munID" => $result['Municipio']['id'],
+                  "comarca" => $result['Comarca']['nombre'],
+                  "lat" => $result['Lugar']['lat'],
+                  "lng" => $result['Lugar']['lng']
+              ];
+            }
+
+            echo json_encode($lugaresEncontrados);
+        }
+    }
+
+    /**
+     * Obtiene los lugares que coincidan en su nombre, municipio, comarca o cuadricula UTM con el valor recibido
+     */
+    public function obtenerLugar() {
+
+        $response = [];
+
+        if ($this->request->is('ajax')) {
+
+            $this->autoRender = false;
+
+            $results = $this->Lugar->find(
+                'all',
+                [
+                    'fields' => [
+                        'Lugar.id',
+                        'Lugar.nombre',
+                        'Lugar.lng',
+                        'Municipio.nombre',
+                        'Comarca.nombre',
+                        'Lugar.lat',
+                    ],
+                    'conditions' => [
+                        'Lugar.id = ' => $this->request->query['id']
+                    ]
+                ]
+            );
+
+            $lugaresEncontrados = [];
+            foreach($results as $result) {
+                $lugaresEncontrados[] = [
+                    "id" => $result['Lugar']['id'],
+                    "nombre" => $result['Lugar']['nombre'],
+                    "municipio" => $result['Municipio']['nombre'],
+                    "comarca" => $result['Comarca']['nombre'],
+                    "lat" => $result['Lugar']['lat'],
+                    "lng" => $result['Lugar']['lng']
+                ];
+            }
+
+            echo json_encode($lugaresEncontrados);
+        }
+    }
+
+// .", "
     /**
      * Obtiene los lugares que coincidan en su nombre
      */

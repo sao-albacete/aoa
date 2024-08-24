@@ -16,11 +16,11 @@ $this->Html->css(array(
  * Javascript
  */
 $this->Html->script(array(
+  '/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.js',
 	'/plugin/jquery-validation-1.11.1/dist/jquery.validate.min',
 	'/plugin/jquery-validation-1.11.1/dist/additional-methods.min',
 	'/plugin/jquery-validation-1.11.1/localization/messages_es',
 	'/plugin/DataTables-1.9.4/media/js/jquery.dataTables',
-	'/plugin/jquery-timepicker-1.3.5/jquery.timepicker.min.js',
 	'datatables-bootstrap',
 	'/plugin/bootbox/bootbox.min',
 	'/plugin/summernote-0.8.16-dist/summernote.min.js',
@@ -30,7 +30,12 @@ $this->Html->script(array(
 	'common/Cita/funciones',
 	'common/ObservadorPrimario/funciones',
 	'common/ObservadorSecundario/funciones',
+  'https://maps.googleapis.com/maps/api/js?key=AIzaSyCvHe5uH6Ogczm4OWoXkq8_NiwspG4oE1I',
+  'common/maps/geoxml3/geoxml3.js',
+  'common/maps/geoxml3/ProjectedOverlay.js',
+  'Lugar/common',
 	'Cita/add'
+
 ), array('inline' => false));
 
 // Menu
@@ -38,7 +43,9 @@ $this->start('menu');
 echo $this->element('/menu');
 $this->end();
 ?>
-
+<script>
+google.maps.event.addDomListener(window, 'load', initialize_map);
+</script>
 <!-- Cuerpo -->
 <div id="divNuevaCita">
 	<fieldset>
@@ -50,7 +57,7 @@ $this->end();
 			Los campos marcados con un asterisco (*) son obligatorios
 		</div>
 
-		<div id="errorMessagesGrafico" class="alert alert-error"
+		<div id="errorMessagesGrafico" clviewass="alert alert-error"
 			 style="display: none; padding-left: 14px;">
 			<h5>Por favor, corrija los errores en el formulario:</h5>
 			<ul></ul>
@@ -151,6 +158,8 @@ $this->end();
 						<button class="btnVaciarLugar btn btn-warning btn-mini" type="button">
 							<i class="icon-trash" style="margin-right: 10px;"></i><?php echo __("Limpiar"); ?>
 						</button>
+            <button id="btnSeleccionarLugarMapa" class="btn btn-mini btn-primary btnSeleccionarLugarMapa" type="button"><i class="icon-map-marker"></i> <?php echo __("Seleccionar desde mapa"); ?></button>
+
 						<a href="#modalSeleccioanrLugar" role="button"
 						   class="btn btn-mini btn-info" data-toggle="modal"
 						   id="btnSeleccionarLugar"><i
@@ -452,6 +461,7 @@ $this->end();
 
 <!-- SELECCIONAR LUGAR -->
 <?php echo $this->element('Lugar/seleccionarLugar'); ?>
+<?php echo $this->element('Lugar/seleccionarLugarMapa'); ?>
 
 <!-- NUEVO LUGAR -->
 <?php echo $this->element('Lugar/nuevoLugar'); ?>

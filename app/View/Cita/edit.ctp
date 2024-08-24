@@ -36,6 +36,8 @@ $this->Html->script(array(
 	'common/Cita/funciones',
 	'common/ObservadorPrimario/funciones',
 	'common/ObservadorSecundario/funciones',
+  'Lugar/common',
+  'Cita/add',
 	'Cita/edit'
 ), array('inline' => false));
 
@@ -46,82 +48,53 @@ $this->end();
 ?>
 
 <script type="text/javascript">
+google.maps.event.addDomListener(window, 'load', initialize_map_view);
 
-	var map;
+$(document).ready(function(){
+  function onChangeLugar() {
+      if($(this).val() != "") {
+        var id = $(this).val()
+        $.getJSON("/lugar/obtenerLugar", {
+                id: id
+            },
+            function( data ) {
+                if (data.length){
+                  var lugar = data[0];
+                  placemarker_lugar_municipio(lugar.lat, lugar.lng, lugar.nombre, lugar.municipio)
+                  var municipioAMarcar = {};
+                  municipioAMarcar.codigo = lugar.municipio;
+                  municipioAMarcar.tipo = "municipio";
 
-	function initialize() {
+                  marcarMapa(parser_readonly.docs[0], municipioAMarcar);
+                }
+            } );
+      }
 
-		var myLatlng = new google.maps.LatLng(38.70, -1.70);
+  }
+  $("#lugarId").change(onChangeLugar);
 
-		var mapOptions = {
-			zoom: 8,
-			center: myLatlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		map = new google.maps.Map(document.getElementById("map_canvas"),
-			mapOptions);
+});
 
-		// GeoXML para añadir eventos
-		geoXmlUtm = new geoXML3.parser({
-			map: map,
-			singleInfoWindow: true,
-			zoom: false,
-			afterParse: useTheData
-		});
+function marcarMunicipio(parserDocs) {
+    // Marcar municipio en el mapa
+    var municipioAMarcar = {};
+    municipioAMarcar.codigo = "<?php echo $cita['Lugar']['Municipio']['nombre'];?>";
+    municipioAMarcar.tipo = "municipio";
+    marcarMapa(parserDocs[0], municipioAMarcar);
+    add_init_lugar_marker();
+}
 
-		// Tratamos el archivo
-		geoXmlUtm.parse('/kml/UTM_AB.kml');
+function add_init_lugar_marker(){
+  var nombreLugar = "<?php echo $cita['Lugar']['Lugar']['nombre'];?>";
+  var nombreMunicipio = "<?php echo $cita['Lugar']['Municipio']['nombre']; ?>";
+  placemarker_lugar_municipio(<?php echo $cita['Lugar']['Lugar']['lat'];?>,
+              <?php echo $cita['Lugar']['Lugar']['lng'];?>,
+              nombreLugar, nombreMunicipio);
 
-		// GeoXML para añadir eventos
-		geoXmlMunicipios = new geoXML3.parser({
-			map: map,
-			singleInfoWindow: true,
-			zoom: false,
-			afterParse: useTheData
-		});
+  //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
+  setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 2000);
+}
 
-		// Tratamos el archivo
-		geoXmlMunicipios.parse('/kml/municipios_AB.kml');
-
-		var highlightOptions = {fillColor: "#0000ff", strokeColor: "#000000", fillOpacity: 0.5, strokeWidth: 10};
-
-		// Se obtienen los datos del xml (kml)
-		function useTheData(doc) {
-			var currentBounds = map.getBounds();
-			if (!currentBounds) currentBounds = new google.maps.LatLngBounds();
-
-			geoXmlDoc = doc[0];
-
-			for (var i = 0; i < geoXmlDoc.placemarks.length; i++) {
-
-				var placemark = geoXmlDoc.placemarks[i];
-
-				//alert(placemark.name);
-
-				if (placemark.polygon) {
-
-					var kmlStrokeColor = kmlColor(placemark.style.color);
-					var kmlFillColor = kmlColor(placemark.style.fillcolor);
-
-					var normalStyle = {
-						strokeColor: kmlStrokeColor.color,
-						strokeWeight: placemark.style.width,
-						strokeOpacity: kmlStrokeColor.opacity,
-						fillColor: kmlFillColor.color,
-						fillOpacity: kmlFillColor.opacity
-					};
-
-					placemark.polygon.normalStyle = normalStyle;
-
-					if (placemark.name == '<?=$cita['Lugar']['CuadriculaUtm']['codigo'];?>') {
-						placemark.polygon.setOptions(highlightOptions);
-					}
-				}
-			}
-		}
-	}
-
-	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <?php if (isset($warnings)): ?>
@@ -534,6 +507,8 @@ $this->end();
 									<button class="btnVaciarLugar btn btn-warning btn-mini" type="button">
 										<i class="icon-trash" style="margin-right: 10px;"></i><?= __("Limpiar"); ?>
 									</button>
+                  <button id="btnSeleccionarLugarMapa" class="btn btn-mini btn-primary btnSeleccionarLugarMapa" type="button"><i class="icon-map-marker"></i> <?php echo __("Seleccionar desde mapa"); ?></button>
+
 									<a href="#modalSeleccioanrLugar" role="button"
 									   class="btn btn-mini btn-info" data-toggle="modal"
 									   id="btnSeleccionarLugar"><i
@@ -547,7 +522,7 @@ $this->end();
 									   value="<?= $cita['Lugar']['Lugar']['id'] ?>">
 							</div>
 						</div>
-						<div id="map_canvas" class="span12" style="height: 400px"></div>
+						<div id="map_canvas_view" class="span12" style="height: 400px"></div>
 					</div>
 					<fieldset class="fsCustom" style="margin-top: 20px;">
 						<legend>Observaciones</legend>
@@ -753,6 +728,7 @@ $this->end();
 
 <!-- SELECCIONAR LUGAR -->
 <?= $this->element('Lugar/seleccionarLugar'); ?>
+<?php echo $this->element('Lugar/seleccionarLugarMapa'); ?>
 
 <!-- NUEVO LUGAR -->
 <?= $this->element('Lugar/nuevoLugar'); ?>
