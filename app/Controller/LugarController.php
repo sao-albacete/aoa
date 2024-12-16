@@ -150,7 +150,7 @@ class LugarController extends AppController {
                     $lugar = $this->Lugar->read(array('Lugar.id', 'Lugar.nombre'), $this->Lugar->id);
 
                     EmailUtil::enviarEmailNuevLugar($lugar, $current_user);
-
+                    
                     $this->Session->setFlash(__('El lugar ha sido creado correctamente.'), 'success');
 
                     if (isset($this->request->data["controller"]) && !empty($this->request->data["controller"])

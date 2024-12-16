@@ -48,6 +48,20 @@ function clickablePolygon(p) {
   );
 }
 
+// Esto evita las cajas de 'Cerrar' q aparecen al clickar sobre una comarca en el KML
+function removeCloseTooltips() {
+  var tooltips = document.querySelectorAll('.ui-tooltip');
+  tooltips.forEach(function(tooltip) {
+      if (tooltip.querySelector('.ui-tooltip-content') && 
+          tooltip.querySelector('.ui-tooltip-content').textContent === 'Cerrar') {
+          tooltip.remove();
+      }
+    });
+  }
+
+removeCloseTooltips();
+setInterval(removeCloseTooltips, 500);
+
 function onChangeMunicipioSelect() {
 
     if($(this).val() != "") {
@@ -300,6 +314,7 @@ function placemarker(lat, lng, content, mapobj=map){
 	infoWindow.open(mapobj, marker);
   //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 200);
+
 
 }
 

@@ -17,11 +17,13 @@ function limpiarFormularioLugar() {
     $formularioNuevoLugar.find(".selectMunicipio").prop("disabled", true);
 }
 
+var $formularioNuevoLugar, $divNuevoLugar, $divSelectLugarMapa;
+
 $(document).ready(function() {
 
-    var $formularioNuevoLugar = $('#frmNuevoLugar'),
-        divNuevoLugar = $('#modalNuevoLugar');
-        divSelectLugarMapa = $('#modalSeleccionarLugarMapa');
+    $frmNuevoLugar = $('#frmNuevoLugar');
+    $divNuevoLugar = $('#modalNuevoLugar');
+    $divSelectLugarMapa = $('#modalSeleccionarLugarMapa');
 
     /* INICIO cambio de municipio */
     $("#selectMunicipio").change(onChangeMunicipioSelect);
@@ -38,15 +40,15 @@ $(document).ready(function() {
     /* FIN limpiar formulario */
 
     // Cancelar modal de nuevo lugar
-    divNuevoLugar.find('#btnCancelarNuevo').click(function () {
+    $('#btnCancelarNuevo').click(function () {
         $('#modalNuevoLugar').modal('hide');
     });
-    // Limpiar formulario de nuevo lugar
-    divNuevoLugar.find('#btnGuardar').click(function () {
-        guardarLugar(divNuevoLugar);
+
+    $('#btnGuardarNuevo').click(function () {
+        guardarLugar($frmNuevoLugar);
     });
     // Cancelar modal de seleccionar lugar con mapa
-    divSelectLugarMapa.find('#btnCancelarMapa').click(function () {
+    $('#btnCancelarMapa').click(function () {
         $('#modalSeleccionarLugarMapa').modal('hide');
     });
 
@@ -56,16 +58,16 @@ $(document).ready(function() {
     $('.badge-info').popover();
     /* FIN popup ayuda */
 
-    // /* INICIO guardar lugar */
-    // $("#btnGuardar").click(function(){
-    //     if ($('#frmNuevoLugar').valid()) {
+    /* INICIO guardar lugar */
+    $("#btnGuardarLugar").click(function(){
+        if ($('#frmNuevoLugar').valid()) {
 
-    //         var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
-    //         var nombreLugar = $('#txtNombre').val();
-    //         var municipioId = $('#selectMunicipio').val();
-    //         $("#frmNuevoLugar").submit();
-    //     }
-    // });
+            var codigoCuadriculaUtm = $('#selectCuadriculaUtm').val();
+            var nombreLugar = $('#txtNombre').val();
+            var municipioId = $('#selectMunicipio').val();
+            $("#frmNuevoLugar").submit();
+        }
+    });
     /* FIN guardar lugar */
 
     /* INICIO popup ayuda */
@@ -129,7 +131,7 @@ function limpiar() {
 function guardarLugar($div)
 {
     if ($('#frmNuevoLugar').valid()) {
-      var $formularioNuevoLugar = $div.find('#frmNuevoLugar'),
+      var $formularioNuevoLugar = $('#frmNuevoLugar'),
           nombreLugar = $formularioNuevoLugar.find('#txtNombre').val(),
           municipioId = $formularioNuevoLugar.find('#selectMunicipio').val(),
           lat = $formularioNuevoLugar.find('#txtCoordenadasLat').val(),
@@ -156,8 +158,10 @@ function guardarLugar($div)
                   $("#lugarSeleccionadoContenedor").show();
                   $("#lugarSeleccionado").text(textoLugar.join(', '));
                   $('#lugarId').val(respuesta.lugar.Lugar.id).trigger("change");
-
-                  $('#modalNuevoLugar').modal('hide');
+                  console.log('El lugar ha sido creado correctamente');
+                  if ($('#modalNuevoLugar').length) {
+                    $('#modalNuevoLugar').modal('hide');
+                  }
               }
               else {
                   if (respuesta.errores) {
