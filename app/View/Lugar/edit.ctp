@@ -139,8 +139,8 @@ $(document).ready(function() {
                             <div class="control-group">
                                 <div class="controls form-inline">
                                     <label class="control-label" for="lat"> <?php echo __("Latitud y Longitud WGS 84");?></label>
-                                    <input name="lat" class="input-small" id="txtCoordenadasLat" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
-                                    <input name="lng" class="input-small" id="txtCoordenadasLng" readonly="readonly" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
+                                    <input name="lat" class="input-small" id="txtCoordenadasLat" type="text" value="<?php echo $lugar['Lugar']['lat'];?>">
+                                    <input name="lng" class="input-small" id="txtCoordenadasLng" type="text" value="<?php echo $lugar['Lugar']['lng'];?>">
 
                                     <span class="badge badge-info" data-trigger="hover"
                                         data-content="<?php echo __('Coordenadas WGS84 del lugar.');?>"><i
