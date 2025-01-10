@@ -4,7 +4,7 @@ App::uses('CakeEmail', 'Network/Email');
 
 class EmailUtil {
     
-    const EMAIL_ADMINISTRADOR = "anuario@sao.albacete.org";
+    const EMAIL_ADMINISTRADOR = "donotreply@komun.org"; //"anuario@sao.albacete.org";
     const NOMBRE_ADMINISTRADOR = "Anuario Ornitológico de Albacte Online";
     
     public static function enviarEmailNuevaCitaRareza($especie, $citaId, $usuario) {
