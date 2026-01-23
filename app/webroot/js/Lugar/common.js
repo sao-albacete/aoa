@@ -111,6 +111,21 @@ validate_rules = {
     onfocusout: false
 }
 
+
+// Esto evita las cajas de 'Cerrar' q aparecen al clickar sobre una comarca en el KML
+function removeCloseTooltips() {
+  var tooltips = document.querySelectorAll('.ui-tooltip');
+  tooltips.forEach(function(tooltip) {
+      if (tooltip.querySelector('.ui-tooltip-content') && 
+          tooltip.querySelector('.ui-tooltip-content').textContent === 'Cerrar') {
+          tooltip.remove();
+      }
+    });
+  }
+
+  removeCloseTooltips();
+  setInterval(removeCloseTooltips, 500);
+
 function clickMunicipioListener(mapsMouseEvent, placemark){
 	// Descarmacar municipios
 
@@ -266,11 +281,12 @@ function initialize_map_handler(canvas) {
         // parser.parse(['/kml/UTM_AB.kml']);
     }
 
+
+
     active_map.mapTypes.set('PNOA', PNOAWMTS); //Definición de la capa de fondo
     active_map.mapTypes.set('Raster', RasterWMTS); //Definición de la capa de fondo
 
-
-
+        
 
 }
 
@@ -298,6 +314,7 @@ function placemarker(lat, lng, content, mapobj=map){
 
 	infoWindow = new google.maps.InfoWindow({content: content});
 	infoWindow.open(mapobj, marker);
+
   //con esto eliminamos la molesta caja de Close que se queda al pasar el ratón por el x del infobox y cerrarlo.
   setTimeout(function (){ $(".gm-ui-hover-effect").attr('title','');  }, 200);
 

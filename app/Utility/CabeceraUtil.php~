@@ -74,15 +74,6 @@ class CabeceraUtil
         ['src' => '/img/cabecera/falco_naumanni_MC', 'alt' => 'Primilla'],
         ['src' => '/img/cabecera/grus_grus_MC', 'alt' => 'Grullas'],
         ['src' => '/img/cabecera/merops_apiaster_MC', 'alt' => 'Abejaruco europeo'],
-        ['src' => '/img/cabecera/monticola_solitarius_MC', 'alt' => 'Roquero solitario'],
-        ['src' => '/img/cabecera/oenanthe_hispanica_JLE', 'alt' => 'Collalba rubia'],
-        ['src' => '/img/cabecera/oenanthe_oenanthe_MC', 'alt' => 'Collarba gris'],
-        ['src' => '/img/cabecera/otis_tarda_MC', 'alt' => 'Avutarda'],
-        ['src' => '/img/cabecera/otis_tarda2_MC', 'alt' => 'Avutarda europea'],
-        ['src' => '/img/cabecera/pterocles_alchata_JLE', 'alt' => 'Ganga ibérica'],
-        ['src' => '/img/cabecera/pyrrhycorax_MC', 'alt' => 'Chova piquirroja'],
-        ['src' => '/img/cabecera/upupa_epops_MC', 'alt' => 'Abubilla'],
-        ['src' => '/img/cabecera/upupa_epops_JLE', 'alt' => 'Abubillas'],
         
     ];
 

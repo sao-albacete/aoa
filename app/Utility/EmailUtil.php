@@ -5,6 +5,7 @@ App::uses('CakeEmail', 'Network/Email');
 class EmailUtil {
     
     const EMAIL_ADMINISTRADOR = "anuario@sao.albacete.org";
+    const EMAIL_REMITENTE = "donotreply@komun.org"; 
     const NOMBRE_ADMINISTRADOR = "Anuario Ornitológico de Albacte Online";
     
     public static function enviarEmailNuevaCitaRareza($especie, $citaId, $usuario) {
@@ -16,7 +17,7 @@ class EmailUtil {
             $emailUsuario = $usuario['email'];
             
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to(EmailUtil::EMAIL_ADMINISTRADOR);
             $Email->subject("[ALTA RAREZA] Nueva cita de $nombreEspecie con id $citaId");
             $Email->send("El usuario $nombreUsuario ($emailUsuario) ha dado de alta una nueva cita de $nombreEspecie con id $citaId.");
@@ -36,7 +37,7 @@ class EmailUtil {
             $emailUsuario = $usuario['email'];
                 
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to(EmailUtil::EMAIL_ADMINISTRADOR);
             $Email->subject("[ALTA LUGAR] Nueva lugar \"$lugarNombre\" con id $lugarId");
             $Email->send("El usuario $nombreUsuario ($emailUsuario) ha dado de alta el nuevo lugar \"$lugarNombre\" con id $lugarId.");
@@ -55,7 +56,7 @@ class EmailUtil {
             $emailUsuario = $usuario['email'];
     
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to(EmailUtil::EMAIL_ADMINISTRADOR);
             $Email->subject("[BAJA CITA] Se ha dado de baja una cita de \"$nombreEspecie\" con id $citaId");
             $Email->send("El usuario $nombreUsuario ($emailUsuario) ha dado de baja una cita de \"$nombreEspecie\" con id $citaId.");
@@ -74,7 +75,7 @@ class EmailUtil {
             $idUsuario = $usuario['User']['id'];
     
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to(EmailUtil::EMAIL_ADMINISTRADOR);
             $Email->subject("[ALTA USUARIO] Se ha dado de alta el nuevo usuario $nombreUsuario con id $idUsuario");
             $Email->send("El usuario $nombreUsuario ($emailUsuario) se ha dado de alta con id $idUsuario.");
@@ -93,7 +94,7 @@ class EmailUtil {
             $idUsuario = $usuario['id'];
     
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to(EmailUtil::EMAIL_ADMINISTRADOR);
             $Email->subject("[BAJA USUARIO] Se ha dado de baja el usuario $nombreUsuario con id $idUsuario");
             $Email->send("El usuario $nombreUsuario ($emailUsuario) se ha dado de baja con id $idUsuario.");
@@ -108,7 +109,7 @@ class EmailUtil {
         try {
     
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to($email);
             $Email->subject("Recueprar contraseña");
             
@@ -138,7 +139,7 @@ cuerpo;
         try {
     
             $Email = new CakeEmail('gmail');
-            $Email->from(array(EmailUtil::EMAIL_ADMINISTRADOR => EmailUtil::NOMBRE_ADMINISTRADOR));
+            $Email->from(array(EmailUtil::EMAIL_REMITENTE => EmailUtil::NOMBRE_ADMINISTRADOR));
             $Email->to($email);
             $Email->subject("Activar usuario");
                 

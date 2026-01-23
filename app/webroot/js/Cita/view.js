@@ -7,4 +7,6 @@ $(document).ready(function() {
 		showDescription : true,
 		renderInfoPin : false
 	});
+	
+	
 });

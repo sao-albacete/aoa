@@ -55,8 +55,11 @@ $(document).ready(function() {
     /* INICIO popup ayuda */
     $('.help-button').popover();
     /* FIN popup ayuda */
+
 });
 
+
+    
 var map;
 
 function initialize() {

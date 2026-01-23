@@ -43,9 +43,23 @@ function marcarMunicipioCluster(parserDocs, addmarkerFunct) {
                   return addmarkerFunct(location["lat"], location["lng"], location["id"], location["nombre"], location["municipio"], location["munID"], location["comarca"]);
               });
               // Add a marker clusterer to manage the markers.
-              new MarkerClusterer(map_cluster, markers, {
+              const markerCluster = new MarkerClusterer(map_cluster, markers, {
                 imagePath:
                   "https://unpkg.com/@googlemaps/markerclustererplus@1.0.3/images/m",
+                  zoomOnClick: true, // Habilita el zoom al hacer clic
+                  maxZoom: 15,       // Define el nivel máximo de zoom antes de desactivar el clúster                
+              });
+
+              // Maneja el evento 'clusterclick'
+              google.maps.event.addListener(markerCluster, 'clusterclick', function (cluster) {
+                // Obtén los límites del clúster
+                const bounds = new google.maps.LatLngBounds();
+                cluster.getMarkers().forEach(function (marker) {
+                  bounds.extend(marker.getPosition());
+                });
+
+                // Ajusta el mapa para que muestre todos los marcadores en el clúster
+                map_cluster.fitBounds(bounds);
               });
         }
     );

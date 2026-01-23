@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+
+
     $("#selectComarca").change(function(){
          $( "#frmComarca" ).submit();
     });
@@ -77,7 +79,7 @@ function initialize() {
         map: map,
         singleInfoWindow: true,
         zoom: false,
-            afterParse: useTheData
+        afterParse: useTheData
         });
         
     // Tratamos el archivo

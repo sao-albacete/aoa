@@ -61,7 +61,6 @@
                 <p><?=__("Podrás encontrar toda la información acerca de cuándo se ven las especies.");?></p>
             </div>
         </div>
-<!-- 
         <div class="item">
             <div class="text-center"><img src="<?=$headerImages[7]['src']?>" alt="<?=$headerImages[7]['alt']?>"></div>
             <div class="carousel-caption">
@@ -69,7 +68,7 @@
                 <h3><?=__("¿Qué especies se reproducen y qué especies invernan?");?></h3>
                 <p><?=__("Con tus datos podremos conocer mejor la distribución y población de las aves reproductoras, migradoras e invernantes.");?></p>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <!-- Controls -->
