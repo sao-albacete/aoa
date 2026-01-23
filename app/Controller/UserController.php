@@ -52,6 +52,16 @@ class UserController extends AppController
 
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
+                // Verificamos si el usuario tiene observador_principal_id, si no lo tiene, lo creamos
+                $current_user = $this->Auth->user();
+                if (empty($current_user['observador_principal_id'])) {
+                    $user = $this->User->read(null, $current_user['id']);
+                    if ($this->_createPrincipalAndSecondaryObserver($user)) {
+                        // Actualizamos la sesión con los datos actualizados del usuario
+                        $user = $this->User->read(null, $current_user['id']);
+                        $this->Auth->login($user['User']);
+                    }
+                }
                 $this->redirect($this->Auth->redirect());
             } else {
                 $this->Session->setFlash(__("El usuario o contraseña son incorrectos."), 'failure');
@@ -137,7 +147,16 @@ class UserController extends AppController
 
                 $this->User->saveField('indActivo', 1);
 
-                EmailUtil::enviarEmailNuevoUsuario($this->User->read(null, $this->User->id));
+                $user = $this->User->read(null, $this->User->id);
+
+                // Verificamos y creamos el observador principal y secundario si no existen
+                if (empty($user['User']['observador_principal_id'])) {
+                    $this->_createPrincipalAndSecondaryObserver($user);
+                    // Recargamos el usuario para tener los datos actualizados
+                    $user = $this->User->read(null, $this->User->id);
+                }
+
+                EmailUtil::enviarEmailNuevoUsuario($user);
 
                 $this->Session->setFlash(__('¡BIENVENID@ DE NUEVO AL ANUARIO! Su usuario ha sido reactivado correctamente.'), 'success');
                 $this->login();
@@ -227,36 +246,8 @@ class UserController extends AppController
 
         $user = $this->User->read(null, $userId);
 
-        // Creamos el observador principal
-        $codigo = $this->ObservadorPrincipal->generarCodigo($user["User"]["username"]);
-        $this->ObservadorPrincipal->create();
-        $observador = array('ObservadorPrincipal' => array(
-            'codigo' => $codigo,
-            'nombre' => $user["User"]["username"])
-        );
-        $this->ObservadorPrincipal->set($observador);
-        if ($this->ObservadorPrincipal->validates()) {
-            $this->ObservadorPrincipal->save();
-        } else {
-            CakeLog::error(sprintf('[%s] Error creando usuario principal. %s', __METHOD__, print_r($this->ObservadorPrincipal->validationErrors)));
-        }
-
-        $this->User->saveField('observador_principal_id', $this->ObservadorPrincipal->id);
-
-        // Creamos el observador secundario
-        $codigo = $this->ObservadorSecundario->generarCodigo($user["User"]["username"]);
-        $this->ObservadorSecundario->create();
-        $observadorSecundario = array('ObservadorSecundario' => array(
-            'codigo' => $codigo,
-            'nombre' => $user["User"]["username"],
-            'observador_principal_id' => $this->ObservadorPrincipal->id
-        ));
-        $this->ObservadorSecundario->set($observadorSecundario);
-        if ($this->ObservadorSecundario->validates()) {
-            $this->ObservadorSecundario->save();
-        } else {
-            CakeLog::error(sprintf('[%s] Error creando usuario secundario. %s', __METHOD__, print_r($this->ObservadorSecundario->validationErrors)));
-        }
+        // Creamos el observador principal y secundario
+        $this->_createPrincipalAndSecondaryObserver($user);
 
         // Enviamos un email para que el alta quede registrada
         EmailUtil::enviarEmailNuevoUsuario($user);
@@ -515,6 +506,57 @@ class UserController extends AppController
                 $this->Session->setFlash($errorsMessages, "failure");
             }
         }
+    }
+
+    /**
+     * Crea el observador principal y secundario para un usuario si no existen
+     * 
+     * @param array $user Datos del usuario
+     * @return bool true si se crearon correctamente, false en caso contrario
+     */
+    private function _createPrincipalAndSecondaryObserver($user)
+    {
+        // Verificamos si el usuario ya tiene observador_principal_id
+        if (!empty($user['User']['observador_principal_id'])) {
+            return true;
+        }
+
+        // Creamos el observador principal
+        $codigo = $this->ObservadorPrincipal->generarCodigo($user["User"]["username"]);
+        $this->ObservadorPrincipal->create();
+        $observador = array('ObservadorPrincipal' => array(
+            'codigo' => $codigo,
+            'nombre' => $user["User"]["username"])
+        );
+        $this->ObservadorPrincipal->set($observador);
+        if ($this->ObservadorPrincipal->validates()) {
+            $this->ObservadorPrincipal->save();
+        } else {
+            CakeLog::error(sprintf('[%s] Error creando observador principal. %s', __METHOD__, print_r($this->ObservadorPrincipal->validationErrors)));
+            return false;
+        }
+
+        // Asignamos el observador principal al usuario
+        $this->User->id = $user['User']['id'];
+        $this->User->saveField('observador_principal_id', $this->ObservadorPrincipal->id);
+
+        // Creamos el observador secundario
+        $codigo = $this->ObservadorSecundario->generarCodigo($user["User"]["username"]);
+        $this->ObservadorSecundario->create();
+        $observadorSecundario = array('ObservadorSecundario' => array(
+            'codigo' => $codigo,
+            'nombre' => $user["User"]["username"],
+            'observador_principal_id' => $this->ObservadorPrincipal->id
+        ));
+        $this->ObservadorSecundario->set($observadorSecundario);
+        if ($this->ObservadorSecundario->validates()) {
+            $this->ObservadorSecundario->save();
+        } else {
+            CakeLog::error(sprintf('[%s] Error creando observador secundario. %s', __METHOD__, print_r($this->ObservadorSecundario->validationErrors)));
+            return false;
+        }
+
+        return true;
     }
 
 }
